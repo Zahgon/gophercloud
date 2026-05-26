@@ -1,8 +1,6 @@
 package servers
 
 import (
-	"fmt"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -10,23 +8,20 @@ import (
 // ID nor the image name is provided for a server operation
 type ErrNeitherImageIDNorImageNameProvided struct{ gophercloud.ErrMissingInput }
 
-func (e ErrNeitherImageIDNorImageNameProvided) Error() string {
-	return "One and only one of the image ID and the image name must be provided."
-}
+func (e ErrNeitherImageIDNorImageNameProvided) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrNeitherFlavorIDNorFlavorNameProvided is the error when neither the flavor
 // ID nor the flavor name is provided for a server operation
 type ErrNeitherFlavorIDNorFlavorNameProvided struct{ gophercloud.ErrMissingInput }
 
 func (e ErrNeitherFlavorIDNorFlavorNameProvided) Error() string {
-	return "One and only one of the flavor ID and the flavor name must be provided."
+	_ = "STUB: not implemented"
+	return ""
 }
 
 type ErrNoClientProvidedForIDByName struct{ gophercloud.ErrMissingInput }
 
-func (e ErrNoClientProvidedForIDByName) Error() string {
-	return "A service client must be provided to find a resource ID by name."
-}
+func (e ErrNoClientProvidedForIDByName) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrInvalidHowParameterProvided is the error when an unknown value is given
 // for the `how` argument
@@ -50,14 +45,12 @@ type ErrServer struct {
 	ID string
 }
 
-func (se ErrServer) Error() string {
-	return fmt.Sprintf("Error while executing HTTP request for server [%s]", se.ID)
-}
+func (se ErrServer) Error() string { _ = "STUB: not implemented"; return "" }
 
 // Error404 overrides the generic 404 error message.
 func (se ErrServer) Error404(e gophercloud.ErrUnexpectedResponseCode) error {
-	se.ErrUnexpectedResponseCode = e
-	return &ErrServerNotFound{se}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ErrServerNotFound is the error when a 404 is received during server HTTP
@@ -66,6 +59,4 @@ type ErrServerNotFound struct {
 	ErrServer
 }
 
-func (e ErrServerNotFound) Error() string {
-	return fmt.Sprintf("I couldn't find server [%s]", e.ID)
-}
+func (e ErrServerNotFound) Error() string { _ = "STUB: not implemented"; return "" }

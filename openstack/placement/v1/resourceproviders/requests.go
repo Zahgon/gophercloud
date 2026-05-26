@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/gophercloud/gophercloud/v2"
-	"github.com/gophercloud/gophercloud/v2/openstack/utils"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -41,25 +40,14 @@ type ListOpts struct {
 
 // ToResourceProviderListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToResourceProviderListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list resource providers.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := resourceProvidersListURL(client)
-
-	if opts != nil {
-		query, err := opts.ToResourceProviderListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ResourceProvidersPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -79,41 +67,26 @@ type CreateOpts struct {
 
 // ToResourceProviderCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToResourceProviderCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create makes a request against the API to create a resource provider
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToResourceProviderCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, resourceProvidersListURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete accepts a unique ID and deletes the resource provider associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, resourceProviderID string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, resourceProviderID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves a specific resource provider based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, resourceProviderID string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -133,50 +106,31 @@ type UpdateOpts struct {
 
 // ToResourceProviderUpdateMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToResourceProviderUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	// In order to set this to null, use an empty string as a value.
-	if opts.ParentProviderUUID != nil && *opts.ParentProviderUUID == "" {
-		b["parent_provider_uuid"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// In order to set this to null, use an empty string as a value.
 
 // Update makes a request against the API to create a resource provider
 func Update(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToResourceProviderUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, updateURL(client, resourceProviderID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 func GetUsages(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string) (r GetUsagesResult) {
-	resp, err := client.Get(ctx, getResourceProviderUsagesURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetUsagesResult)
 }
 
 func GetInventories(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string) (r GetInventoriesResult) {
-	resp, err := client.Get(ctx, getResourceProviderInventoriesURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetInventoriesResult)
 }
 
 func GetInventory(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID, resourceClass string) (r GetInventoryResult) {
-	resp, err := client.Get(ctx, getResourceProviderInventoryURL(client, resourceProviderID, resourceClass), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetInventoryResult)
 }
 
 // UpdateInventoriesOptsBuilder allows extensions to add additional parameters to the
@@ -190,29 +144,20 @@ type UpdateInventoriesOpts = ResourceProviderInventories
 
 // ToResourceProviderUpdateInventoriesMap constructs a request body from UpdateInventoriesOpts.
 func (opts UpdateInventoriesOpts) ToResourceProviderUpdateInventoriesMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateInventories updates all inventories of a resource provider.
 func UpdateInventories(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string, opts UpdateInventoriesOptsBuilder) (r GetInventoriesResult) {
-	b, err := opts.ToResourceProviderUpdateInventoriesMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, getResourceProviderInventoriesURL(client, resourceProviderID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetInventoriesResult)
 }
 
 // DeleteInventories deletes all inventories from a resource provider.
 func DeleteInventories(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteResourceProviderInventoriesURL(client, resourceProviderID), &gophercloud.RequestOpts{OkCodes: []int{204}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateInventoryOptsBuilder allows extensions to add additional parameters to the
@@ -226,47 +171,35 @@ type UpdateInventoryOpts = ResourceProviderInventory
 
 // ToResourceProviderUpdateInventoryMap constructs a request body from UpdateInventoryOpts.
 func (opts UpdateInventoryOpts) ToResourceProviderUpdateInventoryMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateInventory updates one inventory of a resource provider.
 func UpdateInventory(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID, resourceClass string, opts UpdateInventoryOptsBuilder) (r UpdateInventoryResult) {
-	b, err := opts.ToResourceProviderUpdateInventoryMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, updateResourceProviderInventoryURL(client, resourceProviderID, resourceClass), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateInventoryResult)
 }
 
 // DeleteInventory deletes one inventory from a resource provider.
 func DeleteInventory(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID, resourceClass string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteResourceProviderInventoryURL(client, resourceProviderID, resourceClass), &gophercloud.RequestOpts{OkCodes: []int{204}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 func GetAllocations(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string) (r GetAllocationsResult) {
-	resp, err := client.Get(ctx, getResourceProviderAllocationsURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetAllocationsResult)
 }
 
 func GetTraits(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string) (r GetTraitsResult) {
-	resp, err := client.Get(ctx, getResourceProviderTraitsURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetTraitsResult)
 }
 
 func GetAggregates(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string) (r GetAggregatesResult) {
-	resp, err := client.Get(ctx, getResourceProviderAggregatesURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetAggregatesResult)
 }
 
 // UpdateAggregatesOptsBuilder allows extensions to add additional parameters to the
@@ -284,34 +217,16 @@ type UpdateAggregatesOpts struct {
 
 // ToResourceProviderUpdateAggregatesMap constructs a request body from UpdateAggregatesOpts.
 func (opts UpdateAggregatesOpts) ToResourceProviderUpdateAggregatesMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func UpdateAggregates(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string, opts UpdateAggregatesOptsBuilder) (r GetAggregatesResult) {
-	b, err := opts.ToResourceProviderUpdateAggregatesMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	var body any = b
-	if client.Microversion != "" {
-		_, minor, err := utils.ParseMicroversion(client.Microversion)
-		if err != nil {
-			r.Err = err
-			return
-		}
-		// In microversions prior to 1.19, the body was not enveloped.
-		if minor < 19 {
-			body = b["aggregates"]
-		}
-	}
-	resp, err := client.Put(ctx, updateResourceProviderAggregatesURL(client, resourceProviderID), body, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetAggregatesResult)
 }
+
+// In microversions prior to 1.19, the body was not enveloped.
 
 // UpdateTraitsOptsBuilder allows extensions to add additional parameters to the
 // UpdateTraits request.
@@ -324,26 +239,16 @@ type UpdateTraitsOpts = ResourceProviderTraits
 
 // ToResourceProviderUpdateTraitsMap constructs a request body from UpdateTraitsOpts.
 func (opts UpdateTraitsOpts) ToResourceProviderUpdateTraitsMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func UpdateTraits(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string, opts UpdateTraitsOptsBuilder) (r GetTraitsResult) {
-	b, err := opts.ToResourceProviderUpdateTraitsMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, getResourceProviderTraitsURL(client, resourceProviderID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetTraitsResult)
 }
 
 func DeleteTraits(ctx context.Context, client *gophercloud.ServiceClient, resourceProviderID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, getResourceProviderTraitsURL(client, resourceProviderID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -1,8 +1,6 @@
 package projects
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -76,35 +74,10 @@ type Project struct {
 	Options map[Option]any `json:"options,omitempty"`
 }
 
-func (r *Project) UnmarshalJSON(b []byte) error {
-	type tmp Project
-	var s struct {
-		tmp
-		Extra map[string]any `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Project(s.tmp)
+func (r *Project) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Collect other fields and bundle them into Extra
-	// but only if a field titled "extra" wasn't sent.
-	if s.Extra != nil {
-		r.Extra = s.Extra
-	} else {
-		var result any
-		err := json.Unmarshal(b, &result)
-		if err != nil {
-			return err
-		}
-		if resultMap, ok := result.(map[string]any); ok {
-			r.Extra = gophercloud.RemainingKeys(Project{}, resultMap)
-		}
-	}
-
-	return err
-}
+// Collect other fields and bundle them into Extra
+// but only if a field titled "extra" wasn't sent.
 
 // ProjectPage is a single page of Project results.
 type ProjectPage struct {
@@ -112,48 +85,23 @@ type ProjectPage struct {
 }
 
 // IsEmpty determines whether or not a page of Projects contains any results.
-func (r ProjectPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	projects, err := ExtractProjects(r)
-	return len(projects) == 0, err
-}
+func (r ProjectPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r ProjectPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractProjects returns a slice of Projects contained in a single page of
 // results.
 func ExtractProjects(r pagination.Page) ([]Project, error) {
-	var s struct {
-		Projects []Project `json:"projects"`
-	}
-	err := (r.(ProjectPage)).ExtractInto(&s)
-	return s.Projects, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any projectResults as a Project.
-func (r projectResult) Extract() (*Project, error) {
-	var s struct {
-		Project *Project `json:"project"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Project, err
-}
+func (r projectResult) Extract() (*Project, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Tags represents a list of Tags object.
 type Tags struct {
@@ -168,11 +116,7 @@ type ListTagsResult struct {
 }
 
 // Extract interprets any ListTagsResult as a Tags Object.
-func (r ListTagsResult) Extract() (*Tags, error) {
-	var s = &Tags{}
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r ListTagsResult) Extract() (*Tags, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ProjectTags represents a list of Tags object.
 type ProjectTags struct {
@@ -190,9 +134,8 @@ type ModifyTagsResult struct {
 
 // Extract interprets any ModifyTags as a Tags Object.
 func (r ModifyTagsResult) Extract() (*ProjectTags, error) {
-	var s = &ProjectTags{}
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DeleteTagsResult is the result of a Delete Tags request. Call its ExtractErr method to

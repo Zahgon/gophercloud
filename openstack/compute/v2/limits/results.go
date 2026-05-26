@@ -75,13 +75,7 @@ type Absolute struct {
 }
 
 // Extract interprets a limits result as a Limits.
-func (r GetResult) Extract() (*Limits, error) {
-	var s struct {
-		Limits *Limits `json:"limits"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Limits, err
-}
+func (r GetResult) Extract() (*Limits, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract
 // method to interpret it as an Absolute.

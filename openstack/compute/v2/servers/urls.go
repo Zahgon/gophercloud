@@ -2,50 +2,53 @@ package servers
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func createURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("servers")
-}
+func createURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return createURL(client)
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listDetailURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("servers", "detail")
-}
+func listDetailURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("servers", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getURL(client *gophercloud.ServiceClient, id string) string {
-	return deleteURL(client, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(client *gophercloud.ServiceClient, id string) string {
-	return deleteURL(client, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func actionURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("servers", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func metadatumURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("servers", id, "metadata", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func metadataURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("servers", id, "metadata")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listAddressesURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("servers", id, "ips")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listAddressesByNetworkURL(client *gophercloud.ServiceClient, id, network string) string {
-	return client.ServiceURL("servers", id, "ips", network)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func passwordURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("servers", id, "os-server-password")
+	_ = "STUB: not implemented"
+	return ""
 }

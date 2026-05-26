@@ -24,52 +24,34 @@ type ListDriversOpts struct {
 
 // ToListDriversOptsQuery formats a ListOpts into a query string
 func (opts ListDriversOpts) ToListDriversOptsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListDrivers makes a request against the API to list all drivers
 func ListDrivers(client *gophercloud.ServiceClient, opts ListDriversOptsBuilder) pagination.Pager {
-	url := driversURL(client)
-	if opts != nil {
-		query, err := opts.ToListDriversOptsQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return DriverPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetDriverDetails Shows details for a driver
 func GetDriverDetails(ctx context.Context, client *gophercloud.ServiceClient, driverName string) (r GetDriverResult) {
-	resp, err := client.Get(ctx, driverDetailsURL(client, driverName), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetDriverResult)
 }
 
 // GetDriverProperties Shows the required and optional parameters that
 // driverName expects to be supplied in the driver_info field for every
 // Node it manages
 func GetDriverProperties(ctx context.Context, client *gophercloud.ServiceClient, driverName string) (r GetPropertiesResult) {
-	resp, err := client.Get(ctx, driverPropertiesURL(client, driverName), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetPropertiesResult)
 }
 
 // GetDriverDiskProperties Show the required and optional parameters that
 // driverName expects to be supplied in the node’s raid_config field, if a
 // RAID configuration change is requested.
 func GetDriverDiskProperties(ctx context.Context, client *gophercloud.ServiceClient, driverName string) (r GetDiskPropertiesResult) {
-	resp, err := client.Get(ctx, driverDiskPropertiesURL(client, driverName), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetDiskPropertiesResult)
 }

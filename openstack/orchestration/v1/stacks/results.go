@@ -1,7 +1,6 @@
 package stacks
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -21,13 +20,7 @@ type CreateResult struct {
 
 // Extract returns a pointer to a CreatedStack object and is called after a
 // Create operation.
-func (r CreateResult) Extract() (*CreatedStack, error) {
-	var s struct {
-		CreatedStack *CreatedStack `json:"stack"`
-	}
-	err := r.ExtractInto(&s)
-	return s.CreatedStack, err
-}
+func (r CreateResult) Extract() (*CreatedStack, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // AdoptResult represents the result of an Adopt operation. AdoptResult has the
 // same form as CreateResult.
@@ -41,14 +34,7 @@ type StackPage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no Stacks.
-func (r StackPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	stacks, err := ExtractStacks(r)
-	return len(stacks) == 0, err
-}
+func (r StackPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ListedStack represents an element in the slice extracted from a List operation.
 type ListedStack struct {
@@ -63,54 +49,13 @@ type ListedStack struct {
 	UpdatedTime  time.Time          `json:"-"`
 }
 
-func (r *ListedStack) UnmarshalJSON(b []byte) error {
-	type tmp ListedStack
-	var s struct {
-		tmp
-		CreationTime string `json:"creation_time"`
-		UpdatedTime  string `json:"updated_time"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = ListedStack(s.tmp)
-
-	if s.CreationTime != "" {
-		t, err := time.Parse(time.RFC3339, s.CreationTime)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.CreationTime)
-			if err != nil {
-				return err
-			}
-		}
-		r.CreationTime = t
-	}
-
-	if s.UpdatedTime != "" {
-		t, err := time.Parse(time.RFC3339, s.UpdatedTime)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.UpdatedTime)
-			if err != nil {
-				return err
-			}
-		}
-		r.UpdatedTime = t
-	}
-
-	return nil
-}
+func (r *ListedStack) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ExtractStacks extracts and returns a slice of ListedStack. It is used while iterating
 // over a stacks.List call.
 func ExtractStacks(r pagination.Page) ([]ListedStack, error) {
-	var s struct {
-		ListedStacks []ListedStack `json:"stacks"`
-	}
-	err := (r.(StackPage)).ExtractInto(&s)
-	return s.ListedStacks, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RetrievedStack represents the object extracted from a Get operation.
@@ -133,45 +78,7 @@ type RetrievedStack struct {
 	UpdatedTime         time.Time          `json:"-"`
 }
 
-func (r *RetrievedStack) UnmarshalJSON(b []byte) error {
-	type tmp RetrievedStack
-	var s struct {
-		tmp
-		CreationTime string `json:"creation_time"`
-		UpdatedTime  string `json:"updated_time"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = RetrievedStack(s.tmp)
-
-	if s.CreationTime != "" {
-		t, err := time.Parse(time.RFC3339, s.CreationTime)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.CreationTime)
-			if err != nil {
-				return err
-			}
-		}
-		r.CreationTime = t
-	}
-
-	if s.UpdatedTime != "" {
-		t, err := time.Parse(time.RFC3339, s.UpdatedTime)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.UpdatedTime)
-			if err != nil {
-				return err
-			}
-		}
-		r.UpdatedTime = t
-	}
-
-	return nil
-}
+func (r *RetrievedStack) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
@@ -180,13 +87,7 @@ type GetResult struct {
 
 // Extract returns a pointer to a RetrievedStack object and is called after a
 // Get operation.
-func (r GetResult) Extract() (*RetrievedStack, error) {
-	var s struct {
-		Stack *RetrievedStack `json:"stack"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Stack, err
-}
+func (r GetResult) Extract() (*RetrievedStack, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // UpdateResult represents the result of a Update operation.
 type UpdateResult struct {
@@ -215,45 +116,7 @@ type PreviewedStack struct {
 	UpdatedTime         time.Time          `json:"-"`
 }
 
-func (r *PreviewedStack) UnmarshalJSON(b []byte) error {
-	type tmp PreviewedStack
-	var s struct {
-		tmp
-		CreationTime string `json:"creation_time"`
-		UpdatedTime  string `json:"updated_time"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = PreviewedStack(s.tmp)
-
-	if s.CreationTime != "" {
-		t, err := time.Parse(time.RFC3339, s.CreationTime)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.CreationTime)
-			if err != nil {
-				return err
-			}
-		}
-		r.CreationTime = t
-	}
-
-	if s.UpdatedTime != "" {
-		t, err := time.Parse(time.RFC3339, s.UpdatedTime)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.UpdatedTime)
-			if err != nil {
-				return err
-			}
-		}
-		r.UpdatedTime = t
-	}
-
-	return nil
-}
+func (r *PreviewedStack) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // PreviewResult represents the result of a Preview operation.
 type PreviewResult struct {
@@ -263,11 +126,8 @@ type PreviewResult struct {
 // Extract returns a pointer to a PreviewedStack object and is called after a
 // Preview operation.
 func (r PreviewResult) Extract() (*PreviewedStack, error) {
-	var s struct {
-		PreviewedStack *PreviewedStack `json:"stack"`
-	}
-	err := r.ExtractInto(&s)
-	return s.PreviewedStack, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AbandonedStack represents the result of an Abandon operation.
@@ -292,14 +152,10 @@ type AbandonResult struct {
 // Extract returns a pointer to an AbandonedStack object and is called after an
 // Abandon operation.
 func (r AbandonResult) Extract() (*AbandonedStack, error) {
-	var s *AbandonedStack
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // String converts an AbandonResult to a string. This is useful to when passing
 // the result of an Abandon operation to an AdoptOpts AdoptStackData field.
-func (r AbandonResult) String() (string, error) {
-	out, err := json.Marshal(r)
-	return string(out), err
-}
+func (r AbandonResult) String() (string, error) { _ = "STUB: not implemented"; return "", nil }

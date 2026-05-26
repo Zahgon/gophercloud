@@ -6,6 +6,4 @@ import (
 
 const resourcePath = "limits"
 
-func getURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resourcePath)
-}
+func getURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

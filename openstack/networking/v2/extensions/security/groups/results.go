@@ -1,7 +1,6 @@
 package groups
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -47,42 +46,13 @@ type SecGroup struct {
 }
 
 func (r *SecGroup) UnmarshalJSON(b []byte) error {
-	type tmp SecGroup
+	_ = "STUB: not implemented"
 
 	// Support for older neutron time format
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = SecGroup(s1.tmp)
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		return nil
-	}
-
-	// Support for newer neutron time format
-	var s2 struct {
-		tmp
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = SecGroup(s2.tmp)
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-
 	return nil
 }
+
+// Support for newer neutron time format
 
 // SecGroupPage is the page returned by a pager when traversing over a
 // collection of security groups.
@@ -94,36 +64,19 @@ type SecGroupPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one. In
 // order to do this, it needs to construct the next page's URL.
 func (r SecGroupPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"security_groups_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a SecGroupPage struct is empty.
-func (r SecGroupPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractGroups(r)
-	return len(is) == 0, err
-}
+func (r SecGroupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractGroups accepts a Page struct, specifically a SecGroupPage struct,
 // and extracts the elements into a slice of SecGroup structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractGroups(r pagination.Page) ([]SecGroup, error) {
-	var s struct {
-		SecGroups []SecGroup `json:"security_groups"`
-	}
-	err := (r.(SecGroupPage)).ExtractInto(&s)
-	return s.SecGroups, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -131,13 +84,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a security group.
-func (r commonResult) Extract() (*SecGroup, error) {
-	var s struct {
-		SecGroup *SecGroup `json:"security_group"`
-	}
-	err := r.ExtractInto(&s)
-	return s.SecGroup, err
-}
+func (r commonResult) Extract() (*SecGroup, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a SecGroup.

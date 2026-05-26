@@ -49,25 +49,14 @@ type CreateOpts struct {
 
 // ToPortGroupCreateMap assembles a request body based on the contents of a CreateOpts.
 func (opts CreateOpts) ToPortGroupCreateMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests a node to be created
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	reqBody, err := opts.ToPortGroupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createURL(client), reqBody, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List request.
@@ -113,37 +102,24 @@ type ListOpts struct {
 
 // ToPortGroupListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPortGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list portgroups accessible to you.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToPortGroupListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return PortGroupsPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get requests the details of an portgroup by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete requests the deletion of an portgroup
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

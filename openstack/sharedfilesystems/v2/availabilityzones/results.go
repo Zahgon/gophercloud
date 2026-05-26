@@ -1,10 +1,8 @@
 package availabilityzones
 
 import (
-	"encoding/json"
 	"time"
 
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -28,28 +26,8 @@ type AvailabilityZonePage struct {
 
 // ExtractAvailabilityZones will get the AvailabilityZone objects out of the shareTypeAccessResult object.
 func ExtractAvailabilityZones(r pagination.Page) ([]AvailabilityZone, error) {
-	var a struct {
-		AvailabilityZone []AvailabilityZone `json:"availability_zones"`
-	}
-	err := (r.(AvailabilityZonePage)).ExtractInto(&a)
-	return a.AvailabilityZone, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (r *AvailabilityZone) UnmarshalJSON(b []byte) error {
-	type tmp AvailabilityZone
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = AvailabilityZone(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *AvailabilityZone) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }

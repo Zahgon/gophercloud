@@ -25,25 +25,16 @@ type ListOpts struct {
 
 // ToFlavorProfileListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToFlavorProfileListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // FlavorProfiles. It accepts a ListOpts struct, which allows you to filter
 // and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToFlavorProfileListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return FlavorProfilePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -67,27 +58,21 @@ type CreateOpts struct {
 
 // ToFlavorProfileCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToFlavorProfileCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "flavorprofile")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is and operation which add a new FlavorProfile into the database.
 // CreateResult will be returned.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToFlavorProfileCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular FlavorProfile based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -111,33 +96,20 @@ type UpdateOpts struct {
 
 // ToFlavorProfileUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToFlavorProfileUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "flavorprofile")
-	if err != nil {
-		return nil, err
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is an operation which modifies the attributes of the specified
 // FlavorProfile.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToFlavorProfileUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular FlavorProfile based on its
 // unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

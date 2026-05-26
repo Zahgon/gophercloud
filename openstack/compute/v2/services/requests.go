@@ -21,24 +21,14 @@ type ListOpts struct {
 
 // ToServicesListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToServicesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list services.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToServicesListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ServicePage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 type ServiceStatus string
@@ -72,28 +62,18 @@ type UpdateOpts struct {
 
 // ToServiceUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToServiceUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update requests that various attributes of the indicated service be changed.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToServiceUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will delete the existing service with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, updateURL(client, id), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

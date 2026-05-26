@@ -124,99 +124,58 @@ type commonResult struct {
 // Extract is a shortcut for ExtractToken.
 // This function is deprecated and still present for backward compatibility.
 func (r commonResult) Extract() (*Token, error) {
-	return r.ExtractToken()
+	_ = "STUB: not implemented"
+	return nil,
+
+		// ExtractToken interprets a commonResult as a Token.
+		nil
 }
 
-// ExtractToken interprets a commonResult as a Token.
-func (r commonResult) ExtractToken() (*Token, error) {
-	var s Token
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return nil, err
-	}
+func (r commonResult) ExtractToken() (*Token, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	// Parse the token itself from the stored headers.
-	s.ID = r.Header.Get("X-Subject-Token")
-
-	return &s, err
-}
+// Parse the token itself from the stored headers.
 
 // ExtractTokenID implements the gophercloud.AuthResult interface. The returned
 // string is the same as the ID field of the Token struct returned from
 // ExtractToken().
-func (r CreateResult) ExtractTokenID() (string, error) {
-	return r.Header.Get("X-Subject-Token"), r.Err
-}
+func (r CreateResult) ExtractTokenID() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ExtractTokenID implements the gophercloud.AuthResult interface. The returned
 // string is the same as the ID field of the Token struct returned from
 // ExtractToken().
-func (r GetResult) ExtractTokenID() (string, error) {
-	return r.Header.Get("X-Subject-Token"), r.Err
-}
+func (r GetResult) ExtractTokenID() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ExtractServiceCatalog returns the ServiceCatalog that was generated along
 // with the user's Token.
 func (r commonResult) ExtractServiceCatalog() (*ServiceCatalog, error) {
-	var s ServiceCatalog
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractUser returns the User that is the owner of the Token.
-func (r commonResult) ExtractUser() (*User, error) {
-	var s struct {
-		User *User `json:"user"`
-	}
-	err := r.ExtractInto(&s)
-	return s.User, err
-}
+func (r commonResult) ExtractUser() (*User, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractRoles returns Roles to which User is authorized.
-func (r commonResult) ExtractRoles() ([]Role, error) {
-	var s struct {
-		Roles []Role `json:"roles"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Roles, err
-}
+func (r commonResult) ExtractRoles() ([]Role, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractProject returns Project to which User is authorized.
 func (r commonResult) ExtractProject() (*Project, error) {
-	var s struct {
-		Project *Project `json:"project"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Project, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractDomain returns Domain to which User is authorized.
-func (r commonResult) ExtractDomain() (*Domain, error) {
-	var s struct {
-		Domain *Domain `json:"domain"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Domain, err
-}
+func (r commonResult) ExtractDomain() (*Domain, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractTrust returns Trust to which User is authorized.
-func (r commonResult) ExtractTrust() (*Trust, error) {
-	var s struct {
-		Trust *Trust `json:"OS-TRUST:trust"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Trust, err
-}
+func (r commonResult) ExtractTrust() (*Trust, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractApplicationCredential returns the ApplicationCredential that was used
 // to create the token. This is only present when the token was created using
 // an application credential.
 func (r commonResult) ExtractApplicationCredential() (*ApplicationCredential, error) {
-	var s struct {
-		ApplicationCredential *ApplicationCredential `json:"application_credential"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ApplicationCredential, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult is the response from a Create request. Use ExtractToken()
@@ -248,6 +207,4 @@ type Token struct {
 	ExpiresAt time.Time `json:"expires_at"`
 }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "token")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }

@@ -47,55 +47,23 @@ type RolePage struct {
 }
 
 // IsEmpty determines whether or not a page of Users contains any results.
-func (r UserPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	users, err := ExtractUsers(r)
-	return len(users) == 0, err
-}
+func (r UserPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractUsers returns a slice of Users contained in a single page of results.
-func ExtractUsers(r pagination.Page) ([]User, error) {
-	var s struct {
-		Users []User `json:"users"`
-	}
-	err := (r.(UserPage)).ExtractInto(&s)
-	return s.Users, err
-}
+func ExtractUsers(r pagination.Page) ([]User, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // IsEmpty determines whether or not a page of Roles contains any results.
-func (r RolePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	users, err := ExtractRoles(r)
-	return len(users) == 0, err
-}
+func (r RolePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractRoles returns a slice of Roles contained in a single page of results.
-func ExtractRoles(r pagination.Page) ([]Role, error) {
-	var s struct {
-		Roles []Role `json:"roles"`
-	}
-	err := (r.(RolePage)).ExtractInto(&s)
-	return s.Roles, err
-}
+func ExtractRoles(r pagination.Page) ([]Role, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract interprets any commonResult as a User, if possible.
-func (r commonResult) Extract() (*User, error) {
-	var s struct {
-		User *User `json:"user"`
-	}
-	err := r.ExtractInto(&s)
-	return s.User, err
-}
+func (r commonResult) Extract() (*User, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a Create operation. Call its Extract
 // method to interpret the result as a User.

@@ -1,11 +1,7 @@
 package gophercloud
 
 import (
-	"bytes"
-	"errors"
-	"fmt"
 	"net/http"
-	"strings"
 )
 
 // BaseError is an error type that all other error types embed.
@@ -14,17 +10,9 @@ type BaseError struct {
 	Info             string
 }
 
-func (e BaseError) Error() string {
-	e.DefaultErrString = "An error occurred while executing a Gophercloud request."
-	return e.choseErrString()
-}
+func (e BaseError) Error() string { _ = "STUB: not implemented"; return "" }
 
-func (e BaseError) choseErrString() string {
-	if e.Info != "" {
-		return e.Info
-	}
-	return e.DefaultErrString
-}
+func (e BaseError) choseErrString() string { _ = "STUB: not implemented"; return "" }
 
 // ErrMissingInput is the error when input is required in a particular
 // situation but not provided by the user
@@ -33,10 +21,7 @@ type ErrMissingInput struct {
 	Argument string
 }
 
-func (e ErrMissingInput) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Missing input for argument [%s]", e.Argument)
-	return e.choseErrString()
-}
+func (e ErrMissingInput) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrInvalidInput is an error type used for most non-HTTP Gophercloud errors.
 type ErrInvalidInput struct {
@@ -44,10 +29,7 @@ type ErrInvalidInput struct {
 	Value any
 }
 
-func (e ErrInvalidInput) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Invalid input provided for argument [%s]: [%+v]", e.Argument, e.Value)
-	return e.choseErrString()
-}
+func (e ErrInvalidInput) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrMissingEnvironmentVariable is the error when environment variable is required
 // in a particular situation but not provided by the user
@@ -56,10 +38,7 @@ type ErrMissingEnvironmentVariable struct {
 	EnvironmentVariable string
 }
 
-func (e ErrMissingEnvironmentVariable) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Missing environment variable [%s]", e.EnvironmentVariable)
-	return e.choseErrString()
-}
+func (e ErrMissingEnvironmentVariable) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrMissingAnyoneOfEnvironmentVariables is the error when anyone of the environment variables
 // is required in a particular situation but not provided by the user
@@ -69,11 +48,8 @@ type ErrMissingAnyoneOfEnvironmentVariables struct {
 }
 
 func (e ErrMissingAnyoneOfEnvironmentVariables) Error() string {
-	e.DefaultErrString = fmt.Sprintf(
-		"Missing one of the following environment variables [%s]",
-		strings.Join(e.EnvironmentVariables, ", "),
-	)
-	return e.choseErrString()
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // ErrUnexpectedResponseCode is returned by the Request method when a response code other than
@@ -88,46 +64,33 @@ type ErrUnexpectedResponseCode struct {
 	ResponseHeader http.Header
 }
 
-func (e ErrUnexpectedResponseCode) Error() string {
-	e.DefaultErrString = fmt.Sprintf(
-		"Expected HTTP response code %v when accessing [%s %s], but got %d instead: %s",
-		e.Expected, e.Method, e.URL, e.Actual, bytes.TrimSpace(e.Body),
-	)
-	return e.choseErrString()
-}
+func (e ErrUnexpectedResponseCode) Error() string { _ = "STUB: not implemented"; return "" }
 
 // GetStatusCode returns the actual status code of the error.
 func (e ErrUnexpectedResponseCode) GetStatusCode() int {
-	return e.Actual
+	_ = "STUB: not implemented"
+
+	// ResponseCodeIs returns true if this error is or contains an ErrUnexpectedResponseCode reporting
+	// that the request failed with the given response code. For example, this checks if a request
+	// failed because of a 404 error:
+	//
+	//	allServers, err := servers.List(client, servers.ListOpts{})
+	//	if gophercloud.ResponseCodeIs(err, http.StatusNotFound) {
+	//		handleNotFound()
+	//	}
+	//
+	// It is safe to pass a nil error, in which case this function always returns false.
+	return 0
 }
 
-// ResponseCodeIs returns true if this error is or contains an ErrUnexpectedResponseCode reporting
-// that the request failed with the given response code. For example, this checks if a request
-// failed because of a 404 error:
-//
-//	allServers, err := servers.List(client, servers.ListOpts{})
-//	if gophercloud.ResponseCodeIs(err, http.StatusNotFound) {
-//		handleNotFound()
-//	}
-//
-// It is safe to pass a nil error, in which case this function always returns false.
-func ResponseCodeIs(err error, status int) bool {
-	var codeError ErrUnexpectedResponseCode
-	if errors.As(err, &codeError) {
-		return codeError.Actual == status
-	}
-	return false
-}
+func ResponseCodeIs(err error, status int) bool { _ = "STUB: not implemented"; return false }
 
 // ErrTimeOut is the error type returned when an operations times out.
 type ErrTimeOut struct {
 	BaseError
 }
 
-func (e ErrTimeOut) Error() string {
-	e.DefaultErrString = "A time out occurred"
-	return e.choseErrString()
-}
+func (e ErrTimeOut) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrUnableToReauthenticate is the error type returned when reauthentication fails.
 type ErrUnableToReauthenticate struct {
@@ -136,10 +99,7 @@ type ErrUnableToReauthenticate struct {
 	ErrReauth   error
 }
 
-func (e ErrUnableToReauthenticate) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Unable to re-authenticate: %s: %s", e.ErrOriginal, e.ErrReauth)
-	return e.choseErrString()
-}
+func (e ErrUnableToReauthenticate) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrErrorAfterReauthentication is the error type returned when reauthentication
 // succeeds, but an error occurs afterword (usually an HTTP error).
@@ -148,10 +108,7 @@ type ErrErrorAfterReauthentication struct {
 	ErrOriginal error
 }
 
-func (e ErrErrorAfterReauthentication) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Successfully re-authenticated, but got error executing request: %s", e.ErrOriginal)
-	return e.choseErrString()
-}
+func (e ErrErrorAfterReauthentication) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrServiceNotFound is returned when no service in a service catalog matches
 // the provided EndpointOpts. This is generally returned by provider service
@@ -161,10 +118,7 @@ type ErrServiceNotFound struct {
 	BaseError
 }
 
-func (e ErrServiceNotFound) Error() string {
-	e.DefaultErrString = "No suitable service could be found in the service catalog."
-	return e.choseErrString()
-}
+func (e ErrServiceNotFound) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrEndpointNotFound is returned when no available endpoints match the
 // provided EndpointOpts. This is also generally returned by provider service
@@ -174,10 +128,7 @@ type ErrEndpointNotFound struct {
 	BaseError
 }
 
-func (e ErrEndpointNotFound) Error() string {
-	e.DefaultErrString = "No suitable endpoint could be found in the service catalog."
-	return e.choseErrString()
-}
+func (e ErrEndpointNotFound) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrResourceNotFound is the error when trying to retrieve a resource's
 // ID by name and the resource doesn't exist.
@@ -187,10 +138,7 @@ type ErrResourceNotFound struct {
 	ResourceType string
 }
 
-func (e ErrResourceNotFound) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Unable to find %s with name %s", e.ResourceType, e.Name)
-	return e.choseErrString()
-}
+func (e ErrResourceNotFound) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrMultipleResourcesFound is the error when trying to retrieve a resource's
 // ID by name and multiple resources have the user-provided name.
@@ -201,10 +149,7 @@ type ErrMultipleResourcesFound struct {
 	ResourceType string
 }
 
-func (e ErrMultipleResourcesFound) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Found %d %ss matching %s", e.Count, e.ResourceType, e.Name)
-	return e.choseErrString()
-}
+func (e ErrMultipleResourcesFound) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrUnexpectedType is the error when an unexpected type is encountered
 type ErrUnexpectedType struct {
@@ -213,139 +158,96 @@ type ErrUnexpectedType struct {
 	Actual   string
 }
 
-func (e ErrUnexpectedType) Error() string {
-	e.DefaultErrString = fmt.Sprintf("Expected %s but got %s", e.Expected, e.Actual)
-	return e.choseErrString()
-}
+func (e ErrUnexpectedType) Error() string { _ = "STUB: not implemented"; return "" }
 
-func unacceptedAttributeErr(attribute string) string {
-	return fmt.Sprintf("The base Identity V3 API does not accept authentication by %s", attribute)
-}
+func unacceptedAttributeErr(attribute string) string { _ = "STUB: not implemented"; return "" }
 
-func redundantWithTokenErr(attribute string) string {
-	return fmt.Sprintf("%s may not be provided when authenticating with a TokenID", attribute)
-}
+func redundantWithTokenErr(attribute string) string { _ = "STUB: not implemented"; return "" }
 
-func redundantWithUserID(attribute string) string {
-	return fmt.Sprintf("%s may not be provided when authenticating with a UserID", attribute)
-}
+func redundantWithUserID(attribute string) string { _ = "STUB: not implemented"; return "" }
 
 // ErrAPIKeyProvided indicates that an APIKey was provided but can't be used.
 type ErrAPIKeyProvided struct{ BaseError }
 
-func (e ErrAPIKeyProvided) Error() string {
-	return unacceptedAttributeErr("APIKey")
-}
+func (e ErrAPIKeyProvided) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrTenantIDProvided indicates that a TenantID was provided but can't be used.
 type ErrTenantIDProvided struct{ BaseError }
 
-func (e ErrTenantIDProvided) Error() string {
-	return unacceptedAttributeErr("TenantID")
-}
+func (e ErrTenantIDProvided) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrTenantNameProvided indicates that a TenantName was provided but can't be used.
 type ErrTenantNameProvided struct{ BaseError }
 
-func (e ErrTenantNameProvided) Error() string {
-	return unacceptedAttributeErr("TenantName")
-}
+func (e ErrTenantNameProvided) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrUsernameWithToken indicates that a Username was provided, but token authentication is being used instead.
 type ErrUsernameWithToken struct{ BaseError }
 
-func (e ErrUsernameWithToken) Error() string {
-	return redundantWithTokenErr("Username")
-}
+func (e ErrUsernameWithToken) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrUserIDWithToken indicates that a UserID was provided, but token authentication is being used instead.
 type ErrUserIDWithToken struct{ BaseError }
 
-func (e ErrUserIDWithToken) Error() string {
-	return redundantWithTokenErr("UserID")
-}
+func (e ErrUserIDWithToken) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrDomainIDWithToken indicates that a DomainID was provided, but token authentication is being used instead.
 type ErrDomainIDWithToken struct{ BaseError }
 
-func (e ErrDomainIDWithToken) Error() string {
-	return redundantWithTokenErr("DomainID")
-}
+func (e ErrDomainIDWithToken) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrDomainNameWithToken indicates that a DomainName was provided, but token authentication is being used instead.s
 type ErrDomainNameWithToken struct{ BaseError }
 
-func (e ErrDomainNameWithToken) Error() string {
-	return redundantWithTokenErr("DomainName")
-}
+func (e ErrDomainNameWithToken) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrUsernameOrUserID indicates that neither username nor userID are specified, or both are at once.
 type ErrUsernameOrUserID struct{ BaseError }
 
-func (e ErrUsernameOrUserID) Error() string {
-	return "Exactly one of Username and UserID must be provided for password authentication"
-}
+func (e ErrUsernameOrUserID) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrDomainIDWithUserID indicates that a DomainID was provided, but unnecessary because a UserID is being used.
 type ErrDomainIDWithUserID struct{ BaseError }
 
-func (e ErrDomainIDWithUserID) Error() string {
-	return redundantWithUserID("DomainID")
-}
+func (e ErrDomainIDWithUserID) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrDomainNameWithUserID indicates that a DomainName was provided, but unnecessary because a UserID is being used.
 type ErrDomainNameWithUserID struct{ BaseError }
 
-func (e ErrDomainNameWithUserID) Error() string {
-	return redundantWithUserID("DomainName")
-}
+func (e ErrDomainNameWithUserID) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrDomainIDOrDomainName indicates that a username was provided, but no domain to scope it.
 // It may also indicate that both a DomainID and a DomainName were provided at once.
 type ErrDomainIDOrDomainName struct{ BaseError }
 
-func (e ErrDomainIDOrDomainName) Error() string {
-	return "You must provide exactly one of DomainID or DomainName to authenticate by Username"
-}
+func (e ErrDomainIDOrDomainName) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrMissingPassword indicates that no password was provided and no token is available.
 type ErrMissingPassword struct{ BaseError }
 
-func (e ErrMissingPassword) Error() string {
-	return "You must provide a password to authenticate"
-}
+func (e ErrMissingPassword) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrScopeDomainIDOrDomainName indicates that a domain ID or Name was required in a Scope, but not present.
 type ErrScopeDomainIDOrDomainName struct{ BaseError }
 
-func (e ErrScopeDomainIDOrDomainName) Error() string {
-	return "You must provide exactly one of DomainID or DomainName in a Scope with ProjectName"
-}
+func (e ErrScopeDomainIDOrDomainName) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrScopeProjectIDOrProjectName indicates that both a ProjectID and a ProjectName were provided in a Scope.
 type ErrScopeProjectIDOrProjectName struct{ BaseError }
 
-func (e ErrScopeProjectIDOrProjectName) Error() string {
-	return "You must provide at most one of ProjectID or ProjectName in a Scope"
-}
+func (e ErrScopeProjectIDOrProjectName) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrScopeProjectIDAlone indicates that a ProjectID was provided with other constraints in a Scope.
 type ErrScopeProjectIDAlone struct{ BaseError }
 
-func (e ErrScopeProjectIDAlone) Error() string {
-	return "ProjectID must be supplied alone in a Scope"
-}
+func (e ErrScopeProjectIDAlone) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrScopeEmpty indicates that no credentials were provided in a Scope.
 type ErrScopeEmpty struct{ BaseError }
 
-func (e ErrScopeEmpty) Error() string {
-	return "You must provide either a Project or Domain in a Scope"
-}
+func (e ErrScopeEmpty) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrAppCredMissingSecret indicates that no Application Credential Secret was provided with Application Credential ID or Name
 type ErrAppCredMissingSecret struct{ BaseError }
 
-func (e ErrAppCredMissingSecret) Error() string {
-	return "You must provide an Application Credential Secret"
-}
+func (e ErrAppCredMissingSecret) Error() string { _ = "STUB: not implemented"; return "" }

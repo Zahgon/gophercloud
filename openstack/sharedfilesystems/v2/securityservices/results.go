@@ -1,7 +1,6 @@
 package securityservices
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -41,24 +40,7 @@ type SecurityService struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (r *SecurityService) UnmarshalJSON(b []byte) error {
-	type tmp SecurityService
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = SecurityService(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *SecurityService) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
@@ -70,32 +52,19 @@ type SecurityServicePage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no SecurityServices.
-func (r SecurityServicePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	securityServices, err := ExtractSecurityServices(r)
-	return len(securityServices) == 0, err
-}
+func (r SecurityServicePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractSecurityServices extracts and returns SecurityServices. It is used while
 // iterating over a securityservices.List call.
 func ExtractSecurityServices(r pagination.Page) ([]SecurityService, error) {
-	var s struct {
-		SecurityServices []SecurityService `json:"security_services"`
-	}
-	err := (r.(SecurityServicePage)).ExtractInto(&s)
-	return s.SecurityServices, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract will get the SecurityService object out of the commonResult object.
 func (r commonResult) Extract() (*SecurityService, error) {
-	var s struct {
-		SecurityService *SecurityService `json:"security_service"`
-	}
-	err := r.ExtractInto(&s)
-	return s.SecurityService, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult contains the response body and error from a Create request.

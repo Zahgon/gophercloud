@@ -4,10 +4,9 @@ import "github.com/gophercloud/gophercloud/v2"
 
 const resourcePath = "floatingips"
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id)
+	_ = "STUB: not implemented"
+	return ""
 }

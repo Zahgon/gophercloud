@@ -1,7 +1,6 @@
 package floatingips
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -62,57 +61,22 @@ type FloatingIP struct {
 }
 
 func (r *FloatingIP) UnmarshalJSON(b []byte) error {
-	type tmp FloatingIP
+	_ = "STUB: not implemented"
 
 	// Support for older neutron time format
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = FloatingIP(s1.tmp)
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		return nil
-	}
-
-	// Support for newer neutron time format
-	var s2 struct {
-		tmp
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = FloatingIP(s2.tmp)
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-
 	return nil
 }
+
+// Support for newer neutron time format
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract will extract a FloatingIP resource from a result.
-func (r commonResult) Extract() (*FloatingIP, error) {
-	var s FloatingIP
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*FloatingIP, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "floatingip")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a FloatingIP.
@@ -148,37 +112,19 @@ type FloatingIPPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r FloatingIPPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"floatingips_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a FloatingIPPage struct is empty.
-func (r FloatingIPPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractFloatingIPs(r)
-	return len(is) == 0, err
-}
+func (r FloatingIPPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractFloatingIPs accepts a Page struct, specifically a FloatingIPPage
 // struct, and extracts the elements into a slice of FloatingIP structs. In
 // other words, a generic collection is mapped into a relevant slice.
 func ExtractFloatingIPs(r pagination.Page) ([]FloatingIP, error) {
-	var s struct {
-		FloatingIPs []FloatingIP `json:"floatingips"`
-	}
-	err := (r.(FloatingIPPage)).ExtractInto(&s)
-	return s.FloatingIPs, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func ExtractFloatingIPsInto(r pagination.Page, v any) error {
-	return r.(FloatingIPPage).ExtractIntoSlicePtr(v, "floatingips")
-}
+func ExtractFloatingIPsInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }

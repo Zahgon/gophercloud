@@ -23,11 +23,8 @@ type ListOptsBuilder interface {
 
 // Get requests details on a single capsule, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 203},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOpts is the common options struct used in this package's Create
@@ -41,29 +38,14 @@ type CreateOpts struct {
 // ToCapsuleCreateMap assembles a request body based on the contents of
 // a CreateOpts.
 func (opts CreateOpts) ToCapsuleCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if err := opts.TemplateOpts.Parse(); err != nil {
-		return nil, err
-	}
-	b["template"] = string(opts.TemplateOpts.Bin)
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create implements create capsule request.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToCapsuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{202}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // ListOpts allows the filtering and sorting of paginated collections through
@@ -80,28 +62,18 @@ type ListOpts struct {
 
 // ToCapsuleListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToCapsuleListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list capsules accessible to you.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToCapsuleListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return CapsulePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Delete implements Capsule delete request.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

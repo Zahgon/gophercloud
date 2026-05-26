@@ -1,7 +1,6 @@
 package executions
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -23,11 +22,7 @@ type GetResult struct {
 }
 
 // Extract helps to get an Execution struct from a Get or a Create function.
-func (r commonResult) Extract() (*Execution, error) {
-	var s Execution
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*Execution, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DeleteResult is the result from a Delete operation. Call its ExtractErr method to determine the success of the call.
 type DeleteResult struct {
@@ -83,47 +78,7 @@ type Execution struct {
 }
 
 // UnmarshalJSON implements unmarshalling custom types
-func (r *Execution) UnmarshalJSON(b []byte) error {
-	type tmp Execution
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
-		Input     string                         `json:"input"`
-		Output    string                         `json:"output"`
-		Params    string                         `json:"params"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Execution(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	if s.Input != "" {
-		if err := json.Unmarshal([]byte(s.Input), &r.Input); err != nil {
-			return err
-		}
-	}
-
-	if s.Output != "" {
-		if err := json.Unmarshal([]byte(s.Output), &r.Output); err != nil {
-			return err
-		}
-	}
-
-	if s.Params != "" {
-		if err := json.Unmarshal([]byte(s.Params), &r.Params); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
+func (r *Execution) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ExecutionPage contains a single page of all executions from a List call.
 type ExecutionPage struct {
@@ -131,32 +86,16 @@ type ExecutionPage struct {
 }
 
 // IsEmpty checks if an ExecutionPage contains any results.
-func (r ExecutionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	exec, err := ExtractExecutions(r)
-	return len(exec) == 0, err
-}
+func (r ExecutionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL finds the next page URL in a page in order to navigate to the next page of results.
 func (r ExecutionPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractExecutions get the list of executions from a page acquired from the List call.
 func ExtractExecutions(r pagination.Page) ([]Execution, error) {
-	var s struct {
-		Executions []Execution `json:"executions"`
-	}
-	err := (r.(ExecutionPage)).ExtractInto(&s)
-	return s.Executions, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

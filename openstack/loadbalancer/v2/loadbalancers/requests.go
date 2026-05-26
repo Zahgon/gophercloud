@@ -47,8 +47,8 @@ type ListOpts struct {
 
 // ToLoadBalancerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToLoadBalancerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
@@ -58,17 +58,8 @@ func (opts ListOpts) ToLoadBalancerListQuery() (string, error) {
 // Default policy settings return only those load balancers that are owned by
 // the project who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -150,7 +141,8 @@ type CreateOpts struct {
 
 // ToLoadBalancerCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "loadbalancer")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is an operation which provisions a new loadbalancer based on the
@@ -158,21 +150,14 @@ func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]any, error) {
 // validated and progress has started on the provisioning process, a
 // CreateResult will be returned.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToLoadBalancerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular Loadbalancer based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -203,22 +188,15 @@ type UpdateOpts struct {
 
 // ToLoadBalancerUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToLoadBalancerUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "loadbalancer")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is an operation which modifies the attributes of the specified
 // LoadBalancer.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToLoadBalancerUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
@@ -236,46 +214,31 @@ type DeleteOpts struct {
 
 // ToLoadBalancerDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToLoadBalancerDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Delete will permanently delete a particular LoadBalancer based on its
 // unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
-	url := resourceURL(c, id)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := c.Delete(ctx, url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // GetStatuses will return the status of a particular LoadBalancer.
 func GetStatuses(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetStatusesResult) {
-	resp, err := c.Get(ctx, statusRootURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetStatusesResult)
 }
 
 // GetStats will return the shows the current statistics of a particular LoadBalancer.
 func GetStats(ctx context.Context, c *gophercloud.ServiceClient, id string) (r StatsResult) {
-	resp, err := c.Get(ctx, statisticsRootURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(StatsResult)
 }
 
 // Failover performs a failover of a load balancer.
 func Failover(ctx context.Context, c *gophercloud.ServiceClient, id string) (r FailoverResult) {
-	resp, err := c.Put(ctx, failoverRootURL(c, id), nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(FailoverResult)
 }

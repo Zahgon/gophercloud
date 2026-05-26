@@ -3,9 +3,8 @@ package flavors
 import "github.com/gophercloud/gophercloud/v2"
 
 func getURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("flavors")
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

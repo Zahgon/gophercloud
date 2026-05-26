@@ -2,8 +2,6 @@ package projects
 
 import (
 	"context"
-	"net/url"
-	"strings"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -55,53 +53,26 @@ type ListOpts struct {
 
 // ToProjectListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToProjectListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-
-	params := q.Query()
-	for k, v := range opts.Filters {
-		i := strings.Index(k, "__")
-		if i > 0 && i < len(k)-2 {
-			params.Add(k, v)
-		} else {
-			return "", InvalidListFilter{FilterName: k}
-		}
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List enumerates the Projects to which the current token has access.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToProjectListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ProjectPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListAvailable enumerates the Projects which are available to a specific user.
 func ListAvailable(client *gophercloud.ServiceClient) pagination.Pager {
-	url := listAvailableURL(client)
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ProjectPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details on a single project, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to
@@ -142,40 +113,20 @@ type CreateOpts struct {
 
 // ToProjectCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToProjectCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "project")
-
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["project"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create creates a new Project.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToProjectCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), &b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete deletes a project.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, projectID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -216,44 +167,20 @@ type UpdateOpts struct {
 
 // ToUpdateCreateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToProjectUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "project")
-
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["project"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update modifies the attributes of a project.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToProjectUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // CheckTags lists tags for a project.
 func ListTags(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r ListTagsResult) {
-	resp, err := client.Get(ctx, listTagsURL(client, projectID), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListTagsResult)
 }
 
 // Tags represents a list of Tags object.
@@ -270,33 +197,18 @@ type ModifyTagsOptsBuilder interface {
 
 // ToModifyTagsCreateMap formats a ModifyTagsOpts into a Modify tags request.
 func (opts ModifyTagsOpts) ToModifyTagsCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ModifyTags deletes all tags of a project and adds new ones.
 func ModifyTags(ctx context.Context, client *gophercloud.ServiceClient, projectID string, opts ModifyTagsOptsBuilder) (r ModifyTagsResult) {
-	b, err := opts.ToModifyTagsCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, modifyTagsURL(client, projectID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ModifyTagsResult)
 }
 
 // DeleteTag deletes a tag from a project.
 func DeleteTags(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r DeleteTagsResult) {
-	resp, err := client.Delete(ctx, deleteTagsURL(client, projectID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteTagsResult)
 }

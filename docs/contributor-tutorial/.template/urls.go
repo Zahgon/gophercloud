@@ -2,22 +2,21 @@ package RESOURCE
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("resource")
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func getURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("resource", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("resource")
-}
+func createURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("resource", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("resource", id)
+	_ = "STUB: not implemented"
+	return ""
 }

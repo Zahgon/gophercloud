@@ -6,42 +6,37 @@ import (
 
 var apiName = "clusters"
 
-func commonURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL(apiName)
-}
+func commonURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func idURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL(apiName, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
-	return commonURL(client)
-}
+func createURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(client *gophercloud.ServiceClient, id string) string {
-	return idURL(client, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("clusters", id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("clusters")
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listDetailURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("clusters", "detail")
-}
+func listDetailURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func updateURL(client *gophercloud.ServiceClient, id string) string {
-	return idURL(client, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func upgradeURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("clusters", id, "actions/upgrade")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func resizeURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("clusters", id, "actions/resize")
+	_ = "STUB: not implemented"
+	return ""
 }

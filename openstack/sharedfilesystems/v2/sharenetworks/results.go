@@ -1,9 +1,6 @@
 package sharenetworks
 
 import (
-	"encoding/json"
-	"net/url"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -41,24 +38,7 @@ type ShareNetwork struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (r *ShareNetwork) UnmarshalJSON(b []byte) error {
-	type tmp ShareNetwork
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ShareNetwork(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *ShareNetwork) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
@@ -71,87 +51,27 @@ type ShareNetworkPage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r ShareNetworkPage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-
-	q := currentURL.Query()
-	q.Set("offset", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
-func (r ShareNetworkPage) LastMarker() (string, error) {
-	maxInt := strconv.Itoa(int(^uint(0) >> 1))
-	shareNetworks, err := ExtractShareNetworks(r)
-	if err != nil {
-		return maxInt, err
-	}
-	if len(shareNetworks) == 0 {
-		return maxInt, nil
-	}
+func (r ShareNetworkPage) LastMarker() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return maxInt, err
-	}
-	queryParams := u.Query()
-	offset := queryParams.Get("offset")
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return maxInt, nil
-	}
-
-	iOffset := 0
-	if offset != "" {
-		iOffset, err = strconv.Atoi(offset)
-		if err != nil {
-			return maxInt, err
-		}
-	}
-	iLimit, err := strconv.Atoi(limit)
-	if err != nil {
-		return maxInt, err
-	}
-	iOffset = iOffset + iLimit
-	offset = strconv.Itoa(iOffset)
-
-	return offset, nil
-}
+// Limit is not present, only one page required
 
 // IsEmpty satisifies the IsEmpty method of the Page interface
-func (r ShareNetworkPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	shareNetworks, err := ExtractShareNetworks(r)
-	return len(shareNetworks) == 0, err
-}
+func (r ShareNetworkPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractShareNetworks extracts and returns ShareNetworks. It is used while
 // iterating over a sharenetworks.List call.
 func ExtractShareNetworks(r pagination.Page) ([]ShareNetwork, error) {
-	var s struct {
-		ShareNetworks []ShareNetwork `json:"share_networks"`
-	}
-	err := (r.(ShareNetworkPage)).ExtractInto(&s)
-	return s.ShareNetworks, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract will get the ShareNetwork object out of the commonResult object.
-func (r commonResult) Extract() (*ShareNetwork, error) {
-	var s struct {
-		ShareNetwork *ShareNetwork `json:"share_network"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ShareNetwork, err
-}
+func (r commonResult) Extract() (*ShareNetwork, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {

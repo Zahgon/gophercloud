@@ -55,13 +55,7 @@ type Lifetime struct {
 }
 
 // Extract is a function that accepts a result and extracts an IKE Policy.
-func (r commonResult) Extract() (*Policy, error) {
-	var s struct {
-		Policy *Policy `json:"ikepolicy"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Policy, err
-}
+func (r commonResult) Extract() (*Policy, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // PolicyPage is the page returned by a pager when traversing over a
 // collection of Policies.
@@ -73,35 +67,19 @@ type PolicyPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r PolicyPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"ikepolicies_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a PolicyPage struct is empty.
-func (r PolicyPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractPolicies(r)
-	return len(is) == 0, err
-}
+func (r PolicyPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractPolicies accepts a Page struct, specifically a Policy struct,
 // and extracts the elements into a slice of Policy structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractPolicies(r pagination.Page) ([]Policy, error) {
-	var s struct {
-		Policies []Policy `json:"ikepolicies"`
-	}
-	err := (r.(PolicyPage)).ExtractInto(&s)
-	return s.Policies, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult represents the result of a Create operation. Call its Extract method to

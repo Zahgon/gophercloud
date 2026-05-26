@@ -4,30 +4,28 @@ import "github.com/gophercloud/gophercloud/v2"
 
 const resourcePath = "OS-TRUST/trusts"
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return rootURL(c)
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return resourceURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resourcePath)
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func listRolesURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "roles")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getRoleURL(c *gophercloud.ServiceClient, id, roleID string) string {
-	return c.ServiceURL(resourcePath, id, "roles", roleID)
+	_ = "STUB: not implemented"
+	return ""
 }

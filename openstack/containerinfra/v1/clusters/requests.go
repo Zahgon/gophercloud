@@ -34,35 +34,26 @@ type CreateOpts struct {
 
 // ToClusterCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToClusterCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new cluster.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToClusterCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a specific clusters based on its unique ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete deletes the specified cluster ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the
@@ -84,25 +75,16 @@ type ListOpts struct {
 
 // ToClustersListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToClustersListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // clusters. It accepts a ListOptsBuilder, which allows you to sort
 // the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToClustersListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return ClusterPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListDetail returns a Pager which allows you to iterate over a collection of
@@ -110,17 +92,8 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 // It accepts a ListOptsBuilder, which allows you to sort the returned
 // collection for greater efficiency.
 func ListDetail(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listDetailURL(c)
-	if opts != nil {
-		query, err := opts.ToClustersListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return ClusterPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 type UpdateOp string
@@ -146,25 +119,14 @@ type UpdateOptsBuilder interface {
 // ToClusterUpdateMap assembles a request body based on the contents of
 // UpdateOpts.
 func (opts UpdateOpts) ToClustersUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update implements cluster updated request.
 func Update[T UpdateOptsBuilder](ctx context.Context, client *gophercloud.ServiceClient, id string, opts []T) (r UpdateResult) {
-	var o []map[string]any
-	for _, opt := range opts {
-		b, err := opt.ToClustersUpdateMap()
-		if err != nil {
-			r.Err = err
-			return r
-		}
-		o = append(o, b)
-	}
-	resp, err := client.Patch(ctx, updateURL(client, id), o, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 type UpgradeOpts struct {
@@ -181,26 +143,14 @@ type UpgradeOptsBuilder interface {
 
 // ToClustersUpgradeMap constructs a request body from UpgradeOpts.
 func (opts UpgradeOpts) ToClustersUpgradeMap() (map[string]any, error) {
-	if opts.MaxBatchSize == nil {
-		defaultMaxBatchSize := 1
-		opts.MaxBatchSize = &defaultMaxBatchSize
-	}
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Upgrade implements cluster upgrade request.
 func Upgrade(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpgradeOptsBuilder) (r UpgradeResult) {
-	b, err := opts.ToClustersUpgradeMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, upgradeURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpgradeResult)
 }
 
 // ResizeOptsBuilder allows extensions to add additional parameters to the
@@ -218,19 +168,12 @@ type ResizeOpts struct {
 
 // ToClusterResizeMap constructs a request body from ResizeOpts.
 func (opts ResizeOpts) ToClusterResizeMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Resize an existing cluster node count.
 func Resize(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResizeOptsBuilder) (r ResizeResult) {
-	b, err := opts.ToClusterResizeMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, resizeURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResizeResult)
 }

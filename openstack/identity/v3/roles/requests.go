@@ -2,8 +2,6 @@ package roles
 
 import (
 	"context"
-	"net/url"
-	"strings"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -37,47 +35,18 @@ type ListOpts struct {
 }
 
 // ToRoleListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToRoleListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-
-	params := q.Query()
-	for k, v := range opts.Filters {
-		i := strings.Index(k, "__")
-		if i > 0 && i < len(k)-2 {
-			params.Add(k, v)
-		} else {
-			return "", InvalidListFilter{FilterName: k}
-		}
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), err
-}
+func (opts ListOpts) ToRoleListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List enumerates the roles to which the current token has access.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToRoleListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return RolePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details on a single role, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to
@@ -106,34 +75,14 @@ type CreateOpts struct {
 
 // ToRoleCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToRoleCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "role")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["role"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create creates a new Role.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToRoleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -159,41 +108,20 @@ type UpdateOpts struct {
 
 // ToRoleUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToRoleUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "role")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["role"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update updates an existing Role.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, roleID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRoleUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, updateURL(client, roleID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete deletes a role.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, roleID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, roleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListAssignmentsOptsBuilder allows extensions to add additional parameters to
@@ -238,23 +166,14 @@ type ListAssignmentsOpts struct {
 
 // ToRolesListAssignmentsQuery formats a ListAssignmentsOpts into a query string.
 func (opts ListAssignmentsOpts) ToRolesListAssignmentsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListAssignments enumerates the roles assigned to a specified resource.
 func ListAssignments(client *gophercloud.ServiceClient, opts ListAssignmentsOptsBuilder) pagination.Pager {
-	url := listAssignmentsURL(client)
-	if opts != nil {
-		query, err := opts.ToRolesListAssignmentsQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return RoleAssignmentPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListAssignmentsOnResourceOpts provides options to list role assignments
@@ -318,143 +237,49 @@ type UnassignOpts struct {
 // ListAssignmentsOnResource is the operation responsible for listing role
 // assignments for a user/group on a project/domain.
 func ListAssignmentsOnResource(client *gophercloud.ServiceClient, opts ListAssignmentsOnResourceOpts) pagination.Pager {
+	_ = "STUB: not implemented"
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return pagination.Pager{Err: err}
-	}
-
-	// Get corresponding URL
-	var targetID string
-	var targetType string
-	if opts.ProjectID != "" {
-		targetID = opts.ProjectID
-		targetType = "projects"
-	} else {
-		targetID = opts.DomainID
-		targetType = "domains"
-	}
-
-	var actorID string
-	var actorType string
-	if opts.UserID != "" {
-		actorID = opts.UserID
-		actorType = "users"
-	} else {
-		actorID = opts.GroupID
-		actorType = "groups"
-	}
-
-	url := listAssignmentsOnResourceURL(client, targetType, targetID, actorType, actorID)
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return RolePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	return *new(pagination.Pager)
 }
+
+// Get corresponding URL
 
 // Assign is the operation responsible for assigning a role
 // to a user/group on a project/domain.
 func Assign(ctx context.Context, client *gophercloud.ServiceClient, roleID string, opts AssignOpts) (r AssignmentResult) {
+	_ = "STUB: not implemented"
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	// Get corresponding URL
-	var targetID string
-	var targetType string
-	if opts.ProjectID != "" {
-		targetID = opts.ProjectID
-		targetType = "projects"
-	} else {
-		targetID = opts.DomainID
-		targetType = "domains"
-	}
-
-	var actorID string
-	var actorType string
-	if opts.UserID != "" {
-		actorID = opts.UserID
-		actorType = "users"
-	} else {
-		actorID = opts.GroupID
-		actorType = "groups"
-	}
-
-	resp, err := client.Put(ctx, assignURL(client, targetType, targetID, actorType, actorID, roleID), nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	return *new(AssignmentResult)
 }
+
+// Get corresponding URL
 
 // Unassign is the operation responsible for unassigning a role
 // from a user/group on a project/domain.
 func Unassign(ctx context.Context, client *gophercloud.ServiceClient, roleID string, opts UnassignOpts) (r UnassignmentResult) {
+	_ = "STUB: not implemented"
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	// Get corresponding URL
-	var targetID string
-	var targetType string
-	if opts.ProjectID != "" {
-		targetID = opts.ProjectID
-		targetType = "projects"
-	} else {
-		targetID = opts.DomainID
-		targetType = "domains"
-	}
-
-	var actorID string
-	var actorType string
-	if opts.UserID != "" {
-		actorID = opts.UserID
-		actorType = "users"
-	} else {
-		actorID = opts.GroupID
-		actorType = "groups"
-	}
-
-	resp, err := client.Delete(ctx, assignURL(client, targetType, targetID, actorType, actorID, roleID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	return *new(UnassignmentResult)
 }
 
+// Get corresponding URL
+
 func CreateRoleInferenceRule(ctx context.Context, client *gophercloud.ServiceClient, priorRoleID, impliedRoleID string) (r CreateImpliedRoleResult) {
-	resp, err := client.Put(ctx, createRoleInferenceRuleURL(client, priorRoleID, impliedRoleID), nil, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateImpliedRoleResult)
 }
 
 func GetRoleInferenceRule(ctx context.Context, client *gophercloud.ServiceClient, priorRoleID, impliedRoleID string) (r CreateImpliedRoleResult) {
-	resp, err := client.Get(ctx, getRoleInferenceRuleURL(client, priorRoleID, impliedRoleID), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateImpliedRoleResult)
 }
 
 func DeleteRoleInferenceRule(ctx context.Context, client *gophercloud.ServiceClient, priorRoleID, impliedRoleID string) (r DeleteImpliedRoleResult) {
-	resp, err := client.Delete(ctx, deleteRoleInferenceRuleURL(client, priorRoleID, impliedRoleID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteImpliedRoleResult)
 }
 
 func ListRoleInferenceRules(ctx context.Context, client *gophercloud.ServiceClient) (r ListImpliedRolesResult) {
-	resp, err := client.Get(ctx, listRoleInferenceRulesURL(client), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListImpliedRolesResult)
 }

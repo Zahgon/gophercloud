@@ -32,25 +32,14 @@ type ListOpts struct {
 }
 
 func (opts ListOpts) ToMessageListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListMessages lists messages on a specific queue based off queue name.
 func List(client *gophercloud.ServiceClient, queueName string, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client, queueName)
-	if opts != nil {
-		query, err := opts.ToMessageListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	pager := pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return MessagePage{pagination.LinkedPageBase{PageResult: r}}
-	})
-	return pager
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder Builder.
@@ -76,35 +65,17 @@ type CreateOpts struct {
 
 // ToMessageCreateMap constructs a request body from BatchCreateOpts.
 func (opts BatchCreateOpts) ToMessageCreateMap() (map[string]any, error) {
-	messages := make([]map[string]any, len(opts))
-	for i, message := range opts {
-		messageMap, err := message.ToMap()
-		if err != nil {
-			return nil, err
-		}
-		messages[i] = messageMap
-	}
-	return map[string]any{"messages": messages}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToMap constructs a request body from UpdateOpts.
-func (opts CreateOpts) ToMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
-}
+func (opts CreateOpts) ToMap() (map[string]any, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Create creates a message on a specific queue based of off queue name.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToMessageCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createURL(client, queueName), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // DeleteMessagesOptsBuilder allows extensions to add additional parameters to the
@@ -120,26 +91,14 @@ type DeleteMessagesOpts struct {
 
 // ToMessagesDeleteQuery formats a DeleteMessagesOpts structure into a query string.
 func (opts DeleteMessagesOpts) ToMessagesDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // DeleteMessages deletes multiple messages based off of ID.
 func DeleteMessages(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts DeleteMessagesOptsBuilder) (r DeleteResult) {
-	url := deleteURL(client, queueName)
-	if opts != nil {
-		query, err := opts.ToMessagesDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Delete(ctx, url, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // PopMessagesOptsBuilder allows extensions to add additional parameters to the
@@ -155,27 +114,14 @@ type PopMessagesOpts struct {
 
 // ToMessagesPopQuery formats a PopMessagesOpts structure into a query string.
 func (opts PopMessagesOpts) ToMessagesPopQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // PopMessages deletes and returns multiple messages based off of number of messages.
 func PopMessages(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts PopMessagesOptsBuilder) (r PopResult) {
-	url := deleteURL(client, queueName)
-	if opts != nil {
-		query, err := opts.ToMessagesPopQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Delete(ctx, url, &gophercloud.RequestOpts{
-		JSONResponse: &r.Body,
-		OkCodes:      []int{200, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(PopResult)
 }
 
 // GetMessagesOptsBuilder allows extensions to add additional parameters to the
@@ -191,35 +137,20 @@ type GetMessagesOpts struct {
 
 // ToGetMessagesListQuery formats a GetMessagesOpts structure into a query string.
 func (opts GetMessagesOpts) ToGetMessagesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetMessages requests details on a multiple messages, by IDs.
 func GetMessages(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts GetMessagesOptsBuilder) (r GetMessagesResult) {
-	url := getURL(client, queueName)
-	if opts != nil {
-		query, err := opts.ToGetMessagesListQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Get(ctx, url, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetMessagesResult)
 }
 
 // Get requests details on a single message, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, queueName string, messageID string) (r GetResult) {
-	resp, err := client.Get(ctx, messageURL(client, queueName, messageID), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
@@ -236,24 +167,12 @@ type DeleteOpts struct {
 
 // ToMessageDeleteQuery formats a DeleteOpts structure into a query string.
 func (opts DeleteOpts) ToMessageDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Delete deletes a specific message from the queue.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, queueName string, messageID string, opts DeleteOptsBuilder) (r DeleteResult) {
-	url := DeleteMessageURL(client, queueName, messageID)
-	if opts != nil {
-		query, err := opts.ToMessageDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Delete(ctx, url, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

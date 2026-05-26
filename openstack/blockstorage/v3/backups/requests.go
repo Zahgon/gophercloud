@@ -51,38 +51,29 @@ type CreateOpts struct {
 // ToBackupCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToBackupCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "backup")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new Backup based on the values in CreateOpts. To
 // extract the Backup object from the response, call the Extract method on the
 // CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToBackupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete will delete the existing Backup with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves the Backup with the provided ID. To extract the Backup
 // object from the response, call the Extract method on the GetResult.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -126,25 +117,13 @@ type ListOpts struct {
 }
 
 // ToBackupListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToBackupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToBackupListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns Backups optionally limited by the conditions provided in
 // ListOpts.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToBackupListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return BackupPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListDetailOptsBuilder allows extensions to add additional parameters to the ListDetail
@@ -176,24 +155,15 @@ type ListDetailOpts struct {
 
 // ToBackupListDetailQuery formats a ListDetailOpts into a query string.
 func (opts ListDetailOpts) ToBackupListDetailQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListDetail returns more detailed information about Backups optionally
 // limited by the conditions provided in ListDetailOpts.
 func ListDetail(client *gophercloud.ServiceClient, opts ListDetailOptsBuilder) pagination.Pager {
-	url := listDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToBackupListDetailQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return BackupPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -218,7 +188,8 @@ type UpdateOpts struct {
 // ToBackupUpdateMap assembles a request body based on the contents of
 // an UpdateOpts.
 func (opts UpdateOpts) ToBackupUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the Backup with provided information. To extract
@@ -226,16 +197,8 @@ func (opts UpdateOpts) ToBackupUpdateMap() (map[string]any, error) {
 // UpdateResult.
 // Requires microversion 3.9 or later.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToBackupUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // RestoreOptsBuilder allows extensions to add additional parameters to the
@@ -257,31 +220,23 @@ type RestoreOpts struct {
 // ToRestoreMap assembles a request body based on the contents of a
 // RestoreOpts.
 func (opts RestoreOpts) ToRestoreMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "restore")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RestoreFromBackup will restore a Backup to a volume based on the values in
 // RestoreOpts. To extract the Restore object from the response, call the
 // Extract method on the RestoreResult.
 func RestoreFromBackup(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RestoreOptsBuilder) (r RestoreResult) {
-	b, err := opts.ToRestoreMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, restoreURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RestoreResult)
 }
 
 // Export will export a Backup information. To extract the Backup export record
 // object from the response, call the Extract method on the ExportResult.
 func Export(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ExportResult) {
-	resp, err := client.Get(ctx, exportURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ExportResult)
 }
 
 // ImportOptsBuilder allows extensions to add additional parameters to the
@@ -297,23 +252,16 @@ type ImportOpts BackupRecord
 // ToBackupImportMap assembles a request body based on the contents of a
 // ImportOpts.
 func (opts ImportOpts) ToBackupImportMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "backup-record")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Import will import a Backup data to a backup based on the values in
 // ImportOpts. To extract the Backup object from the response, call the
 // Extract method on the ImportResult.
 func Import(ctx context.Context, client *gophercloud.ServiceClient, opts ImportOptsBuilder) (r ImportResult) {
-	b, err := opts.ToBackupImportMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, importURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ImportResult)
 }
 
 // ResetStatusOptsBuilder allows extensions to add additional parameters to the
@@ -333,34 +281,20 @@ type ResetStatusOpts struct {
 // ToBackupResetStatusMap assembles a request body based on the contents of a
 // ResetStatusOpts.
 func (opts ResetStatusOpts) ToBackupResetStatusMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-reset_status")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResetStatus will reset the existing backup status. ResetStatusResult contains only the error.
 // To extract it, call the ExtractErr method on the ResetStatusResult.
 func ResetStatus(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResetStatusOptsBuilder) (r ResetStatusResult) {
-	b, err := opts.ToBackupResetStatusMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, resetStatusURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetStatusResult)
 }
 
 // ForceDelete will delete the existing backup in any state. ForceDeleteResult contains only the error.
 // To extract it, call the ExtractErr method on the ForceDeleteResult.
 func ForceDelete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ForceDeleteResult) {
-	b := map[string]any{
-		"os-force_delete": struct{}{},
-	}
-	resp, err := client.Post(ctx, forceDeleteURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ForceDeleteResult)
 }

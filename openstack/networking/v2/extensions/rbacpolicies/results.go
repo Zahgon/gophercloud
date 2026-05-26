@@ -10,15 +10,9 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts RBAC Policy resource.
-func (r commonResult) Extract() (*RBACPolicy, error) {
-	var s RBACPolicy
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*RBACPolicy, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "rbac_policy")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a RBAC Policy.
@@ -81,25 +75,15 @@ type RBACPolicyPage struct {
 }
 
 // IsEmpty checks whether a RBACPolicyPage struct is empty.
-func (r RBACPolicyPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractRBACPolicies(r)
-	return len(is) == 0, err
-}
+func (r RBACPolicyPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractRBACPolicies accepts a Page struct, specifically a RBAC Policy struct,
 // and extracts the elements into a slice of RBAC Policy structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractRBACPolicies(r pagination.Page) ([]RBACPolicy, error) {
-	var s []RBACPolicy
-	err := ExtractRBACPolicesInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractRBACPolicesInto extracts the elements into a slice of RBAC Policy structs.
-func ExtractRBACPolicesInto(r pagination.Page, v any) error {
-	return r.(RBACPolicyPage).ExtractIntoSlicePtr(v, "rbac_policies")
-}
+func ExtractRBACPolicesInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }

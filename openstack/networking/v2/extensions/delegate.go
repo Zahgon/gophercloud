@@ -20,24 +20,19 @@ type GetResult struct {
 
 // ExtractExtensions interprets a Page as a slice of Extensions.
 func ExtractExtensions(page pagination.Page) ([]Extension, error) {
-	inner, err := common.ExtractExtensions(page)
-	if err != nil {
-		return nil, err
-	}
-	outer := make([]Extension, len(inner))
-	for index, ext := range inner {
-		outer[index] = Extension{ext}
-	}
-	return outer, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Get retrieves information for a specific extension using its alias.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, alias string) GetResult {
-	return GetResult{common.Get(ctx, c, alias)}
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // List returns a Pager which allows you to iterate over the full collection of extensions.
 // It does not accept query parameters.
 func List(c *gophercloud.ServiceClient) pagination.Pager {
-	return common.List(c)
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

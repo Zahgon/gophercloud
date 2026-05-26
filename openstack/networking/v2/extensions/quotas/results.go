@@ -1,10 +1,6 @@
 package quotas
 
 import (
-	"encoding/json"
-	"fmt"
-	"strconv"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -17,21 +13,12 @@ type detailResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a Quota resource.
-func (r commonResult) Extract() (*Quota, error) {
-	var s struct {
-		Quota *Quota `json:"quota"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Quota, err
-}
+func (r commonResult) Extract() (*Quota, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract is a function that accepts a result and extracts a QuotaDetailSet resource.
 func (r detailResult) Extract() (*QuotaDetailSet, error) {
-	var s struct {
-		Quota *QuotaDetailSet `json:"quota"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Quota, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResult represents the result of a get operation. Call its Extract
@@ -144,33 +131,9 @@ type QuotaDetail struct {
 // This method is left for compatibility with unpatched versions of Neutron.
 //
 // cf. https://bugs.launchpad.net/neutron/+bug/1918565
-func (q *QuotaDetail) UnmarshalJSON(b []byte) error {
-	type tmp QuotaDetail
-	var s struct {
-		tmp
-		Reserved any `json:"reserved"`
-	}
+func (q *QuotaDetail) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*q = QuotaDetail(s.tmp)
-
-	switch t := s.Reserved.(type) {
-	case float64:
-		q.Reserved = int(t)
-	case string:
-		if q.Reserved, err = strconv.Atoi(t); err != nil {
-			return err
-		}
-	default:
-		return fmt.Errorf("Reserved has unexpected type: %T", t) //nolint:staticcheck
-	}
-
-	return nil
-}
+//nolint:staticcheck
 
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.

@@ -1,7 +1,6 @@
 package shareaccessrules
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -31,24 +30,7 @@ type ShareAccess struct {
 	Metadata map[string]any `json:"metadata"`
 }
 
-func (r *ShareAccess) UnmarshalJSON(b []byte) error {
-	type tmp ShareAccess
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ShareAccess(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *ShareAccess) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // GetResult contains the response body and error from a Get request.
 type GetResult struct {
@@ -56,23 +38,11 @@ type GetResult struct {
 }
 
 // Extract will get the ShareAccess object from the GetResult.
-func (r GetResult) Extract() (*ShareAccess, error) {
-	var s struct {
-		ShareAccess *ShareAccess `json:"access"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ShareAccess, err
-}
+func (r GetResult) Extract() (*ShareAccess, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ListResult contains the response body and error from a List request.
 type ListResult struct {
 	gophercloud.Result
 }
 
-func (r ListResult) Extract() ([]ShareAccess, error) {
-	var s struct {
-		AccessList []ShareAccess `json:"access_list"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AccessList, err
-}
+func (r ListResult) Extract() ([]ShareAccess, error) { _ = "STUB: not implemented"; return nil, nil }

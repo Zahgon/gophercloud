@@ -23,26 +23,13 @@ type ListOpts struct {
 }
 
 // ToServerListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToServerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToServerListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager that allows you to iterate over a collection of
 // ServerGroups.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToServerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ServerGroupPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -70,33 +57,24 @@ type CreateOpts struct {
 
 // ToServerGroupCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToServerGroupCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "server_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new Server Group.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToServerGroupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get returns data about a previously created ServerGroup.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete requests the deletion of a previously allocated ServerGroup.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

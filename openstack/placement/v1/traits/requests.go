@@ -29,50 +29,28 @@ type ListOpts struct {
 }
 
 // ToTraitListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToTraitListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToTraitListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List retrieves a list of traits.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-
-	if opts != nil {
-		query, err := opts.ToTraitListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return TraitsPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get confirms the existence of a trait.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, traitName string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, traitName), nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Create creates a new trait.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, traitName string) (r CreateResult) {
-	resp, err := client.Put(ctx, createURL(client, traitName), nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{201, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete deletes the trait specified by name.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, traitName string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, traitName), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

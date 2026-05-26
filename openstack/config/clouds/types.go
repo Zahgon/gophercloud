@@ -1,7 +1,5 @@
 package clouds
 
-import "encoding/json"
-
 // Clouds represents a collection of Cloud entries in a clouds.yaml file.
 // The format of clouds.yaml is documented at
 // https://docs.openstack.org/os-client-config/latest/user/configuration.html.
@@ -144,41 +142,12 @@ type Region struct {
 
 // UnmarshalJSON handles either a plain string acting as the Name property or
 // a struct, mimicking the Python-based openstacksdk.
-func (r *Region) UnmarshalJSON(data []byte) error {
-	var name string
-	if err := json.Unmarshal(data, &name); err == nil {
-		r.Name = name
-		return nil
-	}
-
-	type region Region
-	var tmp region
-	if err := json.Unmarshal(data, &tmp); err != nil {
-		return err
-	}
-	r.Name = tmp.Name
-	r.Values = tmp.Values
-
-	return nil
-}
+func (r *Region) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 // UnmarshalYAML handles either a plain string acting as the Name property or
 // a struct, mimicking the Python-based openstacksdk.
 func (r *Region) UnmarshalYAML(unmarshal func(any) error) error {
-	var name string
-	if err := unmarshal(&name); err == nil {
-		r.Name = name
-		return nil
-	}
-
-	type region Region
-	var tmp region
-	if err := unmarshal(&tmp); err != nil {
-		return err
-	}
-	r.Name = tmp.Name
-	r.Values = tmp.Values
-
+	_ = "STUB: not implemented"
 	return nil
 }
 

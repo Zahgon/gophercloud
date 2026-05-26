@@ -2,7 +2,6 @@ package testing
 
 import (
 	"fmt"
-	"net/http"
 	"testing"
 	"time"
 
@@ -11,7 +10,6 @@ import (
 	inventorytesting "github.com/gophercloud/gophercloud/v2/openstack/baremetal/inventory/testing"
 	"github.com/gophercloud/gophercloud/v2/openstack/baremetalintrospection/v1/introspection"
 	th "github.com/gophercloud/gophercloud/v2/testhelper"
-	"github.com/gophercloud/gophercloud/v2/testhelper/client"
 )
 
 // IntrospectionListBody contains the canned body of a introspection.IntrospectionList response.
@@ -455,73 +453,36 @@ var (
 
 // HandleListIntrospectionsSuccessfully sets up the test server to respond to a server ListIntrospections request.
 func HandleListIntrospectionsSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/introspection", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.Header().Add("Content-Type", "application/json")
-		if err := r.ParseForm(); err != nil {
-			t.Errorf("Failed to parse request form %v", err)
-		}
-
-		marker := r.Form.Get("marker")
-
-		switch marker {
-		case "":
-			fmt.Fprint(w, IntrospectionListBody)
-
-		case "c244557e-899f-46fa-a1ff-5b2c6718616b":
-			fmt.Fprint(w, `{ "introspection": [] }`)
-
-		default:
-			t.Fatalf("/introspection invoked with unexpected marker=[%s]", marker)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandleGetIntrospectionStatusSuccessfully sets up the test server to respond to a GetIntrospectionStatus request.
 func HandleGetIntrospectionStatusSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/introspection/c244557e-899f-46fa-a1ff-5b2c6718616b", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-		fmt.Fprint(w, IntrospectionStatus)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandleStartIntrospectionSuccessfully sets up the test server to respond to a StartIntrospection request.
 func HandleStartIntrospectionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/introspection/c244557e-899f-46fa-a1ff-5b2c6718616b", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.WriteHeader(http.StatusAccepted)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandleAbortIntrospectionSuccessfully sets up the test server to respond to an AbortIntrospection request.
 func HandleAbortIntrospectionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/introspection/c244557e-899f-46fa-a1ff-5b2c6718616b/abort", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.WriteHeader(http.StatusAccepted)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandleGetIntrospectionDataSuccessfully sets up the test server to respond to a GetIntrospectionData request.
 func HandleGetIntrospectionDataSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/introspection/c244557e-899f-46fa-a1ff-5b2c6718616b/data", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-
-		fmt.Fprint(w, IntrospectionDataJSONSample)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandleReApplyIntrospectionSuccessfully sets up the test server to respond to a ReApplyIntrospection request.
 func HandleReApplyIntrospectionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/introspection/c244557e-899f-46fa-a1ff-5b2c6718616b/data/unprocessed", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.WriteHeader(http.StatusAccepted)
-	})
+	_ = "STUB: not implemented"
+	return
 }

@@ -8,36 +8,26 @@ import (
 
 // Get returns public data about a previously created QuotaSet.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, tenantID string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, tenantID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // GetDetail returns detailed public data about a previously created QuotaSet.
 func GetDetail(ctx context.Context, client *gophercloud.ServiceClient, tenantID string) (r GetDetailResult) {
-	resp, err := client.Get(ctx, getDetailURL(client, tenantID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetDetailResult)
 }
 
 // Updates the quotas for the given tenantID and returns the new QuotaSet.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, tenantID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	reqBody, err := opts.ToComputeQuotaUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, updateURL(client, tenantID), reqBody, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Resets the quotas for the given tenant to their default values.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, tenantID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, tenantID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Options for Updating the quotas of a Tenant.
@@ -101,5 +91,6 @@ type UpdateOptsBuilder interface {
 // ToComputeQuotaUpdateMap builds the update options into a serializable
 // format.
 func (opts UpdateOpts) ToComputeQuotaUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "quota_set")
+	_ = "STUB: not implemented"
+	return nil, nil
 }

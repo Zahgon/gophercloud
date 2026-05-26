@@ -27,26 +27,14 @@ type ListOptsBuilder interface {
 }
 
 func (opts ListOpts) ToSegmentListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List all segments.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToSegmentListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return SegmentPage{LinkedPageBase: pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters.
@@ -65,33 +53,26 @@ type CreateOpts struct {
 }
 
 func (opts CreateOpts) ToSegmentCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "segment")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create a new segment.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSegmentCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a segment by ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete removes a segment by ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOpts contains fields to update a segment.
@@ -107,19 +88,12 @@ type UpdateOptsBuilder interface {
 }
 
 func (opts UpdateOpts) ToSegmentUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "segment")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update a segment.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSegmentUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }

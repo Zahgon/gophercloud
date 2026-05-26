@@ -66,113 +66,29 @@ type UnassignOpts struct {
 // Assign is the operation responsible for assigning an inherited role
 // to a user/group on a project/domain.
 func Assign(ctx context.Context, client *gophercloud.ServiceClient, roleID string, opts AssignOpts) (r AssignmentResult) {
+	_ = "STUB: not implemented"
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	// Get corresponding URL
-	var targetID string
-	var targetType string
-	if opts.ProjectID != "" {
-		targetID = opts.ProjectID
-		targetType = "projects"
-	} else {
-		targetID = opts.DomainID
-		targetType = "domains"
-	}
-
-	var actorID string
-	var actorType string
-	if opts.UserID != "" {
-		actorID = opts.UserID
-		actorType = "users"
-	} else {
-		actorID = opts.GroupID
-		actorType = "groups"
-	}
-
-	resp, err := client.Put(ctx, assignURL(client, targetType, targetID, actorType, actorID, roleID), nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	return *new(AssignmentResult)
 }
+
+// Get corresponding URL
 
 // Validate is the operation responsible for validating an inherited role
 // of a user/group on a project/domain.
 func Validate(ctx context.Context, client *gophercloud.ServiceClient, roleID string, opts ValidateOpts) (r ValidateResult) {
+	_ = "STUB: not implemented"
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	// Get corresponding URL
-	var targetID string
-	var targetType string
-	if opts.ProjectID != "" {
-		targetID = opts.ProjectID
-		targetType = "projects"
-	} else {
-		targetID = opts.DomainID
-		targetType = "domains"
-	}
-
-	var actorID string
-	var actorType string
-	if opts.UserID != "" {
-		actorID = opts.UserID
-		actorType = "users"
-	} else {
-		actorID = opts.GroupID
-		actorType = "groups"
-	}
-
-	resp, err := client.Head(ctx, assignURL(client, targetType, targetID, actorType, actorID, roleID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	return *new(ValidateResult)
 }
+
+// Get corresponding URL
 
 // Unassign is the operation responsible for unassigning an inherited
 // role to a user/group on a project/domain.
 func Unassign(ctx context.Context, client *gophercloud.ServiceClient, roleID string, opts UnassignOpts) (r UnassignmentResult) {
+	_ = "STUB: not implemented"
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	// Get corresponding URL
-	var targetID string
-	var targetType string
-	if opts.ProjectID != "" {
-		targetID = opts.ProjectID
-		targetType = "projects"
-	} else {
-		targetID = opts.DomainID
-		targetType = "domains"
-	}
-
-	var actorID string
-	var actorType string
-	if opts.UserID != "" {
-		actorID = opts.UserID
-		actorType = "users"
-	} else {
-		actorID = opts.GroupID
-		actorType = "groups"
-	}
-
-	resp, err := client.Delete(ctx, assignURL(client, targetType, targetID, actorType, actorID, roleID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	return *new(UnassignmentResult)
 }
+
+// Get corresponding URL

@@ -11,20 +11,10 @@ type ServiceCatalogPage struct {
 }
 
 // IsEmpty returns true if the ServiceCatalogPage contains no results.
-func (r ServiceCatalogPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	services, err := ExtractServiceCatalog(r)
-	return len(services) == 0, err
-}
+func (r ServiceCatalogPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractServiceCatalog extracts a slice of Catalog from a Collection acquired from List.
 func ExtractServiceCatalog(r pagination.Page) ([]tokens.CatalogEntry, error) {
-	var s struct {
-		Entries []tokens.CatalogEntry `json:"catalog"`
-	}
-	err := (r.(ServiceCatalogPage)).ExtractInto(&s)
-	return s.Entries, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

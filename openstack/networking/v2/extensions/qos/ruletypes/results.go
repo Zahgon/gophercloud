@@ -9,13 +9,7 @@ type commonResult struct {
 	gophercloud.Result
 }
 
-func (r commonResult) Extract() (*RuleType, error) {
-	var s struct {
-		RuleType *RuleType `json:"rule_type"`
-	}
-	err := r.ExtractInto(&s)
-	return s.RuleType, err
-}
+func (r commonResult) Extract() (*RuleType, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a RuleType.
@@ -46,20 +40,9 @@ type ListRuleTypesPage struct {
 	pagination.SinglePageBase
 }
 
-func (r ListRuleTypesPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	v, err := ExtractRuleTypes(r)
-	return len(v) == 0, err
-}
+func (r ListRuleTypesPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func ExtractRuleTypes(r pagination.Page) ([]RuleType, error) {
-	var s struct {
-		RuleTypes []RuleType `json:"rule_types"`
-	}
-
-	err := (r.(ListRuleTypesPage)).ExtractInto(&s)
-	return s.RuleTypes, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

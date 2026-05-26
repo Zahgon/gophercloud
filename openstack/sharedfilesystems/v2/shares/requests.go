@@ -74,23 +74,16 @@ type CreateOpts struct {
 // ToShareCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToShareCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "share")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new Share based on the values in CreateOpts. To extract
 // the Share object from the response, call the Extract method on the
 // CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToShareCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // ListOpts holds options for listing Shares. It is passed to the
@@ -163,57 +156,38 @@ type ListOptsBuilder interface {
 }
 
 // ToShareListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToShareListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToShareListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ListDetail returns []Share optionally limited by the conditions provided in ListOpts.
 func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToShareListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		p := SharePage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Delete will delete an existing Share with the given UUID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get will get a single share with given UUID
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListExportLocations will list shareID's export locations.
 // Client must have Microversion set; minimum supported microversion for ListExportLocations is 2.9.
 func ListExportLocations(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ListExportLocationsResult) {
-	resp, err := client.Get(ctx, listExportLocationsURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListExportLocationsResult)
 }
 
 // GetExportLocation will get shareID's export location by an ID.
 // Client must have Microversion set; minimum supported microversion for GetExportLocation is 2.9.
 func GetExportLocation(ctx context.Context, client *gophercloud.ServiceClient, shareID string, id string) (r GetExportLocationResult) {
-	resp, err := client.Get(ctx, getExportLocationURL(client, shareID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetExportLocationResult)
 }
 
 // GrantAccessOptsBuilder allows extensions to add additional parameters to the
@@ -237,23 +211,16 @@ type GrantAccessOpts struct {
 // ToGrantAccessMap assembles a request body based on the contents of a
 // GrantAccessOpts.
 func (opts GrantAccessOpts) ToGrantAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "allow_access")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GrantAccess will grant access to a Share based on the values in GrantAccessOpts. To extract
 // the GrantAccess object from the response, call the Extract method on the GrantAccessResult.
 // Client must have Microversion set; minimum supported microversion for GrantAccess is 2.7.
 func GrantAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts GrantAccessOptsBuilder) (r GrantAccessResult) {
-	b, err := opts.ToGrantAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, grantAccessURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GrantAccessResult)
 }
 
 // RevokeAccessOptsBuilder allows extensions to add additional parameters to the
@@ -272,7 +239,8 @@ type RevokeAccessOpts struct {
 // ToRevokeAccessMap assembles a request body based on the contents of a
 // RevokeAccessOpts.
 func (opts RevokeAccessOpts) ToRevokeAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "deny_access")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RevokeAccess will revoke an existing access to a Share based on the values in RevokeAccessOpts.
@@ -280,29 +248,16 @@ func (opts RevokeAccessOpts) ToRevokeAccessMap() (map[string]any, error) {
 // the RevokeAccessResult. Client must have Microversion set; minimum supported microversion
 // for RevokeAccess is 2.7.
 func RevokeAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RevokeAccessOptsBuilder) (r RevokeAccessResult) {
-	b, err := opts.ToRevokeAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, revokeAccessURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RevokeAccessResult)
 }
 
 // ListAccessRights lists all access rules assigned to a Share based on its id. To extract
 // the AccessRight slice from the response, call the Extract method on the ListAccessRightsResult.
 // Client must have Microversion set; minimum supported microversion for ListAccessRights is 2.7.
 func ListAccessRights(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ListAccessRightsResult) {
-	requestBody := map[string]any{"access_list": nil}
-	resp, err := client.Post(ctx, listAccessRightsURL(client, id), requestBody, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListAccessRightsResult)
 }
 
 // ExtendOptsBuilder allows extensions to add additional parameters to the
@@ -322,24 +277,16 @@ type ExtendOpts struct {
 // ToShareExtendMap assembles a request body based on the contents of a
 // ExtendOpts.
 func (opts ExtendOpts) ToShareExtendMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "extend")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extend will extend the capacity of an existing share. ExtendResult contains only the error.
 // To extract it, call the ExtractErr method on the ExtendResult.
 // Client must have Microversion set; minimum supported microversion for Extend is 2.7.
 func Extend(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ExtendOptsBuilder) (r ExtendResult) {
-	b, err := opts.ToShareExtendMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, extendURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ExtendResult)
 }
 
 // ShrinkOptsBuilder allows extensions to add additional parameters to the
@@ -359,24 +306,16 @@ type ShrinkOpts struct {
 // ToShareShrinkMap assembles a request body based on the contents of a
 // ShrinkOpts.
 func (opts ShrinkOpts) ToShareShrinkMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "shrink")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Shrink will shrink the capacity of an existing share. ShrinkResult contains only the error.
 // To extract it, call the ExtractErr method on the ShrinkResult.
 // Client must have Microversion set; minimum supported microversion for Shrink is 2.7.
 func Shrink(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ShrinkOptsBuilder) (r ShrinkResult) {
-	b, err := opts.ToShareShrinkMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, shrinkURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ShrinkResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -400,38 +339,29 @@ type UpdateOpts struct {
 // ToShareUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToShareUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "share")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the Share with provided information. To extract the updated
 // Share from the response, call the Extract method on the UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToShareUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // GetMetadata retrieves metadata of the specified share. To extract the retrieved
 // metadata from the response, call the Extract method on the MetadataResult.
 func GetMetadata(ctx context.Context, client *gophercloud.ServiceClient, id string) (r MetadataResult) {
-	resp, err := client.Get(ctx, getMetadataURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadataResult)
 }
 
 // GetMetadatum retrieves a single metadata item of the specified share. To extract the retrieved
 // metadata from the response, call the Extract method on the GetMetadatumResult.
 func GetMetadatum(ctx context.Context, client *gophercloud.ServiceClient, id, key string) (r GetMetadatumResult) {
-	resp, err := client.Get(ctx, getMetadatumURL(client, id, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetMetadatumResult)
 }
 
 // SetMetadataOpts contains options for setting share metadata.
@@ -444,7 +374,8 @@ type SetMetadataOpts struct {
 // ToSetMetadataMap assembles a request body based on the contents of an
 // SetMetadataOpts.
 func (opts SetMetadataOpts) ToSetMetadataMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetMetadataOptsBuilder allows extensions to add additional parameters to the
@@ -458,17 +389,8 @@ type SetMetadataOptsBuilder interface {
 // To extract the updated metadata from the response, call the Extract
 // method on the MetadataResult.
 func SetMetadata(ctx context.Context, client *gophercloud.ServiceClient, id string, opts SetMetadataOptsBuilder) (r MetadataResult) {
-	b, err := opts.ToSetMetadataMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, setMetadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadataResult)
 }
 
 // UpdateMetadataOpts contains options for updating share metadata.
@@ -481,7 +403,8 @@ type UpdateMetadataOpts struct {
 // ToUpdateMetadataMap assembles a request body based on the contents of an
 // UpdateMetadataOpts.
 func (opts UpdateMetadataOpts) ToUpdateMetadataMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateMetadataOptsBuilder allows extensions to add additional parameters to the
@@ -495,26 +418,14 @@ type UpdateMetadataOptsBuilder interface {
 // To extract the updated metadata from the response, call the Extract
 // method on the MetadataResult.
 func UpdateMetadata(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r MetadataResult) {
-	b, err := opts.ToUpdateMetadataMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, updateMetadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadataResult)
 }
 
 // DeleteMetadatum deletes a single key-value pair from the metadata of the specified share.
 func DeleteMetadatum(ctx context.Context, client *gophercloud.ServiceClient, id, key string) (r DeleteMetadatumResult) {
-	resp, err := client.Delete(ctx, deleteMetadatumURL(client, id, key), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteMetadatumResult)
 }
 
 // RevertOptsBuilder allows extensions to add additional parameters to the
@@ -535,24 +446,16 @@ type RevertOpts struct {
 // ToShareRevertMap assembles a request body based on the contents of a
 // RevertOpts.
 func (opts RevertOpts) ToShareRevertMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "revert")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Revert will revert the existing share to a Snapshot. RevertResult contains only the error.
 // To extract it, call the ExtractErr method on the RevertResult.
 // Client must have Microversion set; minimum supported microversion for Revert is 2.27.
 func Revert(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RevertOptsBuilder) (r RevertResult) {
-	b, err := opts.ToShareRevertMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, revertURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RevertResult)
 }
 
 // ResetStatusOptsBuilder allows extensions to add additional parameters to the
@@ -572,38 +475,24 @@ type ResetStatusOpts struct {
 // ToShareResetStatusMap assembles a request body based on the contents of a
 // ResetStatusOpts.
 func (opts ResetStatusOpts) ToShareResetStatusMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "reset_status")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResetStatus will reset the existing share status. ResetStatusResult contains only the error.
 // To extract it, call the ExtractErr method on the ResetStatusResult.
 // Client must have Microversion set; minimum supported microversion for ResetStatus is 2.7.
 func ResetStatus(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResetStatusOptsBuilder) (r ResetStatusResult) {
-	b, err := opts.ToShareResetStatusMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, resetStatusURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetStatusResult)
 }
 
 // ForceDelete will delete the existing share in any state. ForceDeleteResult contains only the error.
 // To extract it, call the ExtractErr method on the ForceDeleteResult.
 // Client must have Microversion set; minimum supported microversion for ForceDelete is 2.7.
 func ForceDelete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ForceDeleteResult) {
-	b := map[string]any{
-		"force_delete": nil,
-	}
-	resp, err := client.Post(ctx, forceDeleteURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ForceDeleteResult)
 }
 
 // Unmanage will remove a share from the management of the Shared File System
@@ -611,12 +500,6 @@ func ForceDelete(ctx context.Context, client *gophercloud.ServiceClient, id stri
 // To extract it, call the ExtractErr method on the UnmanageResult.
 // Client must have Microversion set; minimum supported microversion for Unmanage is 2.7.
 func Unmanage(ctx context.Context, client *gophercloud.ServiceClient, id string) (r UnmanageResult) {
-	b := map[string]any{
-		"unmanage": nil,
-	}
-	resp, err := client.Post(ctx, unmanageURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UnmanageResult)
 }

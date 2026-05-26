@@ -2,16 +2,9 @@ package servers
 
 import (
 	"crypto/rsa"
-	"encoding/base64"
-	"encoding/json"
-	"fmt"
-	"net/url"
-	"path"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
-	"github.com/gophercloud/gophercloud/v2/openstack/utils"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -20,19 +13,11 @@ type serverResult struct {
 }
 
 // Extract interprets any serverResult as a Server, if possible.
-func (r serverResult) Extract() (*Server, error) {
-	var s Server
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r serverResult) Extract() (*Server, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r serverResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "server")
-}
+func (r serverResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractServersInto(r pagination.Page, v any) error {
-	return r.(ServerPage).ExtractIntoSlicePtr(v, "servers")
-}
+func ExtractServersInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // CreateResult is the response from a Create operation. Call its Extract
 // method to interpret it as a Server.
@@ -83,12 +68,8 @@ type ShowConsoleOutputResult struct {
 
 // Extract will return the console output from a ShowConsoleOutput request.
 func (r ShowConsoleOutputResult) Extract() (string, error) {
-	var s struct {
-		Output string `json:"output"`
-	}
-
-	err := r.ExtractInto(&s)
-	return s.Output, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetPasswordResult represent the result of a get os-server-password operation.
@@ -104,77 +85,33 @@ type GetPasswordResult struct {
 //
 //	echo '<pwd>' | base64 -D | openssl rsautl -decrypt -inkey <private_key>
 func (r GetPasswordResult) ExtractPassword(privateKey *rsa.PrivateKey) (string, error) {
-	var s struct {
-		Password string `json:"password"`
-	}
-	err := r.ExtractInto(&s)
-	if err == nil && privateKey != nil && s.Password != "" {
-		return decryptPassword(s.Password, privateKey)
-	}
-	return s.Password, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func decryptPassword(encryptedPassword string, privateKey *rsa.PrivateKey) (string, error) {
-	b64EncryptedPassword := make([]byte, base64.StdEncoding.DecodedLen(len(encryptedPassword)))
-
-	n, err := base64.StdEncoding.Decode(b64EncryptedPassword, []byte(encryptedPassword))
-	if err != nil {
-		return "", fmt.Errorf("failed to base64 decode encrypted password: %s", err)
-	}
-	password, err := rsa.DecryptPKCS1v15(nil, privateKey, b64EncryptedPassword[0:n])
-	if err != nil {
-		return "", fmt.Errorf("failed to decrypt password: %s", err)
-	}
-
-	return string(password), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractImageID gets the ID of the newly created server image from the header.
 func (r CreateImageResult) ExtractImageID() (string, error) {
-	if r.Err != nil {
-		return "", r.Err
-	}
-
-	microversion := r.Header.Get("X-OpenStack-Nova-API-Version")
-
-	major, minor, err := utils.ParseMicroversion(microversion)
-	if err != nil {
-		return "", fmt.Errorf("failed to parse X-OpenStack-Nova-API-Version header: %s", err)
-	}
-
-	// In microversions prior to 2.45, the image ID was provided in the Location header.
-	if major < 2 || (major == 2 && minor < 45) {
-		return r.extractImageIDFromLocationHeader()
-	}
-
-	// Starting from 2.45, it is included in the response body.
-	return r.extractImageIDFromResponseBody()
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
+// In microversions prior to 2.45, the image ID was provided in the Location header.
+
+// Starting from 2.45, it is included in the response body.
+
 func (r CreateImageResult) extractImageIDFromLocationHeader() (string, error) {
-	u, err := url.ParseRequestURI(r.Header.Get("Location"))
-	if err != nil {
-		return "", err
-	}
-
-	imageID := path.Base(u.Path)
-	if imageID == "." || imageID == "/" {
-		return "", fmt.Errorf("failed to parse the ID of newly created image: %s", u)
-	}
-
-	return imageID, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func (r CreateImageResult) extractImageIDFromResponseBody() (string, error) {
-	var response struct {
-		ImageID string `json:"image_id"`
-	}
-
-	if err := r.ExtractInto(&response); err != nil {
-		return "", err
-	}
-
-	return response.ImageID, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Server represents a server/instance in the OpenStack cloud.
@@ -351,76 +288,9 @@ const (
 	SUSPENDED
 )
 
-func (r PowerState) String() string {
-	switch r {
-	case NOSTATE:
-		return "NOSTATE"
-	case RUNNING:
-		return "RUNNING"
-	case PAUSED:
-		return "PAUSED"
-	case SHUTDOWN:
-		return "SHUTDOWN"
-	case CRASHED:
-		return "CRASHED"
-	case SUSPENDED:
-		return "SUSPENDED"
-	case _UNUSED1, _UNUSED2:
-		return "_UNUSED"
-	default:
-		return "N/A"
-	}
-}
+func (r PowerState) String() string { _ = "STUB: not implemented"; return "" }
 
-func (r *Server) UnmarshalJSON(b []byte) error {
-	type tmp Server
-	var s struct {
-		tmp
-		Image        any                             `json:"image"`
-		LaunchedAt   gophercloud.JSONRFC3339MilliNoZ `json:"OS-SRV-USG:launched_at"`
-		TerminatedAt gophercloud.JSONRFC3339MilliNoZ `json:"OS-SRV-USG:terminated_at"`
-		ConfigDrive  any                             `json:"config_drive"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Server(s.tmp)
-
-	switch t := s.Image.(type) {
-	case map[string]any:
-		r.Image = t
-	case string:
-		switch t {
-		case "":
-			r.Image = nil
-		}
-	}
-
-	r.LaunchedAt = time.Time(s.LaunchedAt)
-	r.TerminatedAt = time.Time(s.TerminatedAt)
-
-	switch t := s.ConfigDrive.(type) {
-	case nil:
-		r.ConfigDrive = false
-	case bool:
-		r.ConfigDrive = t
-	case string:
-		if t == "" {
-			r.ConfigDrive = false
-		} else {
-			r.ConfigDrive, err = strconv.ParseBool(t)
-			if err != nil {
-				return fmt.Errorf("failed to parse ConfigDrive %q: %v", t, err)
-			}
-		}
-	default:
-		return fmt.Errorf("unknown type for ConfigDrive: %T (value: %v)", t, t)
-	}
-
-	return err
-}
+func (r *Server) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ServerPage abstracts the raw results of making a List() request against
 // the API. As OpenStack extensions may freely alter the response bodies of
@@ -431,34 +301,20 @@ type ServerPage struct {
 }
 
 // IsEmpty returns true if a page contains no Server results.
-func (r ServerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractServers(r)
-	return len(s) == 0, err
-}
+func (r ServerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r ServerPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"servers_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractServers interprets the results of a single page from a List() call,
 // producing a slice of Server entities.
 func ExtractServers(r pagination.Page) ([]Server, error) {
-	var s []Server
-	err := ExtractServersInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MetadataResult contains the result of a call for (potentially) multiple
@@ -512,20 +368,14 @@ type DeleteMetadatumResult struct {
 
 // Extract interprets any MetadataResult as a Metadata, if possible.
 func (r MetadataResult) Extract() (map[string]string, error) {
-	var s struct {
-		Metadata map[string]string `json:"metadata"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Metadata, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any MetadatumResult as a Metadatum, if possible.
 func (r MetadatumResult) Extract() (map[string]string, error) {
-	var s struct {
-		Metadatum map[string]string `json:"meta"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Metadatum, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Address represents an IP address.
@@ -543,23 +393,13 @@ type AddressPage struct {
 }
 
 // IsEmpty returns true if an AddressPage contains no networks.
-func (r AddressPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	addresses, err := ExtractAddresses(r)
-	return len(addresses) == 0, err
-}
+func (r AddressPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAddresses interprets the results of a single page from a
 // ListAddresses() call, producing a map of addresses.
 func ExtractAddresses(r pagination.Page) (map[string][]Address, error) {
-	var s struct {
-		Addresses map[string][]Address `json:"addresses"`
-	}
-	err := (r.(AddressPage)).ExtractInto(&s)
-	return s.Addresses, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkAddressPage abstracts the raw results of making a
@@ -572,30 +412,13 @@ type NetworkAddressPage struct {
 }
 
 // IsEmpty returns true if a NetworkAddressPage contains no addresses.
-func (r NetworkAddressPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	addresses, err := ExtractNetworkAddresses(r)
-	return len(addresses) == 0, err
-}
+func (r NetworkAddressPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractNetworkAddresses interprets the results of a single page from a
 // ListAddressesByNetwork() call, producing a slice of addresses.
 func ExtractNetworkAddresses(r pagination.Page) ([]Address, error) {
-	var s map[string][]Address
-	err := (r.(NetworkAddressPage)).ExtractInto(&s)
-	if err != nil {
-		return nil, err
-	}
-
-	var key string
-	for k := range s {
-		key = k
-	}
-
-	return s[key], err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // EvacuateResult is the response from an Evacuate operation.
@@ -606,14 +429,8 @@ type EvacuateResult struct {
 }
 
 func (r EvacuateResult) ExtractAdminPass() (string, error) {
-	var s struct {
-		AdminPass string `json:"adminPass"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil && err.Error() == "EOF" {
-		return "", nil
-	}
-	return s.AdminPass, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // InjectNetworkResult is the response of a InjectNetworkInfo operation. Call
@@ -668,13 +485,7 @@ type UnrescueResult struct {
 }
 
 // Extract interprets any RescueResult as an AdminPass, if possible.
-func (r RescueResult) Extract() (string, error) {
-	var s struct {
-		AdminPass string `json:"adminPass"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AdminPass, err
-}
+func (r RescueResult) Extract() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ResetResult is the response of a ResetNetwork operation. Call its ExtractErr
 // method to determine if the request suceeded or failed.

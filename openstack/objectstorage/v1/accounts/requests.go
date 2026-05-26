@@ -20,7 +20,8 @@ type GetOpts struct {
 
 // ToAccountGetMap formats a GetOpts into a map[string]string of headers.
 func (opts GetOpts) ToAccountGetMap() (map[string]string, error) {
-	return gophercloud.BuildHeaders(opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Get is a function that retrieves an account's metadata. To extract just the
@@ -28,23 +29,8 @@ func (opts GetOpts) ToAccountGetMap() (map[string]string, error) {
 // all the headers that are returned (including the metadata), call the
 // Extract method on the GetResult.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, opts GetOptsBuilder) (r GetResult) {
-	h := make(map[string]string)
-	if opts != nil {
-		headers, err := opts.ToAccountGetMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		for k, v := range headers {
-			h[k] = v
-		}
-	}
-	resp, err := c.Head(ctx, getURL(c), &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional headers to the Update
@@ -66,40 +52,13 @@ type UpdateOpts struct {
 
 // ToAccountUpdateMap formats an UpdateOpts into a map[string]string of headers.
 func (opts UpdateOpts) ToAccountUpdateMap() (map[string]string, error) {
-	headers, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, err
-	}
-
-	for k, v := range opts.Metadata {
-		headers["X-Account-Meta-"+k] = v
-	}
-
-	for _, k := range opts.RemoveMetadata {
-		headers["X-Remove-Account-Meta-"+k] = "remove"
-	}
-
-	return headers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is a function that creates, updates, or deletes an account's metadata.
 // To extract the headers returned, call the Extract method on the UpdateResult.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, opts UpdateOptsBuilder) (r UpdateResult) {
-	h := make(map[string]string)
-	if opts != nil {
-		headers, err := opts.ToAccountUpdateMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		for k, v := range headers {
-			h[k] = v
-		}
-	}
-	resp, err := c.Request(ctx, "POST", updateURL(c), &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{201, 202, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }

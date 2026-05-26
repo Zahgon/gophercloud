@@ -67,20 +67,12 @@ type CreateOpts struct {
 
 // ToRemoteConsoleCreateMap builds a request body from the CreateOpts.
 func (opts CreateOpts) ToRemoteConsoleCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "remote_console")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new remote console on the specified server.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
-	reqBody, err := opts.ToRemoteConsoleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createURL(client, serverID), reqBody, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }

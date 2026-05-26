@@ -36,30 +36,22 @@ type ExtraSpecsOpts struct {
 // ToShareTypeCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToShareTypeCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "share_type")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new ShareType based on the values in CreateOpts. To
 // extract the ShareType object from the response, call the Extract method
 // on the CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToShareTypeCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete will delete the existing ShareType with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -77,38 +69,26 @@ type ListOpts struct {
 
 // ToShareTypeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToShareTypeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns ShareTypes optionally limited by the conditions provided in ListOpts.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToShareTypeListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ShareTypePage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetDefault will retrieve the default ShareType.
 func GetDefault(ctx context.Context, client *gophercloud.ServiceClient) (r GetDefaultResult) {
-	resp, err := client.Get(ctx, getDefaultURL(client), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetDefaultResult)
 }
 
 // GetExtraSpecs will retrieve the extra specifications for a given ShareType.
 func GetExtraSpecs(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetExtraSpecsResult) {
-	resp, err := client.Get(ctx, getExtraSpecsURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetExtraSpecsResult)
 }
 
 // SetExtraSpecsOptsBuilder allows extensions to add additional parameters to the
@@ -125,38 +105,28 @@ type SetExtraSpecsOpts struct {
 // ToShareTypeSetExtraSpecsMap assembles a request body based on the contents of a
 // SetExtraSpecsOpts.
 func (opts SetExtraSpecsOpts) ToShareTypeSetExtraSpecsMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetExtraSpecs will set new specifications for a ShareType based on the values
 // in SetExtraSpecsOpts. To extract the extra specifications object from the response,
 // call the Extract method on the SetExtraSpecsResult.
 func SetExtraSpecs(ctx context.Context, client *gophercloud.ServiceClient, id string, opts SetExtraSpecsOptsBuilder) (r SetExtraSpecsResult) {
-	b, err := opts.ToShareTypeSetExtraSpecsMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, setExtraSpecsURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SetExtraSpecsResult)
 }
 
 // UnsetExtraSpecs will unset an extra specification for an existing ShareType.
 func UnsetExtraSpecs(ctx context.Context, client *gophercloud.ServiceClient, id string, key string) (r UnsetExtraSpecsResult) {
-	resp, err := client.Delete(ctx, unsetExtraSpecsURL(client, id, key), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UnsetExtraSpecsResult)
 }
 
 // ShowAccess will show access details for an existing ShareType.
 func ShowAccess(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ShowAccessResult) {
-	resp, err := client.Get(ctx, showAccessURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ShowAccessResult)
 }
 
 // AddAccessOptsBuilder allows extensions to add additional parameters to the
@@ -173,23 +143,15 @@ type AccessOpts struct {
 // ToAddAccessMap assembles a request body based on the contents of a
 // AccessOpts.
 func (opts AccessOpts) ToAddAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "addProjectAccess")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddAccess will add access to a ShareType based on the values
 // in AccessOpts.
 func AddAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts AddAccessOptsBuilder) (r AddAccessResult) {
-	b, err := opts.ToAddAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, addAccessURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddAccessResult)
 }
 
 // RemoveAccessOptsBuilder allows extensions to add additional parameters to the
@@ -201,21 +163,13 @@ type RemoveAccessOptsBuilder interface {
 // ToRemoveAccessMap assembles a request body based on the contents of a
 // AccessOpts.
 func (opts AccessOpts) ToRemoveAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "removeProjectAccess")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveAccess will remove access to a ShareType based on the values
 // in AccessOpts.
 func RemoveAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RemoveAccessOptsBuilder) (r RemoveAccessResult) {
-	b, err := opts.ToRemoveAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, removeAccessURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveAccessResult)
 }

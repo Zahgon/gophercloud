@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/gophercloud/gophercloud/v2"
-	"github.com/gophercloud/gophercloud/v2/openstack"
 )
 
 type options struct {
@@ -17,20 +16,12 @@ type options struct {
 // WithHTTPClient enables passing a custom http.Client to be used in the
 // ProviderClient for authentication and for any further call, for example when
 // using a ServiceClient derived from this ProviderClient.
-func WithHTTPClient(httpClient http.Client) func(*options) {
-	return func(o *options) {
-		o.httpClient = httpClient
-	}
-}
+func WithHTTPClient(httpClient http.Client) func(*options) { _ = "STUB: not implemented"; return nil }
 
 // WithTLSConfig replaces the Transport of the default HTTP client (or of the
 // HTTP client passed with WithHTTPClient) with a RoundTripper containing the
 // given TLS config.
-func WithTLSConfig(tlsConfig *tls.Config) func(*options) {
-	return func(o *options) {
-		o.tlsConfig = tlsConfig
-	}
-}
+func WithTLSConfig(tlsConfig *tls.Config) func(*options) { _ = "STUB: not implemented"; return nil }
 
 // NewProviderClient logs in to an OpenStack cloud found at the identity
 // endpoint specified by the options, acquires a token, and returns a Provider
@@ -45,26 +36,6 @@ func WithTLSConfig(tlsConfig *tls.Config) func(*options) {
 // service are available, then chooses the most recent or most supported
 // version.
 func NewProviderClient(ctx context.Context, authOptions gophercloud.AuthOptions, opts ...func(*options)) (*gophercloud.ProviderClient, error) {
-	var options options
-	for _, apply := range opts {
-		apply(&options)
-	}
-
-	client, err := openstack.NewClient(authOptions.IdentityEndpoint)
-	if err != nil {
-		return nil, err
-	}
-
-	if options.tlsConfig != nil {
-		transport := http.DefaultTransport.(*http.Transport).Clone()
-		transport.TLSClientConfig = options.tlsConfig
-		options.httpClient.Transport = transport
-	}
-	client.HTTPClient = options.httpClient
-
-	err = openstack.Authenticate(ctx, client, authOptions)
-	if err != nil {
-		return nil, err
-	}
-	return client, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -41,36 +41,16 @@ type CreateOpts struct {
 // ToQoSCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToQoSCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "qos_specs")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Specs != nil {
-		if v, ok := b["qos_specs"].(map[string]any); ok {
-			for key, value := range opts.Specs {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new QoS based on the values in CreateOpts. To extract
 // the QoS object from the response, call the Extract method on the
 // CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToQoSCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
@@ -88,24 +68,14 @@ type DeleteOpts struct {
 
 // ToQoSDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToQoSDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Delete will delete the existing QoS with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
-	url := deleteURL(client, id)
-	if opts != nil {
-		query, err := opts.ToQoSDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Delete(ctx, url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 type ListOpts struct {
@@ -124,36 +94,21 @@ type ListOpts struct {
 }
 
 // ToQoSListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToQoSListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToQoSListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List instructs OpenStack to provide a list of QoS.
 // You may provide criteria by which List curtails its results for easier
 // processing.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToQoSListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return QoSPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details of a single qos. Use Extract to convert its
 // result into a QoS.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateQosSpecsOptsBuilder allows extensions to add additional parameters to the
@@ -180,36 +135,16 @@ type UpdateOptsBuilder interface {
 // ToQoSUpdateMap assembles a request body based on the contents of a
 // UpdateOpts.
 func (opts UpdateOpts) ToQoSUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "qos_specs")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Specs != nil {
-		if v, ok := b["qos_specs"].(map[string]any); ok {
-			for key, value := range opts.Specs {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update an existing QoS based on the values in UpdateOpts.
 // To extract the QoS object from the response, call the Extract method
 // on the UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r updateResult) {
-	b, err := opts.ToQoSUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(updateResult)
 }
 
 // DeleteKeysOptsBuilder allows extensions to add additional parameters to the
@@ -224,21 +159,14 @@ type DeleteKeysOpts []string
 // ToDeleteKeysCreateMap assembles a body for a Create request based on
 // the contents of ExtraSpecsOpts.
 func (opts DeleteKeysOpts) ToDeleteKeysCreateMap() (map[string]any, error) {
-	return map[string]any{"keys": opts}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DeleteKeys will delete the keys/specs from the specified QoS
 func DeleteKeys(ctx context.Context, client *gophercloud.ServiceClient, qosID string, opts DeleteKeysOptsBuilder) (r DeleteResult) {
-	b, err := opts.ToDeleteKeysCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, deleteKeysURL(client, qosID), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // AssociateOpitsBuilder allows extensions to define volume type id
@@ -255,25 +183,14 @@ type AssociateOpts struct {
 
 // ToQosAssociateQuery formats an AssociateOpts into a query string
 func (opts AssociateOpts) ToQosAssociateQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Associate will associate a qos with a volute type
 func Associate(ctx context.Context, client *gophercloud.ServiceClient, qosID string, opts AssociateOptsBuilder) (r AssociateResult) {
-	url := associateURL(client, qosID)
-	query, err := opts.ToQosAssociateQuery()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url += query
-
-	resp, err := client.Get(ctx, url, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AssociateResult)
 }
 
 // DisassociateOpitsBuilder allows extensions to define volume type id
@@ -290,41 +207,24 @@ type DisassociateOpts struct {
 
 // ToQosDisassociateQuery formats a DisassociateOpts into a query string
 func (opts DisassociateOpts) ToQosDisassociateQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Disassociate will disassociate a qos from a volute type
 func Disassociate(ctx context.Context, client *gophercloud.ServiceClient, qosID string, opts DisassociateOptsBuilder) (r DisassociateResult) {
-	url := disassociateURL(client, qosID)
-	query, err := opts.ToQosDisassociateQuery()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url += query
-
-	resp, err := client.Get(ctx, url, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DisassociateResult)
 }
 
 // DisassociateAll will disassociate a qos from all volute types
 func DisassociateAll(ctx context.Context, client *gophercloud.ServiceClient, qosID string) (r DisassociateAllResult) {
-	resp, err := client.Get(ctx, disassociateAllURL(client, qosID), nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DisassociateAllResult)
 }
 
 // ListAssociations retrieves the associations of a QoS.
 func ListAssociations(client *gophercloud.ServiceClient, qosID string) pagination.Pager {
-	url := listAssociationsURL(client, qosID)
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AssociationPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

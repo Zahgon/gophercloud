@@ -8,16 +8,14 @@ import (
 
 // Get returns Networking Quotas for a project.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // GetDetail returns detailed Networking Quotas for a project.
 func GetDetail(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r GetDetailResult) {
-	resp, err := client.Get(ctx, getDetailURL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetDetailResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -61,26 +59,18 @@ type UpdateOpts struct {
 
 // ToQuotaUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToQuotaUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "quota")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing Networking Quotas using the
 // values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, projectID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToQuotaUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateURL(c, projectID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, projectID string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, projectID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

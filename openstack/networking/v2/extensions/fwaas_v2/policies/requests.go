@@ -33,10 +33,7 @@ type ListOpts struct {
 }
 
 // ToPolicyListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToPolicyListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToPolicyListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // firewall policies. It accepts a ListOpts struct, which allows you to filter
@@ -45,17 +42,8 @@ func (opts ListOpts) ToPolicyListQuery() (string, error) {
 // Default policy settings return only those firewall policies that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToPolicyListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return PolicyPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order
@@ -81,26 +69,20 @@ type CreateOpts struct {
 
 // ToFirewallPolicyCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToFirewallPolicyCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_policy")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new firewall policy
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToFirewallPolicyCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular firewall policy based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder is the interface options structs have to satisfy in order
@@ -122,28 +104,20 @@ type UpdateOpts struct {
 
 // ToFirewallPolicyUpdateMap casts a CreateOpts struct to a map.
 func (opts UpdateOpts) ToFirewallPolicyUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_policy")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update allows firewall policies to be updated.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToFirewallPolicyUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular firewall policy based on its unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 type InsertRuleOptsBuilder interface {
@@ -157,27 +131,16 @@ type InsertRuleOpts struct {
 }
 
 func (opts InsertRuleOpts) ToFirewallPolicyInsertRuleMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func InsertRule(ctx context.Context, c *gophercloud.ServiceClient, id string, opts InsertRuleOptsBuilder) (r InsertRuleResult) {
-	b, err := opts.ToFirewallPolicyInsertRuleMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, insertURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(InsertRuleResult)
 }
 
 func RemoveRule(ctx context.Context, c *gophercloud.ServiceClient, id, ruleID string) (r RemoveRuleResult) {
-	b := map[string]any{"firewall_rule_id": ruleID}
-	resp, err := c.Put(ctx, removeURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveRuleResult)
 }

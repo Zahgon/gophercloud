@@ -1,10 +1,6 @@
 package images
 
 import (
-	"encoding/json"
-	"fmt"
-	"reflect"
-	"strings"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -98,85 +94,18 @@ type Image struct {
 	OpenStackImageStoreIDs []string `json:"-"`
 }
 
-func (r *Image) UnmarshalJSON(b []byte) error {
-	type tmp Image
-	var s struct {
-		tmp
-		Properties                  string `json:"properties"`
-		SizeBytes                   any    `json:"size"`
-		OpenStackImageImportMethods string `json:"openstack-image-import-methods"`
-		OpenStackImageStoreIDs      string `json:"openstack-image-store-ids"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Image(s.tmp)
+func (r *Image) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	switch t := s.SizeBytes.(type) {
-	case nil:
-		r.SizeBytes = 0
-	case float32:
-		r.SizeBytes = int64(t)
-	case float64:
-		r.SizeBytes = int64(t)
-	default:
-		return fmt.Errorf("unknown type for SizeBytes: %v (value: %v)", reflect.TypeOf(t), t)
-	}
+// Bundle all other fields into Properties, except for the field named "properties"
 
-	// Bundle all other fields into Properties, except for the field named "properties"
-	var result any
-	err = json.Unmarshal(b, &result)
-	if err != nil {
-		return err
-	}
-	if resultMap, ok := result.(map[string]any); ok {
-		delete(resultMap, "self")
-		delete(resultMap, "size")
-		delete(resultMap, "openstack-image-import-methods")
-		delete(resultMap, "openstack-image-store-ids")
-		r.Properties = gophercloud.RemainingKeys(Image{}, resultMap)
-	}
-
-	// Add the "properties" field to the image since it's not included in above step (i.e. in remaining keys)
-	if s.Properties != "" {
-		r.Properties["properties"] = s.Properties
-	}
-
-	if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageImportMethods), splitFunc); len(v) > 0 {
-		r.OpenStackImageImportMethods = v
-	}
-	if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageStoreIDs), splitFunc); len(v) > 0 {
-		r.OpenStackImageStoreIDs = v
-	}
-
-	return err
-}
+// Add the "properties" field to the image since it's not included in above step (i.e. in remaining keys)
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract interprets any commonResult as an Image.
-func (r commonResult) Extract() (*Image, error) {
-	var s *Image
-	if v, ok := r.Body.(map[string]any); ok {
-		for k, h := range r.Header {
-			if strings.ToLower(k) == "openstack-image-import-methods" {
-				for _, s := range h {
-					v["openstack-image-import-methods"] = s
-				}
-			}
-			if strings.ToLower(k) == "openstack-image-store-ids" {
-				for _, s := range h {
-					v["openstack-image-store-ids"] = s
-				}
-			}
-		}
-	}
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Image, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a Create operation. Call its Extract
 // method to interpret it as an Image.
@@ -208,44 +137,18 @@ type ImagePage struct {
 }
 
 // IsEmpty returns true if an ImagePage contains no Images results.
-func (r ImagePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	images, err := ExtractImages(r)
-	return len(images) == 0, err
-}
+func (r ImagePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to
 // the next page of results.
 func (r ImagePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-
-	if s.Next == "" {
-		return "", nil
-	}
-
-	return nextPageURL(endpointURL, s.Next)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractImages interprets the results of a single page from a List() call,
 // producing a slice of Image entities.
-func ExtractImages(r pagination.Page) ([]Image, error) {
-	var s struct {
-		Images []Image `json:"images"`
-	}
-	err := (r.(ImagePage)).ExtractInto(&s)
-	return s.Images, err
-}
+func ExtractImages(r pagination.Page) ([]Image, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // splitFunc is a helper function used to avoid a slice of empty strings.
-func splitFunc(c rune) bool {
-	return c == ','
-}
+func splitFunc(c rune) bool { _ = "STUB: not implemented"; return false }

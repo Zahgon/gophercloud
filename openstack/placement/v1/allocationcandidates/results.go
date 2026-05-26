@@ -1,8 +1,6 @@
 package allocationcandidates
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -75,19 +73,12 @@ type AllocationCandidatesPage struct {
 // IsEmpty determines if an AllocationCandidatesPage contains any results.
 // It avoids full deserialization so that it works across all microversions,
 func (page AllocationCandidatesPage) IsEmpty() (bool, error) {
-	var s struct {
-		AllocationRequests []json.RawMessage `json:"allocation_requests"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return false, err
-	}
-	return len(s.AllocationRequests) == 0, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractAllocationCandidates interprets an AllocationCandidatesPage as AllocationCandidates (microversion 1.12+).
 func ExtractAllocationCandidates(r pagination.Page) (*AllocationCandidates, error) {
-	var s AllocationCandidates
-	err := (r.(AllocationCandidatesPage)).ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

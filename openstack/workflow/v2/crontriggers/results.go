@@ -1,7 +1,6 @@
 package crontriggers
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -28,11 +27,7 @@ type DeleteResult struct {
 }
 
 // Extract helps to get a CronTrigger struct from a Get or a Create function.
-func (r commonResult) Extract() (*CronTrigger, error) {
-	var s CronTrigger
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*CronTrigger, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CronTrigger represents a workflow cron trigger on OpenStack mistral API.
 type CronTrigger struct {
@@ -79,49 +74,7 @@ type CronTrigger struct {
 }
 
 // UnmarshalJSON implements unmarshalling custom types
-func (r *CronTrigger) UnmarshalJSON(b []byte) error {
-	type tmp CronTrigger
-	var s struct {
-		tmp
-		CreatedAt          gophercloud.JSONRFC3339ZNoTNoZ  `json:"created_at"`
-		FirstExecutionTime *gophercloud.JSONRFC3339ZNoTNoZ `json:"first_execution_time"`
-		NextExecutionTime  *gophercloud.JSONRFC3339ZNoTNoZ `json:"next_execution_time"`
-		WorkflowInput      string                          `json:"workflow_input"`
-		WorkflowParams     string                          `json:"workflow_params"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = CronTrigger(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	if s.FirstExecutionTime != nil {
-		t := time.Time(*s.FirstExecutionTime)
-		r.FirstExecutionTime = &t
-	}
-
-	if s.NextExecutionTime != nil {
-		t := time.Time(*s.NextExecutionTime)
-		r.NextExecutionTime = &t
-	}
-
-	if s.WorkflowInput != "" {
-		if err := json.Unmarshal([]byte(s.WorkflowInput), &r.WorkflowInput); err != nil {
-			return err
-		}
-	}
-
-	if s.WorkflowParams != "" {
-		if err := json.Unmarshal([]byte(s.WorkflowParams), &r.WorkflowParams); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
+func (r *CronTrigger) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // CronTriggerPage contains a single page of all cron triggers from a List call.
 type CronTriggerPage struct {
@@ -129,32 +82,16 @@ type CronTriggerPage struct {
 }
 
 // IsEmpty checks if an CronTriggerPage contains any results.
-func (r CronTriggerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	exec, err := ExtractCronTriggers(r)
-	return len(exec) == 0, err
-}
+func (r CronTriggerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL finds the next page URL in a page in order to navigate to the next page of results.
 func (r CronTriggerPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractCronTriggers get the list of cron triggers from a page acquired from the List call.
 func ExtractCronTriggers(r pagination.Page) ([]CronTrigger, error) {
-	var s struct {
-		CronTriggers []CronTrigger `json:"cron_triggers"`
-	}
-	err := (r.(CronTriggerPage)).ExtractInto(&s)
-	return s.CronTriggers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

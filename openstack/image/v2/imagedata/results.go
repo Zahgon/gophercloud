@@ -27,8 +27,6 @@ type DownloadResult struct {
 
 // Extract builds images model from io.Reader
 func (r DownloadResult) Extract() (io.ReadCloser, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	return r.Body, nil
+	_ = "STUB: not implemented"
+	return *new(io.ReadCloser), nil
 }

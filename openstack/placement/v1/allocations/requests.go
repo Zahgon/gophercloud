@@ -2,16 +2,14 @@ package allocations
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/gophercloud/gophercloud/v2"
 )
 
 // Get retrieves the allocations for a specific consumer by its UUID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, consumerUUID string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, consumerUUID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ProviderAllocationsOpts specifies the resources to consume from a single resource
@@ -58,23 +56,16 @@ type UpdateOpts struct {
 
 // ToAllocationUpdateMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToAllocationUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update replaces all allocations for a consumer. The operation is atomic.
 //
 // Requires microversion 1.28 or later.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, consumerUUID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToAllocationUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, consumerUUID), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete removes all allocations for a consumer. Returns 204 on success or
@@ -84,9 +75,8 @@ func Update(ctx context.Context, client *gophercloud.ServiceClient, consumerUUID
 // it is protected by the consumer generation check, preventing accidental
 // deletion under concurrent updates.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, consumerUUID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, consumerUUID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ManageOptsBuilder allows extensions to add additional parameters to the
@@ -109,13 +99,8 @@ type ManageOpts map[string]UpdateOpts
 
 // ToAllocationManageMap constructs a request body from ManageOpts.
 func (opts ManageOpts) ToAllocationManageMap() (map[string]any, error) {
-	b, err := json.Marshal(opts)
-	if err != nil {
-		return nil, err
-	}
-	var m map[string]any
-	err = json.Unmarshal(b, &m)
-	return m, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Manage atomically sets allocations for one or more consumers in a single
@@ -124,14 +109,6 @@ func (opts ManageOpts) ToAllocationManageMap() (map[string]any, error) {
 // Requires microversion 1.13 or later. For generation-safe writes, use
 // microversion 1.28 or later.
 func Manage(ctx context.Context, client *gophercloud.ServiceClient, opts ManageOptsBuilder) (r ManageResult) {
-	b, err := opts.ToAllocationManageMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, manageURL(client), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ManageResult)
 }

@@ -2,8 +2,6 @@ package volumes
 
 import (
 	"context"
-	"maps"
-	"regexp"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -38,62 +36,8 @@ type SchedulerHintOpts struct {
 
 // ToSchedulerHintsMap assembles a request body for scheduler hints
 func (opts SchedulerHintOpts) ToSchedulerHintsMap() (map[string]any, error) {
-	sh := make(map[string]any)
-
-	uuidRegex, _ := regexp.Compile("^[a-z0-9]{8}-[a-z0-9]{4}-[1-5][a-z0-9]{3}-[a-z0-9]{4}-[a-z0-9]{12}$")
-
-	if len(opts.DifferentHost) > 0 {
-		for _, diffHost := range opts.DifferentHost {
-			if !uuidRegex.MatchString(diffHost) {
-				err := gophercloud.ErrInvalidInput{}
-				err.Argument = "volumes.SchedulerHintOpts.DifferentHost"
-				err.Value = opts.DifferentHost
-				err.Info = "The hosts must be in UUID format."
-				return nil, err
-			}
-		}
-		sh["different_host"] = opts.DifferentHost
-	}
-
-	if len(opts.SameHost) > 0 {
-		for _, sameHost := range opts.SameHost {
-			if !uuidRegex.MatchString(sameHost) {
-				err := gophercloud.ErrInvalidInput{}
-				err.Argument = "volumes.SchedulerHintOpts.SameHost"
-				err.Value = opts.SameHost
-				err.Info = "The hosts must be in UUID format."
-				return nil, err
-			}
-		}
-		sh["same_host"] = opts.SameHost
-	}
-
-	if opts.LocalToInstance != "" {
-		if !uuidRegex.MatchString(opts.LocalToInstance) {
-			err := gophercloud.ErrInvalidInput{}
-			err.Argument = "volumes.SchedulerHintOpts.LocalToInstance"
-			err.Value = opts.LocalToInstance
-			err.Info = "The instance must be in UUID format."
-			return nil, err
-		}
-		sh["local_to_instance"] = opts.LocalToInstance
-	}
-
-	if opts.Query != "" {
-		sh["query"] = opts.Query
-	}
-
-	if opts.AdditionalProperties != nil {
-		for k, v := range opts.AdditionalProperties {
-			sh[k] = v
-		}
-	}
-
-	if len(sh) == 0 {
-		return sh, nil
-	}
-
-	return map[string]any{"OS-SCH-HNT:scheduler_hints": sh}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -134,33 +78,16 @@ type CreateOpts struct {
 // ToVolumeCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToVolumeCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "volume")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new Volume based on the values in CreateOpts. To extract
 // the Volume object from the response, call the Extract method on the
 // CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder, hintOpts SchedulerHintOptsBuilder) (r CreateResult) {
-	b, err := opts.ToVolumeCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	if hintOpts != nil {
-		sh, err := hintOpts.ToSchedulerHintsMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		maps.Copy(b, sh)
-	}
-
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
@@ -178,32 +105,21 @@ type DeleteOpts struct {
 
 // ToLoadBalancerDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToVolumeDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Delete will delete the existing Volume with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
-	url := deleteURL(client, id)
-	if opts != nil {
-		query, err := opts.ToVolumeDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Delete(ctx, url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves the Volume with the provided ID. To extract the Volume object
 // from the response, call the Extract method on the GetResult.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -246,25 +162,12 @@ type ListOpts struct {
 }
 
 // ToVolumeListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToVolumeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToVolumeListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns Volumes optionally limited by the conditions provided in ListOpts.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToVolumeListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return VolumePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -285,22 +188,15 @@ type UpdateOpts struct {
 // ToVolumeUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToVolumeUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "volume")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the Volume with provided information. To extract the updated
 // Volume from the response, call the Extract method on the UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToVolumeUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // AttachOptsBuilder allows extensions to add additional parameters to the
@@ -336,31 +232,20 @@ type AttachOpts struct {
 // ToVolumeAttachMap assembles a request body based on the contents of a
 // AttachOpts.
 func (opts AttachOpts) ToVolumeAttachMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-attach")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Attach will attach a volume based on the values in AttachOpts.
 func Attach(ctx context.Context, client *gophercloud.ServiceClient, id string, opts AttachOptsBuilder) (r AttachResult) {
-	b, err := opts.ToVolumeAttachMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AttachResult)
 }
 
 // BeginDetaching will mark the volume as detaching.
 func BeginDetaching(ctx context.Context, client *gophercloud.ServiceClient, id string) (r BeginDetachingResult) {
-	b := map[string]any{"os-begin_detaching": make(map[string]any)}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(BeginDetachingResult)
 }
 
 // DetachOptsBuilder allows extensions to add additional parameters to the
@@ -378,41 +263,26 @@ type DetachOpts struct {
 // ToVolumeDetachMap assembles a request body based on the contents of a
 // DetachOpts.
 func (opts DetachOpts) ToVolumeDetachMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-detach")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Detach will detach a volume based on volume ID.
 func Detach(ctx context.Context, client *gophercloud.ServiceClient, id string, opts DetachOptsBuilder) (r DetachResult) {
-	b, err := opts.ToVolumeDetachMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DetachResult)
 }
 
 // Reserve will reserve a volume based on volume ID.
 func Reserve(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ReserveResult) {
-	b := map[string]any{"os-reserve": make(map[string]any)}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ReserveResult)
 }
 
 // Unreserve will unreserve a volume based on volume ID.
 func Unreserve(ctx context.Context, client *gophercloud.ServiceClient, id string) (r UnreserveResult) {
-	b := map[string]any{"os-unreserve": make(map[string]any)}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UnreserveResult)
 }
 
 // InitializeConnectionOptsBuilder allows extensions to add additional parameters to the
@@ -438,22 +308,14 @@ type InitializeConnectionOpts struct {
 // ToVolumeInitializeConnectionMap assembles a request body based on the contents of a
 // InitializeConnectionOpts.
 func (opts InitializeConnectionOpts) ToVolumeInitializeConnectionMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "connector")
-	return map[string]any{"os-initialize_connection": b}, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // InitializeConnection initializes an iSCSI connection by volume ID.
 func InitializeConnection(ctx context.Context, client *gophercloud.ServiceClient, id string, opts InitializeConnectionOptsBuilder) (r InitializeConnectionResult) {
-	b, err := opts.ToVolumeInitializeConnectionMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(InitializeConnectionResult)
 }
 
 // TerminateConnectionOptsBuilder allows extensions to add additional parameters to the
@@ -477,22 +339,14 @@ type TerminateConnectionOpts struct {
 // ToVolumeTerminateConnectionMap assembles a request body based on the contents of a
 // TerminateConnectionOpts.
 func (opts TerminateConnectionOpts) ToVolumeTerminateConnectionMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "connector")
-	return map[string]any{"os-terminate_connection": b}, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TerminateConnection terminates an iSCSI connection by volume ID.
 func TerminateConnection(ctx context.Context, client *gophercloud.ServiceClient, id string, opts TerminateConnectionOptsBuilder) (r TerminateConnectionResult) {
-	b, err := opts.ToVolumeTerminateConnectionMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(TerminateConnectionResult)
 }
 
 // ExtendSizeOptsBuilder allows extensions to add additional parameters to the
@@ -511,22 +365,15 @@ type ExtendSizeOpts struct {
 // ToVolumeExtendSizeMap assembles a request body based on the contents of an
 // ExtendSizeOpts.
 func (opts ExtendSizeOpts) ToVolumeExtendSizeMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-extend")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtendSize will extend the size of the volume based on the provided information.
 // This operation does not return a response body.
 func ExtendSize(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ExtendSizeOptsBuilder) (r ExtendSizeResult) {
-	b, err := opts.ToVolumeExtendSizeMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ExtendSizeResult)
 }
 
 // UploadImageOptsBuilder allows extensions to add additional parameters to the
@@ -561,28 +408,20 @@ type UploadImageOpts struct {
 // ToVolumeUploadImageMap assembles a request body based on the contents of a
 // UploadImageOpts.
 func (opts UploadImageOpts) ToVolumeUploadImageMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-volume_upload_image")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UploadImage will upload an image based on the values in UploadImageOptsBuilder.
 func UploadImage(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UploadImageOptsBuilder) (r UploadImageResult) {
-	b, err := opts.ToVolumeUploadImageMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UploadImageResult)
 }
 
 // ForceDelete will delete the volume regardless of state.
 func ForceDelete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ForceDeleteResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"os-force_delete": ""}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ForceDeleteResult)
 }
 
 // ImageMetadataOptsBuilder allows extensions to add additional parameters to the
@@ -600,21 +439,14 @@ type ImageMetadataOpts struct {
 // ToImageMetadataMap assembles a request body based on the contents of a
 // ImageMetadataOpts.
 func (opts ImageMetadataOpts) ToImageMetadataMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-set_image_metadata")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetImageMetadata will set image metadata on a volume based on the values in ImageMetadataOptsBuilder.
 func SetImageMetadata(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ImageMetadataOptsBuilder) (r SetImageMetadataResult) {
-	b, err := opts.ToImageMetadataMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SetImageMetadataResult)
 }
 
 // BootableOptsBuilder allows extensions to add additional parameters to the
@@ -632,21 +464,14 @@ type BootableOpts struct {
 // ToBootableMap assembles a request body based on the contents of a
 // BootableOpts.
 func (opts BootableOpts) ToBootableMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-set_bootable")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetBootable will set bootable status on a volume based on the values in BootableOpts
 func SetBootable(ctx context.Context, client *gophercloud.ServiceClient, id string, opts BootableOptsBuilder) (r SetBootableResult) {
-	b, err := opts.ToBootableMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SetBootableResult)
 }
 
 // MigrationPolicy type represents a migration_policy when changing types.
@@ -679,22 +504,15 @@ type ChangeTypeOpts struct {
 // ToVolumeChangeTypeMap assembles a request body based on the contents of an
 // ChangeTypeOpts.
 func (opts ChangeTypeOpts) ToVolumeChangeTypeMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-retype")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ChangeType will change the volume type of the volume based on the provided information.
 // This operation does not return a response body.
 func ChangeType(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ChangeTypeOptsBuilder) (r ChangeTypeResult) {
-	b, err := opts.ToVolumeChangeTypeMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ChangeTypeResult)
 }
 
 // ReImageOptsBuilder allows extensions to add additional parameters to the
@@ -713,21 +531,14 @@ type ReImageOpts struct {
 
 // ToReImageMap assembles a request body based on the contents of a ReImageOpts.
 func (opts ReImageOpts) ToReImageMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-reimage")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ReImage will re-image a volume based on the values in ReImageOpts
 func ReImage(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ReImageOptsBuilder) (r ReImageResult) {
-	b, err := opts.ToReImageMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ReImageResult)
 }
 
 // ResetStatusOptsBuilder allows extensions to add additional parameters to the
@@ -751,21 +562,13 @@ type ResetStatusOpts struct {
 // ToResetStatusMap assembles a request body based on the contents of a
 // ResetStatusOpts.
 func (opts ResetStatusOpts) ToResetStatusMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-reset_status")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResetStatus will reset the existing volume status. ResetStatusResult contains only the error.
 // To extract it, call the ExtractErr method on the ResetStatusResult.
 func ResetStatus(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResetStatusOptsBuilder) (r ResetStatusResult) {
-	b, err := opts.ToResetStatusMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetStatusResult)
 }

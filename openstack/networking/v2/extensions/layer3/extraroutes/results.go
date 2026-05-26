@@ -7,11 +7,8 @@ import (
 
 // Extract is a function that accepts a result and extracts a router.
 func (r commonResult) Extract() (*routers.Router, error) {
-	var s struct {
-		Router *routers.Router `json:"router"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Router, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {

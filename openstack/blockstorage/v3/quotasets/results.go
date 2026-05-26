@@ -1,8 +1,6 @@
 package quotasets
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -44,29 +42,7 @@ type QuotaSet struct {
 
 // UnmarshalJSON is used on QuotaSet to unmarshal extra keys that are
 // used for volume_type quota
-func (r *QuotaSet) UnmarshalJSON(b []byte) error {
-	type tmp QuotaSet
-	var s struct {
-		tmp
-		Extra map[string]any `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = QuotaSet(s.tmp)
-
-	var result any
-	err = json.Unmarshal(b, &result)
-	if err != nil {
-		return err
-	}
-	if resultMap, ok := result.(map[string]any); ok {
-		r.Extra = gophercloud.RemainingKeys(QuotaSet{}, resultMap)
-	}
-
-	return err
-}
+func (r *QuotaSet) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // QuotaUsageSet represents details of both operational limits of block
 // storage resources and the current usage of those resources.
@@ -120,39 +96,9 @@ type QuotaUsageSet struct {
 
 // UnmarshalJSON is used on QuotaUsageSet to unmarshal extra keys that are
 // used to represent QuotaUsage per volume_type.
-func (r *QuotaUsageSet) UnmarshalJSON(b []byte) error {
-	type tmp QuotaUsageSet
-	var s struct {
-		tmp
-		Extra map[string]QuotaUsage `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = QuotaUsageSet(s.tmp)
+func (r *QuotaUsageSet) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	var result any
-	err = json.Unmarshal(b, &result)
-	if err != nil {
-		return err
-	}
-
-	// process remaining items as separate QuotaUsage objects.
-	if resultMap, ok := result.(map[string]any); ok {
-		tmpb, err := json.Marshal(gophercloud.RemainingKeys(QuotaUsageSet{}, resultMap))
-		if err != nil {
-			return err
-		}
-
-		err = json.Unmarshal(tmpb, &r.Extra)
-		if err != nil {
-			return err
-		}
-	}
-
-	return err
-}
+// process remaining items as separate QuotaUsage objects.
 
 // QuotaUsage is a set of details about a single operational limit that allows
 // for control of block storage usage.
@@ -179,22 +125,12 @@ type QuotaSetPage struct {
 }
 
 // IsEmpty determines whether or not a QuotaSetsetPage is empty.
-func (r QuotaSetPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	ks, err := ExtractQuotaSets(r)
-	return len(ks) == 0, err
-}
+func (r QuotaSetPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractQuotaSets interprets a page of results as a slice of QuotaSets.
 func ExtractQuotaSets(r pagination.Page) ([]QuotaSet, error) {
-	var s struct {
-		QuotaSets []QuotaSet `json:"quotas"`
-	}
-	err := (r.(QuotaSetPage)).ExtractInto(&s)
-	return s.QuotaSets, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type quotaResult struct {
@@ -203,13 +139,7 @@ type quotaResult struct {
 
 // Extract is a method that attempts to interpret any QuotaSet resource response
 // as a QuotaSet struct.
-func (r quotaResult) Extract() (*QuotaSet, error) {
-	var s struct {
-		QuotaSet *QuotaSet `json:"quota_set"`
-	}
-	err := r.ExtractInto(&s)
-	return s.QuotaSet, err
-}
+func (r quotaResult) Extract() (*QuotaSet, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract method to
 // interpret it as a QuotaSet.
@@ -236,11 +166,8 @@ type GetUsageResult struct {
 // Extract is a method that attempts to interpret any QuotaUsageSet resource
 // response as a set of QuotaUsageSet structs.
 func (r quotaUsageResult) Extract() (QuotaUsageSet, error) {
-	var s struct {
-		QuotaUsageSet QuotaUsageSet `json:"quota_set"`
-	}
-	err := r.ExtractInto(&s)
-	return s.QuotaUsageSet, err
+	_ = "STUB: not implemented"
+	return *new(QuotaUsageSet), nil
 }
 
 // DeleteResult is the response from a Delete operation. Call its ExtractErr

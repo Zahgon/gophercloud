@@ -2,7 +2,6 @@ package trunks
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -27,29 +26,19 @@ type CreateOpts struct {
 
 // ToTrunkCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToTrunkCreateMap() (map[string]any, error) {
-	if opts.Subports == nil {
-		opts.Subports = []Subport{}
-	}
-	return gophercloud.BuildRequestBody(opts, "trunk")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	body, err := opts.ToTrunkCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := c.Post(ctx, createURL(c), body, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete accepts a unique ID and deletes the trunk associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the
@@ -83,10 +72,7 @@ type ListOpts struct {
 }
 
 // ToTrunkListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToTrunkListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToTrunkListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // trunks. It accepts a ListOpts struct, which allows you to filter and sort
@@ -96,24 +82,14 @@ func (opts ListOpts) ToTrunkListQuery() (string, error) {
 // who submits the request, unless the request is submitted by a user with
 // administrative rights.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToTrunkListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return TrunkPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific trunk based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 type UpdateOptsBuilder interface {
@@ -132,39 +108,18 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToTrunkUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "trunk")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	body, err := opts.ToTrunkUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-	resp, err := c.Put(ctx, updateURL(c, id), body, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 func GetSubports(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetSubportsResult) {
-	resp, err := c.Get(ctx, getSubportsURL(c, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetSubportsResult)
 }
 
 type AddSubportsOpts struct {
@@ -176,20 +131,13 @@ type AddSubportsOptsBuilder interface {
 }
 
 func (opts AddSubportsOpts) ToTrunkAddSubportsMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func AddSubports(ctx context.Context, c *gophercloud.ServiceClient, id string, opts AddSubportsOptsBuilder) (r UpdateSubportsResult) {
-	body, err := opts.ToTrunkAddSubportsMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, addSubportsURL(c, id), body, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateSubportsResult)
 }
 
 type RemoveSubport struct {
@@ -205,18 +153,11 @@ type RemoveSubportsOptsBuilder interface {
 }
 
 func (opts RemoveSubportsOpts) ToTrunkRemoveSubportsMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func RemoveSubports(ctx context.Context, c *gophercloud.ServiceClient, id string, opts RemoveSubportsOptsBuilder) (r UpdateSubportsResult) {
-	body, err := opts.ToTrunkRemoveSubportsMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, removeSubportsURL(c, id), body, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateSubportsResult)
 }

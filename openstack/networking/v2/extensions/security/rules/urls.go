@@ -4,10 +4,9 @@ import "github.com/gophercloud/gophercloud/v2"
 
 const rootPath = "security-group-rules"
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, id)
+	_ = "STUB: not implemented"
+	return ""
 }

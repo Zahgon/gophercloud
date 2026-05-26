@@ -9,18 +9,14 @@ import (
 
 // List makes a request against the nova API to list the server's interfaces.
 func List(client *gophercloud.ServiceClient, serverID string) pagination.Pager {
-	return pagination.NewPager(client, listInterfaceURL(client, serverID), func(r pagination.PageResult) pagination.Page {
-		return InterfacePage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get requests details on a single interface attachment by the server and port IDs.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, serverID, portID string) (r GetResult) {
-	resp, err := client.Get(ctx, getInterfaceURL(client, serverID, portID), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -51,27 +47,19 @@ type CreateOpts struct {
 
 // ToAttachInterfacesCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToAttachInterfacesCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "interfaceAttachment")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new interface attachment on the server.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToAttachInterfacesCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createInterfaceURL(client, serverID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete makes a request against the nova API to detach a single interface from the server.
 // It needs server and port IDs to make a such request.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, serverID, portID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteInterfaceURL(client, serverID, portID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

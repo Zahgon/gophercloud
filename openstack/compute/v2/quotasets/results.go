@@ -127,22 +127,12 @@ type QuotaSetPage struct {
 }
 
 // IsEmpty determines whether or not a QuotaSetsetPage is empty.
-func (page QuotaSetPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	ks, err := ExtractQuotaSets(page)
-	return len(ks) == 0, err
-}
+func (page QuotaSetPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractQuotaSets interprets a page of results as a slice of QuotaSets.
 func ExtractQuotaSets(r pagination.Page) ([]QuotaSet, error) {
-	var s struct {
-		QuotaSets []QuotaSet `json:"quotas"`
-	}
-	err := (r.(QuotaSetPage)).ExtractInto(&s)
-	return s.QuotaSets, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type quotaResult struct {
@@ -151,13 +141,7 @@ type quotaResult struct {
 
 // Extract is a method that attempts to interpret any QuotaSet resource response
 // as a QuotaSet struct.
-func (r quotaResult) Extract() (*QuotaSet, error) {
-	var s struct {
-		QuotaSet *QuotaSet `json:"quota_set"`
-	}
-	err := r.ExtractInto(&s)
-	return s.QuotaSet, err
-}
+func (r quotaResult) Extract() (*QuotaSet, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract method to
 // interpret it as a QuotaSet.
@@ -190,9 +174,6 @@ type GetDetailResult struct {
 // Extract is a method that attempts to interpret any QuotaDetailSet
 // resource response as a set of QuotaDetailSet structs.
 func (r quotaDetailResult) Extract() (QuotaDetailSet, error) {
-	var s struct {
-		QuotaData QuotaDetailSet `json:"quota_set"`
-	}
-	err := r.ExtractInto(&s)
-	return s.QuotaData, err
+	_ = "STUB: not implemented"
+	return *new(QuotaDetailSet), nil
 }

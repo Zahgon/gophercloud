@@ -2,7 +2,6 @@ package accept
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -23,30 +22,20 @@ type ListOpts struct {
 
 // ToTransferAcceptListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTransferAcceptListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List implements a transfer accept List request.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := baseURL(client)
-	if opts != nil {
-		query, err := opts.ToTransferAcceptListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return TransferAcceptPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get returns information about a transfer accept, given its ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, transferAcceptID string) (r GetResult) {
-	resp, err := client.Get(ctx, resourceURL(client, transferAcceptID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional attributes to the
@@ -67,23 +56,12 @@ type CreateOpts struct {
 
 // ToTransferAcceptCreateMap formats an CreateOpts structure into a request body.
 func (opts CreateOpts) ToTransferAcceptCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create implements a transfer accept create request.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToTransferAcceptCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, baseURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{http.StatusCreated, http.StatusAccepted},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }

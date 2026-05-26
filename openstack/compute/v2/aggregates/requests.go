@@ -2,7 +2,6 @@ package aggregates
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -10,9 +9,8 @@ import (
 
 // List makes a request against the API to list aggregates.
 func List(client *gophercloud.ServiceClient) pagination.Pager {
-	return pagination.NewPager(client, aggregatesListURL(client), func(r pagination.PageResult) pagination.Page {
-		return AggregatesPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -33,41 +31,26 @@ type CreateOpts struct {
 }
 
 func (opts CreateOpts) ToAggregatesCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "aggregate")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create makes a request against the API to create an aggregate.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToAggregatesCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, aggregatesCreateURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete makes a request against the API to delete an aggregate.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, aggregateID int) (r DeleteResult) {
-	v := strconv.Itoa(aggregateID)
-	resp, err := client.Delete(ctx, aggregatesDeleteURL(client, v), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get makes a request against the API to get details for a specific aggregate.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, aggregateID int) (r GetResult) {
-	v := strconv.Itoa(aggregateID)
-	resp, err := client.Get(ctx, aggregatesGetURL(client, v), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -88,23 +71,14 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToAggregatesUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "aggregate")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update makes a request against the API to update a specific aggregate.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, aggregateID int, opts UpdateOptsBuilder) (r UpdateResult) {
-	v := strconv.Itoa(aggregateID)
-
-	b, err := opts.ToAggregatesUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, aggregatesUpdateURL(client, v), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 type AddHostOpts struct {
@@ -113,23 +87,14 @@ type AddHostOpts struct {
 }
 
 func (opts AddHostOpts) ToAggregatesAddHostMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "add_host")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddHost makes a request against the API to add host to a specific aggregate.
 func AddHost(ctx context.Context, client *gophercloud.ServiceClient, aggregateID int, opts AddHostOpts) (r ActionResult) {
-	v := strconv.Itoa(aggregateID)
-
-	b, err := opts.ToAggregatesAddHostMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, aggregatesAddHostURL(client, v), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 type RemoveHostOpts struct {
@@ -138,23 +103,14 @@ type RemoveHostOpts struct {
 }
 
 func (opts RemoveHostOpts) ToAggregatesRemoveHostMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "remove_host")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveHost makes a request against the API to remove host from a specific aggregate.
 func RemoveHost(ctx context.Context, client *gophercloud.ServiceClient, aggregateID int, opts RemoveHostOpts) (r ActionResult) {
-	v := strconv.Itoa(aggregateID)
-
-	b, err := opts.ToAggregatesRemoveHostMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, aggregatesRemoveHostURL(client, v), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 type SetMetadataOpts struct {
@@ -162,21 +118,12 @@ type SetMetadataOpts struct {
 }
 
 func (opts SetMetadataOpts) ToSetMetadataMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "set_metadata")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SetMetadata makes a request against the API to set metadata to a specific aggregate.
 func SetMetadata(ctx context.Context, client *gophercloud.ServiceClient, aggregateID int, opts SetMetadataOpts) (r ActionResult) {
-	v := strconv.Itoa(aggregateID)
-
-	b, err := opts.ToSetMetadataMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, aggregatesSetMetadataURL(client, v), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }

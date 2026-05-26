@@ -2,9 +2,6 @@ package secrets
 
 import (
 	"context"
-	"fmt"
-	"net/url"
-	"strings"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -91,62 +88,18 @@ type ListOpts struct {
 }
 
 // ToSecretListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToSecretListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	params := q.Query()
-
-	if opts.CreatedQuery != nil {
-		created := opts.CreatedQuery.Date.Format(time.RFC3339)
-		if v := opts.CreatedQuery.Filter; v != "" {
-			created = fmt.Sprintf("%s:%s", v, created)
-		}
-
-		params.Add("created", created)
-	}
-
-	if opts.UpdatedQuery != nil {
-		updated := opts.UpdatedQuery.Date.Format(time.RFC3339)
-		if v := opts.UpdatedQuery.Filter; v != "" {
-			updated = fmt.Sprintf("%s:%s", v, updated)
-		}
-
-		params.Add("updated", updated)
-	}
-
-	if opts.ExpirationQuery != nil {
-		expiration := opts.ExpirationQuery.Date.Format(time.RFC3339)
-		if v := opts.ExpirationQuery.Filter; v != "" {
-			expiration = fmt.Sprintf("%s:%s", v, expiration)
-		}
-
-		params.Add("expiration", expiration)
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-
-	return q.String(), err
-}
+func (opts ListOpts) ToSecretListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List retrieves a list of Secrets.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToSecretListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return SecretPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details of a secrets.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // GetPayloadOpts represents options used for obtaining a payload.
@@ -162,32 +115,14 @@ type GetPayloadOptsBuilder interface {
 
 // ToSecretPayloadGetParams formats a GetPayloadOpts into a query string.
 func (opts GetPayloadOpts) ToSecretPayloadGetParams() (map[string]string, error) {
-	return gophercloud.BuildHeaders(opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetPayload retrieves the payload of a secret.
 func GetPayload(ctx context.Context, client *gophercloud.ServiceClient, id string, opts GetPayloadOptsBuilder) (r PayloadResult) {
-	h := map[string]string{"Accept": "text/plain"}
-
-	if opts != nil {
-		headers, err := opts.ToSecretPayloadGetParams()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		for k, v := range headers {
-			h[k] = v
-		}
-	}
-
-	url := payloadURL(client, id)
-	resp, err := client.Get(ctx, url, nil, &gophercloud.RequestOpts{
-		MoreHeaders:      h,
-		OkCodes:          []int{200},
-		KeepResponseBody: true,
-	})
-	r.Body, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(PayloadResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to
@@ -228,37 +163,20 @@ type CreateOpts struct {
 
 // ToSecretCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToSecretCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Expiration != nil {
-		b["expiration"] = opts.Expiration.Format(gophercloud.RFC3339NoZ)
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create creates a new secrets.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSecretCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete deletes a secrets.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -282,47 +200,20 @@ type UpdateOpts struct {
 
 // ToUpdateCreateRequest formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToSecretUpdateRequest() (string, map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return "", nil, err
-	}
-
-	return opts.Payload, h, nil
+	_ = "STUB: not implemented"
+	return "", nil, nil
 }
 
 // Update modifies the attributes of a secrets.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	url := updateURL(client, id)
-	h := make(map[string]string)
-	var b string
-
-	if opts != nil {
-		payload, headers, err := opts.ToSecretUpdateRequest()
-		if err != nil {
-			r.Err = err
-			return
-		}
-
-		for k, v := range headers {
-			h[k] = v
-		}
-
-		b = payload
-	}
-
-	resp, err := client.Put(ctx, url, strings.NewReader(b), nil, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // GetMetadata will list metadata for a given secret.
 func GetMetadata(ctx context.Context, client *gophercloud.ServiceClient, secretID string) (r MetadataResult) {
-	resp, err := client.Get(ctx, metadataURL(client, secretID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadataResult)
 }
 
 // MetadataOpts is a map that contains key-value pairs for secret metadata.
@@ -336,28 +227,20 @@ type CreateMetadataOptsBuilder interface {
 
 // ToMetadataCreateMap converts a MetadataOpts into a request body.
 func (opts MetadataOpts) ToMetadataCreateMap() (map[string]any, error) {
-	return map[string]any{"metadata": opts}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateMetadata will set metadata for a given secret.
 func CreateMetadata(ctx context.Context, client *gophercloud.ServiceClient, secretID string, opts CreateMetadataOptsBuilder) (r MetadataCreateResult) {
-	b, err := opts.ToMetadataCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, metadataURL(client, secretID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadataCreateResult)
 }
 
 // GetMetadatum will get a single key/value metadata from a secret.
 func GetMetadatum(ctx context.Context, client *gophercloud.ServiceClient, secretID string, key string) (r MetadatumResult) {
-	resp, err := client.Get(ctx, metadatumURL(client, secretID, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadatumResult)
 }
 
 // MetadatumOpts represents a single metadata.
@@ -374,21 +257,14 @@ type CreateMetadatumOptsBuilder interface {
 
 // ToMetadatumCreateMap converts a MetadatumOpts into a request body.
 func (opts MetadatumOpts) ToMetadatumCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateMetadatum will add a single key/value metadata to a secret.
 func CreateMetadatum(ctx context.Context, client *gophercloud.ServiceClient, secretID string, opts CreateMetadatumOptsBuilder) (r MetadatumCreateResult) {
-	b, err := opts.ToMetadatumCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, metadataURL(client, secretID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadatumCreateResult)
 }
 
 // UpdateMetadatumOptsBuilder allows extensions to add additional parameters to
@@ -399,27 +275,18 @@ type UpdateMetadatumOptsBuilder interface {
 
 // ToMetadatumUpdateMap converts a MetadataOpts into a request body.
 func (opts MetadatumOpts) ToMetadatumUpdateMap() (map[string]any, string, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	return b, opts.Key, err
+	_ = "STUB: not implemented"
+	return nil, "", nil
 }
 
 // UpdateMetadatum will update a single key/value metadata to a secret.
 func UpdateMetadatum(ctx context.Context, client *gophercloud.ServiceClient, secretID string, opts UpdateMetadatumOptsBuilder) (r MetadatumResult) {
-	b, key, err := opts.ToMetadatumUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, metadatumURL(client, secretID, key), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadatumResult)
 }
 
 // DeleteMetadatum will delete an individual metadatum from a secret.
 func DeleteMetadatum(ctx context.Context, client *gophercloud.ServiceClient, secretID string, key string) (r MetadatumDeleteResult) {
-	resp, err := client.Delete(ctx, metadatumURL(client, secretID, key), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MetadatumDeleteResult)
 }

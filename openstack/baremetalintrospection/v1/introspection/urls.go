@@ -3,21 +3,26 @@ package introspection
 import "github.com/gophercloud/gophercloud/v2"
 
 func listIntrospectionsURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("introspection")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func introspectionURL(client *gophercloud.ServiceClient, nodeID string) string {
-	return client.ServiceURL("introspection", nodeID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func abortIntrospectionURL(client *gophercloud.ServiceClient, nodeID string) string {
-	return client.ServiceURL("introspection", nodeID, "abort")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func introspectionDataURL(client *gophercloud.ServiceClient, nodeID string) string {
-	return client.ServiceURL("introspection", nodeID, "data")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func introspectionUnprocessedDataURL(client *gophercloud.ServiceClient, nodeID string) string {
-	return client.ServiceURL("introspection", nodeID, "data", "unprocessed")
+	_ = "STUB: not implemented"
+	return ""
 }

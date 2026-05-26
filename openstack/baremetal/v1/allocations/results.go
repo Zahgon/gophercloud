@@ -50,18 +50,13 @@ type allocationResult struct {
 }
 
 func (r allocationResult) Extract() (*Allocation, error) {
-	var s Allocation
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (r allocationResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r allocationResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractAllocationsInto(r pagination.Page, v any) error {
-	return r.(AllocationPage).ExtractIntoSlicePtr(v, "allocations")
-}
+func ExtractAllocationsInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // AllocationPage abstracts the raw results of making a List() request against
 // the API.
@@ -70,34 +65,20 @@ type AllocationPage struct {
 }
 
 // IsEmpty returns true if a page contains no Allocation results.
-func (r AllocationPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractAllocations(r)
-	return len(s) == 0, err
-}
+func (r AllocationPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r AllocationPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"allocations_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractAllocations interprets the results of a single page from a List() call,
 // producing a slice of Allocation entities.
 func ExtractAllocations(r pagination.Page) ([]Allocation, error) {
-	var s []Allocation
-	err := ExtractAllocationsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResult is the response from a Get operation. Call its Extract

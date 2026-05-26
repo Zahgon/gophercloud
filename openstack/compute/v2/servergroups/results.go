@@ -63,23 +63,13 @@ type ServerGroupPage struct {
 }
 
 // IsEmpty determines whether or not a ServerGroupsPage is empty.
-func (page ServerGroupPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	va, err := ExtractServerGroups(page)
-	return len(va) == 0, err
-}
+func (page ServerGroupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractServerGroups interprets a page of results as a slice of
 // ServerGroups.
 func ExtractServerGroups(r pagination.Page) ([]ServerGroup, error) {
-	var s struct {
-		ServerGroups []ServerGroup `json:"server_groups"`
-	}
-	err := (r.(ServerGroupPage)).ExtractInto(&s)
-	return s.ServerGroups, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type ServerGroupResult struct {
@@ -89,11 +79,8 @@ type ServerGroupResult struct {
 // Extract is a method that attempts to interpret any Server Group resource
 // response as a ServerGroup struct.
 func (r ServerGroupResult) Extract() (*ServerGroup, error) {
-	var s struct {
-		ServerGroup *ServerGroup `json:"server_group"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ServerGroup, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult is the response from a Create operation. Call its Extract method

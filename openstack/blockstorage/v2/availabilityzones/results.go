@@ -25,9 +25,6 @@ type AvailabilityZonePage struct {
 // ExtractAvailabilityZones returns a slice of AvailabilityZones contained in a
 // single page of results.
 func ExtractAvailabilityZones(r pagination.Page) ([]AvailabilityZone, error) {
-	var s struct {
-		AvailabilityZoneInfo []AvailabilityZone `json:"availabilityZoneInfo"`
-	}
-	err := (r.(AvailabilityZonePage)).ExtractInto(&s)
-	return s.AvailabilityZoneInfo, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

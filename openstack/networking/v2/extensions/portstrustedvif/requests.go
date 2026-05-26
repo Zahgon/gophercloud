@@ -14,18 +14,8 @@ type PortCreateOptsExt struct {
 
 // To PortCreateMap casts a CreateOpts struct to a map
 func (opts PortCreateOptsExt) ToPortCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToPortCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.PortTrustedVIF != nil {
-		port["trusted"] = *opts.PortTrustedVIF
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PortUpdateOptsExt adds port trusted VIF options to the base ports.UpdateOpts.
@@ -38,16 +28,6 @@ type PortUpdateOptsExt struct {
 
 // ToPortUpdateMap casts a UpdateOpts struct to a map.
 func (opts PortUpdateOptsExt) ToPortUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToPortUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.PortTrustedVIF != nil {
-		port["trusted"] = *opts.PortTrustedVIF
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

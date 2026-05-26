@@ -2,7 +2,6 @@ package monitors
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -44,11 +43,8 @@ type ListOpts struct {
 
 // ToMonitorListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToMonitorListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
@@ -58,17 +54,8 @@ func (opts ListOpts) ToMonitorListQuery() (string, error) {
 // Default policy settings return only those health monitors that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToMonitorListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return MonitorPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Constants that represent approved monitoring types.
@@ -154,25 +141,8 @@ type CreateOpts struct {
 
 // ToMonitorCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToMonitorCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "healthmonitor")
-	if err != nil {
-		return nil, err
-	}
-
-	if v, ok := b["healthmonitor"]; ok {
-		if m, ok := v.(map[string]any); ok {
-			if v, ok := m["http_version"]; ok {
-				if v, ok := v.(string); ok {
-					m["http_version"], err = strconv.ParseFloat(v, 64)
-					if err != nil {
-						return nil, err
-					}
-				}
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 /*
@@ -191,21 +161,14 @@ CreateOpts{Type: TypeHTTP, Delay: 20, Timeout: 10, MaxRetries: 3,
 HttpMethod: "HEAD", ExpectedCodes: "200", PoolID: "2c946bfc-1804-43ab-a2ff-58f6a762b505"}
 */
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToMonitorCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular Health Monitor based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -266,46 +229,19 @@ type UpdateOpts struct {
 
 // ToMonitorUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToMonitorUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "healthmonitor")
-	if err != nil {
-		return nil, err
-	}
-
-	if v, ok := b["healthmonitor"]; ok {
-		if m, ok := v.(map[string]any); ok {
-			if v, ok := m["http_version"]; ok {
-				if v, ok := v.(string); ok {
-					m["http_version"], err = strconv.ParseFloat(v, 64)
-					if err != nil {
-						return nil, err
-					}
-				}
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is an operation which modifies the attributes of the specified
 // Monitor.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToMonitorUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular Monitor based on its unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -10,13 +10,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts an address-scope resource.
-func (r commonResult) Extract() (*AddressScope, error) {
-	var s struct {
-		AddressScope *AddressScope `json:"address_scope"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AddressScope, err
-}
+func (r commonResult) Extract() (*AddressScope, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a SubnetPool.
@@ -72,32 +66,16 @@ type AddressScopePage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r AddressScopePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"address_scopes_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty determines whether or not a AddressScopePage is empty.
-func (r AddressScopePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	addressScopes, err := ExtractAddressScopes(r)
-	return len(addressScopes) == 0, err
-}
+func (r AddressScopePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAddressScopes interprets the results of a single page from a List()
 // API call, producing a slice of AddressScopes structs.
 func ExtractAddressScopes(r pagination.Page) ([]AddressScope, error) {
-	var s struct {
-		AddressScopes []AddressScope `json:"address_scopes"`
-	}
-	err := (r.(AddressScopePage)).ExtractInto(&s)
-	return s.AddressScopes, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

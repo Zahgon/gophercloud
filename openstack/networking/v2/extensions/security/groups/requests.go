@@ -2,7 +2,6 @@ package groups
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -39,25 +38,16 @@ type ListOpts struct {
 
 // ToPortListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToSecGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // security groups. It accepts a ListOpts struct, which allows you to filter
 // and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToSecGroupListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return SecGroupPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -88,20 +78,15 @@ type CreateOpts struct {
 
 // ToSecGroupCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSecGroupCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is an operation which provisions a new security group with default
 // security group rules for the IPv4 and IPv6 ether types.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSecGroupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -130,46 +115,25 @@ type UpdateOpts struct {
 
 // ToSecGroupUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToSecGroupUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is an operation which updates an existing security group.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSecGroupUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Get retrieves a particular security group based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete will permanently delete a particular security group based on its
 // unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -1,9 +1,6 @@
 package subnetpools
 
 import (
-	"encoding/json"
-	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -15,13 +12,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a subnetpool resource.
-func (r commonResult) Extract() (*SubnetPool, error) {
-	var s struct {
-		SubnetPool *SubnetPool `json:"subnetpool"`
-	}
-	err := r.ExtractInto(&s)
-	return s.SubnetPool, err
-}
+func (r commonResult) Extract() (*SubnetPool, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a SubnetPool.
@@ -117,118 +108,13 @@ type SubnetPool struct {
 }
 
 func (r *SubnetPool) UnmarshalJSON(b []byte) error {
-	type tmp SubnetPool
+	_ = "STUB: not implemented"
 
 	// Support for older neutron time format
-	var s1 struct {
-		tmp
-		DefaultPrefixLen any `json:"default_prefixlen"`
-		MinPrefixLen     any `json:"min_prefixlen"`
-		MaxPrefixLen     any `json:"max_prefixlen"`
-
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = SubnetPool(s1.tmp)
-
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		switch t := s1.DefaultPrefixLen.(type) {
-		case string:
-			if r.DefaultPrefixLen, err = strconv.Atoi(t); err != nil {
-				return err
-			}
-		case float64:
-			r.DefaultPrefixLen = int(t)
-		default:
-			return fmt.Errorf("DefaultPrefixLen has unexpected type: %T", t)
-		}
-
-		switch t := s1.MinPrefixLen.(type) {
-		case string:
-			if r.MinPrefixLen, err = strconv.Atoi(t); err != nil {
-				return err
-			}
-		case float64:
-			r.MinPrefixLen = int(t)
-		default:
-			return fmt.Errorf("MinPrefixLen has unexpected type: %T", t)
-		}
-
-		switch t := s1.MaxPrefixLen.(type) {
-		case string:
-			if r.MaxPrefixLen, err = strconv.Atoi(t); err != nil {
-				return err
-			}
-		case float64:
-			r.MaxPrefixLen = int(t)
-		default:
-			return fmt.Errorf("MaxPrefixLen has unexpected type: %T", t)
-		}
-
-		return nil
-	}
-
-	// Support for newer neutron time format
-	var s2 struct {
-		tmp
-		DefaultPrefixLen any `json:"default_prefixlen"`
-		MinPrefixLen     any `json:"min_prefixlen"`
-		MaxPrefixLen     any `json:"max_prefixlen"`
-
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = SubnetPool(s2.tmp)
-
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-
-	switch t := s2.DefaultPrefixLen.(type) {
-	case string:
-		if r.DefaultPrefixLen, err = strconv.Atoi(t); err != nil {
-			return err
-		}
-	case float64:
-		r.DefaultPrefixLen = int(t)
-	default:
-		return fmt.Errorf("DefaultPrefixLen has unexpected type: %T", t)
-	}
-
-	switch t := s2.MinPrefixLen.(type) {
-	case string:
-		if r.MinPrefixLen, err = strconv.Atoi(t); err != nil {
-			return err
-		}
-	case float64:
-		r.MinPrefixLen = int(t)
-	default:
-		return fmt.Errorf("MinPrefixLen has unexpected type: %T", t)
-	}
-
-	switch t := s2.MaxPrefixLen.(type) {
-	case string:
-		if r.MaxPrefixLen, err = strconv.Atoi(t); err != nil {
-			return err
-		}
-	case float64:
-		r.MaxPrefixLen = int(t)
-	default:
-		return fmt.Errorf("MaxPrefixLen has unexpected type: %T", t)
-	}
-
 	return nil
 }
+
+// Support for newer neutron time format
 
 // SubnetPoolPage stores a single page of SubnetPools from a List() API call.
 type SubnetPoolPage struct {
@@ -239,32 +125,16 @@ type SubnetPoolPage struct {
 // the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r SubnetPoolPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"subnetpools_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty determines whether or not a SubnetPoolPage is empty.
-func (r SubnetPoolPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	subnetpools, err := ExtractSubnetPools(r)
-	return len(subnetpools) == 0, err
-}
+func (r SubnetPoolPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractSubnetPools interprets the results of a single page from a List() API call,
 // producing a slice of SubnetPools structs.
 func ExtractSubnetPools(r pagination.Page) ([]SubnetPool, error) {
-	var s struct {
-		SubnetPools []SubnetPool `json:"subnetpools"`
-	}
-	err := (r.(SubnetPoolPage)).ExtractInto(&s)
-	return s.SubnetPools, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

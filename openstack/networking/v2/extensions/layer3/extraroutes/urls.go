@@ -5,9 +5,11 @@ import "github.com/gophercloud/gophercloud/v2"
 const resourcePath = "routers"
 
 func addExtraRoutesURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "add_extraroutes")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func removeExtraRoutesURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "remove_extraroutes")
+	_ = "STUB: not implemented"
+	return ""
 }

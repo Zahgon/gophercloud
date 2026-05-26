@@ -1,9 +1,6 @@
 package flavors
 
 import (
-	"encoding/json"
-	"strconv"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -38,13 +35,7 @@ type DeleteResult struct {
 
 // Extract provides access to the individual Flavor returned by the Get and
 // Create functions.
-func (r commonResult) Extract() (*Flavor, error) {
-	var s struct {
-		Flavor *Flavor `json:"flavor"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Flavor, err
-}
+func (r commonResult) Extract() (*Flavor, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Flavor represent (virtual) hardware configurations for server resources
 // in a region.
@@ -88,37 +79,7 @@ type Flavor struct {
 	ExtraSpecs map[string]string `json:"extra_specs"`
 }
 
-func (r *Flavor) UnmarshalJSON(b []byte) error {
-	type tmp Flavor
-	var s struct {
-		tmp
-		Swap any `json:"swap"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Flavor(s.tmp)
-
-	switch t := s.Swap.(type) {
-	case float64:
-		r.Swap = int(t)
-	case string:
-		switch t {
-		case "":
-			r.Swap = 0
-		default:
-			swap, err := strconv.ParseFloat(t, 64)
-			if err != nil {
-				return err
-			}
-			r.Swap = int(swap)
-		}
-	}
-
-	return nil
-}
+func (r *Flavor) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // FlavorPage contains a single page of all flavors from a ListDetails call.
 type FlavorPage struct {
@@ -126,36 +87,20 @@ type FlavorPage struct {
 }
 
 // IsEmpty determines if a FlavorPage contains any results.
-func (page FlavorPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	flavors, err := ExtractFlavors(page)
-	return len(flavors) == 0, err
-}
+func (page FlavorPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (page FlavorPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"flavors_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractFlavors provides access to the list of flavors in a page acquired
 // from the ListDetail operation.
 func ExtractFlavors(r pagination.Page) ([]Flavor, error) {
-	var s struct {
-		Flavors []Flavor `json:"flavors"`
-	}
-	err := (r.(FlavorPage)).ExtractInto(&s)
-	return s.Flavors, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AccessPage contains a single page of all FlavorAccess entries for a flavor.
@@ -164,22 +109,12 @@ type AccessPage struct {
 }
 
 // IsEmpty indicates whether an AccessPage is empty.
-func (page AccessPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	v, err := ExtractAccesses(page)
-	return len(v) == 0, err
-}
+func (page AccessPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAccesses interprets a page of results as a slice of FlavorAccess.
 func ExtractAccesses(r pagination.Page) ([]FlavorAccess, error) {
-	var s struct {
-		FlavorAccesses []FlavorAccess `json:"flavor_access"`
-	}
-	err := (r.(AccessPage)).ExtractInto(&s)
-	return s.FlavorAccesses, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type accessResult struct {
@@ -200,13 +135,7 @@ type RemoveAccessResult struct {
 
 // Extract provides access to the result of an access create or delete.
 // The result will be all accesses that the flavor has.
-func (r accessResult) Extract() ([]FlavorAccess, error) {
-	var s struct {
-		FlavorAccesses []FlavorAccess `json:"flavor_access"`
-	}
-	err := r.ExtractInto(&s)
-	return s.FlavorAccesses, err
-}
+func (r accessResult) Extract() ([]FlavorAccess, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // FlavorAccess represents an ACL of tenant access to a specific Flavor.
 type FlavorAccess struct {
@@ -219,11 +148,8 @@ type FlavorAccess struct {
 
 // Extract interprets any extraSpecsResult as ExtraSpecs, if possible.
 func (r extraSpecsResult) Extract() (map[string]string, error) {
-	var s struct {
-		ExtraSpecs map[string]string `json:"extra_specs"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ExtraSpecs, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // extraSpecsResult contains the result of a call for (potentially) multiple
@@ -271,7 +197,6 @@ type DeleteExtraSpecResult struct {
 
 // Extract interprets any extraSpecResult as an ExtraSpec, if possible.
 func (r extraSpecResult) Extract() (map[string]string, error) {
-	var s map[string]string
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

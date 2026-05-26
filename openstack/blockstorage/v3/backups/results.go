@@ -1,7 +1,6 @@
 package backups
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -90,53 +89,20 @@ type BackupPage struct {
 }
 
 // UnmarshalJSON converts our JSON API response into our backup struct
-func (r *Backup) UnmarshalJSON(b []byte) error {
-	type tmp Backup
-	var s struct {
-		tmp
-		CreatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		DataTimestamp gophercloud.JSONRFC3339MilliNoZ `json:"data_timestamp"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Backup(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-	r.DataTimestamp = time.Time(s.DataTimestamp)
-
-	return err
-}
+func (r *Backup) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // IsEmpty returns true if a BackupPage contains no Backups.
-func (r BackupPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	volumes, err := ExtractBackups(r)
-	return len(volumes) == 0, err
-}
+func (r BackupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func (page BackupPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"backups_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractBackups extracts and returns Backups. It is used while iterating over a backups.List call.
 func ExtractBackups(r pagination.Page) ([]Backup, error) {
-	var s []Backup
-	err := ExtractBackupsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateResult contains the response body and error from an Update request.
@@ -149,19 +115,11 @@ type commonResult struct {
 }
 
 // Extract will get the Backup object out of the commonResult object.
-func (r commonResult) Extract() (*Backup, error) {
-	var s Backup
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*Backup, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "backup")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractBackupsInto(r pagination.Page, v any) error {
-	return r.(BackupPage).ExtractIntoSlicePtr(v, "backups")
-}
+func ExtractBackupsInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // RestoreResult contains the response body and error from a restore request.
 type RestoreResult struct {
@@ -182,15 +140,9 @@ type Restore struct {
 }
 
 // Extract will get the Backup restore object out of the RestoreResult object.
-func (r RestoreResult) Extract() (*Restore, error) {
-	var s Restore
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r RestoreResult) Extract() (*Restore, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r RestoreResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "restore")
-}
+func (r RestoreResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // ExportResult contains the response body and error from an export request.
 type ExportResult struct {
@@ -207,15 +159,9 @@ type BackupRecord struct {
 }
 
 // Extract will get the Backup record object out of the ExportResult object.
-func (r ExportResult) Extract() (*BackupRecord, error) {
-	var s BackupRecord
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r ExportResult) Extract() (*BackupRecord, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r ExportResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "backup-record")
-}
+func (r ExportResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // ImportResponse struct contains the response of the Backup Import action.
 type ImportResponse struct {
@@ -230,14 +176,11 @@ type ImportResult struct {
 
 // Extract will get the Backup object out of the commonResult object.
 func (r ImportResult) Extract() (*ImportResponse, error) {
-	var s ImportResponse
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (r ImportResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "backup")
-}
+func (r ImportResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // ImportBackup contains all the information to import a Cinder Backup.
 type ImportBackup struct {
@@ -273,72 +216,10 @@ type ImportBackup struct {
 }
 
 // UnmarshalJSON converts our JSON API response into our backup struct
-func (r *ImportBackup) UnmarshalJSON(b []byte) error {
-	type tmp ImportBackup
-	var s struct {
-		tmp
-		CreatedAt     time.Time `json:"created_at"`
-		UpdatedAt     time.Time `json:"updated_at"`
-		DeletedAt     time.Time `json:"deleted_at"`
-		DataTimestamp time.Time `json:"data_timestamp"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ImportBackup(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-	r.DeletedAt = time.Time(s.DeletedAt)
-	r.DataTimestamp = time.Time(s.DataTimestamp)
-
-	return err
-}
+func (r *ImportBackup) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // MarshalJSON converts our struct request into JSON backup import request
-func (r ImportBackup) MarshalJSON() ([]byte, error) {
-	type b ImportBackup
-	type ext struct {
-		CreatedAt     *string `json:"created_at"`
-		UpdatedAt     *string `json:"updated_at"`
-		DeletedAt     *string `json:"deleted_at"`
-		DataTimestamp *string `json:"data_timestamp"`
-	}
-	type tmp struct {
-		b
-		ext
-	}
-
-	var t ext
-	if r.CreatedAt != (time.Time{}) {
-		v := r.CreatedAt.Format(time.RFC3339)
-		t.CreatedAt = &v
-	}
-	if r.UpdatedAt != (time.Time{}) {
-		v := r.UpdatedAt.Format(time.RFC3339)
-		t.UpdatedAt = &v
-	}
-	if r.DeletedAt != (time.Time{}) {
-		v := r.DeletedAt.Format(time.RFC3339)
-		t.DeletedAt = &v
-	}
-	if r.DataTimestamp != (time.Time{}) {
-		v := r.DataTimestamp.Format(time.RFC3339)
-		t.DataTimestamp = &v
-	}
-
-	if r.Metadata == nil {
-		r.Metadata = make(map[string]string)
-	}
-
-	s := tmp{
-		b(r),
-		t,
-	}
-
-	return json.Marshal(s)
-}
+func (r ImportBackup) MarshalJSON() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ResetStatusResult contains the response error from a ResetStatus request.
 type ResetStatusResult struct {

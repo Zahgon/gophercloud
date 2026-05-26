@@ -11,11 +11,8 @@ type commonResult struct {
 
 // Extract is a function that accepts a result and extracts a BandwidthLimitRule.
 func (r commonResult) ExtractBandwidthLimitRule() (*BandwidthLimitRule, error) {
-	var s struct {
-		BandwidthLimitRule *BandwidthLimitRule `json:"bandwidth_limit_rule"`
-	}
-	err := r.ExtractInto(&s)
-	return s.BandwidthLimitRule, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetBandwidthLimitRuleResult represents the result of a Get operation. Call its Extract
@@ -70,34 +67,27 @@ type BandwidthLimitRulePage struct {
 
 // IsEmpty checks whether a BandwidthLimitRulePage is empty.
 func (r BandwidthLimitRulePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractBandwidthLimitRules(r)
-	return len(is) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractBandwidthLimitRules accepts a BandwidthLimitRulePage, and extracts the elements into a slice of
 // BandwidthLimitRules.
 func ExtractBandwidthLimitRules(r pagination.Page) ([]BandwidthLimitRule, error) {
-	var s []BandwidthLimitRule
-	err := ExtractBandwidthLimitRulesInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractBandwidthLimitRulesInto extracts the elements into a slice of RBAC Policy structs.
 func ExtractBandwidthLimitRulesInto(r pagination.Page, v any) error {
-	return r.(BandwidthLimitRulePage).ExtractIntoSlicePtr(v, "bandwidth_limit_rules")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Extract is a function that accepts a result and extracts a DSCPMarkingRule.
 func (r commonResult) ExtractDSCPMarkingRule() (*DSCPMarkingRule, error) {
-	var s struct {
-		DSCPMarkingRule *DSCPMarkingRule `json:"dscp_marking_rule"`
-	}
-	err := r.ExtractInto(&s)
-	return s.DSCPMarkingRule, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetDSCPMarkingRuleResult represents the result of a Get operation. Call its Extract
@@ -145,35 +135,25 @@ type DSCPMarkingRulePage struct {
 }
 
 // IsEmpty checks whether a DSCPMarkingRulePage is empty.
-func (r DSCPMarkingRulePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractDSCPMarkingRules(r)
-	return len(is) == 0, err
-}
+func (r DSCPMarkingRulePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractDSCPMarkingRules accepts a DSCPMarkingRulePage, and extracts the elements into a slice of
 // DSCPMarkingRules.
 func ExtractDSCPMarkingRules(r pagination.Page) ([]DSCPMarkingRule, error) {
-	var s []DSCPMarkingRule
-	err := ExtractDSCPMarkingRulesInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractDSCPMarkingRulesInto extracts the elements into a slice of RBAC Policy structs.
 func ExtractDSCPMarkingRulesInto(r pagination.Page, v any) error {
-	return r.(DSCPMarkingRulePage).ExtractIntoSlicePtr(v, "dscp_marking_rules")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Extract is a function that accepts a result and extracts a BandwidthLimitRule.
 func (r commonResult) ExtractMinimumBandwidthRule() (*MinimumBandwidthRule, error) {
-	var s struct {
-		MinimumBandwidthRule *MinimumBandwidthRule `json:"minimum_bandwidth_rule"`
-	}
-	err := r.ExtractInto(&s)
-	return s.MinimumBandwidthRule, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetMinimumBandwidthRuleResult represents the result of a Get operation. Call its Extract
@@ -225,23 +205,19 @@ type MinimumBandwidthRulePage struct {
 
 // IsEmpty checks whether a MinimumBandwidthRulePage is empty.
 func (r MinimumBandwidthRulePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractMinimumBandwidthRules(r)
-	return len(is) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractMinimumBandwidthRules accepts a MinimumBandwidthRulePage, and extracts the elements into a slice of
 // MinimumBandwidthRules.
 func ExtractMinimumBandwidthRules(r pagination.Page) ([]MinimumBandwidthRule, error) {
-	var s []MinimumBandwidthRule
-	err := ExtractMinimumBandwidthRulesInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractMinimumBandwidthRulesInto extracts the elements into a slice of RBAC Policy structs.
 func ExtractMinimumBandwidthRulesInto(r pagination.Page, v any) error {
-	return r.(MinimumBandwidthRulePage).ExtractIntoSlicePtr(v, "minimum_bandwidth_rules")
+	_ = "STUB: not implemented"
+	return nil
 }

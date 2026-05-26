@@ -1,24 +1,11 @@
 package objects
 
 import (
-	"bytes"
 	"context"
-	"crypto/hmac"
-	"crypto/md5"
-	"crypto/sha1"
-	"crypto/sha256"
-	"crypto/sha512"
-	"fmt"
-	"hash"
 	"io"
-	"net/url"
-	"strings"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
-	v1 "github.com/gophercloud/gophercloud/v2/openstack/objectstorage/v1"
-	"github.com/gophercloud/gophercloud/v2/openstack/objectstorage/v1/accounts"
-	"github.com/gophercloud/gophercloud/v2/openstack/objectstorage/v1/containers"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -26,9 +13,7 @@ import (
 // neigther set nor resolved from a container or account metadata.
 type ErrTempURLKeyNotFound struct{ gophercloud.ErrMissingInput }
 
-func (e ErrTempURLKeyNotFound) Error() string {
-	return "Unable to obtain the Temp URL key."
-}
+func (e ErrTempURLKeyNotFound) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrTempURLDigestNotValid is an error indicating that the requested
 // cryptographic hash function is not supported.
@@ -37,9 +22,7 @@ type ErrTempURLDigestNotValid struct {
 	Digest string
 }
 
-func (e ErrTempURLDigestNotValid) Error() string {
-	return fmt.Sprintf("The requested %q digest is not supported.", e.Digest)
-}
+func (e ErrTempURLDigestNotValid) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
 // request.
@@ -66,8 +49,8 @@ type ListOpts struct {
 
 // ToObjectListParams formats a ListOpts into a query string.
 func (opts ListOpts) ToObjectListParams() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List is a function that retrieves all objects in a container. It also returns
@@ -75,27 +58,8 @@ func (opts ListOpts) ToObjectListParams() (string, error) {
 // pass the ListResult response to the ExtractInfo or ExtractNames function,
 // respectively.
 func List(c *gophercloud.ServiceClient, containerName string, opts ListOptsBuilder) pagination.Pager {
-	url, err := listURL(c, containerName)
-	if err != nil {
-		return pagination.Pager{Err: err}
-	}
-
-	headers := map[string]string{"Accept": "application/json", "Content-Type": "application/json"}
-	if opts != nil {
-		query, err := opts.ToObjectListParams()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	pager := pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		p := ObjectPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
-	pager.Headers = headers
-	return pager
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // DownloadOptsBuilder allows extensions to add additional parameters to the
@@ -121,53 +85,16 @@ type DownloadOpts struct {
 // ToObjectDownloadParams formats a DownloadOpts into a query string and map of
 // headers.
 func (opts DownloadOpts) ToObjectDownloadParams() (map[string]string, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return nil, "", err
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, q.String(), err
-	}
-	if !opts.IfModifiedSince.IsZero() {
-		h["If-Modified-Since"] = opts.IfModifiedSince.Format(time.RFC1123)
-	}
-	if !opts.IfUnmodifiedSince.IsZero() {
-		h["If-Unmodified-Since"] = opts.IfUnmodifiedSince.Format(time.RFC1123)
-	}
-	return h, q.String(), nil
+	_ = "STUB: not implemented"
+	return nil, "", nil
 }
 
 // Download is a function that retrieves the content and metadata for an object.
 // To extract just the content, call the DownloadResult method ExtractContent,
 // after checking DownloadResult's Err field.
 func Download(ctx context.Context, c *gophercloud.ServiceClient, containerName, objectName string, opts DownloadOptsBuilder) (r DownloadResult) {
-	url, err := downloadURL(c, containerName, objectName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	h := make(map[string]string)
-	if opts != nil {
-		headers, query, err := opts.ToObjectDownloadParams()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		for k, v := range headers {
-			h[k] = v
-		}
-		url += query
-	}
-
-	resp, err := c.Get(ctx, url, nil, &gophercloud.RequestOpts{
-		MoreHeaders:      h,
-		OkCodes:          []int{200, 206, 304},
-		KeepResponseBody: true,
-	})
-	r.Body, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DownloadResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -202,83 +129,21 @@ type CreateOpts struct {
 // ToObjectCreateParams formats a CreateOpts into a query string and map of
 // headers.
 func (opts CreateOpts) ToObjectCreateParams() (io.Reader, map[string]string, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return nil, nil, "", err
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, nil, "", err
-	}
-
-	for k, v := range opts.Metadata {
-		h["X-Object-Meta-"+k] = v
-	}
-
-	if opts.NoETag {
-		delete(h, "etag")
-		return opts.Content, h, q.String(), nil
-	}
-
-	if h["ETag"] != "" {
-		return opts.Content, h, q.String(), nil
-	}
-
-	// When we're dealing with big files an io.ReadSeeker allows us to efficiently calculate
-	// the md5 sum. An io.Reader is only readable once which means we have to copy the entire
-	// file content into memory first.
-	readSeeker, isReadSeeker := opts.Content.(io.ReadSeeker)
-	if !isReadSeeker {
-		data, err := io.ReadAll(opts.Content)
-		if err != nil {
-			return nil, nil, "", err
-		}
-		readSeeker = bytes.NewReader(data)
-	}
-
-	hash := md5.New()
-	// io.Copy into md5 is very efficient as it's done in small chunks.
-	if _, err := io.Copy(hash, readSeeker); err != nil {
-		return nil, nil, "", err
-	}
-	_, err = readSeeker.Seek(0, io.SeekStart)
-	if err != nil {
-		return nil, nil, "", err
-	}
-
-	h["ETag"] = fmt.Sprintf("%x", hash.Sum(nil))
-
-	return readSeeker, h, q.String(), nil
+	_ = "STUB: not implemented"
+	return *new(io.Reader), nil, "", nil
 }
+
+// When we're dealing with big files an io.ReadSeeker allows us to efficiently calculate
+// the md5 sum. An io.Reader is only readable once which means we have to copy the entire
+// file content into memory first.
+
+// io.Copy into md5 is very efficient as it's done in small chunks.
 
 // Create is a function that creates a new object or replaces an existing
 // object.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, containerName, objectName string, opts CreateOptsBuilder) (r CreateResult) {
-	url, err := createURL(c, containerName, objectName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h := make(map[string]string)
-	var b io.Reader
-	if opts != nil {
-		tmpB, headers, query, err := opts.ToObjectCreateParams()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		for k, v := range headers {
-			h[k] = v
-		}
-		url += query
-		b = tmpB
-	}
-
-	resp, err := c.Put(ctx, url, b, nil, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // CopyOptsBuilder allows extensions to add additional parameters to the
@@ -310,78 +175,23 @@ type CopyOpts struct {
 
 // ToObjectCopyMap formats a CopyOpts into a map of headers.
 func (opts CopyOpts) ToObjectCopyMap() (map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, err
-	}
-	for k, v := range opts.Metadata {
-		h["X-Object-Meta-"+k] = v
-	}
-	return h, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToObjectCopyQuery formats a CopyOpts into a query.
-func (opts CopyOpts) ToObjectCopyQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
-}
+func (opts CopyOpts) ToObjectCopyQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // Copy is a function that copies one object to another.
 func Copy(ctx context.Context, c *gophercloud.ServiceClient, containerName, objectName string, opts CopyOptsBuilder) (r CopyResult) {
-	h := make(map[string]string)
-	headers, err := opts.ToObjectCopyMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k, v := range headers {
-		if strings.ToLower(k) == "destination" {
-			// URL-encode the container name and the object name
-			// separately before joining them around the `/` slash
-			// separator. Note that the destination path is also
-			// expected to start with a slash.
-			segments := strings.SplitN(v, "/", 3)
-			if l := len(segments); l != 3 {
-				r.Err = fmt.Errorf("the destination field is expected to contain at least two slash / characters: the initial one, and the separator between the container name and the object name")
-				return
-			}
-			if segments[0] != "" {
-				r.Err = fmt.Errorf("the destination field is expected to start with a slash")
-				return
-			}
-			for i := range segments {
-				segments[i] = url.PathEscape(segments[i])
-			}
-			v = strings.Join(segments, "/")
-		}
-		h[k] = v
-	}
-
-	url, err := copyURL(c, containerName, objectName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	if opts, ok := opts.(CopyOptsQueryBuilder); ok {
-		query, err := opts.ToObjectCopyQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-
-	resp, err := c.Request(ctx, "COPY", url, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CopyResult)
 }
+
+// URL-encode the container name and the object name
+// separately before joining them around the `/` slash
+// separator. Note that the destination path is also
+// expected to start with a slash.
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
 // Delete request.
@@ -397,28 +207,14 @@ type DeleteOpts struct {
 
 // ToObjectDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToObjectDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Delete is a function that deletes an object.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, containerName, objectName string, opts DeleteOptsBuilder) (r DeleteResult) {
-	url, err := deleteURL(c, containerName, objectName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	if opts != nil {
-		query, err := opts.ToObjectDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := c.Delete(ctx, url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // GetOptsBuilder allows extensions to add additional parameters to the
@@ -438,45 +234,16 @@ type GetOpts struct {
 
 // ToObjectGetParams formats a GetOpts into a query string and a map of headers.
 func (opts GetOpts) ToObjectGetParams() (map[string]string, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return nil, "", err
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, q.String(), err
-	}
-	return h, q.String(), nil
+	_ = "STUB: not implemented"
+	return nil, "", nil
 }
 
 // Get is a function that retrieves the metadata of an object. To extract just
 // the custom metadata, pass the GetResult response to the ExtractMetadata
 // function.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, containerName, objectName string, opts GetOptsBuilder) (r GetResult) {
-	url, err := getURL(c, containerName, objectName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h := make(map[string]string)
-	if opts != nil {
-		headers, query, err := opts.ToObjectGetParams()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		for k, v := range headers {
-			h[k] = v
-		}
-		url += query
-	}
-
-	resp, err := c.Head(ctx, url, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -500,45 +267,14 @@ type UpdateOpts struct {
 
 // ToObjectUpdateMap formats a UpdateOpts into a map of headers.
 func (opts UpdateOpts) ToObjectUpdateMap() (map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, err
-	}
-
-	for k, v := range opts.Metadata {
-		h["X-Object-Meta-"+k] = v
-	}
-
-	for _, k := range opts.RemoveMetadata {
-		h["X-Remove-Object-Meta-"+k] = "remove"
-	}
-	return h, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is a function that creates, updates, or deletes an object's metadata.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, containerName, objectName string, opts UpdateOptsBuilder) (r UpdateResult) {
-	url, err := updateURL(c, containerName, objectName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h := make(map[string]string)
-	if opts != nil {
-		headers, err := opts.ToObjectUpdateMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-
-		for k, v := range headers {
-			h[k] = v
-		}
-	}
-	resp, err := c.Post(ctx, url, nil, nil, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // HTTPMethod represents an HTTP method string (e.g. "GET").
@@ -592,69 +328,19 @@ type CreateTempURLOpts struct {
 // allows users to have "GET" or "POST" access to a particular tenant's object
 // for a limited amount of time.
 func CreateTempURL(ctx context.Context, c *gophercloud.ServiceClient, containerName, objectName string, opts CreateTempURLOpts) (string, error) {
-	url, err := getURL(c, containerName, objectName)
-	if err != nil {
-		return "", err
-	}
-	urlToBeSigned := tempURL(c, containerName, objectName)
-
-	if opts.Split == "" {
-		opts.Split = "/v1/"
-	}
-
-	// Initialize time if it was not passed as opts
-	date := opts.Timestamp
-	if date.IsZero() {
-		date = time.Now()
-	}
-	duration := time.Duration(opts.TTL) * time.Second
-	// UNIX time is always UTC
-	expiry := date.Add(duration).Unix()
-
-	// Initialize the tempURLKey to calculate a signature
-	tempURLKey := opts.TempURLKey
-	if tempURLKey == "" {
-		// fallback to a container TempURL key
-		getHeader, err := containers.Get(ctx, c, containerName, nil).Extract()
-		if err != nil {
-			return "", err
-		}
-		tempURLKey = getHeader.TempURLKey
-		if tempURLKey == "" {
-			// fallback to an account TempURL key
-			getHeader, err := accounts.Get(ctx, c, nil).Extract()
-			if err != nil {
-				return "", err
-			}
-			tempURLKey = getHeader.TempURLKey
-		}
-		if tempURLKey == "" {
-			return "", ErrTempURLKeyNotFound{}
-		}
-	}
-
-	secretKey := []byte(tempURLKey)
-	_, objectPath, splitFound := strings.Cut(urlToBeSigned, opts.Split)
-	if !splitFound {
-		return "", fmt.Errorf("URL prefix %q not found", opts.Split)
-	}
-	objectPath = opts.Split + objectPath
-	body := fmt.Sprintf("%s\n%d\n%s", opts.Method, expiry, objectPath)
-	var hash hash.Hash
-	switch opts.Digest {
-	case "", "sha1":
-		hash = hmac.New(sha1.New, secretKey)
-	case "sha256":
-		hash = hmac.New(sha256.New, secretKey)
-	case "sha512":
-		hash = hmac.New(sha512.New, secretKey)
-	default:
-		return "", ErrTempURLDigestNotValid{Digest: opts.Digest}
-	}
-	hash.Write([]byte(body))
-	hexsum := fmt.Sprintf("%x", hash.Sum(nil))
-	return fmt.Sprintf("%s?temp_url_sig=%s&temp_url_expires=%d", url, hexsum, expiry), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// Initialize time if it was not passed as opts
+
+// UNIX time is always UTC
+
+// Initialize the tempURLKey to calculate a signature
+
+// fallback to a container TempURL key
+
+// fallback to an account TempURL key
 
 // BulkDelete is a function that bulk deletes objects.
 // In Swift, the maximum number of deletes per request is set by default to 10000.
@@ -663,32 +349,6 @@ func CreateTempURL(ctx context.Context, c *gophercloud.ServiceClient, containerN
 // * https://github.com/openstack/swift/blob/6d3d4197151f44bf28b51257c1a4c5d33411dcae/etc/proxy-server.conf-sample#L1029-L1034
 // * https://github.com/openstack/swift/blob/e8cecf7fcc1630ee83b08f9a73e1e59c07f8d372/swift/common/middleware/bulk.py#L309
 func BulkDelete(ctx context.Context, c *gophercloud.ServiceClient, container string, objects []string) (r BulkDeleteResult) {
-	if err := v1.CheckContainerName(container); err != nil {
-		r.Err = err
-		return
-	}
-
-	encodedContainer := url.PathEscape(container)
-
-	var body bytes.Buffer
-	for i := range objects {
-		if err := v1.CheckObjectName(objects[i]); err != nil {
-			r.Err = err
-			return
-		}
-		body.WriteString(encodedContainer)
-		body.WriteRune('/')
-		body.WriteString(url.PathEscape(objects[i]))
-		body.WriteRune('\n')
-	}
-
-	resp, err := c.Post(ctx, bulkDeleteURL(c), &body, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: map[string]string{
-			"Accept":       "application/json",
-			"Content-Type": "text/plain",
-		},
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(BulkDeleteResult)
 }

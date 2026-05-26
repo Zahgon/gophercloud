@@ -3,7 +3,6 @@
 package attachments
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -33,24 +32,7 @@ type Attachment struct {
 }
 
 // UnmarshalJSON is our unmarshalling helper
-func (r *Attachment) UnmarshalJSON(b []byte) error {
-	type tmp Attachment
-	var s struct {
-		tmp
-		AttachedAt gophercloud.JSONRFC3339MilliNoZ `json:"attached_at"`
-		DetachedAt gophercloud.JSONRFC3339MilliNoZ `json:"detached_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Attachment(s.tmp)
-
-	r.AttachedAt = time.Time(s.AttachedAt)
-	r.DetachedAt = time.Time(s.DetachedAt)
-
-	return err
-}
+func (r *Attachment) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // AttachmentPage is a pagination.pager that is returned from a call to the List
 // function.
@@ -59,21 +41,13 @@ type AttachmentPage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no Attachments.
-func (r AttachmentPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	attachments, err := ExtractAttachments(r)
-	return len(attachments) == 0, err
-}
+func (r AttachmentPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAttachments extracts and returns Attachments. It is used while
 // iterating over a attachment.List call.
 func ExtractAttachments(r pagination.Page) ([]Attachment, error) {
-	var s []Attachment
-	err := ExtractAttachmentsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -81,22 +55,14 @@ type commonResult struct {
 }
 
 // Extract will get the Attachment object out of the commonResult object.
-func (r commonResult) Extract() (*Attachment, error) {
-	var s Attachment
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*Attachment, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractInto converts our response data into a attachment struct.
-func (r commonResult) ExtractInto(a any) error {
-	return r.ExtractIntoStructPtr(a, "attachment")
-}
+func (r commonResult) ExtractInto(a any) error { _ = "STUB: not implemented"; return nil }
 
 // ExtractAttachmentsInto similar to ExtractInto but operates on a List of
 // attachments.
-func ExtractAttachmentsInto(r pagination.Page, a any) error {
-	return r.(AttachmentPage).ExtractIntoSlicePtr(a, "attachments")
-}
+func ExtractAttachmentsInto(r pagination.Page, a any) error { _ = "STUB: not implemented"; return nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {

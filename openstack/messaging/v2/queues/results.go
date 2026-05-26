@@ -1,8 +1,6 @@
 package queues
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -117,103 +115,37 @@ type QueueShare struct {
 
 // Extract interprets any commonResult as a Queue.
 func (r commonResult) Extract() (QueueDetails, error) {
-	var s QueueDetails
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return *new(QueueDetails), nil
 }
 
 // Extract interprets any StatResult as a Stats.
-func (r StatResult) Extract() (Stats, error) {
-	var s struct {
-		Stats Stats `json:"messages"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Stats, err
-}
+func (r StatResult) Extract() (Stats, error) { _ = "STUB: not implemented"; return *new(Stats), nil }
 
 // Extract interprets any ShareResult as a QueueShare.
 func (r ShareResult) Extract() (QueueShare, error) {
-	var s QueueShare
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return *new(QueueShare), nil
 }
 
 // ExtractQueues interprets the results of a single page from a
 // List() call, producing a map of queues.
-func ExtractQueues(r pagination.Page) ([]Queue, error) {
-	var s struct {
-		Queues []Queue `json:"queues"`
-	}
-	err := (r.(QueuePage)).ExtractInto(&s)
-	return s.Queues, err
-}
+func ExtractQueues(r pagination.Page) ([]Queue, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // IsEmpty determines if a QueuesPage contains any results.
-func (r QueuePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractQueues(r)
-	return len(s) == 0, err
-}
+func (r QueuePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r QueuePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-
-	next, err := gophercloud.ExtractNextURL(s.Links)
-	if err != nil {
-		return "", err
-	}
-	return nextPageURL(endpointURL, next)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetCount value if it request was supplied `WithCount` param
-func (r QueuePage) GetCount() (int, error) {
-	var s struct {
-		Count int `json:"count"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return 0, err
-	}
-	return s.Count, nil
-}
+func (r QueuePage) GetCount() (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
-func (r *QueueDetails) UnmarshalJSON(b []byte) error {
-	type tmp QueueDetails
-	var s struct {
-		tmp
-		Extra map[string]any `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = QueueDetails(s.tmp)
+func (r *QueueDetails) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Collect other fields and bundle them into Extra
-	// but only if a field titled "extra" wasn't sent.
-	if s.Extra != nil {
-		r.Extra = s.Extra
-	} else {
-		var result any
-		err := json.Unmarshal(b, &result)
-		if err != nil {
-			return err
-		}
-		if resultMap, ok := result.(map[string]any); ok {
-			r.Extra = gophercloud.RemainingKeys(QueueDetails{}, resultMap)
-		}
-	}
-
-	return err
-}
+// Collect other fields and bundle them into Extra
+// but only if a field titled "extra" wasn't sent.

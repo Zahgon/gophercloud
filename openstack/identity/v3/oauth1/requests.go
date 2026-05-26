@@ -2,16 +2,7 @@ package oauth1
 
 import (
 	"context"
-	"crypto/hmac"
-	"crypto/sha1"
-	"encoding/base64"
-	"fmt"
-	"io"
-	"math/rand"
 	"net/url"
-	"sort"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -73,93 +64,41 @@ type AuthOptions struct {
 // ToTokenV3HeadersMap builds the headers required for an OAuth1-based create
 // request.
 func (opts AuthOptions) ToTokenV3HeadersMap(headerOpts map[string]any) (map[string]string, error) {
-	q, err := buildOAuth1QueryString(opts, opts.OAuthTimestamp, "")
-	if err != nil {
-		return nil, err
-	}
-
-	signatureKeys := []string{opts.OAuthConsumerSecret, opts.OAuthTokenSecret}
-
-	method := headerOpts["method"].(string)
-	u := headerOpts["url"].(string)
-	stringToSign := buildStringToSign(method, u, q.Query())
-	signature := url.QueryEscape(signString(opts.OAuthSignatureMethod, stringToSign, signatureKeys))
-
-	authHeader := buildAuthHeader(q.Query(), signature)
-
-	headers := map[string]string{
-		"Authorization": authHeader,
-		"X-Auth-Token":  "",
-	}
-
-	return headers, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToTokenV3ScopeMap allows AuthOptions to satisfy the tokens.AuthOptionsBuilder
 // interface.
 func (opts AuthOptions) ToTokenV3ScopeMap() (map[string]any, error) {
+	_ = "STUB: not implemented"
+
+	// CanReauth allows AuthOptions to satisfy the tokens.AuthOptionsBuilder
+	// interface.
 	return nil, nil
 }
 
-// CanReauth allows AuthOptions to satisfy the tokens.AuthOptionsBuilder
-// interface.
-func (opts AuthOptions) CanReauth() bool {
-	return opts.AllowReauth
-}
+func (opts AuthOptions) CanReauth() bool { _ = "STUB: not implemented"; return false }
 
 // ToTokenV3CreateMap builds a create request body.
 func (opts AuthOptions) ToTokenV3CreateMap(map[string]any) (map[string]any, error) {
+	_ = "STUB: not implemented"
 	// identityReq defines the "identity" portion of an OAuth1-based authentication
 	// create request body.
-	type identityReq struct {
-		Methods []string `json:"methods"`
-		OAuth1  struct{} `json:"oauth1"`
-	}
-
-	// authReq defines the "auth" portion of an OAuth1-based authentication
-	// create request body.
-	type authReq struct {
-		Identity identityReq `json:"identity"`
-	}
-
-	// oauth1Request defines how  an OAuth1-based authentication create
-	// request body looks.
-	type oauth1Request struct {
-		Auth authReq `json:"auth"`
-	}
-
-	var req oauth1Request
-
-	req.Auth.Identity.Methods = []string{"oauth1"}
-	return gophercloud.BuildRequestBody(req, "")
+	return nil, nil
 }
+
+// authReq defines the "auth" portion of an OAuth1-based authentication
+// create request body.
+
+// oauth1Request defines how  an OAuth1-based authentication create
+// request body looks.
 
 // Create authenticates and either generates a new OpenStack token
 // from an OAuth1 token.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens.CreateResult) {
-	b, err := opts.ToTokenV3CreateMap(nil)
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	headerOpts := map[string]any{
-		"method": "POST",
-		"url":    authURL(client),
-	}
-
-	h, err := opts.ToTokenV3HeadersMap(headerOpts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, authURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(tokens.CreateResult)
 }
 
 // CreateConsumerOptsBuilder allows extensions to add additional parameters to
@@ -176,42 +115,32 @@ type CreateConsumerOpts struct {
 
 // ToOAuth1CreateConsumerMap formats a CreateConsumerOpts into a create request.
 func (opts CreateConsumerOpts) ToOAuth1CreateConsumerMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "consumer")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateConsumer creates a new Consumer.
 func CreateConsumer(ctx context.Context, client *gophercloud.ServiceClient, opts CreateConsumerOptsBuilder) (r CreateConsumerResult) {
-	b, err := opts.ToOAuth1CreateConsumerMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, consumersURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateConsumerResult)
 }
 
 // DeleteConsumer deletes a Consumer.
 func DeleteConsumer(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteConsumerResult) {
-	resp, err := client.Delete(ctx, consumerURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteConsumerResult)
 }
 
 // List enumerates Consumers.
 func ListConsumers(client *gophercloud.ServiceClient) pagination.Pager {
-	return pagination.NewPager(client, consumersURL(client), func(r pagination.PageResult) pagination.Page {
-		return ConsumersPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetConsumer retrieves details on a single Consumer by ID.
 func GetConsumer(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetConsumerResult) {
-	resp, err := client.Get(ctx, consumerURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetConsumerResult)
 }
 
 // UpdateConsumerOptsBuilder allows extensions to add additional parameters to the
@@ -229,21 +158,14 @@ type UpdateConsumerOpts struct {
 // ToOAuth1UpdateConsumerMap formats an UpdateConsumerOpts into a consumer update
 // request.
 func (opts UpdateConsumerOpts) ToOAuth1UpdateConsumerMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "consumer")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateConsumer updates an existing Consumer.
 func UpdateConsumer(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateConsumerOptsBuilder) (r UpdateConsumerResult) {
-	b, err := opts.ToOAuth1UpdateConsumerMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, consumerURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateConsumerResult)
 }
 
 // RequestTokenOptsBuilder allows extensions to add additional parameters to the
@@ -284,50 +206,14 @@ type RequestTokenOpts struct {
 // ToOAuth1RequestTokenHeaders formats a RequestTokenOpts into a map of request
 // headers.
 func (opts RequestTokenOpts) ToOAuth1RequestTokenHeaders(method, u string) (map[string]string, error) {
-	q, err := buildOAuth1QueryString(opts, opts.OAuthTimestamp, "oob")
-	if err != nil {
-		return nil, err
-	}
-
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, err
-	}
-
-	signatureKeys := []string{opts.OAuthConsumerSecret}
-	stringToSign := buildStringToSign(method, u, q.Query())
-	signature := url.QueryEscape(signString(opts.OAuthSignatureMethod, stringToSign, signatureKeys))
-	authHeader := buildAuthHeader(q.Query(), signature)
-
-	h["Authorization"] = authHeader
-
-	return h, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RequestToken requests an unauthorized OAuth1 Token.
 func RequestToken(ctx context.Context, client *gophercloud.ServiceClient, opts RequestTokenOptsBuilder) (r TokenResult) {
-	h, err := opts.ToOAuth1RequestTokenHeaders("POST", requestTokenURL(client))
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, requestTokenURL(client), nil, nil, &gophercloud.RequestOpts{
-		MoreHeaders:      h,
-		OkCodes:          []int{201},
-		KeepResponseBody: true,
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	if r.Err != nil {
-		return
-	}
-	defer resp.Body.Close()
-	if v := r.Header.Get("Content-Type"); v != OAuth1TokenContentType {
-		r.Err = fmt.Errorf("unsupported Content-Type: %q", v)
-		return
-	}
-	r.Body, r.Err = io.ReadAll(resp.Body)
-	return
+	_ = "STUB: not implemented"
+	return *new(TokenResult)
 }
 
 // AuthorizeTokenOptsBuilder allows extensions to add additional parameters to
@@ -350,26 +236,14 @@ type Role struct {
 // ToOAuth1AuthorizeTokenMap formats an AuthorizeTokenOpts into an authorize token
 // request.
 func (opts AuthorizeTokenOpts) ToOAuth1AuthorizeTokenMap() (map[string]any, error) {
-	for _, r := range opts.Roles {
-		if r == (Role{}) {
-			return nil, fmt.Errorf("role must not be empty")
-		}
-	}
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AuthorizeToken authorizes an unauthorized consumer token.
 func AuthorizeToken(ctx context.Context, client *gophercloud.ServiceClient, id string, opts AuthorizeTokenOptsBuilder) (r AuthorizeTokenResult) {
-	b, err := opts.ToOAuth1AuthorizeTokenMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, authorizeTokenURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AuthorizeTokenResult)
 }
 
 // CreateAccessTokenOptsBuilder allows extensions to add additional parameters
@@ -415,85 +289,45 @@ type CreateAccessTokenOpts struct {
 // ToOAuth1CreateAccessTokenHeaders formats a CreateAccessTokenOpts into a map of
 // request headers.
 func (opts CreateAccessTokenOpts) ToOAuth1CreateAccessTokenHeaders(method, u string) (map[string]string, error) {
-	q, err := buildOAuth1QueryString(opts, opts.OAuthTimestamp, "")
-	if err != nil {
-		return nil, err
-	}
-
-	signatureKeys := []string{opts.OAuthConsumerSecret, opts.OAuthTokenSecret}
-	stringToSign := buildStringToSign(method, u, q.Query())
-	signature := url.QueryEscape(signString(opts.OAuthSignatureMethod, stringToSign, signatureKeys))
-	authHeader := buildAuthHeader(q.Query(), signature)
-
-	headers := map[string]string{
-		"Authorization": authHeader,
-	}
-
-	return headers, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateAccessToken creates a new OAuth1 Access Token
 func CreateAccessToken(ctx context.Context, client *gophercloud.ServiceClient, opts CreateAccessTokenOptsBuilder) (r TokenResult) {
-	h, err := opts.ToOAuth1CreateAccessTokenHeaders("POST", createAccessTokenURL(client))
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createAccessTokenURL(client), nil, nil, &gophercloud.RequestOpts{
-		MoreHeaders:      h,
-		OkCodes:          []int{201},
-		KeepResponseBody: true,
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	if r.Err != nil {
-		return
-	}
-	defer resp.Body.Close()
-	if v := r.Header.Get("Content-Type"); v != OAuth1TokenContentType {
-		r.Err = fmt.Errorf("unsupported Content-Type: %q", v)
-		return
-	}
-	r.Body, r.Err = io.ReadAll(resp.Body)
-	return
+	_ = "STUB: not implemented"
+	return *new(TokenResult)
 }
 
 // GetAccessToken retrieves details on a single OAuth1 access token by an ID.
 func GetAccessToken(ctx context.Context, client *gophercloud.ServiceClient, userID string, id string) (r GetAccessTokenResult) {
-	resp, err := client.Get(ctx, userAccessTokenURL(client, userID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetAccessTokenResult)
 }
 
 // RevokeAccessToken revokes an OAuth1 access token.
 func RevokeAccessToken(ctx context.Context, client *gophercloud.ServiceClient, userID string, id string) (r RevokeAccessTokenResult) {
-	resp, err := client.Delete(ctx, userAccessTokenURL(client, userID, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RevokeAccessTokenResult)
 }
 
 // ListAccessTokens enumerates authorized access tokens.
 func ListAccessTokens(client *gophercloud.ServiceClient, userID string) pagination.Pager {
-	url := userAccessTokensURL(client, userID)
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AccessTokensPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListAccessTokenRoles enumerates authorized access token roles.
 func ListAccessTokenRoles(client *gophercloud.ServiceClient, userID string, id string) pagination.Pager {
-	url := userAccessTokenRolesURL(client, userID, id)
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AccessTokenRolesPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetAccessTokenRole retrieves details on a single OAuth1 access token role by
 // an ID.
 func GetAccessTokenRole(ctx context.Context, client *gophercloud.ServiceClient, userID string, id string, roleID string) (r GetAccessTokenRoleResult) {
-	resp, err := client.Get(ctx, userAccessTokenRoleURL(client, userID, id, roleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetAccessTokenRoleResult)
 }
 
 // The following are small helper functions used to help build the signature.
@@ -501,94 +335,35 @@ func GetAccessTokenRole(ctx context.Context, client *gophercloud.ServiceClient, 
 // buildOAuth1QueryString builds a URLEncoded parameters string specific for
 // OAuth1-based requests.
 func buildOAuth1QueryString(opts any, timestamp *time.Time, callback string) (*url.URL, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return nil, err
-	}
-
-	query := q.Query()
-
-	if timestamp != nil {
-		// use provided timestamp
-		query.Set("oauth_timestamp", strconv.FormatInt(timestamp.Unix(), 10))
-	} else {
-		// use current timestamp
-		query.Set("oauth_timestamp", strconv.FormatInt(time.Now().UTC().Unix(), 10))
-	}
-
-	if query.Get("oauth_nonce") == "" {
-		// when nonce is not set, generate a random one
-		query.Set("oauth_nonce", strconv.FormatInt(rand.Int63(), 10)+query.Get("oauth_timestamp"))
-	}
-
-	if callback != "" {
-		query.Set("oauth_callback", callback)
-	}
-	query.Set("oauth_version", "1.0")
-
-	return &url.URL{RawQuery: query.Encode()}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// use provided timestamp
+
+// use current timestamp
+
+// when nonce is not set, generate a random one
 
 // buildStringToSign builds a string to be signed.
 func buildStringToSign(method string, u string, query url.Values) []byte {
-	parsedURL, _ := url.Parse(u)
-	p := parsedURL.Port()
-	s := parsedURL.Scheme
-
-	// Default scheme port must be stripped
-	if s == "http" && p == "80" || s == "https" && p == "443" {
-		parsedURL.Host = strings.TrimSuffix(parsedURL.Host, ":"+p)
-	}
-
-	// Ensure that URL doesn't contain queries
-	parsedURL.RawQuery = ""
-
-	v := strings.Join(
-		[]string{method, url.QueryEscape(parsedURL.String()), url.QueryEscape(query.Encode())}, "&")
-
-	return []byte(v)
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// Default scheme port must be stripped
+
+// Ensure that URL doesn't contain queries
 
 // signString signs a string using an OAuth1 signature method.
 func signString(signatureMethod SignatureMethod, strToSign []byte, signatureKeys []string) string {
-	var key []byte
-	for i, k := range signatureKeys {
-		key = append(key, []byte(url.QueryEscape(k))...)
-		if i == 0 {
-			key = append(key, '&')
-		}
-	}
-
-	var signedString string
-	switch signatureMethod {
-	case PLAINTEXT:
-		signedString = string(key)
-	default:
-		h := hmac.New(sha1.New, key)
-		h.Write(strToSign)
-		signedString = base64.StdEncoding.EncodeToString(h.Sum(nil))
-	}
-
-	return signedString
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // buildAuthHeader generates an OAuth1 Authorization header with a signature
 // calculated using an OAuth1 signature method.
 func buildAuthHeader(query url.Values, signature string) string {
-	var authHeader []string
-	var keys []string
-	for k := range query {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-
-	for _, k := range keys {
-		for _, v := range query[k] {
-			authHeader = append(authHeader, fmt.Sprintf("%s=%q", k, url.QueryEscape(v)))
-		}
-	}
-
-	authHeader = append(authHeader, fmt.Sprintf("oauth_signature=%q", signature))
-
-	return "OAuth " + strings.Join(authHeader, ", ")
+	_ = "STUB: not implemented"
+	return ""
 }

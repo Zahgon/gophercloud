@@ -1,20 +1,12 @@
 package policies
 
-import "fmt"
-
 // InvalidListFilter is returned by the ToPolicyListQuery method when
 // validation of a filter does not pass
 type InvalidListFilter struct {
 	FilterName string
 }
 
-func (e InvalidListFilter) Error() string {
-	s := fmt.Sprintf(
-		"Invalid filter name [%s]: it must be in format of TYPE__COMPARATOR",
-		e.FilterName,
-	)
-	return s
-}
+func (e InvalidListFilter) Error() string { _ = "STUB: not implemented"; return "" }
 
 // StringFieldLengthExceedsLimit is returned by the
 // ToPolicyCreateMap/ToPolicyUpdateMap methods when validation of
@@ -24,8 +16,4 @@ type StringFieldLengthExceedsLimit struct {
 	Limit int
 }
 
-func (e StringFieldLengthExceedsLimit) Error() string {
-	return fmt.Sprintf("String length of field [%s] exceeds limit (%d)",
-		e.Field, e.Limit,
-	)
-}
+func (e StringFieldLengthExceedsLimit) Error() string { _ = "STUB: not implemented"; return "" }

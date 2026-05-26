@@ -8,6 +8,4 @@ type ErrInvalidDataFormat struct {
 	gophercloud.BaseError
 }
 
-func (e ErrInvalidDataFormat) Error() string {
-	return "Data in neither json nor yaml format."
-}
+func (e ErrInvalidDataFormat) Error() string { _ = "STUB: not implemented"; return "" }

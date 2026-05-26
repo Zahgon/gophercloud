@@ -4,7 +4,6 @@ import (
 	"context"
 	"io"
 	"net/http"
-	"strings"
 )
 
 // ServiceClient stores details required to interact with a specific service API implemented by a provider.
@@ -36,136 +35,72 @@ type ServiceClient struct {
 }
 
 // ResourceBaseURL returns the base URL of any resources used by this service. It MUST end with a /.
-func (client *ServiceClient) ResourceBaseURL() string {
-	if client.ResourceBase != "" {
-		return client.ResourceBase
-	}
-	return client.Endpoint
-}
+func (client *ServiceClient) ResourceBaseURL() string { _ = "STUB: not implemented"; return "" }
 
 // ServiceURL constructs a URL for a resource belonging to this provider.
 func (client *ServiceClient) ServiceURL(parts ...string) string {
-	return client.ResourceBaseURL() + strings.Join(parts, "/")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func (client *ServiceClient) initReqOpts(JSONBody any, JSONResponse any, opts *RequestOpts) {
-	if v, ok := (JSONBody).(io.Reader); ok {
-		opts.RawBody = v
-	} else if JSONBody != nil {
-		opts.JSONBody = JSONBody
-	}
-
-	if JSONResponse != nil {
-		opts.JSONResponse = JSONResponse
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // Get calls `Request` with the "GET" HTTP verb.
 func (client *ServiceClient) Get(ctx context.Context, url string, JSONResponse any, opts *RequestOpts) (*http.Response, error) {
-	if opts == nil {
-		opts = new(RequestOpts)
-	}
-	client.initReqOpts(nil, JSONResponse, opts)
-	return client.Request(ctx, "GET", url, opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Post calls `Request` with the "POST" HTTP verb.
 func (client *ServiceClient) Post(ctx context.Context, url string, JSONBody any, JSONResponse any, opts *RequestOpts) (*http.Response, error) {
-	if opts == nil {
-		opts = new(RequestOpts)
-	}
-	client.initReqOpts(JSONBody, JSONResponse, opts)
-	return client.Request(ctx, "POST", url, opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Put calls `Request` with the "PUT" HTTP verb.
 func (client *ServiceClient) Put(ctx context.Context, url string, JSONBody any, JSONResponse any, opts *RequestOpts) (*http.Response, error) {
-	if opts == nil {
-		opts = new(RequestOpts)
-	}
-	client.initReqOpts(JSONBody, JSONResponse, opts)
-	return client.Request(ctx, "PUT", url, opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Patch calls `Request` with the "PATCH" HTTP verb.
 func (client *ServiceClient) Patch(ctx context.Context, url string, JSONBody any, JSONResponse any, opts *RequestOpts) (*http.Response, error) {
-	if opts == nil {
-		opts = new(RequestOpts)
-	}
-	client.initReqOpts(JSONBody, JSONResponse, opts)
-	return client.Request(ctx, "PATCH", url, opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Delete calls `Request` with the "DELETE" HTTP verb.
 func (client *ServiceClient) Delete(ctx context.Context, url string, opts *RequestOpts) (*http.Response, error) {
-	if opts == nil {
-		opts = new(RequestOpts)
-	}
-	client.initReqOpts(nil, nil, opts)
-	return client.Request(ctx, "DELETE", url, opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Head calls `Request` with the "HEAD" HTTP verb.
 func (client *ServiceClient) Head(ctx context.Context, url string, opts *RequestOpts) (*http.Response, error) {
-	if opts == nil {
-		opts = new(RequestOpts)
-	}
-	client.initReqOpts(nil, nil, opts)
-	return client.Request(ctx, "HEAD", url, opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (client *ServiceClient) setMicroversionHeader(opts *RequestOpts) {
-	serviceType := client.Type
-
-	switch client.Type {
-	case "compute":
-		opts.MoreHeaders["X-OpenStack-Nova-API-Version"] = client.Microversion
-	case "shared-file-system", "sharev2", "share":
-		opts.MoreHeaders["X-OpenStack-Manila-API-Version"] = client.Microversion
-	case "block-storage", "block-store", "volume", "volumev3":
-		opts.MoreHeaders["X-OpenStack-Volume-API-Version"] = client.Microversion
-		// cinder should accept block-storage but (as of Dalmatian) does not
-		serviceType = "volume"
-	case "baremetal":
-		opts.MoreHeaders["X-OpenStack-Ironic-API-Version"] = client.Microversion
-	case "baremetal-introspection":
-		opts.MoreHeaders["X-OpenStack-Ironic-Inspector-API-Version"] = client.Microversion
-	case "container-infrastructure-management", "container-infrastructure", "container-infra":
-		// magnum should accept container-infrastructure-management but (as of Epoxy) does not
-		serviceType = "container-infra"
-	}
-
-	if client.Type != "" {
-		opts.MoreHeaders["OpenStack-API-Version"] = serviceType + " " + client.Microversion
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// cinder should accept block-storage but (as of Dalmatian) does not
+
+// magnum should accept container-infrastructure-management but (as of Epoxy) does not
 
 // Request carries out the HTTP operation for the service client
 func (client *ServiceClient) Request(ctx context.Context, method, url string, options *RequestOpts) (*http.Response, error) {
-	if options.MoreHeaders == nil {
-		options.MoreHeaders = make(map[string]string)
-	}
-
-	if client.Microversion != "" {
-		client.setMicroversionHeader(options)
-	}
-
-	if len(client.MoreHeaders) > 0 {
-		if options == nil {
-			options = new(RequestOpts)
-		}
-
-		for k, v := range client.MoreHeaders {
-			options.MoreHeaders[k] = v
-		}
-	}
-	return client.ProviderClient.Request(ctx, method, url, options)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ParseResponse is a helper function to parse http.Response to constituents.
 func ParseResponse(resp *http.Response, err error) (io.ReadCloser, http.Header, error) {
-	if resp != nil {
-		return resp.Body, resp.Header, err
-	}
-	return nil, nil, err
+	_ = "STUB: not implemented"
+	return *new(io.ReadCloser), *new(http.Header), nil
 }

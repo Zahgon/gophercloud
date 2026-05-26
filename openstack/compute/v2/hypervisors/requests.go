@@ -37,33 +37,20 @@ type ListOpts struct {
 
 // ToHypervisorListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToHypervisorListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list hypervisors.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := hypervisorsListDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToHypervisorListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return HypervisorPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Statistics makes a request against the API to get hypervisors statistics.
 func GetStatistics(ctx context.Context, client *gophercloud.ServiceClient) (r StatisticsResult) {
-	resp, err := client.Get(ctx, hypervisorsStatisticsURL(client), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(StatisticsResult)
 }
 
 // GetOptsBuilder allows extensions to add additional parameters to the
@@ -81,38 +68,24 @@ type GetOpts struct {
 
 // ToHypervisorGetQuery formats a GetOpts into a query string.
 func (opts GetOpts) ToHypervisorGetQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Get makes a request against the API to get details for specific hypervisor.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, hypervisorID string) (r HypervisorResult) {
-	return GetExt(ctx, client, hypervisorID, nil)
+	_ = "STUB: not implemented"
+	return *new(HypervisorResult)
 }
 
 // Show makes a request against the API to get details for specific hypervisor with optional query parameters
 func GetExt(ctx context.Context, client *gophercloud.ServiceClient, hypervisorID string, opts GetOptsBuilder) (r HypervisorResult) {
-	url := hypervisorsGetURL(client, hypervisorID)
-	if opts != nil {
-		query, err := opts.ToHypervisorGetQuery()
-		if err != nil {
-			return HypervisorResult{gophercloud.Result{Err: err}}
-		}
-		url += query
-	}
-
-	resp, err := client.Get(ctx, url, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(HypervisorResult)
 }
 
 // GetUptime makes a request against the API to get uptime for specific hypervisor.
 func GetUptime(ctx context.Context, client *gophercloud.ServiceClient, hypervisorID string) (r UptimeResult) {
-	resp, err := client.Get(ctx, hypervisorsUptimeURL(client, hypervisorID), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UptimeResult)
 }

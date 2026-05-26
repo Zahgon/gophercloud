@@ -2,7 +2,6 @@ package nodes
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -16,78 +15,56 @@ type nodeResult struct {
 }
 
 // Extract interprets any nodeResult as a Node, if possible.
-func (r nodeResult) Extract() (*Node, error) {
-	var s Node
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r nodeResult) Extract() (*Node, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets a BootDeviceResult as BootDeviceOpts, if possible.
 func (r BootDeviceResult) Extract() (*BootDeviceOpts, error) {
-	var s BootDeviceOpts
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets a SupportedBootDeviceResult as an array of supported boot devices, if possible.
 func (r SupportedBootDeviceResult) Extract() ([]string, error) {
-	var s struct {
-		Devices []string `json:"supported_boot_devices"`
-	}
-
-	err := r.ExtractInto(&s)
-	return s.Devices, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets a ValidateResult as NodeValidation, if possible.
 func (r ValidateResult) Extract() (*NodeValidation, error) {
-	var s NodeValidation
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (r nodeResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r nodeResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractNodesInto(r pagination.Page, v any) error {
-	return r.(NodePage).ExtractIntoSlicePtr(v, "nodes")
-}
+func ExtractNodesInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // Extract interprets a BIOSSettingsResult as an array of BIOSSetting structs, if possible.
 func (r ListBIOSSettingsResult) Extract() ([]BIOSSetting, error) {
-	var s struct {
-		Settings []BIOSSetting `json:"bios"`
-	}
-
-	err := r.ExtractInto(&s)
-	return s.Settings, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets a SingleBIOSSettingResult as a BIOSSetting struct, if possible.
 func (r GetBIOSSettingResult) Extract() (*BIOSSetting, error) {
-	var s SingleBIOSSetting
-	err := r.ExtractInto(&s)
-	return &s.Setting, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets a VendorPassthruMethod as
 func (r VendorPassthruMethodsResult) Extract() (*VendorPassthruMethods, error) {
-	var s VendorPassthruMethods
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r GetAllSubscriptionsVendorPassthruResult) Extract() (*GetAllSubscriptionsVendorPassthru, error) {
-	var s GetAllSubscriptionsVendorPassthru
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r SubscriptionVendorPassthruResult) Extract() (*SubscriptionVendorPassthru, error) {
-	var s SubscriptionVendorPassthru
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Link represents a hyperlink and its relationship to the current resource.
@@ -334,35 +311,18 @@ type NodePage struct {
 }
 
 // IsEmpty returns true if a page contains no Node results.
-func (r NodePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractNodes(r)
-	return len(s) == 0, err
-}
+func (r NodePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r NodePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"nodes_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractNodes interprets the results of a single page from a List() call,
 // producing a slice of Node entities.
-func ExtractNodes(r pagination.Page) ([]Node, error) {
-	var s []Node
-	err := ExtractNodesInto(r, &s)
-	return s, err
-}
+func ExtractNodes(r pagination.Page) ([]Node, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract
 // method to interpret it as a Node.
@@ -612,49 +572,34 @@ type PluginData struct {
 
 // Interpret plugin data as a free-form mapping.
 func (pd PluginData) AsMap() (result map[string]any, err error) {
-	err = json.Unmarshal(pd.RawMessage, &result)
-	return
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AsStandardData interprets plugin data as coming from ironic native inspection.
 func (pd PluginData) AsStandardData() (result inventory.StandardPluginData, err error) {
-	err = json.Unmarshal(pd.RawMessage, &result)
-	return
+	_ = "STUB: not implemented"
+	return *new(inventory.StandardPluginData), nil
 }
 
 // AsInspectorData interprets plugin data as coming from ironic-inspector.
 func (pd PluginData) AsInspectorData() (result introspection.Data, err error) {
-	err = json.Unmarshal(pd.RawMessage, &result)
-	return
+	_ = "STUB: not implemented"
+	return *new(introspection.Data), nil
 }
 
 // GuessFormat tries to guess which format the data is in. Unless there is
 // an error while parsing, one result will be valid, the other - nil.
 // Unknown (but still parseable) format defaults to standard.
 func (pd PluginData) GuessFormat() (*inventory.StandardPluginData, *introspection.Data, error) {
+	_ = "STUB: not implemented"
 	// Ironic and Inspector formats are compatible, don't expect an error in either case
-	ironic, err := pd.AsStandardData()
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// The valid_interfaces field only exists in the Ironic data (it's called just interfaces in Inspector)
-	if len(ironic.ValidInterfaces) > 0 {
-		return &ironic, nil, nil
-	}
-
-	inspector, err := pd.AsInspectorData()
-	if err != nil {
-		return nil, nil, fmt.Errorf("cannot interpret PluginData as coming from inspector on conversion: %w", err)
-	}
-
-	// If the format does not match anything (but still parses), assume a heavily customized deployment
-	if len(inspector.Interfaces) == 0 {
-		return &ironic, nil, nil
-	}
-
-	return nil, &inspector, nil
+	return nil, nil, nil
 }
+
+// The valid_interfaces field only exists in the Ironic data (it's called just interfaces in Inspector)
+
+// If the format does not match anything (but still parses), assume a heavily customized deployment
 
 // InventoryData is the full node inventory.
 type InventoryData struct {
@@ -671,9 +616,8 @@ type InventoryResult struct {
 
 // Extract interprets a InventoryResult as a InventoryData struct, if possible.
 func (r InventoryResult) Extract() (*InventoryData, error) {
-	var data InventoryData
-	err := r.ExtractInto(&data)
-	return &data, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListFirmwareResult is the response from a ListFirmware operation. Call its Extract method
@@ -700,12 +644,8 @@ type FirmwareComponent struct {
 
 // Extract interprets a ListFirmwareResult as an array of FirmwareComponent structs, if possible.
 func (r ListFirmwareResult) Extract() ([]FirmwareComponent, error) {
-	var s struct {
-		Components []FirmwareComponent `json:"firmware"`
-	}
-
-	err := r.ExtractInto(&s)
-	return s.Components, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type VirtualMediaAttachResult struct {
@@ -745,15 +685,12 @@ type ListVirtualInterfacesResult struct {
 
 // Extract interprets any ListVirtualInterfacesResult as a list of VIFs.
 func (r ListVirtualInterfacesResult) Extract() ([]VIF, error) {
-	var s struct {
-		VIFs []VIF `json:"vifs"`
-	}
-
-	err := r.Result.ExtractInto(&s)
-	return s.VIFs, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractHeader interprets any ListVirtualInterfacesResult as a HeaderResult.
 func (r ListVirtualInterfacesResult) ExtractHeader() (gophercloud.HeaderResult, error) {
-	return r.HeaderResult, nil
+	_ = "STUB: not implemented"
+	return *new(gophercloud.HeaderResult), nil
 }

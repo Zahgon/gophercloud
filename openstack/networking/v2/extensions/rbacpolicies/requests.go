@@ -37,33 +37,22 @@ type ListOpts struct {
 
 // ToRBACPolicyListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToRBACPolicyListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // rbac policies. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToRBACPolicyListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return RBACPolicyPage{pagination.LinkedPageBase{PageResult: r}}
-
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific rbac policy based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // PolicyAction maps to Action for the RBAC policy.
@@ -94,7 +83,8 @@ type CreateOpts struct {
 
 // ToRBACPolicyCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToRBACPolicyCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "rbac_policy")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and creates a new rbac-policy using the values
@@ -103,21 +93,14 @@ func (opts CreateOpts) ToRBACPolicyCreateMap() (map[string]any, error) {
 // The tenant ID that is contained in the URI is the tenant that creates the
 // rbac-policy.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToRBACPolicyCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete accepts a unique ID and deletes the rbac-policy associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, rbacPolicyID string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, rbacPolicyID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -133,20 +116,13 @@ type UpdateOpts struct {
 
 // ToRBACPolicyUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToRBACPolicyUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "rbac_policy")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing rbac-policy using the
 // values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, rbacPolicyID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRBACPolicyUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateURL(c, rbacPolicyID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }

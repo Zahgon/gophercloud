@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -89,42 +88,13 @@ type Router struct {
 }
 
 func (r *Router) UnmarshalJSON(b []byte) error {
-	type tmp Router
+	_ = "STUB: not implemented"
 
 	// Support for older neutron time format
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = Router(s1.tmp)
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		return nil
-	}
-
-	// Support for newer neutron time format
-	var s2 struct {
-		tmp
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = Router(s2.tmp)
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-
 	return nil
 }
+
+// Support for newer neutron time format
 
 // RouterPage is the page returned by a pager when traversing over a
 // collection of routers.
@@ -136,52 +106,30 @@ type RouterPage struct {
 // the end of a page and the pager seeks to traverse over a new one. In order
 // to do this, it needs to construct the next page's URL.
 func (r RouterPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"routers_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a RouterPage struct is empty.
-func (r RouterPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractRouters(r)
-	return len(is) == 0, err
-}
+func (r RouterPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractRouters accepts a Page struct, specifically a RouterPage struct,
 // and extracts the elements into a slice of Router structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractRouters(r pagination.Page) ([]Router, error) {
-	var s []Router
-	err := ExtractRoutersInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractRoutersInto extracts the elements into a slice of Router structs.
-func ExtractRoutersInto(r pagination.Page, v any) error {
-	return r.(RouterPage).ExtractIntoSlicePtr(v, "routers")
-}
+func ExtractRoutersInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a router.
-func (r commonResult) Extract() (*Router, error) {
-	var s struct {
-		Router *Router `json:"router"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Router, err
-}
+func (r commonResult) Extract() (*Router, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a Router.
@@ -233,9 +181,8 @@ type InterfaceResult struct {
 
 // Extract is a function that accepts a result and extracts an information struct.
 func (r InterfaceResult) Extract() (*InterfaceInfo, error) {
-	var s InterfaceInfo
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // L3Agent represents a Neutron agent for routers.
@@ -292,45 +239,15 @@ type L3Agent struct {
 }
 
 // UnmarshalJSON helps to convert the timestamps into the time.Time type.
-func (r *L3Agent) UnmarshalJSON(b []byte) error {
-	type tmp L3Agent
-	var s struct {
-		tmp
-		CreatedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		StartedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"started_at"`
-		HeartbeatTimestamp gophercloud.JSONRFC3339ZNoTNoZ `json:"heartbeat_timestamp"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = L3Agent(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.StartedAt = time.Time(s.StartedAt)
-	r.HeartbeatTimestamp = time.Time(s.HeartbeatTimestamp)
-
-	return nil
-}
+func (r *L3Agent) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type ListL3AgentsPage struct {
 	pagination.SinglePageBase
 }
 
-func (r ListL3AgentsPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	v, err := ExtractL3Agents(r)
-	return len(v) == 0, err
-}
+func (r ListL3AgentsPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func ExtractL3Agents(r pagination.Page) ([]L3Agent, error) {
-	var s struct {
-		L3Agents []L3Agent `json:"agents"`
-	}
-
-	err := (r.(ListL3AgentsPage)).ExtractInto(&s)
-	return s.L3Agents, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

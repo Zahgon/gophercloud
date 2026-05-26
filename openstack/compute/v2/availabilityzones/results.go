@@ -1,10 +1,8 @@
 package availabilityzones
 
 import (
-	"encoding/json"
 	"time"
 
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -16,22 +14,7 @@ type ServiceState struct {
 }
 
 // UnmarshalJSON to override default
-func (r *ServiceState) UnmarshalJSON(b []byte) error {
-	type tmp ServiceState
-	var s struct {
-		tmp
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ServiceState(s.tmp)
-
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *ServiceState) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // Services is a map of services contained in an AvailabilityZone.
 type Services map[string]ServiceState
@@ -62,9 +45,6 @@ type AvailabilityZonePage struct {
 // ExtractAvailabilityZones returns a slice of AvailabilityZones contained in a
 // single page of results.
 func ExtractAvailabilityZones(r pagination.Page) ([]AvailabilityZone, error) {
-	var s struct {
-		AvailabilityZoneInfo []AvailabilityZone `json:"availabilityZoneInfo"`
-	}
-	err := (r.(AvailabilityZonePage)).ExtractInto(&s)
-	return s.AvailabilityZoneInfo, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

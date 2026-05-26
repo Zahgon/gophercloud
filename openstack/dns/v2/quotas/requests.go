@@ -8,9 +8,8 @@ import (
 
 // Get returns information about the quota for a given project ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r Result) {
-	resp, err := client.Get(ctx, URL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(Result)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -30,20 +29,13 @@ type UpdateOpts struct {
 
 // ToQuotaUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToQuotaUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing DNS Quotas using the
 // values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, projectID string, opts UpdateOptsBuilder) (r Result) {
-	b, err := opts.ToQuotaUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Patch(ctx, URL(c, projectID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(Result)
 }

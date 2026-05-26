@@ -33,32 +33,22 @@ type ListOpts struct {
 
 // ToPortForwardingListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPortForwardingListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // Port Forwarding resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder, id string) pagination.Pager {
-	url := portForwardingUrl(c, id)
-	if opts != nil {
-		query, err := opts.ToPortForwardingListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return PortForwardingPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a particular port forwarding resource based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {
-	resp, err := c.Get(ctx, singlePortForwardingUrl(c, floatingIpId, pfId), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOpts contains all the values needed to create a new port forwarding
@@ -81,20 +71,15 @@ type CreateOptsBuilder interface {
 // ToPortForwardingCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
 // interface
 func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "port_forwarding")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values provided to create a
 // new port forwarding for an existing floating IP.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, floatingIpId string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToPortForwardingCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, portForwardingUrl(c, floatingIpId), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOpts contains the values used when updating a port forwarding resource.
@@ -110,7 +95,8 @@ type UpdateOpts struct {
 // ToPortForwardingUpdateMap allows UpdateOpts to satisfy the UpdateOptsBuilder
 // interface
 func (opts UpdateOpts) ToPortForwardingUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "port_forwarding")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -121,21 +107,12 @@ type UpdateOptsBuilder interface {
 
 // Update allows port forwarding resources to be updated.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, fipID string, pfID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToPortForwardingUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, singlePortForwardingUrl(c, fipID, pfID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular port forwarding for a given floating ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, floatingIpId string, pfId string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, singlePortForwardingUrl(c, floatingIpId, pfId), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

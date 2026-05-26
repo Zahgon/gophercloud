@@ -11,11 +11,8 @@ type attachInterfaceResult struct {
 
 // Extract interprets any attachInterfaceResult as an Interface, if possible.
 func (r attachInterfaceResult) Extract() (*Interface, error) {
-	var s struct {
-		Interface *Interface `json:"interfaceAttachment"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Interface, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResult is the response from a Get operation. Call its Extract
@@ -64,21 +61,11 @@ type InterfacePage struct {
 }
 
 // IsEmpty returns true if an InterfacePage contains no interfaces.
-func (r InterfacePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	interfaces, err := ExtractInterfaces(r)
-	return len(interfaces) == 0, err
-}
+func (r InterfacePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractInterfaces interprets the results of a single page from a List() call,
 // producing a slice of Interface structs.
 func ExtractInterfaces(r pagination.Page) ([]Interface, error) {
-	var s struct {
-		Interfaces []Interface `json:"interfaceAttachments"`
-	}
-	err := (r.(InterfacePage)).ExtractInto(&s)
-	return s.Interfaces, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

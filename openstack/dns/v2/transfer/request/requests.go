@@ -2,7 +2,6 @@ package request
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -23,30 +22,20 @@ type ListOpts struct {
 
 // ToTransferRequestListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTransferRequestListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List implements a transfer request List request.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := baseURL(client)
-	if opts != nil {
-		query, err := opts.ToTransferRequestListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return TransferRequestPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get returns information about a transfer request, given its ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, transferRequestID string) (r GetResult) {
-	resp, err := client.Get(ctx, resourceURL(client, transferRequestID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional attributes to the
@@ -67,25 +56,14 @@ type CreateOpts struct {
 
 // ToTransferRequestCreateMap formats an CreateOpts structure into a request body.
 func (opts CreateOpts) ToTransferRequestCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create implements a transfer request create request.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, zoneID string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToTransferRequestCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client, zoneID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{http.StatusCreated, http.StatusAccepted},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional attributes to the
@@ -106,32 +84,18 @@ type UpdateOpts struct {
 
 // ToTransferRequestUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToTransferRequestUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update implements a transfer request update request.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, transferID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToTransferRequestUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, resourceURL(client, transferID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{http.StatusOK, http.StatusAccepted},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete implements a transfer request delete request.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, transferID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, resourceURL(client, transferID), &gophercloud.RequestOpts{
-		OkCodes: []int{http.StatusNoContent},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

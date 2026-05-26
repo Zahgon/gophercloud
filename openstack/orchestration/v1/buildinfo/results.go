@@ -22,8 +22,4 @@ type GetResult struct {
 
 // Extract returns a pointer to a BuildInfo object and is called after a
 // Get operation.
-func (r GetResult) Extract() (*BuildInfo, error) {
-	var s *BuildInfo
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r GetResult) Extract() (*BuildInfo, error) { _ = "STUB: not implemented"; return nil, nil }

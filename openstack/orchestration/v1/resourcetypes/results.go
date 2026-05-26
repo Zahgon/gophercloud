@@ -102,27 +102,8 @@ type ListResult struct {
 // Extract returns a slice of ResourceTypeSummary objects and is called after
 // a List operation.
 func (r ListResult) Extract() (rts []ResourceTypeSummary, err error) {
-	var full struct {
-		ResourceTypes []ResourceTypeSummary `json:"resource_types"`
-	}
-	err = r.ExtractInto(&full)
-	if err == nil {
-		rts = full.ResourceTypes
-		return
-	}
-
-	var basic struct {
-		ResourceTypes []string `json:"resource_types"`
-	}
-	err2 := r.ExtractInto(&basic)
-	if err2 == nil {
-		err = nil
-		rts = make([]ResourceTypeSummary, len(basic.ResourceTypes))
-		for i, n := range basic.ResourceTypes {
-			rts[i] = ResourceTypeSummary{ResourceType: n}
-		}
-	}
-	return
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetSchemaResult represents the result of a GetSchema operation.
@@ -133,8 +114,8 @@ type GetSchemaResult struct {
 // Extract returns a ResourceSchema object and is called after a GetSchema
 // operation.
 func (r GetSchemaResult) Extract() (rts ResourceSchema, err error) {
-	err = r.ExtractInto(&rts)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResourceSchema), nil
 }
 
 // TemplateResult represents the result of a Template get operation.
@@ -145,6 +126,6 @@ type TemplateResult struct {
 // Extract returns a Template object and is called after a Template get
 // operation.
 func (r TemplateResult) Extract() (template map[string]any, err error) {
-	err = r.ExtractInto(&template)
-	return
+	_ = "STUB: not implemented"
+	return nil, nil
 }

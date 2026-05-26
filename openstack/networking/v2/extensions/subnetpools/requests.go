@@ -2,7 +2,6 @@ package subnetpools
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -48,8 +47,8 @@ type ListOpts struct {
 
 // ToSubnetPoolListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToSubnetPoolListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
@@ -59,24 +58,14 @@ func (opts ListOpts) ToSubnetPoolListQuery() (string, error) {
 // Default policy settings return only the subnetpools owned by the project
 // of the user submitting the request, unless the user has the administrative role.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToSubnetPoolListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return SubnetPoolPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific subnetpool based on its ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows to add additional parameters to the
@@ -136,21 +125,14 @@ type CreateOpts struct {
 
 // ToSubnetPoolCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToSubnetPoolCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "subnetpool")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new subnetpool on the server.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSubnetPoolCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -212,38 +194,19 @@ type UpdateOpts struct {
 
 // ToSubnetPoolUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToSubnetPoolUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "subnetpool")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing subnetpool using the
 // values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, subnetPoolID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSubnetPoolUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-	resp, err := c.Put(ctx, updateURL(c, subnetPoolID), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete accepts a unique ID and deletes the subnetpool associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

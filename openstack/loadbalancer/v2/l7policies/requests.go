@@ -95,19 +95,14 @@ type CreateOpts struct {
 
 // ToL7PolicyCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToL7PolicyCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "l7policy")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new l7policy.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToL7PolicyCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the
@@ -137,8 +132,8 @@ type ListOpts struct {
 
 // ToL7PolicyListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToL7PolicyListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
@@ -148,31 +143,20 @@ func (opts ListOpts) ToL7PolicyListQuery() (string, error) {
 // Default policy settings return only those l7policies that are owned by the
 // project who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToL7PolicyListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return L7PolicyPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a particular l7policy based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete will permanently delete a particular l7policy based on its unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -223,44 +207,14 @@ type UpdateOpts struct {
 
 // ToL7PolicyUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToL7PolicyUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "l7policy")
-	if err != nil {
-		return nil, err
-	}
-
-	m := b["l7policy"].(map[string]any)
-
-	if m["redirect_pool_id"] == "" {
-		m["redirect_pool_id"] = nil
-	}
-
-	if m["redirect_url"] == "" {
-		m["redirect_url"] = nil
-	}
-
-	if m["redirect_prefix"] == "" {
-		m["redirect_prefix"] = nil
-	}
-
-	if m["redirect_http_code"] == 0 {
-		m["redirect_http_code"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update allows l7policy to be updated.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToL7PolicyUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // CreateRuleOptsBuilder allows extensions to add additional parameters to the
@@ -302,19 +256,14 @@ type CreateRuleOpts struct {
 
 // ToRuleCreateMap builds a request body from CreateRuleOpts.
 func (opts CreateRuleOpts) ToRuleCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateRule will create and associate a Rule with a particular L7Policy.
 func CreateRule(ctx context.Context, c *gophercloud.ServiceClient, policyID string, opts CreateRuleOptsBuilder) (r CreateRuleResult) {
-	b, err := opts.ToRuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, ruleRootURL(c, policyID), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateRuleResult)
 }
 
 // ListRulesOptsBuilder allows extensions to add additional parameters to the
@@ -342,8 +291,8 @@ type ListRulesOpts struct {
 
 // ToRulesListQuery formats a ListOpts into a query string.
 func (opts ListRulesOpts) ToRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListRules returns a Pager which allows you to iterate over a collection of
@@ -353,31 +302,20 @@ func (opts ListRulesOpts) ToRulesListQuery() (string, error) {
 // Default policy settings return only those rules that are owned by the
 // project who submits the request, unless an admin user submits the request.
 func ListRules(c *gophercloud.ServiceClient, policyID string, opts ListRulesOptsBuilder) pagination.Pager {
-	url := ruleRootURL(c, policyID)
-	if opts != nil {
-		query, err := opts.ToRulesListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return RulePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetRule retrieves a particular L7Policy Rule based on its unique ID.
 func GetRule(ctx context.Context, c *gophercloud.ServiceClient, policyID string, ruleID string) (r GetRuleResult) {
-	resp, err := c.Get(ctx, ruleResourceURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetRuleResult)
 }
 
 // DeleteRule will remove a Rule from a particular L7Policy.
 func DeleteRule(ctx context.Context, c *gophercloud.ServiceClient, policyID string, ruleID string) (r DeleteRuleResult) {
-	resp, err := c.Delete(ctx, ruleResourceURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteRuleResult)
 }
 
 // UpdateRuleOptsBuilder allows to add additional parameters to the PUT request.
@@ -414,28 +352,12 @@ type UpdateRuleOpts struct {
 
 // ToRuleUpdateMap builds a request body from UpdateRuleOpts.
 func (opts UpdateRuleOpts) ToRuleUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "rule")
-	if err != nil {
-		return nil, err
-	}
-
-	if m := b["rule"].(map[string]any); m["key"] == "" {
-		m["key"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateRule allows Rule to be updated.
 func UpdateRule(ctx context.Context, c *gophercloud.ServiceClient, policyID string, ruleID string, opts UpdateRuleOptsBuilder) (r UpdateRuleResult) {
-	b, err := opts.ToRuleUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, ruleResourceURL(c, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateRuleResult)
 }

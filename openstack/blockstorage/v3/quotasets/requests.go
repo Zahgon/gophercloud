@@ -2,46 +2,32 @@ package quotasets
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 )
 
 // Get returns public data about a previously created QuotaSet.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // GetDefaults returns public data about the project's default block storage quotas.
 func GetDefaults(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r GetResult) {
-	resp, err := client.Get(ctx, getDefaultsURL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // GetUsage returns detailed public data about a previously created QuotaSet.
 func GetUsage(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r GetUsageResult) {
-	u := fmt.Sprintf("%s?usage=true", getURL(client, projectID))
-	resp, err := client.Get(ctx, u, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetUsageResult)
 }
 
 // Updates the quotas for the given projectID and returns the new QuotaSet.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, projectID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToBlockStorageQuotaUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, updateURL(client, projectID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // UpdateOptsBuilder enables extensions to add parameters to the update request.
@@ -54,20 +40,8 @@ type UpdateOptsBuilder interface {
 // ToBlockStorageQuotaUpdateMap builds the update options into a serializable
 // format.
 func (opts UpdateOpts) ToBlockStorageQuotaUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "quota_set")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["quota_set"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Options for Updating the quotas of a Tenant.
@@ -109,9 +83,6 @@ type UpdateOpts struct {
 
 // Resets the quotas for the given tenant to their default values.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, projectID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, projectID), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

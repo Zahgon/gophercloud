@@ -7,25 +7,31 @@ const (
 )
 
 func replaceURL(c *gophercloud.ServiceClient, r_type string, id string) string {
-	return c.ServiceURL(r_type, id, tagsPath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listURL(c *gophercloud.ServiceClient, r_type string, id string) string {
-	return c.ServiceURL(r_type, id, tagsPath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteAllURL(c *gophercloud.ServiceClient, r_type string, id string) string {
-	return c.ServiceURL(r_type, id, tagsPath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func addURL(c *gophercloud.ServiceClient, r_type string, id string, tag string) string {
-	return c.ServiceURL(r_type, id, tagsPath, tag)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(c *gophercloud.ServiceClient, r_type string, id string, tag string) string {
-	return c.ServiceURL(r_type, id, tagsPath, tag)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func confirmURL(c *gophercloud.ServiceClient, r_type string, id string, tag string) string {
-	return c.ServiceURL(r_type, id, tagsPath, tag)
+	_ = "STUB: not implemented"
+	return ""
 }

@@ -43,45 +43,17 @@ type ResourcePage struct {
 }
 
 // IsEmpty determines whether or not a page of RESOURCES contains any results.
-func (r ResourcePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	resources, err := ExtractResources(r)
-	return len(resources) == 0, err
-}
+func (r ResourcePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
-func (r ResourcePage) NextPageURL() (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
-}
+func (r ResourcePage) NextPageURL() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ExtractResources returns a slice of Resources contained in a single page of
 // results.
 func ExtractResources(r pagination.Page) ([]Resource, error) {
-	var s struct {
-		Resources []Resource `json:"resources"`
-	}
-	err := (r.(ResourcePage)).ExtractInto(&s)
-	return s.Resources, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any commonResult as a Resource.
-func (r commonResult) Extract() (*Resource, error) {
-	var s struct {
-		Resource *Resource `json:"resource"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Resource, err
-}
+func (r commonResult) Extract() (*Resource, error) { _ = "STUB: not implemented"; return nil, nil }

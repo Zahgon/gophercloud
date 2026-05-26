@@ -10,19 +10,11 @@ type driverResult struct {
 }
 
 // Extract interprets any driverResult as a Driver, if possible.
-func (r driverResult) Extract() (*Driver, error) {
-	var s Driver
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r driverResult) Extract() (*Driver, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r driverResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r driverResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractDriversInto(r pagination.Page, v any) error {
-	return r.(DriverPage).ExtractIntoSlicePtr(v, "drivers")
-}
+func ExtractDriversInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // Driver represents a driver in the OpenStack Bare Metal API.
 type Driver struct {
@@ -140,34 +132,20 @@ type DriverPage struct {
 }
 
 // IsEmpty returns true if a page contains no Driver results.
-func (r DriverPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractDrivers(r)
-	return len(s) == 0, err
-}
+func (r DriverPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r DriverPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"drivers_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractDrivers interprets the results of a single page from ListDrivers()
 // call, producing a slice of Driver entities.
 func ExtractDrivers(r pagination.Page) ([]Driver, error) {
-	var s []Driver
-	err := ExtractDriversInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetDriverResult is the response from a Get operation.
@@ -181,9 +159,8 @@ type DriverProperties map[string]any
 
 // Extract interprets any GetPropertiesResult as DriverProperties, if possible.
 func (r GetPropertiesResult) Extract() (*DriverProperties, error) {
-	var s DriverProperties
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetPropertiesResult is the response from a GetDriverProperties operation.
@@ -197,9 +174,8 @@ type DiskProperties map[string]any
 
 // Extract interprets any GetDiskPropertiesResult as DiskProperties, if possible.
 func (r GetDiskPropertiesResult) Extract() (*DiskProperties, error) {
-	var s DiskProperties
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetDiskPropertiesResult is the response from a GetDriverDiskProperties operation.

@@ -1,12 +1,8 @@
 package gophercloud
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/url"
 	"reflect"
-	"strconv"
-	"strings"
 	"time"
 )
 
@@ -57,175 +53,45 @@ fits within the request process as a whole rather than use it directly as shown
 above.
 */
 func BuildRequestBody(opts any, parent string) (map[string]any, error) {
-	optsValue := reflect.ValueOf(opts)
-	if optsValue.Kind() == reflect.Pointer {
-		optsValue = optsValue.Elem()
-	}
-
-	optsType := reflect.TypeOf(opts)
-	if optsType.Kind() == reflect.Pointer {
-		optsType = optsType.Elem()
-	}
-
-	optsMap := make(map[string]any)
-	switch optsValue.Kind() {
-	case reflect.Struct:
-		//fmt.Printf("optsValue.Kind() is a reflect.Struct: %+v\n", optsValue.Kind())
-		for i := 0; i < optsValue.NumField(); i++ {
-			v := optsValue.Field(i)
-			f := optsType.Field(i)
-
-			if f.Name != strings.Title(f.Name) {
-				//fmt.Printf("Skipping field: %s...\n", f.Name)
-				continue
-			}
-
-			//fmt.Printf("Starting on field: %s...\n", f.Name)
-
-			zero := isZero(v)
-			//fmt.Printf("v is zero?: %v\n", zero)
-
-			// if the field has a required tag that's set to "true"
-			if requiredTag := f.Tag.Get("required"); requiredTag == "true" {
-				//fmt.Printf("Checking required field [%s]:\n\tv: %+v\n\tisZero:%v\n", f.Name, v.Interface(), zero)
-				// if the field's value is zero, return a missing-argument error
-				if zero {
-					// if the field has a 'required' tag, it can't have a zero-value
-					err := ErrMissingInput{}
-					err.Argument = f.Name
-					return nil, err
-				}
-			}
-
-			if xorTag := f.Tag.Get("xor"); xorTag != "" {
-				//fmt.Printf("Checking `xor` tag for field [%s] with value %+v:\n\txorTag: %s\n", f.Name, v, xorTag)
-				xorField := optsValue.FieldByName(xorTag)
-				var xorFieldIsZero bool
-				if reflect.ValueOf(xorField.Interface()) == reflect.Zero(xorField.Type()) {
-					xorFieldIsZero = true
-				} else {
-					if xorField.Kind() == reflect.Pointer {
-						xorField = xorField.Elem()
-					}
-					xorFieldIsZero = isZero(xorField)
-				}
-				if zero == xorFieldIsZero {
-					err := ErrMissingInput{}
-					err.Argument = fmt.Sprintf("%s/%s", f.Name, xorTag)
-					err.Info = fmt.Sprintf("Exactly one of %s and %s must be provided", f.Name, xorTag)
-					return nil, err
-				}
-			}
-
-			if orTag := f.Tag.Get("or"); orTag != "" {
-				//fmt.Printf("Checking `or` tag for field with:\n\tname: %+v\n\torTag:%s\n", f.Name, orTag)
-				//fmt.Printf("field is zero?: %v\n", zero)
-				if zero {
-					orField := optsValue.FieldByName(orTag)
-					var orFieldIsZero bool
-					if reflect.ValueOf(orField.Interface()) == reflect.Zero(orField.Type()) {
-						orFieldIsZero = true
-					} else {
-						if orField.Kind() == reflect.Pointer {
-							orField = orField.Elem()
-						}
-						orFieldIsZero = isZero(orField)
-					}
-					if orFieldIsZero {
-						err := ErrMissingInput{}
-						err.Argument = fmt.Sprintf("%s/%s", f.Name, orTag)
-						err.Info = fmt.Sprintf("At least one of %s and %s must be provided", f.Name, orTag)
-						return nil, err
-					}
-				}
-			}
-
-			jsonTag := f.Tag.Get("json")
-			if jsonTag == "-" {
-				continue
-			}
-
-			if v.Kind() == reflect.Slice || (v.Kind() == reflect.Pointer && v.Elem().Kind() == reflect.Slice) {
-				sliceValue := v
-				if sliceValue.Kind() == reflect.Pointer {
-					sliceValue = sliceValue.Elem()
-				}
-
-				for i := 0; i < sliceValue.Len(); i++ {
-					element := sliceValue.Index(i)
-					if element.Kind() == reflect.Struct || (element.Kind() == reflect.Pointer && element.Elem().Kind() == reflect.Struct) {
-						_, err := BuildRequestBody(element.Interface(), "")
-						if err != nil {
-							return nil, err
-						}
-					}
-				}
-			}
-			if v.Kind() == reflect.Struct || (v.Kind() == reflect.Pointer && v.Elem().Kind() == reflect.Struct) {
-				if zero {
-					//fmt.Printf("value before change: %+v\n", optsValue.Field(i))
-					if jsonTag != "" {
-						jsonTagPieces := strings.Split(jsonTag, ",")
-						if len(jsonTagPieces) > 1 && jsonTagPieces[1] == "omitempty" {
-							if v.CanSet() {
-								if !v.IsNil() {
-									if v.Kind() == reflect.Pointer {
-										v.Set(reflect.Zero(v.Type()))
-									}
-								}
-								//fmt.Printf("value after change: %+v\n", optsValue.Field(i))
-							}
-						}
-					}
-					continue
-				}
-
-				//fmt.Printf("Calling BuildRequestBody with:\n\tv: %+v\n\tf.Name:%s\n", v.Interface(), f.Name)
-				_, err := BuildRequestBody(v.Interface(), f.Name)
-				if err != nil {
-					return nil, err
-				}
-			}
-		}
-
-		//fmt.Printf("opts: %+v \n", opts)
-
-		b, err := json.Marshal(opts)
-		if err != nil {
-			return nil, err
-		}
-
-		//fmt.Printf("string(b): %s\n", string(b))
-
-		err = json.Unmarshal(b, &optsMap)
-		if err != nil {
-			return nil, err
-		}
-
-		//fmt.Printf("optsMap: %+v\n", optsMap)
-
-		if parent != "" {
-			optsMap = map[string]any{parent: optsMap}
-		}
-		//fmt.Printf("optsMap after parent added: %+v\n", optsMap)
-		return optsMap, nil
-	case reflect.Slice, reflect.Array:
-		optsMaps := make([]map[string]any, optsValue.Len())
-		for i := 0; i < optsValue.Len(); i++ {
-			b, err := BuildRequestBody(optsValue.Index(i).Interface(), "")
-			if err != nil {
-				return nil, err
-			}
-			optsMaps[i] = b
-		}
-		if parent == "" {
-			return nil, fmt.Errorf("parent is required when passing an array or a slice")
-		}
-		return map[string]any{parent: optsMaps}, nil
-	}
-	// Return an error if we can't work with the underlying type of 'opts'
-	return nil, fmt.Errorf("options type is not a struct, a slice, or an array")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+//fmt.Printf("optsValue.Kind() is a reflect.Struct: %+v\n", optsValue.Kind())
+
+//fmt.Printf("Skipping field: %s...\n", f.Name)
+
+//fmt.Printf("Starting on field: %s...\n", f.Name)
+
+//fmt.Printf("v is zero?: %v\n", zero)
+
+// if the field has a required tag that's set to "true"
+
+//fmt.Printf("Checking required field [%s]:\n\tv: %+v\n\tisZero:%v\n", f.Name, v.Interface(), zero)
+// if the field's value is zero, return a missing-argument error
+
+// if the field has a 'required' tag, it can't have a zero-value
+
+//fmt.Printf("Checking `xor` tag for field [%s] with value %+v:\n\txorTag: %s\n", f.Name, v, xorTag)
+
+//fmt.Printf("Checking `or` tag for field with:\n\tname: %+v\n\torTag:%s\n", f.Name, orTag)
+//fmt.Printf("field is zero?: %v\n", zero)
+
+//fmt.Printf("value before change: %+v\n", optsValue.Field(i))
+
+//fmt.Printf("value after change: %+v\n", optsValue.Field(i))
+
+//fmt.Printf("Calling BuildRequestBody with:\n\tv: %+v\n\tf.Name:%s\n", v.Interface(), f.Name)
+
+//fmt.Printf("opts: %+v \n", opts)
+
+//fmt.Printf("string(b): %s\n", string(b))
+
+//fmt.Printf("optsMap: %+v\n", optsMap)
+
+//fmt.Printf("optsMap after parent added: %+v\n", optsMap)
+
+// Return an error if we can't work with the underlying type of 'opts'
 
 // EnabledState is a convenience type, mostly used in Create and Update
 // operations. Because the zero value of a bool is FALSE, we need to use a
@@ -255,24 +121,20 @@ const (
 // IntToPointer is a function for converting integers into integer pointers.
 // This is useful when passing in options to operations.
 func IntToPointer(i int) *int {
-	return &i
+	_ = "STUB: not implemented"
+
+	/*
+	   MaybeString is an internal function to be used by request methods in individual
+	   resource packages.
+
+	   It takes a string that might be a zero value and returns either a pointer to its
+	   address or nil. This is useful for allowing users to conveniently omit values
+	   from an options struct by leaving them zeroed, but still pass nil to the JSON
+	   serializer so they'll be omitted from the request body.
+	*/return nil
 }
 
-/*
-MaybeString is an internal function to be used by request methods in individual
-resource packages.
-
-It takes a string that might be a zero value and returns either a pointer to its
-address or nil. This is useful for allowing users to conveniently omit values
-from an options struct by leaving them zeroed, but still pass nil to the JSON
-serializer so they'll be omitted from the request body.
-*/
-func MaybeString(original string) *string {
-	if original != "" {
-		return &original
-	}
-	return nil
-}
+func MaybeString(original string) *string { _ = "STUB: not implemented"; return nil }
 
 /*
 MaybeInt is an internal function to be used by request methods in individual
@@ -282,12 +144,7 @@ Like MaybeString, it accepts an int that may or may not be a zero value, and
 returns either a pointer to its address or nil. It's intended to hint that the
 JSON serializer should omit its field.
 */
-func MaybeInt(original int) *int {
-	if original != 0 {
-		return &original
-	}
-	return nil
-}
+func MaybeInt(original int) *int { _ = "STUB: not implemented"; return nil }
 
 /*
 func isUnderlyingStructZero(v reflect.Value) bool {
@@ -303,36 +160,14 @@ func isUnderlyingStructZero(v reflect.Value) bool {
 var t time.Time
 
 func isZero(v reflect.Value) bool {
-	//fmt.Printf("\n\nchecking isZero for value: %+v\n", v)
-	switch v.Kind() {
-	case reflect.Pointer:
-		if v.IsNil() {
-			return true
-		}
-		return false
-	case reflect.Func, reflect.Map, reflect.Slice:
-		return v.IsNil()
-	case reflect.Array:
-		z := true
-		for i := 0; i < v.Len(); i++ {
-			z = z && isZero(v.Index(i))
-		}
-		return z
-	case reflect.Struct:
-		if v.Type() == reflect.TypeOf(t) {
-			return v.Interface().(time.Time).IsZero()
-		}
-		z := true
-		for i := 0; i < v.NumField(); i++ {
-			z = z && isZero(v.Field(i))
-		}
-		return z
-	}
-	// Compare other types directly:
-	z := reflect.Zero(v.Type())
-	//fmt.Printf("zero type for value: %+v\n\n\n", z)
-	return v.Interface() == z.Interface()
+	_ = "STUB: not implemented"
+	// fmt.Printf("\n\nchecking isZero for value: %+v\n", v)
+	return false
 }
+
+// Compare other types directly:
+
+//fmt.Printf("zero type for value: %+v\n\n\n", z)
 
 /*
 BuildQueryString is an internal function to be used by request methods in
@@ -363,83 +198,15 @@ Slice are handled in one of two ways:
 	   Baz []int    `q:"baz" format="comma-separated"` // E.g. ?baz=1,2
 	}
 */
-func BuildQueryString(opts any) (*url.URL, error) {
-	optsValue := reflect.ValueOf(opts)
-	if optsValue.Kind() == reflect.Pointer {
-		optsValue = optsValue.Elem()
-	}
+func BuildQueryString(opts any) (*url.URL, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	optsType := reflect.TypeOf(opts)
-	if optsType.Kind() == reflect.Pointer {
-		optsType = optsType.Elem()
-	}
+// if the field has a 'q' tag, it goes in the query string
 
-	params := url.Values{}
+// if the field is set, add it to the slice of query pieces
 
-	if optsValue.Kind() == reflect.Struct {
-		for i := 0; i < optsValue.NumField(); i++ {
-			v := optsValue.Field(i)
-			f := optsType.Field(i)
-			qTag := f.Tag.Get("q")
+// if the field has a 'required' tag, it can't have a zero-value
 
-			// if the field has a 'q' tag, it goes in the query string
-			if qTag != "" {
-				tags := strings.Split(qTag, ",")
-
-				// if the field is set, add it to the slice of query pieces
-				if !isZero(v) {
-				loop:
-					switch v.Kind() {
-					case reflect.Pointer:
-						v = v.Elem()
-						goto loop
-					case reflect.String:
-						params.Add(tags[0], v.String())
-					case reflect.Int:
-						params.Add(tags[0], strconv.FormatInt(v.Int(), 10))
-					case reflect.Bool:
-						params.Add(tags[0], strconv.FormatBool(v.Bool()))
-					case reflect.Slice:
-						var values []string
-						switch v.Type().Elem() {
-						case reflect.TypeOf(0):
-							for i := 0; i < v.Len(); i++ {
-								values = append(values, strconv.FormatInt(v.Index(i).Int(), 10))
-							}
-						default:
-							for i := 0; i < v.Len(); i++ {
-								values = append(values, v.Index(i).String())
-							}
-						}
-						if sliceFormat := f.Tag.Get("format"); sliceFormat == "comma-separated" {
-							params.Add(tags[0], strings.Join(values, ","))
-						} else {
-							params[tags[0]] = append(params[tags[0]], values...)
-						}
-					case reflect.Map:
-						if v.Type().Key().Kind() == reflect.String && v.Type().Elem().Kind() == reflect.String {
-							var s []string
-							for _, k := range v.MapKeys() {
-								value := v.MapIndex(k).String()
-								s = append(s, fmt.Sprintf("'%s':'%s'", k.String(), value))
-							}
-							params.Add(tags[0], fmt.Sprintf("{%s}", strings.Join(s, ", ")))
-						}
-					}
-				} else {
-					// if the field has a 'required' tag, it can't have a zero-value
-					if requiredTag := f.Tag.Get("required"); requiredTag == "true" {
-						return &url.URL{}, fmt.Errorf("required query parameter [%s] not set", f.Name)
-					}
-				}
-			}
-		}
-
-		return &url.URL{RawQuery: params.Encode()}, nil
-	}
-	// Return an error if the underlying type of 'opts' isn't a struct.
-	return nil, fmt.Errorf("options type is not a struct")
-}
+// Return an error if the underlying type of 'opts' isn't a struct.
 
 /*
 BuildHeaders is an internal function to be used by request methods in
@@ -469,76 +236,21 @@ will be converted into:
 Untagged fields and fields left at their zero values are skipped. Integers,
 booleans and string values are supported.
 */
-func BuildHeaders(opts any) (map[string]string, error) {
-	optsValue := reflect.ValueOf(opts)
-	if optsValue.Kind() == reflect.Pointer {
-		optsValue = optsValue.Elem()
-	}
+func BuildHeaders(opts any) (map[string]string, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	optsType := reflect.TypeOf(opts)
-	if optsType.Kind() == reflect.Pointer {
-		optsType = optsType.Elem()
-	}
+// if the field has a 'h' tag, it goes in the header
 
-	optsMap := make(map[string]string)
-	if optsValue.Kind() == reflect.Struct {
-		for i := 0; i < optsValue.NumField(); i++ {
-			v := optsValue.Field(i)
-			f := optsType.Field(i)
-			hTag := f.Tag.Get("h")
+// if the field is set, add it to the slice of query pieces
 
-			// if the field has a 'h' tag, it goes in the header
-			if hTag != "" {
-				tags := strings.Split(hTag, ",")
+// if the field has a 'required' tag, it can't have a zero-value
 
-				// if the field is set, add it to the slice of query pieces
-				if !isZero(v) {
-					if v.Kind() == reflect.Pointer {
-						v = v.Elem()
-					}
-					switch v.Kind() {
-					case reflect.String:
-						optsMap[tags[0]] = v.String()
-					case reflect.Int:
-						optsMap[tags[0]] = strconv.FormatInt(v.Int(), 10)
-					case reflect.Int64:
-						optsMap[tags[0]] = strconv.FormatInt(v.Int(), 10)
-					case reflect.Bool:
-						optsMap[tags[0]] = strconv.FormatBool(v.Bool())
-					}
-				} else {
-					// if the field has a 'required' tag, it can't have a zero-value
-					if requiredTag := f.Tag.Get("required"); requiredTag == "true" {
-						return optsMap, fmt.Errorf("required header [%s] not set", f.Name)
-					}
-				}
-			}
-
-		}
-		return optsMap, nil
-	}
-	// Return an error if the underlying type of 'opts' isn't a struct.
-	return optsMap, fmt.Errorf("options type is not a struct")
-}
+// Return an error if the underlying type of 'opts' isn't a struct.
 
 // IDSliceToQueryString takes a slice of elements and converts them into a query
 // string. For example, if name=foo and slice=[]int{20, 40, 60}, then the
 // result would be `?name=20&name=40&name=60'
-func IDSliceToQueryString(name string, ids []int) string {
-	str := ""
-	for k, v := range ids {
-		if k == 0 {
-			str += "?"
-		} else {
-			str += "&"
-		}
-		str += fmt.Sprintf("%s=%s", name, strconv.Itoa(v))
-	}
-	return str
-}
+func IDSliceToQueryString(name string, ids []int) string { _ = "STUB: not implemented"; return "" }
 
 // IntWithinRange returns TRUE if an integer falls within a defined range, and
 // FALSE if not.
-func IntWithinRange(val, min, max int) bool {
-	return val > min && val < max
-}
+func IntWithinRange(val, min, max int) bool { _ = "STUB: not implemented"; return false }

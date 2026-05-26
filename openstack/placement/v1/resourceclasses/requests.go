@@ -9,18 +9,14 @@ import (
 
 // List retrieves a list of resource classes.
 func List(client *gophercloud.ServiceClient) pagination.Pager {
-	url := listURL(client)
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ResourceClassesPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves the resource class with the provided name.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, name string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, name), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to
@@ -36,38 +32,25 @@ type CreateOpts struct {
 
 // ToResourceClassCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToResourceClassCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create creates a new resource class.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToResourceClassCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Update ensures the existence of a custom resource class with the
 // provided name (can be safely called multiple times).
 func Update(ctx context.Context, client *gophercloud.ServiceClient, name string) (r UpdateResult) {
-	resp, err := client.Put(ctx, updateURL(client, name), nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{201, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete deletes the resource class with the provided name.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, name string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, name), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

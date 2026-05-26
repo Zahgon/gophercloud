@@ -1,8 +1,6 @@
 package noauth
 
 import (
-	"fmt"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -15,25 +13,13 @@ type EndpointOpts struct {
 }
 
 func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc := new(gophercloud.ServiceClient)
-	if eo.IronicInspectorEndpoint == "" {
-		return nil, fmt.Errorf("IronicInspectorEndpoint is required")
-	}
-
-	sc.Endpoint = gophercloud.NormalizeURL(eo.IronicInspectorEndpoint)
-	sc.ProviderClient = client
-	return sc, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NewBareMetalIntrospectionNoAuth creates a ServiceClient that may be used to access a
 // "noauth" bare metal introspection service.
 func NewBareMetalIntrospectionNoAuth(eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc, err := initClientOpts(&gophercloud.ProviderClient{}, eo)
-	if err != nil {
-		return nil, err
-	}
-
-	sc.Type = "baremetal-introspection"
-
-	return sc, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

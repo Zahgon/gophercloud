@@ -5,49 +5,55 @@ import (
 )
 
 func getURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("flavors", "detail")
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func createURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("flavors")
-}
+func createURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func updateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func accessURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id, "os-flavor-access")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func accessActionURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecsListURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id, "os-extra_specs")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecsGetURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("flavors", id, "os-extra_specs", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecsCreateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("flavors", id, "os-extra_specs")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecUpdateURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("flavors", id, "os-extra_specs", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecDeleteURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("flavors", id, "os-extra_specs", key)
+	_ = "STUB: not implemented"
+	return ""
 }

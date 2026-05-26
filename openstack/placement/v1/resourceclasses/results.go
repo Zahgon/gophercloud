@@ -24,9 +24,8 @@ type resourceClassResult struct {
 
 // Extract interprets any resourceClassResult-base result as a ResourceClass.
 func (r resourceClassResult) Extract() (*ResourceClass, error) {
-	var s ResourceClass
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResult represents the result of a Get operation. Call its Extract
@@ -60,21 +59,11 @@ type ResourceClassesPage struct {
 
 // IsEmpty satisfies the IsEmpty method of the Page interface. It returns true
 // if a List contains no results.
-func (r ResourceClassesPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	resourceClasses, err := ExtractResourceClasses(r)
-	return len(resourceClasses) == 0, err
-}
+func (r ResourceClassesPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractResourceClasses takes a List result and extracts the collection of resource classes
 // returned by the API.
 func ExtractResourceClasses(p pagination.Page) ([]ResourceClass, error) {
-	var s struct {
-		ResourceClasses []ResourceClass `json:"resource_classes"`
-	}
-	err := (p.(ResourceClassesPage)).ExtractInto(&s)
-	return s.ResourceClasses, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

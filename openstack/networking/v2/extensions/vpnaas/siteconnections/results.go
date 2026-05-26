@@ -102,45 +102,23 @@ type ConnectionPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r ConnectionPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"ipsec_site_connections_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a ConnectionPage struct is empty.
-func (r ConnectionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractConnections(r)
-	return len(is) == 0, err
-}
+func (r ConnectionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractConnections accepts a Page struct, specifically a Connection struct,
 // and extracts the elements into a slice of Connection structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractConnections(r pagination.Page) ([]Connection, error) {
-	var s struct {
-		Connections []Connection `json:"ipsec_site_connections"`
-	}
-	err := (r.(ConnectionPage)).ExtractInto(&s)
-	return s.Connections, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract is a function that accepts a result and extracts an IPSec site connection.
-func (r commonResult) Extract() (*Connection, error) {
-	var s struct {
-		Connection *Connection `json:"ipsec_site_connection"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Connection, err
-}
+func (r commonResult) Extract() (*Connection, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a Connection.

@@ -2,38 +2,23 @@ package metrics
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func queryURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("query")
-}
+func queryURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func labelsURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("labels")
-}
+func labelsURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func labelValuesURL(c *gophercloud.ServiceClient, name string) string {
-	return c.ServiceURL("label", name, "values")
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func seriesURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("series")
-}
+func seriesURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func targetsURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("targets")
-}
+func targetsURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func runtimeInfoURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("status", "runtimeinfo")
-}
+func runtimeInfoURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func cleanTombstonesURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("admin", "tsdb", "clean_tombstones")
-}
+func cleanTombstonesURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func deleteSeriesURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("admin", "tsdb", "delete_series")
-}
+func deleteSeriesURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func snapshotURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("admin", "tsdb", "snapshot")
-}
+func snapshotURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

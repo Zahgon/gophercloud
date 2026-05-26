@@ -1,7 +1,6 @@
 package workflows
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -19,13 +18,7 @@ type DeleteResult struct {
 }
 
 // Extract helps to get created Workflow struct from a Create function.
-func (r CreateResult) Extract() ([]Workflow, error) {
-	var s struct {
-		Workflows []Workflow `json:"workflows"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Workflows, err
-}
+func (r CreateResult) Extract() ([]Workflow, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response of Get operations. Call its Extract method to interpret it as a Workflow.
 type GetResult struct {
@@ -33,11 +26,7 @@ type GetResult struct {
 }
 
 // Extract helps to get a Workflow struct from a Get function.
-func (r GetResult) Extract() (*Workflow, error) {
-	var s Workflow
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r GetResult) Extract() (*Workflow, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Workflow represents a workflow execution on OpenStack mistral API.
 type Workflow struct {
@@ -75,29 +64,7 @@ type Workflow struct {
 }
 
 // UnmarshalJSON implements unmarshalling custom types
-func (r *Workflow) UnmarshalJSON(b []byte) error {
-	type tmp Workflow
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ  `json:"created_at"`
-		UpdatedAt *gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Workflow(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	if s.UpdatedAt != nil {
-		t := time.Time(*s.UpdatedAt)
-		r.UpdatedAt = &t
-	}
-
-	return nil
-}
+func (r *Workflow) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // WorkflowPage contains a single page of all workflows from a List call.
 type WorkflowPage struct {
@@ -105,32 +72,16 @@ type WorkflowPage struct {
 }
 
 // IsEmpty checks if an WorkflowPage contains any results.
-func (r WorkflowPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	exec, err := ExtractWorkflows(r)
-	return len(exec) == 0, err
-}
+func (r WorkflowPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL finds the next page URL in a page in order to navigate to the next page of results.
 func (r WorkflowPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractWorkflows get the list of cron triggers from a page acquired from the List call.
 func ExtractWorkflows(r pagination.Page) ([]Workflow, error) {
-	var s struct {
-		Workflows []Workflow `json:"workflows"`
-	}
-	err := (r.(WorkflowPage)).ExtractInto(&s)
-	return s.Workflows, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

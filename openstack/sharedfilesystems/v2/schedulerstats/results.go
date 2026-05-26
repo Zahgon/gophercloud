@@ -1,9 +1,6 @@
 package schedulerstats
 
 import (
-	"encoding/json"
-	"math"
-
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -56,42 +53,10 @@ type Pool struct {
 	Capabilities Capabilities `json:"capabilities,omitempty"`
 }
 
-func (r *Capabilities) UnmarshalJSON(b []byte) error {
-	type tmp Capabilities
-	var s struct {
-		tmp
-		AllocatedCapacityGB any `json:"allocated_capacity_gb"`
-		FreeCapacityGB      any `json:"free_capacity_gb"`
-		TotalCapacityGB     any `json:"total_capacity_gb"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Capabilities(s.tmp)
+func (r *Capabilities) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Generic function to parse a capacity value which may be a numeric
-	// value, "unknown", or "infinite"
-	parseCapacity := func(capacity any) float64 {
-		if capacity != nil {
-			switch c := capacity.(type) {
-			case float64:
-				return c
-			case string:
-				if c == "infinite" {
-					return math.Inf(1)
-				}
-			}
-		}
-		return 0.0
-	}
-
-	r.AllocatedCapacityGB = parseCapacity(s.AllocatedCapacityGB)
-	r.FreeCapacityGB = parseCapacity(s.FreeCapacityGB)
-	r.TotalCapacityGB = parseCapacity(s.TotalCapacityGB)
-
-	return nil
-}
+// Generic function to parse a capacity value which may be a numeric
+// value, "unknown", or "infinite"
 
 // PoolPage is a single page of all List results.
 type PoolPage struct {
@@ -100,21 +65,8 @@ type PoolPage struct {
 
 // IsEmpty satisfies the IsEmpty method of the Page interface. It returns true
 // if a List contains no results.
-func (page PoolPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	va, err := ExtractPools(page)
-	return len(va) == 0, err
-}
+func (page PoolPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractPools takes a List result and extracts the collection of
 // Pools returned by the API.
-func ExtractPools(p pagination.Page) ([]Pool, error) {
-	var s struct {
-		Pools []Pool `json:"pools"`
-	}
-	err := (p.(PoolPage)).ExtractInto(&s)
-	return s.Pools, err
-}
+func ExtractPools(p pagination.Page) ([]Pool, error) { _ = "STUB: not implemented"; return nil, nil }

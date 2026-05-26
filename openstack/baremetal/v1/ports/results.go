@@ -11,19 +11,11 @@ type portResult struct {
 	gophercloud.Result
 }
 
-func (r portResult) Extract() (*Port, error) {
-	var s Port
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r portResult) Extract() (*Port, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r portResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r portResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractPortsInto(r pagination.Page, v any) error {
-	return r.(PortPage).ExtractIntoSlicePtr(v, "ports")
-}
+func ExtractPortsInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // Port represents a port in the OpenStack Bare Metal API.
 type Port struct {
@@ -81,35 +73,18 @@ type PortPage struct {
 }
 
 // IsEmpty returns true if a page contains no Port results.
-func (r PortPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractPorts(r)
-	return len(s) == 0, err
-}
+func (r PortPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r PortPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"ports_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractPorts interprets the results of a single page from a List() call,
 // producing a slice of Port entities.
-func ExtractPorts(r pagination.Page) ([]Port, error) {
-	var s []Port
-	err := ExtractPortsInto(r, &s)
-	return s, err
-}
+func ExtractPorts(r pagination.Page) ([]Port, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract
 // method to interpret it as a Port.

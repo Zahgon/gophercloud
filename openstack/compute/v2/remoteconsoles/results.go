@@ -29,10 +29,4 @@ type RemoteConsole struct {
 }
 
 // Extract interprets any commonResult as a RemoteConsole.
-func (r commonResult) Extract() (*RemoteConsole, error) {
-	var s struct {
-		RemoteConsole *RemoteConsole `json:"remote_console"`
-	}
-	err := r.ExtractInto(&s)
-	return s.RemoteConsole, err
-}
+func (r commonResult) Extract() (*RemoteConsole, error) { _ = "STUB: not implemented"; return nil, nil }

@@ -1,7 +1,6 @@
 package stackevents
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -30,33 +29,7 @@ type Event struct {
 	ResourceProperties map[string]any `json:"resource_properties"`
 }
 
-func (r *Event) UnmarshalJSON(b []byte) error {
-	type tmp Event
-	var s struct {
-		tmp
-		Time string `json:"event_time"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Event(s.tmp)
-
-	if s.Time != "" {
-		t, err := time.Parse(time.RFC3339, s.Time)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.Time)
-			if err != nil {
-				return err
-			}
-		}
-		r.Time = t
-	}
-
-	return nil
-}
+func (r *Event) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // FindResult represents the result of a Find operation.
 type FindResult struct {
@@ -65,13 +38,7 @@ type FindResult struct {
 
 // Extract returns a slice of Event objects and is called after a
 // Find operation.
-func (r FindResult) Extract() ([]Event, error) {
-	var s struct {
-		Events []Event `json:"events"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Events, err
-}
+func (r FindResult) Extract() ([]Event, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // EventPage abstracts the raw results of making a List() request against the API.
 // As OpenStack extensions may freely alter the response bodies of structures returned to the client, you may only safely access the
@@ -81,53 +48,28 @@ type EventPage struct {
 }
 
 // IsEmpty returns true if a page contains no Server results.
-func (r EventPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	events, err := ExtractEvents(r)
-	return len(events) == 0, err
-}
+func (r EventPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // LastMarker returns the last stack ID in a ListResult.
-func (r EventPage) LastMarker() (string, error) {
-	events, err := ExtractEvents(r)
-	if err != nil {
-		return "", err
-	}
-	if len(events) == 0 {
-		return "", nil
-	}
-	return events[len(events)-1].ID, nil
-}
+func (r EventPage) LastMarker() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ExtractEvents interprets the results of a single page from a List() call, producing a slice of Event entities.
-func ExtractEvents(r pagination.Page) ([]Event, error) {
-	var s struct {
-		Events []Event `json:"events"`
-	}
-	err := (r.(EventPage)).ExtractInto(&s)
-	return s.Events, err
-}
+func ExtractEvents(r pagination.Page) ([]Event, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractResourceEvents interprets the results of a single page from a
 // ListResourceEvents() call, producing a slice of Event entities.
 func ExtractResourceEvents(page pagination.Page) ([]Event, error) {
-	return ExtractEvents(page)
+	_ = "STUB: not implemented"
+	return nil,
+
+		// GetResult represents the result of a Get operation.
+		nil
 }
 
-// GetResult represents the result of a Get operation.
 type GetResult struct {
 	gophercloud.Result
 }
 
 // Extract returns a pointer to an Event object and is called after a
 // Get operation.
-func (r GetResult) Extract() (*Event, error) {
-	var s struct {
-		Event *Event `json:"event"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Event, err
-}
+func (r GetResult) Extract() (*Event, error) { _ = "STUB: not implemented"; return nil, nil }

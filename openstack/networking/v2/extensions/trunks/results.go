@@ -97,13 +97,7 @@ type Trunk struct {
 	Tags []string `json:"tags,omitempty"`
 }
 
-func (r commonResult) Extract() (*Trunk, error) {
-	var s struct {
-		Trunk *Trunk `json:"trunk"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Trunk, err
-}
+func (r commonResult) Extract() (*Trunk, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // TrunkPage is the page returned by a pager when traversing a collection of
 // trunk resources.
@@ -111,32 +105,16 @@ type TrunkPage struct {
 	pagination.LinkedPageBase
 }
 
-func (page TrunkPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	trunks, err := ExtractTrunks(page)
-	return len(trunks) == 0, err
-}
+func (page TrunkPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func ExtractTrunks(page pagination.Page) ([]Trunk, error) {
-	var a struct {
-		Trunks []Trunk `json:"trunks"`
-	}
-	err := (page.(TrunkPage)).ExtractInto(&a)
-	return a.Trunks, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (r GetSubportsResult) Extract() ([]Subport, error) {
-	var s struct {
-		Subports []Subport `json:"sub_ports"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Subports, err
-}
+func (r GetSubportsResult) Extract() ([]Subport, error) { _ = "STUB: not implemented"; return nil, nil }
 
 func (r UpdateSubportsResult) Extract() (t *Trunk, err error) {
-	err = r.ExtractInto(&t)
-	return
+	_ = "STUB: not implemented"
+	return nil, nil
 }

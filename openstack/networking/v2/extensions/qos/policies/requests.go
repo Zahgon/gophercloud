@@ -2,7 +2,6 @@ package policies
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/networks"
@@ -20,18 +19,8 @@ type PortCreateOptsExt struct {
 
 // ToPortCreateMap casts a CreateOpts struct to a map.
 func (opts PortCreateOptsExt) ToPortCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToPortCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.QoSPolicyID != "" {
-		port["qos_policy_id"] = opts.QoSPolicyID
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PortUpdateOptsExt adds QoS options to the base ports.UpdateOpts.
@@ -45,23 +34,8 @@ type PortUpdateOptsExt struct {
 
 // ToPortUpdateMap casts a UpdateOpts struct to a map.
 func (opts PortUpdateOptsExt) ToPortUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToPortUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.QoSPolicyID != nil {
-		qosPolicyID := *opts.QoSPolicyID
-		if qosPolicyID != "" {
-			port["qos_policy_id"] = qosPolicyID
-		} else {
-			port["qos_policy_id"] = nil
-		}
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkCreateOptsExt adds QoS options to the base networks.CreateOpts.
@@ -74,18 +48,8 @@ type NetworkCreateOptsExt struct {
 
 // ToNetworkCreateMap casts a CreateOpts struct to a map.
 func (opts NetworkCreateOptsExt) ToNetworkCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	network := base["network"].(map[string]any)
-
-	if opts.QoSPolicyID != "" {
-		network["qos_policy_id"] = opts.QoSPolicyID
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkUpdateOptsExt adds QoS options to the base networks.UpdateOpts.
@@ -99,23 +63,8 @@ type NetworkUpdateOptsExt struct {
 
 // ToNetworkUpdateMap casts a UpdateOpts struct to a map.
 func (opts NetworkUpdateOptsExt) ToNetworkUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	network := base["network"].(map[string]any)
-
-	if opts.QoSPolicyID != nil {
-		qosPolicyID := *opts.QoSPolicyID
-		if qosPolicyID != "" {
-			network["qos_policy_id"] = qosPolicyID
-		} else {
-			network["qos_policy_id"] = nil
-		}
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PolicyListOptsBuilder allows extensions to add additional parameters to the List request.
@@ -149,34 +98,20 @@ type ListOpts struct {
 }
 
 // ToPolicyListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToPolicyListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToPolicyListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // Policy. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts PolicyListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToPolicyListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return PolicyPage{pagination.LinkedPageBase{PageResult: r}}
-
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific QoS policy based on its ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows to add additional parameters to the
@@ -208,21 +143,14 @@ type CreateOpts struct {
 
 // ToPolicyCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToPolicyCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "policy")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new QoS policy on the server.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToPolicyCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -253,38 +181,19 @@ type UpdateOpts struct {
 
 // ToPolicyUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToPolicyUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "policy")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing policy using the
 // values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, policyID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToPolicyUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-	resp, err := c.Put(ctx, updateURL(c, policyID), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete accepts a unique ID and deletes the QoS policy associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

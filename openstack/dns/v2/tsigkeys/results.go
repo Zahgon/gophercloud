@@ -1,7 +1,6 @@
 package tsigkeys
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -14,11 +13,7 @@ type commonResult struct {
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a TSIGKey.
 // An error is returned if the original call or the extraction failed.
-func (r commonResult) Extract() (*TSIGKey, error) {
-	var s *TSIGKey
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*TSIGKey, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult is the result of a Create request. Call its Extract method
 // to interpret the result as a TSIGKey.
@@ -50,22 +45,12 @@ type TSIGKeyPage struct {
 }
 
 // IsEmpty returns true if the page contains no results.
-func (r TSIGKeyPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractTSIGKeys(r)
-	return len(s) == 0, err
-}
+func (r TSIGKeyPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractTSIGKeys extracts a slice of TSIGKeys from a List result.
 func ExtractTSIGKeys(r pagination.Page) ([]TSIGKey, error) {
-	var s struct {
-		TSIGKeys []TSIGKey `json:"tsigkeys"`
-	}
-	err := (r.(TSIGKeyPage)).ExtractInto(&s)
-	return s.TSIGKeys, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TSIGKey represents a TSIG key for DNS transaction authentication.
@@ -98,22 +83,4 @@ type TSIGKey struct {
 	Links map[string]any `json:"links"`
 }
 
-func (r *TSIGKey) UnmarshalJSON(b []byte) error {
-	type tmp TSIGKey
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = TSIGKey(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *TSIGKey) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }

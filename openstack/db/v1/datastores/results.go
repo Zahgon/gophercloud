@@ -46,33 +46,17 @@ type DatastorePage struct {
 }
 
 // IsEmpty indicates whether a Datastore collection is empty.
-func (r DatastorePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractDatastores(r)
-	return len(is) == 0, err
-}
+func (r DatastorePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractDatastores retrieves a slice of datastore structs from a paginated
 // collection.
 func ExtractDatastores(r pagination.Page) ([]Datastore, error) {
-	var s struct {
-		Datastores []Datastore `json:"datastores"`
-	}
-	err := (r.(DatastorePage)).ExtractInto(&s)
-	return s.Datastores, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract retrieves a single Datastore struct from an operation result.
-func (r GetResult) Extract() (*Datastore, error) {
-	var s struct {
-		Datastore *Datastore `json:"datastore"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Datastore, err
-}
+func (r GetResult) Extract() (*Datastore, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // VersionPage represents a page of version resources.
 type VersionPage struct {
@@ -80,29 +64,13 @@ type VersionPage struct {
 }
 
 // IsEmpty indicates whether a collection of version resources is empty.
-func (r VersionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractVersions(r)
-	return len(is) == 0, err
-}
+func (r VersionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractVersions retrieves a slice of versions from a paginated collection.
 func ExtractVersions(r pagination.Page) ([]Version, error) {
-	var s struct {
-		Versions []Version `json:"versions"`
-	}
-	err := (r.(VersionPage)).ExtractInto(&s)
-	return s.Versions, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract retrieves a single Version struct from an operation result.
-func (r GetVersionResult) Extract() (*Version, error) {
-	var s struct {
-		Version *Version `json:"version"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Version, err
-}
+func (r GetVersionResult) Extract() (*Version, error) { _ = "STUB: not implemented"; return nil, nil }

@@ -30,38 +30,29 @@ type CreateOpts struct {
 // ToVolumeTypeCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToVolumeTypeCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "volume_type")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new Volume Type based on the values in CreateOpts. To extract
 // the Volume Type object from the response, call the Extract method on the
 // CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToVolumeTypeCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete will delete the existing Volume Type with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves the Volume Type with the provided ID. To extract the Volume Type object
 // from the response, call the Extract method on the GetResult.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -104,28 +95,14 @@ const (
 
 // ToVolumeTypeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToVolumeTypeListQuery() (string, error) {
-	if opts.IsPublic == "" {
-		opts.IsPublic = VisibilityDefault
-	}
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns Volume types.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts == nil {
-		opts = ListOpts{}
-	}
-	query, err := opts.ToVolumeTypeListQuery()
-	if err != nil {
-		return pagination.Pager{Err: err}
-	}
-	url += query
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return VolumeTypePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -146,36 +123,27 @@ type UpdateOpts struct {
 // ToVolumeTypeUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToVolumeTypeUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "volume_type")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the Volume Type with provided information. To extract the updated
 // Volume Type from the response, call the Extract method on the UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToVolumeTypeUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // ListExtraSpecs requests all the extra-specs for the given volume type ID.
 func ListExtraSpecs(ctx context.Context, client *gophercloud.ServiceClient, volumeTypeID string) (r ListExtraSpecsResult) {
-	resp, err := client.Get(ctx, extraSpecsListURL(client, volumeTypeID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListExtraSpecsResult)
 }
 
 // GetExtraSpec requests an extra-spec specified by key for the given volume type ID
 func GetExtraSpec(ctx context.Context, client *gophercloud.ServiceClient, volumeTypeID string, key string) (r GetExtraSpecResult) {
-	resp, err := client.Get(ctx, extraSpecsGetURL(client, volumeTypeID, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetExtraSpecResult)
 }
 
 // CreateExtraSpecsOptsBuilder allows extensions to add additional parameters to the
@@ -190,22 +158,15 @@ type ExtraSpecsOpts map[string]string
 // ToVolumeTypeExtraSpecsCreateMap assembles a body for a Create request based on
 // the contents of ExtraSpecsOpts.
 func (opts ExtraSpecsOpts) ToVolumeTypeExtraSpecsCreateMap() (map[string]any, error) {
-	return map[string]any{"extra_specs": opts}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateExtraSpecs will create or update the extra-specs key-value pairs for
 // the specified volume type.
 func CreateExtraSpecs(ctx context.Context, client *gophercloud.ServiceClient, volumeTypeID string, opts CreateExtraSpecsOptsBuilder) (r CreateExtraSpecsResult) {
-	b, err := opts.ToVolumeTypeExtraSpecsCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, extraSpecsCreateURL(client, volumeTypeID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateExtraSpecsResult)
 }
 
 // UpdateExtraSpecOptsBuilder allows extensions to add additional parameters to
@@ -217,53 +178,28 @@ type UpdateExtraSpecOptsBuilder interface {
 // ToVolumeTypeExtraSpecUpdateMap assembles a body for an Update request based on
 // the contents of a ExtraSpecOpts.
 func (opts ExtraSpecsOpts) ToVolumeTypeExtraSpecUpdateMap() (map[string]string, string, error) {
-	if len(opts) != 1 {
-		err := gophercloud.ErrInvalidInput{}
-		err.Argument = "volumetypes.ExtraSpecOpts"
-		err.Info = "Must have one and only one key-value pair"
-		return nil, "", err
-	}
-
-	var key string
-	for k := range opts {
-		key = k
-	}
-
-	return opts, key, nil
+	_ = "STUB: not implemented"
+	return nil, "", nil
 }
 
 // UpdateExtraSpec will updates the value of the specified volume type's extra spec
 // for the key in opts.
 func UpdateExtraSpec(ctx context.Context, client *gophercloud.ServiceClient, volumeTypeID string, opts UpdateExtraSpecOptsBuilder) (r UpdateExtraSpecResult) {
-	b, key, err := opts.ToVolumeTypeExtraSpecUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, extraSpecUpdateURL(client, volumeTypeID, key), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateExtraSpecResult)
 }
 
 // DeleteExtraSpec will delete the key-value pair with the given key for the given
 // volume type ID.
 func DeleteExtraSpec(ctx context.Context, client *gophercloud.ServiceClient, volumeTypeID, key string) (r DeleteExtraSpecResult) {
-	resp, err := client.Delete(ctx, extraSpecDeleteURL(client, volumeTypeID, key), &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteExtraSpecResult)
 }
 
 // ListAccesses retrieves the tenants which have access to a volume type.
 func ListAccesses(client *gophercloud.ServiceClient, id string) pagination.Pager {
-	url := accessURL(client, id)
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AccessPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // AddAccessOptsBuilder allows extensions to add additional parameters to the
@@ -280,21 +216,14 @@ type AddAccessOpts struct {
 
 // ToVolumeTypeAddAccessMap constructs a request body from AddAccessOpts.
 func (opts AddAccessOpts) ToVolumeTypeAddAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "addProjectAccess")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddAccess grants a tenant/project access to a volume type.
 func AddAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts AddAccessOptsBuilder) (r AddAccessResult) {
-	b, err := opts.ToVolumeTypeAddAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, accessActionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddAccessResult)
 }
 
 // RemoveAccessOptsBuilder allows extensions to add additional parameters to the
@@ -311,21 +240,14 @@ type RemoveAccessOpts struct {
 
 // ToVolumeTypeRemoveAccessMap constructs a request body from RemoveAccessOpts.
 func (opts RemoveAccessOpts) ToVolumeTypeRemoveAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "removeProjectAccess")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveAccess removes/revokes a tenant/project access to a volume type.
 func RemoveAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RemoveAccessOptsBuilder) (r RemoveAccessResult) {
-	b, err := opts.ToVolumeTypeRemoveAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, accessActionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveAccessResult)
 }
 
 // CreateEncryptionOptsBuilder allows extensions to add additional parameters to the
@@ -351,44 +273,34 @@ type CreateEncryptionOpts struct {
 // ToEncryptionCreateMap assembles a request body based on the contents of a
 // CreateEncryptionOpts.
 func (opts CreateEncryptionOpts) ToEncryptionCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "encryption")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateEncryption will creates an Encryption Type object based on the CreateEncryptionOpts.
 // To extract the Encryption Type object from the response, call the Extract method on the
 // EncryptionCreateResult.
 func CreateEncryption(ctx context.Context, client *gophercloud.ServiceClient, id string, opts CreateEncryptionOptsBuilder) (r CreateEncryptionResult) {
-	b, err := opts.ToEncryptionCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createEncryptionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateEncryptionResult)
 }
 
 // Delete will delete an encryption type for an existing Volume Type with the provided ID.
 func DeleteEncryption(ctx context.Context, client *gophercloud.ServiceClient, id, encryptionID string) (r DeleteEncryptionResult) {
-	resp, err := client.Delete(ctx, deleteEncryptionURL(client, id, encryptionID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteEncryptionResult)
 }
 
 // GetEncryption retrieves the encryption type for an existing VolumeType with the provided ID.
 func GetEncryption(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetEncryptionResult) {
-	resp, err := client.Get(ctx, getEncryptionURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetEncryptionResult)
 }
 
 // GetEncryptionSpecs retrieves the encryption type specs for an existing VolumeType with the provided ID.
 func GetEncryptionSpec(ctx context.Context, client *gophercloud.ServiceClient, id, key string) (r GetEncryptionSpecResult) {
-	resp, err := client.Get(ctx, getEncryptionSpecURL(client, id, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetEncryptionSpecResult)
 }
 
 // UpdateEncryptionOptsBuilder allows extensions to add additional parameters to the
@@ -414,21 +326,14 @@ type UpdateEncryptionOpts struct {
 // ToEncryptionCreateMap assembles a request body based on the contents of a
 // UpdateEncryptionOpts.
 func (opts UpdateEncryptionOpts) ToUpdateEncryptionMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "encryption")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update an existing encryption for a Volume Type based on the values in UpdateEncryptionOpts.
 // To extract the UpdateEncryption Type object from the response, call the Extract method on the
 // UpdateEncryptionResult.
 func UpdateEncryption(ctx context.Context, client *gophercloud.ServiceClient, id, encryptionID string, opts UpdateEncryptionOptsBuilder) (r UpdateEncryptionResult) {
-	b, err := opts.ToUpdateEncryptionMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateEncryptionURL(client, id, encryptionID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateEncryptionResult)
 }

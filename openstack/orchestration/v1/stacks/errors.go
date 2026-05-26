@@ -1,8 +1,6 @@
 package stacks
 
 import (
-	"fmt"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -11,31 +9,23 @@ type ErrInvalidEnvironment struct {
 	Section string
 }
 
-func (e ErrInvalidEnvironment) Error() string {
-	return fmt.Sprintf("Environment has wrong section: %s", e.Section)
-}
+func (e ErrInvalidEnvironment) Error() string { _ = "STUB: not implemented"; return "" }
 
 type ErrInvalidDataFormat struct {
 	gophercloud.BaseError
 }
 
-func (e ErrInvalidDataFormat) Error() string {
-	return "Data in neither json nor yaml format."
-}
+func (e ErrInvalidDataFormat) Error() string { _ = "STUB: not implemented"; return "" }
 
 type ErrInvalidTemplateFormatVersion struct {
 	gophercloud.BaseError
 	Version string
 }
 
-func (e ErrInvalidTemplateFormatVersion) Error() string {
-	return "Template format version not found."
-}
+func (e ErrInvalidTemplateFormatVersion) Error() string { _ = "STUB: not implemented"; return "" }
 
 type ErrTemplateRequired struct {
 	gophercloud.BaseError
 }
 
-func (e ErrTemplateRequired) Error() string {
-	return "Template required for this function."
-}
+func (e ErrTemplateRequired) Error() string { _ = "STUB: not implemented"; return "" }

@@ -11,13 +11,7 @@ type GetResult struct {
 }
 
 // Extract provides access to the individual Flavor returned by the Get function.
-func (r GetResult) Extract() (*Flavor, error) {
-	var s struct {
-		Flavor *Flavor `json:"flavor"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Flavor, err
-}
+func (r GetResult) Extract() (*Flavor, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Flavor records represent (virtual) hardware configurations for server resources in a region.
 type Flavor struct {
@@ -44,32 +38,16 @@ type FlavorPage struct {
 }
 
 // IsEmpty determines if a page contains any results.
-func (page FlavorPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	flavors, err := ExtractFlavors(page)
-	return len(flavors) == 0, err
-}
+func (page FlavorPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the next page of results.
 func (page FlavorPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"flavors_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractFlavors provides access to the list of flavors in a page acquired from the List operation.
 func ExtractFlavors(r pagination.Page) ([]Flavor, error) {
-	var s struct {
-		Flavors []Flavor `json:"flavors"`
-	}
-	err := (r.(FlavorPage)).ExtractInto(&s)
-	return s.Flavors, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

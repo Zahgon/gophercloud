@@ -76,26 +76,14 @@ type ListOpts struct {
 }
 
 // ToFlavorListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToFlavorListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToFlavorListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ListDetail instructs OpenStack to provide a list of flavors.
 // You may provide criteria by which List curtails its results for easier
 // processing.
 func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToFlavorListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return FlavorPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 type CreateOptsBuilder interface {
@@ -139,21 +127,14 @@ type CreateOpts struct {
 
 // ToFlavorCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToFlavorCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "flavor")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new flavor.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToFlavorCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 type UpdateOptsBuilder interface {
@@ -170,45 +151,33 @@ type UpdateOpts struct {
 
 // ToFlavorUpdateMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToFlavorUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "flavor")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update requests the update of a new flavor.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToFlavorUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Get retrieves details of a single flavor. Use Extract to convert its
 // result into a Flavor.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete deletes the specified flavor ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListAccesses retrieves the tenants which have access to a flavor.
 func ListAccesses(client *gophercloud.ServiceClient, id string) pagination.Pager {
-	url := accessURL(client, id)
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AccessPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // AddAccessOptsBuilder allows extensions to add additional parameters to the
@@ -225,21 +194,14 @@ type AddAccessOpts struct {
 
 // ToFlavorAddAccessMap constructs a request body from AddAccessOpts.
 func (opts AddAccessOpts) ToFlavorAddAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "addTenantAccess")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddAccess grants a tenant/project access to a flavor.
 func AddAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts AddAccessOptsBuilder) (r AddAccessResult) {
-	b, err := opts.ToFlavorAddAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, accessActionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddAccessResult)
 }
 
 // RemoveAccessOptsBuilder allows extensions to add additional parameters to the
@@ -256,34 +218,25 @@ type RemoveAccessOpts struct {
 
 // ToFlavorRemoveAccessMap constructs a request body from RemoveAccessOpts.
 func (opts RemoveAccessOpts) ToFlavorRemoveAccessMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "removeTenantAccess")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveAccess removes/revokes a tenant/project access to a flavor.
 func RemoveAccess(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RemoveAccessOptsBuilder) (r RemoveAccessResult) {
-	b, err := opts.ToFlavorRemoveAccessMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, accessActionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveAccessResult)
 }
 
 // ExtraSpecs requests all the extra-specs for the given flavor ID.
 func ListExtraSpecs(ctx context.Context, client *gophercloud.ServiceClient, flavorID string) (r ListExtraSpecsResult) {
-	resp, err := client.Get(ctx, extraSpecsListURL(client, flavorID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListExtraSpecsResult)
 }
 
 func GetExtraSpec(ctx context.Context, client *gophercloud.ServiceClient, flavorID string, key string) (r GetExtraSpecResult) {
-	resp, err := client.Get(ctx, extraSpecsGetURL(client, flavorID, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetExtraSpecResult)
 }
 
 // CreateExtraSpecsOptsBuilder allows extensions to add additional parameters to the
@@ -298,22 +251,15 @@ type ExtraSpecsOpts map[string]string
 // ToFlavorExtraSpecsCreateMap assembles a body for a Create request based on
 // the contents of ExtraSpecsOpts.
 func (opts ExtraSpecsOpts) ToFlavorExtraSpecsCreateMap() (map[string]any, error) {
-	return map[string]any{"extra_specs": opts}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateExtraSpecs will create or update the extra-specs key-value pairs for
 // the specified Flavor.
 func CreateExtraSpecs(ctx context.Context, client *gophercloud.ServiceClient, flavorID string, opts CreateExtraSpecsOptsBuilder) (r CreateExtraSpecsResult) {
-	b, err := opts.ToFlavorExtraSpecsCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, extraSpecsCreateURL(client, flavorID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateExtraSpecsResult)
 }
 
 // UpdateExtraSpecOptsBuilder allows extensions to add additional parameters to
@@ -325,42 +271,20 @@ type UpdateExtraSpecOptsBuilder interface {
 // ToFlavorExtraSpecUpdateMap assembles a body for an Update request based on
 // the contents of a ExtraSpecOpts.
 func (opts ExtraSpecsOpts) ToFlavorExtraSpecUpdateMap() (map[string]string, string, error) {
-	if len(opts) != 1 {
-		err := gophercloud.ErrInvalidInput{}
-		err.Argument = "flavors.ExtraSpecOpts"
-		err.Info = "Must have 1 and only one key-value pair"
-		return nil, "", err
-	}
-
-	var key string
-	for k := range opts {
-		key = k
-	}
-
-	return opts, key, nil
+	_ = "STUB: not implemented"
+	return nil, "", nil
 }
 
 // UpdateExtraSpec will updates the value of the specified flavor's extra spec
 // for the key in opts.
 func UpdateExtraSpec(ctx context.Context, client *gophercloud.ServiceClient, flavorID string, opts UpdateExtraSpecOptsBuilder) (r UpdateExtraSpecResult) {
-	b, key, err := opts.ToFlavorExtraSpecUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, extraSpecUpdateURL(client, flavorID, key), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateExtraSpecResult)
 }
 
 // DeleteExtraSpec will delete the key-value pair with the given key for the given
 // flavor ID.
 func DeleteExtraSpec(ctx context.Context, client *gophercloud.ServiceClient, flavorID, key string) (r DeleteExtraSpecResult) {
-	resp, err := client.Delete(ctx, extraSpecDeleteURL(client, flavorID, key), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteExtraSpecResult)
 }

@@ -11,85 +11,106 @@ const (
 )
 
 func bandwidthLimitRulesRootURL(c *gophercloud.ServiceClient, policyID string) string {
-	return c.ServiceURL(rootPath, policyID, bandwidthLimitRulesResourcePath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func bandwidthLimitRulesResourceURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return c.ServiceURL(rootPath, policyID, bandwidthLimitRulesResourcePath, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listBandwidthLimitRulesURL(c *gophercloud.ServiceClient, policyID string) string {
-	return bandwidthLimitRulesRootURL(c, policyID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getBandwidthLimitRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return bandwidthLimitRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createBandwidthLimitRuleURL(c *gophercloud.ServiceClient, policyID string) string {
-	return bandwidthLimitRulesRootURL(c, policyID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateBandwidthLimitRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return bandwidthLimitRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteBandwidthLimitRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return bandwidthLimitRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func dscpMarkingRulesRootURL(c *gophercloud.ServiceClient, policyID string) string {
-	return c.ServiceURL(rootPath, policyID, dscpMarkingRulesResourcePath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func dscpMarkingRulesResourceURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return c.ServiceURL(rootPath, policyID, dscpMarkingRulesResourcePath, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listDSCPMarkingRulesURL(c *gophercloud.ServiceClient, policyID string) string {
-	return dscpMarkingRulesRootURL(c, policyID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getDSCPMarkingRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return dscpMarkingRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createDSCPMarkingRuleURL(c *gophercloud.ServiceClient, policyID string) string {
-	return dscpMarkingRulesRootURL(c, policyID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateDSCPMarkingRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return dscpMarkingRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteDSCPMarkingRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return dscpMarkingRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func minimumBandwidthRulesRootURL(c *gophercloud.ServiceClient, policyID string) string {
-	return c.ServiceURL(rootPath, policyID, minimumBandwidthRulesResourcePath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func minimumBandwidthRulesResourceURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return c.ServiceURL(rootPath, policyID, minimumBandwidthRulesResourcePath, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listMinimumBandwidthRulesURL(c *gophercloud.ServiceClient, policyID string) string {
-	return minimumBandwidthRulesRootURL(c, policyID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getMinimumBandwidthRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return minimumBandwidthRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createMinimumBandwidthRuleURL(c *gophercloud.ServiceClient, policyID string) string {
-	return minimumBandwidthRulesRootURL(c, policyID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateMinimumBandwidthRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return minimumBandwidthRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteMinimumBandwidthRuleURL(c *gophercloud.ServiceClient, policyID, ruleID string) string {
-	return minimumBandwidthRulesResourceURL(c, policyID, ruleID)
+	_ = "STUB: not implemented"
+	return ""
 }

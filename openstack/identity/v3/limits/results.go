@@ -22,11 +22,8 @@ type EnforcementModelResult struct {
 
 // Extract interprets EnforcementModelResult as a EnforcementModel.
 func (r EnforcementModelResult) Extract() (*EnforcementModel, error) {
-	var out struct {
-		Model *EnforcementModel `json:"model"`
-	}
-	err := r.ExtractInto(&out)
-	return out.Model, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // A limit is the limit that override the registered limit for each project.
@@ -103,48 +100,20 @@ type DeleteResult struct {
 }
 
 // IsEmpty determines whether or not a page of Limits contains any results.
-func (r LimitPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	limits, err := ExtractLimits(r)
-	return len(limits) == 0, err
-}
+func (r LimitPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r LimitPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractLimits returns a slice of Limits contained in a single page of
 // results.
-func ExtractLimits(r pagination.Page) ([]Limit, error) {
-	var out LimitsOutput
-	err := (r.(LimitPage)).ExtractInto(&out)
-	return out.Limits, err
-}
+func ExtractLimits(r pagination.Page) ([]Limit, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets CreateResult as slice of Limits.
-func (r CreateResult) Extract() ([]Limit, error) {
-	var out LimitsOutput
-	err := r.ExtractInto(&out)
-	return out.Limits, err
-}
+func (r CreateResult) Extract() ([]Limit, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any commonResult as a Limit.
-func (r commonResult) Extract() (*Limit, error) {
-	var out LimitOutput
-	err := r.ExtractInto(&out)
-	return out.Limit, err
-}
+func (r commonResult) Extract() (*Limit, error) { _ = "STUB: not implemented"; return nil, nil }

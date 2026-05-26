@@ -22,23 +22,14 @@ type ListOpts struct {
 
 // ToKeyPairListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToKeyPairListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager that allows you to iterate over a collection of KeyPairs.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToKeyPairListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return KeyPairPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -68,22 +59,15 @@ type CreateOpts struct {
 
 // ToKeyPairCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToKeyPairCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "keypair")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new KeyPair on the server, or to import a
 // pre-existing keypair.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToKeyPairCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // GetOptsBuilder allows extensions to add additional parameters to the
@@ -100,26 +84,12 @@ type GetOpts struct {
 }
 
 // ToKeyPairGetQuery formats a GetOpts into a query string.
-func (opts GetOpts) ToKeyPairGetQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts GetOpts) ToKeyPairGetQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // Get returns public data about a previously uploaded KeyPair.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, name string, opts GetOptsBuilder) (r GetResult) {
-	url := getURL(client, name)
-	if opts != nil {
-		query, err := opts.ToKeyPairGetQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
@@ -137,23 +107,12 @@ type DeleteOpts struct {
 
 // ToKeyPairDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToKeyPairDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Delete requests the deletion of a previous stored KeyPair from the server.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, name string, opts DeleteOptsBuilder) (r DeleteResult) {
-	url := deleteURL(client, name)
-	if opts != nil {
-		query, err := opts.ToKeyPairDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-
-	resp, err := client.Delete(ctx, url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -1,14 +1,11 @@
 package testing
 
 import (
-	"fmt"
-	"net/http"
 	"testing"
 
 	"github.com/gophercloud/gophercloud/v2/openstack/loadbalancer/v2/flavors"
 
 	th "github.com/gophercloud/gophercloud/v2/testhelper"
-	"github.com/gophercloud/gophercloud/v2/testhelper/client"
 )
 
 const FlavorsListBody = `
@@ -111,97 +108,31 @@ var (
 )
 
 func HandleFlavorListSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavors", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.Header().Add("Content-Type", "application/json")
-		if err := r.ParseForm(); err != nil {
-			t.Errorf("Failed to parse request form %v", err)
-		}
-		marker := r.Form.Get("marker")
-		switch marker {
-		case "":
-			fmt.Fprint(w, FlavorsListBody)
-		case "3a0d060b-fcec-4250-9ab6-940b806a12dd":
-			fmt.Fprint(w, `{ "flavors": [] }`)
-		default:
-			t.Fatalf("/v2.0/lbaas/flavors invoked with unexpected marker=[%s]", marker)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorCreationSuccessfully(t *testing.T, fakeServer th.FakeServer, response string) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavors", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestJSONRequest(t, r, `{
-			"flavor": {
-				"name": "Basic",
-				"description": "A basic standalone Octavia load balancer.",
-				"enabled": true,
-				"flavor_profile_id": "9daa2768-74e7-4d13-bf5d-1b8e0dc239e1"
-			}
-		}`)
-
-		w.WriteHeader(http.StatusAccepted)
-		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprint(w, response)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorCreationSuccessfullyDisabled(t *testing.T, fakeServer th.FakeServer, response string) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavors", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestJSONRequest(t, r, `{
-			"flavor": {
-				"name": "Basic",
-				"description": "A basic standalone Octavia load balancer.",
-				"enabled": false,
-				"flavor_profile_id": "9daa2768-74e7-4d13-bf5d-1b8e0dc239e1"
-			}
-		}`)
-
-		w.WriteHeader(http.StatusAccepted)
-		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprint(w, response)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorGetSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavors/5548c807-e6e8-43d7-9ea4-b38d34dd74a0", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-
-		fmt.Fprint(w, SingleFlavorBody)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorDeletionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavors/5548c807-e6e8-43d7-9ea4-b38d34dd74a0", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "DELETE")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.WriteHeader(http.StatusNoContent)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorUpdateSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavors/5548c807-e6e8-43d7-9ea4-b38d34dd74a0", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "PUT")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-		th.TestHeader(t, r, "Content-Type", "application/json")
-		th.TestJSONRequest(t, r, `{
-			"flavor": {
-				"name": "Basic v2",
-				"description": "Rename flavor",
-				"enabled": true
-			}
-		}`)
-
-		fmt.Fprint(w, PostUpdateFlavorBody)
-	})
+	_ = "STUB: not implemented"
+	return
 }

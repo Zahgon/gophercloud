@@ -1,8 +1,6 @@
 package queues
 
 import (
-	"net/url"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -11,53 +9,47 @@ const (
 	apiName    = "queues"
 )
 
-func commonURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL(apiVersion, apiName)
-}
+func commonURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func createURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return commonURL(client)
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func updateURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func statURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName, "stats")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func shareURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName, "share")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func purgeURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName, "purge")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // builds next page full url based on service endpoint
 func nextPageURL(baseURL string, next string) (string, error) {
-	base, err := url.Parse(baseURL)
-	if err != nil {
-		return "", err
-	}
-	rel, err := url.Parse(next)
-	if err != nil {
-		return "", err
-	}
-	combined := base.JoinPath(rel.Path)
-	combined.RawQuery = rel.RawQuery
-	return combined.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }

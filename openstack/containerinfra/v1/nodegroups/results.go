@@ -11,11 +11,7 @@ type commonResult struct {
 	gophercloud.Result
 }
 
-func (r commonResult) Extract() (*NodeGroup, error) {
-	var s NodeGroup
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*NodeGroup, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get request.
 // Use the Extract method to retrieve the NodeGroup itself.
@@ -75,31 +71,15 @@ type NodeGroupPage struct {
 }
 
 func (r NodeGroupPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
-func (r NodeGroupPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractNodeGroups(r)
-	return len(s) == 0, err
-}
+func (r NodeGroupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractNodeGroups takes a Page of node groups as returned from List
 // or from AllPages and extracts it as a slice of NodeGroups.
 func ExtractNodeGroups(r pagination.Page) ([]NodeGroup, error) {
-	var s struct {
-		NodeGroups []NodeGroup `json:"nodegroups"`
-	}
-	err := (r.(NodeGroupPage)).ExtractInto(&s)
-	return s.NodeGroups, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -22,11 +22,8 @@ type EnforcementModelResult struct {
 
 // Extract interprets EnforcementModelResult as a EnforcementModel.
 func (r EnforcementModelResult) Extract() (*EnforcementModel, error) {
-	var out struct {
-		Model *EnforcementModel `json:"model"`
-	}
-	err := r.ExtractInto(&out)
-	return out.Model, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // A registered limit is the limit that is default for all projects.
@@ -97,48 +94,29 @@ type DeleteResult struct {
 }
 
 // IsEmpty determines whether or not a page of Limits contains any results.
-func (r RegisteredLimitPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	registered_limits, err := ExtractRegisteredLimits(r)
-	return len(registered_limits) == 0, err
-}
+func (r RegisteredLimitPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r RegisteredLimitPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractRegisteredLimits returns a slice of Registered Limits contained in a single page of
 // results.
 func ExtractRegisteredLimits(r pagination.Page) ([]RegisteredLimit, error) {
-	var out RegisteredLimitsOutput
-	err := (r.(RegisteredLimitPage)).ExtractInto(&out)
-	return out.RegisteredLimits, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets CreateResult as slice of RegisteredLimits.
 func (r CreateResult) Extract() ([]RegisteredLimit, error) {
-	var out RegisteredLimitsOutput
-	err := r.ExtractInto(&out)
-	return out.RegisteredLimits, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any commonResult as a RegisteredLimit.
 func (r commonResult) Extract() (*RegisteredLimit, error) {
-	var out RegisteredLimitOutput
-	err := r.ExtractInto(&out)
-	return out.RegisteredLimit, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

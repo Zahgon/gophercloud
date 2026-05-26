@@ -1,8 +1,6 @@
 package quotas
 
 import (
-	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -18,11 +16,7 @@ type CreateResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a quota resource.
-func (r commonResult) Extract() (*Quotas, error) {
-	var s *Quotas
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Quotas, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type Quotas struct {
 	Resource  string    `json:"resource"`
@@ -33,25 +27,4 @@ type Quotas struct {
 	ID        string    `json:"-"`
 }
 
-func (r *Quotas) UnmarshalJSON(b []byte) error {
-	type tmp Quotas
-	var s struct {
-		tmp
-		ID any `json:"id"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Quotas(s.tmp)
-
-	switch t := s.ID.(type) {
-	case float64:
-		r.ID = fmt.Sprint(t)
-	case string:
-		r.ID = t
-	}
-
-	return nil
-}
+func (r *Quotas) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }

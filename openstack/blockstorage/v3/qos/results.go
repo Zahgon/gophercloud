@@ -22,16 +22,10 @@ type commonResult struct {
 }
 
 // Extract will get the QoS object out of the commonResult object.
-func (r commonResult) Extract() (*QoS, error) {
-	var s QoS
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*QoS, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractInto converts our response data into a QoS struct
-func (r commonResult) ExtractInto(qos any) error {
-	return r.ExtractIntoStructPtr(qos, "qos_specs")
-}
+func (r commonResult) ExtractInto(qos any) error { _ = "STUB: not implemented"; return nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {
@@ -48,37 +42,18 @@ type QoSPage struct {
 }
 
 // IsEmpty determines if a QoSPage contains any results.
-func (page QoSPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	qos, err := ExtractQoS(page)
-	return len(qos) == 0, err
-}
+func (page QoSPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (page QoSPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"qos_specs_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractQoS provides access to the list of qos in a page acquired
 // from the List operation.
-func ExtractQoS(r pagination.Page) ([]QoS, error) {
-	var s struct {
-		QoSs []QoS `json:"qos_specs"`
-	}
-	err := (r.(QoSPage)).ExtractInto(&s)
-	return s.QoSs, err
-}
+func ExtractQoS(r pagination.Page) ([]QoS, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response of a Get operations. Call its Extract method to
 // interpret it as a Flavor.
@@ -88,11 +63,8 @@ type GetResult struct {
 
 // Extract interprets any updateResult as qosSpecs, if possible.
 func (r updateResult) Extract() (map[string]string, error) {
-	var s struct {
-		QosSpecs map[string]string `json:"qos_specs"`
-	}
-	err := r.ExtractInto(&s)
-	return s.QosSpecs, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // updateResult contains the result of a call for (potentially) multiple
@@ -133,20 +105,10 @@ type AssociationPage struct {
 }
 
 // IsEmpty indicates whether an Association page is empty.
-func (page AssociationPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	v, err := ExtractAssociations(page)
-	return len(v) == 0, err
-}
+func (page AssociationPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAssociations interprets a page of results as a slice of QosAssociations
 func ExtractAssociations(r pagination.Page) ([]QosAssociation, error) {
-	var s struct {
-		QosAssociations []QosAssociation `json:"qos_associations"`
-	}
-	err := (r.(AssociationPage)).ExtractInto(&s)
-	return s.QosAssociations, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

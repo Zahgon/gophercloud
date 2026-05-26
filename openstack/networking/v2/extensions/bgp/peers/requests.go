@@ -9,17 +9,14 @@ import (
 
 // List the bgp peers
 func List(c *gophercloud.ServiceClient) pagination.Pager {
-	url := listURL(c)
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return BGPPeerPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieve the specific bgp peer by its uuid
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -40,26 +37,20 @@ type CreateOpts struct {
 
 // ToPeerCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToPeerCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create a BGP Peer
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToPeerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete accepts a unique ID and deletes the bgp Peer associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, bgpPeerID string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, bgpPeerID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -76,19 +67,12 @@ type UpdateOpts struct {
 
 // ToPeerUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToPeerUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accept a BGP Peer ID and an UpdateOpts and update the BGP Peer
 func Update(ctx context.Context, c *gophercloud.ServiceClient, bgpPeerID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToPeerUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateURL(c, bgpPeerID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }

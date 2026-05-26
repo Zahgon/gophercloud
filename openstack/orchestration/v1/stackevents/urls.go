@@ -3,17 +3,21 @@ package stackevents
 import "github.com/gophercloud/gophercloud/v2"
 
 func findURL(c *gophercloud.ServiceClient, stackName string) string {
-	return c.ServiceURL("stacks", stackName, "events")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listURL(c *gophercloud.ServiceClient, stackName, stackID string) string {
-	return c.ServiceURL("stacks", stackName, stackID, "events")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listResourceEventsURL(c *gophercloud.ServiceClient, stackName, stackID, resourceName string) string {
-	return c.ServiceURL("stacks", stackName, stackID, "resources", resourceName, "events")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getURL(c *gophercloud.ServiceClient, stackName, stackID, resourceName, eventID string) string {
-	return c.ServiceURL("stacks", stackName, stackID, "resources", resourceName, "events", eventID)
+	_ = "STUB: not implemented"
+	return ""
 }

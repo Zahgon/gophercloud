@@ -1,10 +1,6 @@
 package hypervisors
 
 import (
-	"encoding/json"
-	"fmt"
-	"strconv"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -33,35 +29,10 @@ type Service struct {
 	DisabledReason string `json:"disabled_reason"`
 }
 
-func (r *Service) UnmarshalJSON(b []byte) error {
-	type tmp Service
-	var s struct {
-		tmp
-		ID any `json:"id"`
-	}
+func (r *Service) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Service(s.tmp)
-
-	// OpenStack Compute service returns ID in string representation since
-	// 2.53 microversion API (Pike release).
-	switch t := s.ID.(type) {
-	case int:
-		r.ID = strconv.Itoa(t)
-	case float64:
-		r.ID = strconv.Itoa(int(t))
-	case string:
-		r.ID = t
-	default:
-		return fmt.Errorf("ID has unexpected type: %T", t)
-	}
-
-	return nil
-}
+// OpenStack Compute service returns ID in string representation since
+// 2.53 microversion API (Pike release).
 
 // Server represents an instance running on the hypervisor
 type Server struct {
@@ -141,102 +112,24 @@ type Hypervisor struct {
 	VCPUsUsed int `json:"vcpus_used"`
 }
 
-func (r *Hypervisor) UnmarshalJSON(b []byte) error {
-	type tmp Hypervisor
-	var s struct {
-		tmp
-		ID                any `json:"id"`
-		CPUInfo           any `json:"cpu_info"`
-		HypervisorVersion any `json:"hypervisor_version"`
-		FreeDiskGB        any `json:"free_disk_gb"`
-		LocalGB           any `json:"local_gb"`
-	}
+func (r *Hypervisor) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
+// cpu_info doesn't exist after api version 2.87,
+// see https://docs.openstack.org/api-ref/compute/#id288
 
-	*r = Hypervisor(s.tmp)
+// api versions 2.28 to 2.87 return the CPU info as the correct type.
+// api versions < 2.28 return the CPU info as a string and need to be
+// unmarshalled by the json parser.
 
-	// cpu_info doesn't exist after api version 2.87,
-	// see https://docs.openstack.org/api-ref/compute/#id288
-	if s.CPUInfo != nil {
-		// api versions 2.28 to 2.87 return the CPU info as the correct type.
-		// api versions < 2.28 return the CPU info as a string and need to be
-		// unmarshalled by the json parser.
-		var tmpb []byte
+// These fields may be returned as a scientific notation, so they need
+// converted to int.
 
-		switch t := s.CPUInfo.(type) {
-		case string:
-			tmpb = []byte(t)
-		case map[string]any:
-			tmpb, err = json.Marshal(t)
-			if err != nil {
-				return err
-			}
-		default:
-			return fmt.Errorf("CPUInfo has unexpected type: %T", t)
-		}
+// free_disk_gb doesn't exist after api version 2.87
 
-		if len(tmpb) != 0 {
-			err = json.Unmarshal(tmpb, &r.CPUInfo)
-			if err != nil {
-				return err
-			}
-		}
-	}
+// local_gb doesn't exist after api version 2.87
 
-	// These fields may be returned as a scientific notation, so they need
-	// converted to int.
-	switch t := s.HypervisorVersion.(type) {
-	case int:
-		r.HypervisorVersion = t
-	case float64:
-		r.HypervisorVersion = int(t)
-	default:
-		return fmt.Errorf("HypervisorVersion has unexpected type: %T", t)
-	}
-
-	// free_disk_gb doesn't exist after api version 2.87
-	if s.FreeDiskGB != nil {
-		switch t := s.FreeDiskGB.(type) {
-		case int:
-			r.FreeDiskGB = t
-		case float64:
-			r.FreeDiskGB = int(t)
-		default:
-			return fmt.Errorf("FreeDiskGB has unexpected type: %T", t)
-		}
-	}
-
-	// local_gb doesn't exist after api version 2.87
-	if s.LocalGB != nil {
-		switch t := s.LocalGB.(type) {
-		case int:
-			r.LocalGB = t
-		case float64:
-			r.LocalGB = int(t)
-		default:
-			return fmt.Errorf("LocalGB has unexpected type: %T", t)
-		}
-	}
-
-	// OpenStack Compute service returns ID in string representation since
-	// 2.53 microversion API (Pike release).
-	switch t := s.ID.(type) {
-	case int:
-		r.ID = strconv.Itoa(t)
-	case float64:
-		r.ID = strconv.Itoa(int(t))
-	case string:
-		r.ID = t
-	default:
-		return fmt.Errorf("ID has unexpected type: %T", t)
-	}
-
-	return nil
-}
+// OpenStack Compute service returns ID in string representation since
+// 2.53 microversion API (Pike release).
 
 // HypervisorPage represents a single page of all Hypervisors from a List
 // request.
@@ -245,35 +138,19 @@ type HypervisorPage struct {
 }
 
 // IsEmpty determines whether or not a HypervisorPage is empty.
-func (page HypervisorPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	va, err := ExtractHypervisors(page)
-	return len(va) == 0, err
-}
+func (page HypervisorPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (page HypervisorPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"hypervisors_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractHypervisors interprets a page of results as a slice of Hypervisors.
 func ExtractHypervisors(p pagination.Page) ([]Hypervisor, error) {
-	var h struct {
-		Hypervisors []Hypervisor `json:"hypervisors"`
-	}
-	err := (p.(HypervisorPage)).ExtractInto(&h)
-	return h.Hypervisors, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type HypervisorResult struct {
@@ -282,11 +159,8 @@ type HypervisorResult struct {
 
 // Extract interprets any HypervisorResult as a Hypervisor, if possible.
 func (r HypervisorResult) Extract() (*Hypervisor, error) {
-	var s struct {
-		Hypervisor Hypervisor `json:"hypervisor"`
-	}
-	err := r.ExtractInto(&s)
-	return &s.Hypervisor, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Statistics represents a summary statistics for all enabled
@@ -335,11 +209,8 @@ type StatisticsResult struct {
 
 // Extract interprets any StatisticsResult as a Statistics, if possible.
 func (r StatisticsResult) Extract() (*Statistics, error) {
-	var s struct {
-		Stats Statistics `json:"hypervisor_statistics"`
-	}
-	err := r.ExtractInto(&s)
-	return &s.Stats, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Uptime represents uptime and additional info for a specific hypervisor.
@@ -361,45 +232,14 @@ type Uptime struct {
 	Uptime string `json:"uptime"`
 }
 
-func (r *Uptime) UnmarshalJSON(b []byte) error {
-	type tmp Uptime
-	var s struct {
-		tmp
-		ID any `json:"id"`
-	}
+func (r *Uptime) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Uptime(s.tmp)
-
-	// OpenStack Compute service returns ID in string representation since
-	// 2.53 microversion API (Pike release).
-	switch t := s.ID.(type) {
-	case int:
-		r.ID = strconv.Itoa(t)
-	case float64:
-		r.ID = strconv.Itoa(int(t))
-	case string:
-		r.ID = t
-	default:
-		return fmt.Errorf("ID has unexpected type: %T", t)
-	}
-
-	return nil
-}
+// OpenStack Compute service returns ID in string representation since
+// 2.53 microversion API (Pike release).
 
 type UptimeResult struct {
 	gophercloud.Result
 }
 
 // Extract interprets any UptimeResult as a Uptime, if possible.
-func (r UptimeResult) Extract() (*Uptime, error) {
-	var s struct {
-		Uptime Uptime `json:"hypervisor"`
-	}
-	err := r.ExtractInto(&s)
-	return &s.Uptime, err
-}
+func (r UptimeResult) Extract() (*Uptime, error) { _ = "STUB: not implemented"; return nil, nil }

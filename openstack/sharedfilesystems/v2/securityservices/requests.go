@@ -49,30 +49,22 @@ type CreateOpts struct {
 // ToSecurityServicesCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToSecurityServiceCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_service")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new SecurityService based on the values in CreateOpts. To
 // extract the SecurityService object from the response, call the Extract method
 // on the CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSecurityServiceCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete will delete the existing SecurityService with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -108,32 +100,21 @@ type ListOpts struct {
 
 // ToSecurityServiceListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToSecurityServiceListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns SecurityServices optionally limited by the conditions provided in ListOpts.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToSecurityServiceListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return SecurityServicePage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves the SecurityService with the provided ID. To extract the SecurityService
 // object from the response, call the Extract method on the GetResult.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -169,20 +150,13 @@ type UpdateOpts struct {
 // ToSecurityServiceUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToSecurityServiceUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_service")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the SecurityService with provided information. To extract the updated
 // SecurityService from the response, call the Extract method on the UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSecurityServiceUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }

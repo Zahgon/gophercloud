@@ -35,10 +35,7 @@ type ListOpts struct {
 }
 
 // ToAgentListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToAgentListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToAgentListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // agents. It accepts a ListOpts struct, which allows you to filter and
@@ -48,24 +45,14 @@ func (opts ListOpts) ToAgentListQuery() (string, error) {
 // of the user submitting the request, unless the user has the administrative
 // role.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToAgentListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return AgentPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific agent based on its ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -82,36 +69,27 @@ type UpdateOpts struct {
 
 // ToAgentUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToAgentUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "agent")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update updates a specific agent based on its ID.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToAgentUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete deletes a specific agent based on its ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListDHCPNetworks returns a list of networks scheduled to a specific
 // dhcp agent.
 func ListDHCPNetworks(ctx context.Context, c *gophercloud.ServiceClient, id string) (r ListDHCPNetworksResult) {
-	resp, err := c.Get(ctx, listDHCPNetworksURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListDHCPNetworksResult)
 }
 
 // ScheduleDHCPNetworkOptsBuilder allows extensions to add additional parameters
@@ -128,37 +106,27 @@ type ScheduleDHCPNetworkOpts struct {
 
 // ToAgentScheduleDHCPNetworkMap builds a request body from ScheduleDHCPNetworkOpts.
 func (opts ScheduleDHCPNetworkOpts) ToAgentScheduleDHCPNetworkMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ScheduleDHCPNetwork schedule a network to a DHCP agent.
 func ScheduleDHCPNetwork(ctx context.Context, c *gophercloud.ServiceClient, id string, opts ScheduleDHCPNetworkOptsBuilder) (r ScheduleDHCPNetworkResult) {
-	b, err := opts.ToAgentScheduleDHCPNetworkMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, scheduleDHCPNetworkURL(c, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ScheduleDHCPNetworkResult)
 }
 
 // RemoveDHCPNetwork removes a network from a DHCP agent.
 func RemoveDHCPNetwork(ctx context.Context, c *gophercloud.ServiceClient, id string, networkID string) (r RemoveDHCPNetworkResult) {
-	resp, err := c.Delete(ctx, removeDHCPNetworkURL(c, id, networkID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveDHCPNetworkResult)
 }
 
 // ListBGPSpeakers list the BGP Speakers hosted by a specific dragent
 // GET /v2.0/agents/{agent-id}/bgp-drinstances
 func ListBGPSpeakers(c *gophercloud.ServiceClient, agentID string) pagination.Pager {
-	url := listBGPSpeakersURL(c, agentID)
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return ListBGPSpeakersResult{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ScheduleBGPSpeakerOptsBuilder declare a function that build ScheduleBGPSpeakerOpts into a request body
@@ -173,47 +141,36 @@ type ScheduleBGPSpeakerOpts struct {
 
 // ToAgentScheduleBGPSpeakerMap builds a request body from ScheduleBGPSpeakerOpts
 func (opts ScheduleBGPSpeakerOpts) ToAgentScheduleBGPSpeakerMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ScheduleBGPSpeaker schedule a BGP speaker to a BGP agent
 // POST /v2.0/agents/{agent-id}/bgp-drinstances
 func ScheduleBGPSpeaker(ctx context.Context, c *gophercloud.ServiceClient, agentID string, opts ScheduleBGPSpeakerOptsBuilder) (r ScheduleBGPSpeakerResult) {
-	b, err := opts.ToAgentScheduleBGPSpeakerMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, scheduleBGPSpeakersURL(c, agentID), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ScheduleBGPSpeakerResult)
 }
 
 // RemoveBGPSpeaker removes a BGP speaker from a BGP agent
 // DELETE /v2.0/agents/{agent-id}/bgp-drinstances
 func RemoveBGPSpeaker(ctx context.Context, c *gophercloud.ServiceClient, agentID string, speakerID string) (r RemoveBGPSpeakerResult) {
-	resp, err := c.Delete(ctx, removeBGPSpeakersURL(c, agentID, speakerID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveBGPSpeakerResult)
 }
 
 // ListDRAgentHostingBGPSpeakers the dragents that are hosting a specific bgp speaker
 // GET /v2.0/bgp-speakers/{bgp-speaker-id}/bgp-dragents
 func ListDRAgentHostingBGPSpeakers(c *gophercloud.ServiceClient, bgpSpeakerID string) pagination.Pager {
-	url := listDRAgentHostingBGPSpeakersURL(c, bgpSpeakerID)
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return AgentPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListL3Routers returns a list of routers scheduled to a specific
 // L3 agent.
 func ListL3Routers(ctx context.Context, c *gophercloud.ServiceClient, id string) (r ListL3RoutersResult) {
-	resp, err := c.Get(ctx, listL3RoutersURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListL3RoutersResult)
 }
 
 // ScheduleL3RouterOptsBuilder allows extensions to add additional parameters
@@ -230,26 +187,18 @@ type ScheduleL3RouterOpts struct {
 
 // ToAgentScheduleL3RouterMap builds a request body from ScheduleL3RouterOpts.
 func (opts ScheduleL3RouterOpts) ToAgentScheduleL3RouterMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ScheduleL3Router schedule a router to a L3 agent.
 func ScheduleL3Router(ctx context.Context, c *gophercloud.ServiceClient, id string, opts ScheduleL3RouterOptsBuilder) (r ScheduleL3RouterResult) {
-	b, err := opts.ToAgentScheduleL3RouterMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, scheduleL3RouterURL(c, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ScheduleL3RouterResult)
 }
 
 // RemoveL3Router removes a router from a L3 agent.
 func RemoveL3Router(ctx context.Context, c *gophercloud.ServiceClient, id string, routerID string) (r RemoveL3RouterResult) {
-	resp, err := c.Delete(ctx, removeL3RouterURL(c, id, routerID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveL3RouterResult)
 }

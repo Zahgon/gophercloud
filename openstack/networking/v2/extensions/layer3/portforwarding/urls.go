@@ -6,9 +6,11 @@ const resourcePath = "floatingips"
 const portForwardingPath = "port_forwardings"
 
 func portForwardingUrl(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, portForwardingPath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func singlePortForwardingUrl(c *gophercloud.ServiceClient, id string, portForwardingID string) string {
-	return c.ServiceURL(resourcePath, id, portForwardingPath, portForwardingID)
+	_ = "STUB: not implemented"
+	return ""
 }

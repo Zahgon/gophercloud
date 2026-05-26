@@ -10,16 +10,19 @@ import (
 
 // ExtractExtensions interprets a Page as a slice of Extensions.
 func ExtractExtensions(page pagination.Page) ([]common.Extension, error) {
-	return common.ExtractExtensions(page)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Get retrieves information for a specific extension using its alias.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, alias string) common.GetResult {
-	return common.Get(ctx, c, alias)
+	_ = "STUB: not implemented"
+	return *new(common.GetResult)
 }
 
 // List returns a Pager which allows you to iterate over the full collection of extensions.
 // It does not accept query parameters.
 func List(c *gophercloud.ServiceClient) pagination.Pager {
-	return common.List(c)
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

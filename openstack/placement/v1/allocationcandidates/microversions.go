@@ -46,7 +46,6 @@ type ProviderSummary110 struct {
 
 // ExtractAllocationCandidates110 interprets an AllocationCandidatesPage as AllocationCandidates110 (microversions 1.10-1.11).
 func ExtractAllocationCandidates110(r pagination.Page) (*AllocationCandidates110, error) {
-	var s AllocationCandidates110
-	err := (r.(AllocationCandidatesPage)).ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

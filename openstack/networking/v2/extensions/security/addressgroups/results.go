@@ -34,35 +34,19 @@ type AddressGroupPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one. In
 // order to do this, it needs to construct the next page's URL.
 func (r AddressGroupPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"address_groups_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a AddressGroupPage struct is empty.
-func (r AddressGroupPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractGroups(r)
-	return len(is) == 0, err
-}
+func (r AddressGroupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractGroups accepts a Page struct, specifically a AddressGroupPage struct,
 // and extracts the elements into a slice of AddressGroup structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractGroups(r pagination.Page) ([]AddressGroup, error) {
-	var s struct {
-		AddressGroups []AddressGroup `json:"address_groups"`
-	}
-	err := (r.(AddressGroupPage)).ExtractInto(&s)
-	return s.AddressGroups, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -70,13 +54,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a address group.
-func (r commonResult) Extract() (*AddressGroup, error) {
-	var s struct {
-		AddressGroup *AddressGroup `json:"address_group"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AddressGroup, err
-}
+func (r commonResult) Extract() (*AddressGroup, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a AddressGroup.

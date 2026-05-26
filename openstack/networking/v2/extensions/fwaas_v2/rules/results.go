@@ -34,49 +34,24 @@ type RulePage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r RulePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"firewall_rules_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a RulePage struct is empty.
-func (r RulePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractRules(r)
-	return len(is) == 0, err
-}
+func (r RulePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractRules accepts a Page struct, specifically a RouterPage struct,
 // and extracts the elements into a slice of Router structs. In other words,
 // a generic collection is mapped into a relevant slice.
-func ExtractRules(r pagination.Page) ([]Rule, error) {
-	var s struct {
-		Rules []Rule `json:"firewall_rules"`
-	}
-	err := (r.(RulePage)).ExtractInto(&s)
-	return s.Rules, err
-}
+func ExtractRules(r pagination.Page) ([]Rule, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a firewall rule.
-func (r commonResult) Extract() (*Rule, error) {
-	var s struct {
-		Rule *Rule `json:"firewall_rule"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Rule, err
-}
+func (r commonResult) Extract() (*Rule, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a get operation.
 type GetResult struct {

@@ -6,25 +6,31 @@ const resourcePath = "quotas"
 const resourcePathDetail = "details.json"
 
 func resourceURL(c *gophercloud.ServiceClient, projectID string) string {
-	return c.ServiceURL(resourcePath, projectID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func resourceDetailURL(c *gophercloud.ServiceClient, projectID string) string {
-	return c.ServiceURL(resourcePath, projectID, resourcePathDetail)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getURL(c *gophercloud.ServiceClient, projectID string) string {
-	return resourceURL(c, projectID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getDetailURL(c *gophercloud.ServiceClient, projectID string) string {
-	return resourceDetailURL(c, projectID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(c *gophercloud.ServiceClient, projectID string) string {
-	return resourceURL(c, projectID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(c *gophercloud.ServiceClient, projectID string) string {
-	return getURL(c, projectID)
+	_ = "STUB: not implemented"
+	return ""
 }

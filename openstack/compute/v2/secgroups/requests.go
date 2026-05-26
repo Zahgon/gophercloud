@@ -8,21 +8,22 @@ import (
 )
 
 func commonList(client *gophercloud.ServiceClient, url string) pagination.Pager {
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return SecurityGroupPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // List will return a collection of all the security groups for a particular
 // tenant.
 func List(client *gophercloud.ServiceClient) pagination.Pager {
-	return commonList(client, rootURL(client))
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListByServer will return a collection of all the security groups which are
 // associated with a particular server.
 func ListByServer(client *gophercloud.ServiceClient, serverID string) pagination.Pager {
-	return commonList(client, listByServerURL(client, serverID))
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOpts is the struct responsible for creating a security group.
@@ -41,21 +42,14 @@ type CreateOptsBuilder interface {
 
 // ToSecGroupCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSecGroupCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new security group.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSecGroupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, rootURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOpts is the struct responsible for updating an existing security group.
@@ -74,36 +68,27 @@ type UpdateOptsBuilder interface {
 
 // ToSecGroupUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToSecGroupUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will modify the mutable properties of a security group, notably its
 // name and description.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSecGroupUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, resourceURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Get will return details for a particular security group.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, resourceURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete will permanently delete a security group from the project.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, resourceURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // CreateRuleOpts represents the configuration for adding a new rule to an
@@ -145,49 +130,38 @@ type CreateRuleOptsBuilder interface {
 
 // ToRuleCreateMap builds a request body from CreateRuleOpts.
 func (opts CreateRuleOpts) ToRuleCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_group_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateRule will add a new rule to an existing security group (whose ID is
 // specified in CreateRuleOpts). You have the option of controlling inbound
 // traffic from either an IP range (CIDR) or from another security group.
 func CreateRule(ctx context.Context, client *gophercloud.ServiceClient, opts CreateRuleOptsBuilder) (r CreateRuleResult) {
-	b, err := opts.ToRuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, rootRuleURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateRuleResult)
 }
 
 // DeleteRule will permanently delete a rule from a security group.
 func DeleteRule(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteRuleResult) {
-	resp, err := client.Delete(ctx, resourceRuleURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteRuleResult)
 }
 
 func actionMap(prefix, groupName string) map[string]map[string]string {
-	return map[string]map[string]string{
-		prefix + "SecurityGroup": {"name": groupName},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddServer will associate a server and a security group, enforcing the
 // rules of the group on the server.
 func AddServer(ctx context.Context, client *gophercloud.ServiceClient, serverID, groupName string) (r AddServerResult) {
-	resp, err := client.Post(ctx, serverActionURL(client, serverID), actionMap("add", groupName), nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddServerResult)
 }
 
 // RemoveServer will disassociate a server from a security group.
 func RemoveServer(ctx context.Context, client *gophercloud.ServiceClient, serverID, groupName string) (r RemoveServerResult) {
-	resp, err := client.Post(ctx, serverActionURL(client, serverID), actionMap("remove", groupName), nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveServerResult)
 }

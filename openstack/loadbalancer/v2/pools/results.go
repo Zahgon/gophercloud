@@ -1,7 +1,6 @@
 package pools
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -154,49 +153,24 @@ type PoolPage struct {
 // the end of a page and the pager seeks to traverse over a new one. In order
 // to do this, it needs to construct the next page's URL.
 func (r PoolPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"pools_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a PoolPage struct is empty.
-func (r PoolPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractPools(r)
-	return len(is) == 0, err
-}
+func (r PoolPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractPools accepts a Page struct, specifically a PoolPage struct,
 // and extracts the elements into a slice of Pool structs. In other words,
 // a generic collection is mapped into a relevant slice.
-func ExtractPools(r pagination.Page) ([]Pool, error) {
-	var s struct {
-		Pools []Pool `json:"pools"`
-	}
-	err := (r.(PoolPage)).ExtractInto(&s)
-	return s.Pools, err
-}
+func ExtractPools(r pagination.Page) ([]Pool, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a pool.
-func (r commonResult) Extract() (*Pool, error) {
-	var s struct {
-		Pool *Pool `json:"pool"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Pool, err
-}
+func (r commonResult) Extract() (*Pool, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a Create operation. Call its Extract
 // method to interpret the result as a Pool.
@@ -288,66 +262,29 @@ type MemberPage struct {
 // the end of a page and the pager seeks to traverse over a new one. In order
 // to do this, it needs to construct the next page's URL.
 func (r MemberPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"members_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a MemberPage struct is empty.
-func (r MemberPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractMembers(r)
-	return len(is) == 0, err
-}
+func (r MemberPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractMembers accepts a Page struct, specifically a MemberPage struct,
 // and extracts the elements into a slice of Members structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractMembers(r pagination.Page) ([]Member, error) {
-	var s struct {
-		Members []Member `json:"members"`
-	}
-	err := (r.(MemberPage)).ExtractInto(&s)
-	return s.Members, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonMemberResult struct {
 	gophercloud.Result
 }
 
-func (r *Member) UnmarshalJSON(b []byte) error {
-	type tmp Member
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Member(s.tmp)
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-	return nil
-}
+func (r *Member) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ExtractMember is a function that accepts a result and extracts a member.
-func (r commonMemberResult) Extract() (*Member, error) {
-	var s struct {
-		Member *Member `json:"member"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Member, err
-}
+func (r commonMemberResult) Extract() (*Member, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateMemberResult represents the result of a CreateMember operation.
 // Call its Extract method to interpret it as a Member.

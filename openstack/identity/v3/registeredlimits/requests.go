@@ -27,23 +27,14 @@ type ListOpts struct {
 
 // ToRegisteredLimitListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToRegisteredLimitListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List enumerates the registered limits.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(client)
-	if opts != nil {
-		query, err := opts.ToRegisteredLimitListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return RegisteredLimitPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // BatchCreateOptsBuilder allows extensions to add additional parameters to
@@ -74,40 +65,22 @@ type BatchCreateOpts []CreateOpts
 
 // ToRegisteredLimitsCreateMap formats a BatchCreateOpts into a create request.
 func (opts BatchCreateOpts) ToRegisteredLimitsCreateMap() (map[string]any, error) {
-	registered_limits := make([]map[string]any, len(opts))
-	for i, registered_limit := range opts {
-		registeredLimitMap, err := registered_limit.ToMap()
-		if err != nil {
-			return nil, err
-		}
-		registered_limits[i] = registeredLimitMap
-	}
-	return map[string]any{"registered_limits": registered_limits}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (opts CreateOpts) ToMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
-}
+func (opts CreateOpts) ToMap() (map[string]any, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // BatchCreate creates new Limits.
 func BatchCreate(ctx context.Context, client *gophercloud.ServiceClient, opts BatchCreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToRegisteredLimitsCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, rootURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves details on a single registered_limit, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, registeredLimitID string) (r GetResult) {
-	resp, err := client.Get(ctx, resourceURL(client, registeredLimitID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -137,26 +110,18 @@ type UpdateOpts struct {
 
 // ToRegisteredLimitUpdateMap formats UpdateOpts into an update request.
 func (opts UpdateOpts) ToRegisteredLimitUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "registered_limit")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update modifies the attributes of a registered limit.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRegisteredLimitUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, resourceURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete deletes a registered_limit.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, registeredLimitID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, resourceURL(client, registeredLimitID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

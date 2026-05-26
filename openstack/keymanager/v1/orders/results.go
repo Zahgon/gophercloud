@@ -1,7 +1,6 @@
 package orders
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -50,24 +49,7 @@ type Order struct {
 	Updated time.Time `json:"-"`
 }
 
-func (r *Order) UnmarshalJSON(b []byte) error {
-	type tmp Order
-	var s struct {
-		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Order(s.tmp)
-
-	r.Created = time.Time(s.Created)
-	r.Updated = time.Time(s.Updated)
-
-	return nil
-}
+func (r *Order) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type Meta struct {
 	// Algorithm is the algorithm of the secret.
@@ -89,22 +71,7 @@ type Meta struct {
 	PayloadContentType string `json:"payload_content_type"`
 }
 
-func (r *Meta) UnmarshalJSON(b []byte) error {
-	type tmp Meta
-	var s struct {
-		tmp
-		Expiration gophercloud.JSONRFC3339NoZ `json:"expiration"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Meta(s.tmp)
-
-	r.Expiration = time.Time(s.Expiration)
-
-	return nil
-}
+func (r *Meta) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
@@ -134,41 +101,17 @@ type OrderPage struct {
 }
 
 // IsEmpty determines whether or not a page of ordersS contains any results.
-func (r OrderPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	orders, err := ExtractOrders(r)
-	return len(orders) == 0, err
-}
+func (r OrderPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r OrderPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next     string `json:"next"`
-		Previous string `json:"previous"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractOrders returns a slice of Orders contained in a single page of
 // results.
-func ExtractOrders(r pagination.Page) ([]Order, error) {
-	var s struct {
-		Orders []Order `json:"orders"`
-	}
-	err := (r.(OrderPage)).ExtractInto(&s)
-	return s.Orders, err
-}
+func ExtractOrders(r pagination.Page) ([]Order, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any commonResult as a Order.
-func (r commonResult) Extract() (*Order, error) {
-	var s *Order
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Order, error) { _ = "STUB: not implemented"; return nil, nil }

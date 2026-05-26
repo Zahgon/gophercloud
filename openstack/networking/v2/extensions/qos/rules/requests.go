@@ -37,33 +37,22 @@ type BandwidthLimitRulesListOpts struct {
 
 // ToBandwidthLimitRulesListQuery formats a ListOpts into a query string.
 func (opts BandwidthLimitRulesListOpts) ToBandwidthLimitRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListBandwidthLimitRules returns a Pager which allows you to iterate over a collection of
 // BandwidthLimitRules. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
 func ListBandwidthLimitRules(c *gophercloud.ServiceClient, policyID string, opts BandwidthLimitRulesListOptsBuilder) pagination.Pager {
-	url := listBandwidthLimitRulesURL(c, policyID)
-	if opts != nil {
-		query, err := opts.ToBandwidthLimitRulesListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return BandwidthLimitRulePage{pagination.LinkedPageBase{PageResult: r}}
-
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetBandwidthLimitRule retrieves a specific BandwidthLimitRule based on its ID.
 func GetBandwidthLimitRule(ctx context.Context, c *gophercloud.ServiceClient, policyID, ruleID string) (r GetBandwidthLimitRuleResult) {
-	resp, err := c.Get(ctx, getBandwidthLimitRuleURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetBandwidthLimitRuleResult)
 }
 
 // CreateBandwidthLimitRuleOptsBuilder allows to add additional parameters to the
@@ -86,21 +75,14 @@ type CreateBandwidthLimitRuleOpts struct {
 
 // ToBandwidthLimitRuleCreateMap constructs a request body from CreateBandwidthLimitRuleOpts.
 func (opts CreateBandwidthLimitRuleOpts) ToBandwidthLimitRuleCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "bandwidth_limit_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateBandwidthLimitRule requests the creation of a new BandwidthLimitRule on the server.
 func CreateBandwidthLimitRule(ctx context.Context, client *gophercloud.ServiceClient, policyID string, opts CreateBandwidthLimitRuleOptsBuilder) (r CreateBandwidthLimitRuleResult) {
-	b, err := opts.ToBandwidthLimitRuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createBandwidthLimitRuleURL(client, policyID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateBandwidthLimitRuleResult)
 }
 
 // UpdateBandwidthLimitRuleOptsBuilder allows to add additional parameters to the
@@ -123,28 +105,20 @@ type UpdateBandwidthLimitRuleOpts struct {
 
 // ToBandwidthLimitRuleUpdateMap constructs a request body from UpdateBandwidthLimitRuleOpts.
 func (opts UpdateBandwidthLimitRuleOpts) ToBandwidthLimitRuleUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "bandwidth_limit_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateBandwidthLimitRule requests the creation of a new BandwidthLimitRule on the server.
 func UpdateBandwidthLimitRule(ctx context.Context, client *gophercloud.ServiceClient, policyID, ruleID string, opts UpdateBandwidthLimitRuleOptsBuilder) (r UpdateBandwidthLimitRuleResult) {
-	b, err := opts.ToBandwidthLimitRuleUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateBandwidthLimitRuleURL(client, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateBandwidthLimitRuleResult)
 }
 
 // Delete accepts policy and rule ID and deletes the BandwidthLimitRule associated with them.
 func DeleteBandwidthLimitRule(ctx context.Context, c *gophercloud.ServiceClient, policyID, ruleID string) (r DeleteBandwidthLimitRuleResult) {
-	resp, err := c.Delete(ctx, deleteBandwidthLimitRuleURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteBandwidthLimitRuleResult)
 }
 
 // DSCPMarkingRulesListOptsBuilder allows extensions to add additional parameters to the
@@ -175,33 +149,22 @@ type DSCPMarkingRulesListOpts struct {
 
 // ToDSCPMarkingRulesListQuery formats a ListOpts into a query string.
 func (opts DSCPMarkingRulesListOpts) ToDSCPMarkingRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListDSCPMarkingRules returns a Pager which allows you to iterate over a collection of
 // DSCPMarkingRules. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
 func ListDSCPMarkingRules(c *gophercloud.ServiceClient, policyID string, opts DSCPMarkingRulesListOptsBuilder) pagination.Pager {
-	url := listDSCPMarkingRulesURL(c, policyID)
-	if opts != nil {
-		query, err := opts.ToDSCPMarkingRulesListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return DSCPMarkingRulePage{pagination.LinkedPageBase{PageResult: r}}
-
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetDSCPMarkingRule retrieves a specific DSCPMarkingRule based on its ID.
 func GetDSCPMarkingRule(ctx context.Context, c *gophercloud.ServiceClient, policyID, ruleID string) (r GetDSCPMarkingRuleResult) {
-	resp, err := c.Get(ctx, getDSCPMarkingRuleURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetDSCPMarkingRuleResult)
 }
 
 // CreateDSCPMarkingRuleOptsBuilder allows to add additional parameters to the
@@ -218,21 +181,14 @@ type CreateDSCPMarkingRuleOpts struct {
 
 // ToDSCPMarkingRuleCreateMap constructs a request body from CreateDSCPMarkingRuleOpts.
 func (opts CreateDSCPMarkingRuleOpts) ToDSCPMarkingRuleCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "dscp_marking_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateDSCPMarkingRule requests the creation of a new DSCPMarkingRule on the server.
 func CreateDSCPMarkingRule(ctx context.Context, client *gophercloud.ServiceClient, policyID string, opts CreateDSCPMarkingRuleOptsBuilder) (r CreateDSCPMarkingRuleResult) {
-	b, err := opts.ToDSCPMarkingRuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createDSCPMarkingRuleURL(client, policyID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateDSCPMarkingRuleResult)
 }
 
 // UpdateDSCPMarkingRuleOptsBuilder allows to add additional parameters to the
@@ -249,28 +205,20 @@ type UpdateDSCPMarkingRuleOpts struct {
 
 // ToDSCPMarkingRuleUpdateMap constructs a request body from UpdateDSCPMarkingRuleOpts.
 func (opts UpdateDSCPMarkingRuleOpts) ToDSCPMarkingRuleUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "dscp_marking_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateDSCPMarkingRule requests the creation of a new DSCPMarkingRule on the server.
 func UpdateDSCPMarkingRule(ctx context.Context, client *gophercloud.ServiceClient, policyID, ruleID string, opts UpdateDSCPMarkingRuleOptsBuilder) (r UpdateDSCPMarkingRuleResult) {
-	b, err := opts.ToDSCPMarkingRuleUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateDSCPMarkingRuleURL(client, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateDSCPMarkingRuleResult)
 }
 
 // DeleteDSCPMarkingRule accepts policy and rule ID and deletes the DSCPMarkingRule associated with them.
 func DeleteDSCPMarkingRule(ctx context.Context, c *gophercloud.ServiceClient, policyID, ruleID string) (r DeleteDSCPMarkingRuleResult) {
-	resp, err := c.Delete(ctx, deleteDSCPMarkingRuleURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteDSCPMarkingRuleResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the
@@ -302,33 +250,22 @@ type MinimumBandwidthRulesListOpts struct {
 
 // ToMinimumBandwidthRulesListQuery formats a ListOpts into a query string.
 func (opts MinimumBandwidthRulesListOpts) ToMinimumBandwidthRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListMinimumBandwidthRules returns a Pager which allows you to iterate over a collection of
 // MinimumBandwidthRules. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
 func ListMinimumBandwidthRules(c *gophercloud.ServiceClient, policyID string, opts MinimumBandwidthRulesListOptsBuilder) pagination.Pager {
-	url := listMinimumBandwidthRulesURL(c, policyID)
-	if opts != nil {
-		query, err := opts.ToMinimumBandwidthRulesListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return MinimumBandwidthRulePage{pagination.LinkedPageBase{PageResult: r}}
-
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetMinimumBandwidthRule retrieves a specific MinimumBandwidthRule based on its ID.
 func GetMinimumBandwidthRule(ctx context.Context, c *gophercloud.ServiceClient, policyID, ruleID string) (r GetMinimumBandwidthRuleResult) {
-	resp, err := c.Get(ctx, getMinimumBandwidthRuleURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetMinimumBandwidthRuleResult)
 }
 
 // CreateMinimumBandwidthRuleOptsBuilder allows to add additional parameters to the
@@ -348,21 +285,14 @@ type CreateMinimumBandwidthRuleOpts struct {
 
 // ToMinimumBandwidthRuleCreateMap constructs a request body from CreateMinimumBandwidthRuleOpts.
 func (opts CreateMinimumBandwidthRuleOpts) ToMinimumBandwidthRuleCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "minimum_bandwidth_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateMinimumBandwidthRule requests the creation of a new MinimumBandwidthRule on the server.
 func CreateMinimumBandwidthRule(ctx context.Context, client *gophercloud.ServiceClient, policyID string, opts CreateMinimumBandwidthRuleOptsBuilder) (r CreateMinimumBandwidthRuleResult) {
-	b, err := opts.ToMinimumBandwidthRuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createMinimumBandwidthRuleURL(client, policyID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateMinimumBandwidthRuleResult)
 }
 
 // UpdateMinimumBandwidthRuleOptsBuilder allows to add additional parameters to the
@@ -382,26 +312,18 @@ type UpdateMinimumBandwidthRuleOpts struct {
 
 // ToMinimumBandwidthRuleUpdateMap constructs a request body from UpdateMinimumBandwidthRuleOpts.
 func (opts UpdateMinimumBandwidthRuleOpts) ToMinimumBandwidthRuleUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "minimum_bandwidth_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateMinimumBandwidthRule requests the creation of a new MinimumBandwidthRule on the server.
 func UpdateMinimumBandwidthRule(ctx context.Context, client *gophercloud.ServiceClient, policyID, ruleID string, opts UpdateMinimumBandwidthRuleOptsBuilder) (r UpdateMinimumBandwidthRuleResult) {
-	b, err := opts.ToMinimumBandwidthRuleUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateMinimumBandwidthRuleURL(client, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateMinimumBandwidthRuleResult)
 }
 
 // DeleteMinimumBandwidthRule accepts policy and rule ID and deletes the MinimumBandwidthRule associated with them.
 func DeleteMinimumBandwidthRule(ctx context.Context, c *gophercloud.ServiceClient, policyID, ruleID string) (r DeleteMinimumBandwidthRuleResult) {
-	resp, err := c.Delete(ctx, deleteMinimumBandwidthRuleURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteMinimumBandwidthRuleResult)
 }

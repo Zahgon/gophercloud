@@ -1,13 +1,7 @@
 package gophercloud
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
-	"reflect"
-	"strconv"
 	"time"
 )
 
@@ -46,132 +40,42 @@ type Result struct {
 // ExtractInto allows users to provide an object into which `Extract` will extract
 // the `Result.Body`. This would be useful for OpenStack providers that have
 // different fields in the response object than OpenStack proper.
-func (r Result) ExtractInto(to any) error {
-	if r.Err != nil {
-		return r.Err
-	}
+func (r Result) ExtractInto(to any) error { _ = "STUB: not implemented"; return nil }
 
-	if reader, ok := r.Body.(io.Reader); ok {
-		if readCloser, ok := reader.(io.Closer); ok {
-			defer readCloser.Close()
-		}
-		return json.NewDecoder(reader).Decode(to)
-	}
+func (r Result) extractIntoPtr(to any, label string) error { _ = "STUB: not implemented"; return nil }
 
-	b, err := json.Marshal(r.Body)
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(b, to)
+// For each iteration of the slice, we create a new struct.
+// This is to work around a bug where elements of a slice
+// are reused and not overwritten when the same copy of the
+// struct is used:
+//
+// https://github.com/golang/go/issues/21092
+// https://github.com/golang/go/issues/24155
+// https://play.golang.org/p/NHo3ywlPZli
 
-	return err
-}
+// This is needed for structs with an UnmarshalJSON method.
+// Technically this is just unmarshalling the response into
+// a struct that is never used, but it's good enough to
+// trigger the UnmarshalJSON method.
 
-func (r Result) extractIntoPtr(to any, label string) error {
-	if label == "" {
-		return r.ExtractInto(&to)
-	}
+// Unmarshal is used rather than NewDecoder to also work
+// around the above-mentioned bug.
 
-	var m map[string]any
-	err := r.ExtractInto(&m)
-	if err != nil {
-		return err
-	}
+// "to" should now be properly modeled to receive the
+// JSON response body and unmarshal into all the correct
+// fields of the struct or composed extension struct
+// at the end of this method.
 
-	b, err := json.Marshal(m[label])
-	if err != nil {
-		return err
-	}
-
-	toValue := reflect.ValueOf(to)
-	if toValue.Kind() == reflect.Pointer {
-		toValue = toValue.Elem()
-	}
-
-	switch toValue.Kind() {
-	case reflect.Slice:
-		typeOfV := toValue.Type().Elem()
-		if typeOfV.Kind() == reflect.Struct {
-			if typeOfV.NumField() > 0 && typeOfV.Field(0).Anonymous {
-				newSlice := reflect.MakeSlice(reflect.SliceOf(typeOfV), 0, 0)
-
-				if mSlice, ok := m[label].([]any); ok {
-					for _, v := range mSlice {
-						// For each iteration of the slice, we create a new struct.
-						// This is to work around a bug where elements of a slice
-						// are reused and not overwritten when the same copy of the
-						// struct is used:
-						//
-						// https://github.com/golang/go/issues/21092
-						// https://github.com/golang/go/issues/24155
-						// https://play.golang.org/p/NHo3ywlPZli
-						newType := reflect.New(typeOfV).Elem()
-
-						b, err := json.Marshal(v)
-						if err != nil {
-							return err
-						}
-
-						// This is needed for structs with an UnmarshalJSON method.
-						// Technically this is just unmarshalling the response into
-						// a struct that is never used, but it's good enough to
-						// trigger the UnmarshalJSON method.
-						for i := 0; i < newType.NumField(); i++ {
-							if newType.Field(i).Kind() != reflect.Struct {
-								continue
-							}
-							s := newType.Field(i).Addr().Interface()
-
-							// Unmarshal is used rather than NewDecoder to also work
-							// around the above-mentioned bug.
-							err = json.Unmarshal(b, s)
-							if err != nil {
-								return err
-							}
-						}
-
-						newSlice = reflect.Append(newSlice, newType)
-					}
-				}
-
-				// "to" should now be properly modeled to receive the
-				// JSON response body and unmarshal into all the correct
-				// fields of the struct or composed extension struct
-				// at the end of this method.
-				toValue.Set(newSlice)
-
-				// jtopjian: This was put into place to resolve the issue
-				// described at
-				// https://github.com/gophercloud/gophercloud/issues/1963
-				//
-				// This probably isn't the best fix, but it appears to
-				// be resolving the issue, so I'm going to implement it
-				// for now.
-				//
-				// For future readers, this entire case statement could
-				// use a review.
-				return nil
-			}
-		}
-	case reflect.Struct:
-		typeOfV := toValue.Type()
-		if typeOfV.NumField() > 0 && typeOfV.Field(0).Anonymous {
-			for i := 0; i < toValue.NumField(); i++ {
-				toField := toValue.Field(i)
-				if toField.Kind() == reflect.Struct {
-					s := toField.Addr().Interface()
-					err = json.NewDecoder(bytes.NewReader(b)).Decode(s)
-					if err != nil {
-						return err
-					}
-				}
-			}
-		}
-	}
-
-	err = json.Unmarshal(b, &to)
-	return err
-}
+// jtopjian: This was put into place to resolve the issue
+// described at
+// https://github.com/gophercloud/gophercloud/issues/1963
+//
+// This probably isn't the best fix, but it appears to
+// be resolving the issue, so I'm going to implement it
+// for now.
+//
+// For future readers, this entire case statement could
+// use a review.
 
 // ExtractIntoStructPtr will unmarshal the Result (r) into the provided
 // any (to).
@@ -183,29 +87,8 @@ func (r Result) extractIntoPtr(to any, label string) error {
 // If provided, `label` will be filtered out of the response
 // body prior to `r` being unmarshalled into `to`.
 func (r Result) ExtractIntoStructPtr(to any, label string) error {
-	if r.Err != nil {
-		return r.Err
-	}
-
-	if to == nil {
-		return fmt.Errorf("expected pointer, got %T", to)
-	}
-
-	t := reflect.TypeOf(to)
-	if k := t.Kind(); k != reflect.Pointer {
-		return fmt.Errorf("expected pointer, got %v", k)
-	}
-
-	if reflect.ValueOf(to).IsNil() {
-		return fmt.Errorf("expected pointer, got %T", to)
-	}
-
-	switch t.Elem().Kind() {
-	case reflect.Struct:
-		return r.extractIntoPtr(to, label)
-	default:
-		return fmt.Errorf("expected pointer to struct, got: %v", t)
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExtractIntoSlicePtr will unmarshal the Result (r) into the provided
@@ -218,42 +101,15 @@ func (r Result) ExtractIntoStructPtr(to any, label string) error {
 // If provided, `label` will be filtered out of the response
 // body prior to `r` being unmarshalled into `to`.
 func (r Result) ExtractIntoSlicePtr(to any, label string) error {
-	if r.Err != nil {
-		return r.Err
-	}
-
-	if to == nil {
-		return fmt.Errorf("expected pointer, got %T", to)
-	}
-
-	t := reflect.TypeOf(to)
-	if k := t.Kind(); k != reflect.Pointer {
-		return fmt.Errorf("expected pointer, got %v", k)
-	}
-
-	if reflect.ValueOf(to).IsNil() {
-		return fmt.Errorf("expected pointer, got %T", to)
-	}
-
-	switch t.Elem().Kind() {
-	case reflect.Slice:
-		return r.extractIntoPtr(to, label)
-	default:
-		return fmt.Errorf("expected pointer to slice, got: %v", t)
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PrettyPrintJSON creates a string containing the full response body as
 // pretty-printed JSON. It's useful for capturing test fixtures and for
 // debugging extraction bugs. If you include its output in an issue related to
 // a buggy extraction function, we will all love you forever.
-func (r Result) PrettyPrintJSON() string {
-	pretty, err := json.MarshalIndent(r.Body, "", "  ")
-	if err != nil {
-		panic(err.Error())
-	}
-	return string(pretty)
-}
+func (r Result) PrettyPrintJSON() string { _ = "STUB: not implemented"; return "" }
 
 // ErrResult is an internal type to be used by individual resource packages, but
 // its methods will be available on a wide variety of user-facing embedding
@@ -270,163 +126,64 @@ type ErrResult struct {
 
 // ExtractErr is a function that extracts error information, or nil, from a result.
 func (r ErrResult) ExtractErr() error {
-	return r.Err
+	_ = "STUB: not implemented"
+
+	/*
+	   HeaderResult is an internal type to be used by individual resource packages, but
+	   its methods will be available on a wide variety of user-facing embedding types.
+
+	   It represents a result that only contains an error (possibly nil) and an
+	   http.Header. This is used, for example, by the objectstorage packages in
+	   openstack, because most of the operations don't return response bodies, but do
+	   have relevant information in headers.
+	*/return nil
 }
 
-/*
-HeaderResult is an internal type to be used by individual resource packages, but
-its methods will be available on a wide variety of user-facing embedding types.
-
-It represents a result that only contains an error (possibly nil) and an
-http.Header. This is used, for example, by the objectstorage packages in
-openstack, because most of the operations don't return response bodies, but do
-have relevant information in headers.
-*/
 type HeaderResult struct {
 	Result
 }
 
 // ExtractInto allows users to provide an object into which `Extract` will
 // extract the http.Header headers of the result.
-func (r HeaderResult) ExtractInto(to any) error {
-	if r.Err != nil {
-		return r.Err
-	}
-
-	tmpHeaderMap := map[string]string{}
-	for k, v := range r.Header {
-		if len(v) > 0 {
-			tmpHeaderMap[k] = v[0]
-		}
-	}
-
-	b, err := json.Marshal(tmpHeaderMap)
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal(b, to)
-
-	return err
-}
+func (r HeaderResult) ExtractInto(to any) error { _ = "STUB: not implemented"; return nil }
 
 // RFC3339Milli describes a common time format used by some API responses.
 const RFC3339Milli = "2006-01-02T15:04:05.999999Z"
 
 type JSONRFC3339Milli time.Time
 
-func (jt *JSONRFC3339Milli) UnmarshalJSON(data []byte) error {
-	b := bytes.NewBuffer(data)
-	dec := json.NewDecoder(b)
-	var s string
-	if err := dec.Decode(&s); err != nil {
-		return err
-	}
-	t, err := time.Parse(RFC3339Milli, s)
-	if err != nil {
-		return err
-	}
-	*jt = JSONRFC3339Milli(t)
-	return nil
-}
+func (jt *JSONRFC3339Milli) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 const RFC3339MilliNoZ = "2006-01-02T15:04:05.999999"
 
 type JSONRFC3339MilliNoZ time.Time
 
 func (jt *JSONRFC3339MilliNoZ) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	if s == "" {
-		return nil
-	}
-	t, err := time.Parse(RFC3339MilliNoZ, s)
-	if err != nil {
-		return err
-	}
-	*jt = JSONRFC3339MilliNoZ(t)
+	_ = "STUB: not implemented"
 	return nil
 }
 
 type JSONRFC1123 time.Time
 
-func (jt *JSONRFC1123) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	if s == "" {
-		return nil
-	}
-	t, err := time.Parse(time.RFC1123, s)
-	if err != nil {
-		return err
-	}
-	*jt = JSONRFC1123(t)
-	return nil
-}
+func (jt *JSONRFC1123) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 type JSONUnix time.Time
 
-func (jt *JSONUnix) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	if s == "" {
-		return nil
-	}
-	unix, err := strconv.ParseInt(s, 10, 64)
-	if err != nil {
-		return err
-	}
-	t = time.Unix(unix, 0)
-	*jt = JSONUnix(t)
-	return nil
-}
+func (jt *JSONUnix) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 // RFC3339NoZ is the time format used in Heat (Orchestration).
 const RFC3339NoZ = "2006-01-02T15:04:05"
 
 type JSONRFC3339NoZ time.Time
 
-func (jt *JSONRFC3339NoZ) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	if s == "" {
-		return nil
-	}
-	t, err := time.Parse(RFC3339NoZ, s)
-	if err != nil {
-		return err
-	}
-	*jt = JSONRFC3339NoZ(t)
-	return nil
-}
+func (jt *JSONRFC3339NoZ) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 // RFC3339ZNoT is the time format used in Zun (Containers Service).
 const RFC3339ZNoT = "2006-01-02 15:04:05-07:00"
 
 type JSONRFC3339ZNoT time.Time
 
-func (jt *JSONRFC3339ZNoT) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	if s == "" {
-		return nil
-	}
-	t, err := time.Parse(RFC3339ZNoT, s)
-	if err != nil {
-		return err
-	}
-	*jt = JSONRFC3339ZNoT(t)
-	return nil
-}
+func (jt *JSONRFC3339ZNoT) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 // RFC3339ZNoTNoZ is another time format used in Zun (Containers Service).
 const RFC3339ZNoTNoZ = "2006-01-02 15:04:05"
@@ -434,18 +191,7 @@ const RFC3339ZNoTNoZ = "2006-01-02 15:04:05"
 type JSONRFC3339ZNoTNoZ time.Time
 
 func (jt *JSONRFC3339ZNoTNoZ) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	if s == "" {
-		return nil
-	}
-	t, err := time.Parse(RFC3339ZNoTNoZ, s)
-	if err != nil {
-		return err
-	}
-	*jt = JSONRFC3339ZNoTNoZ(t)
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -469,18 +215,4 @@ resources that are paginated in a certain way.
 It attempts to extract the "next" URL from slice of Link structs, or
 "" if no such URL is present.
 */
-func ExtractNextURL(links []Link) (string, error) {
-	var url string
-
-	for _, l := range links {
-		if l.Rel == "next" {
-			url = l.Href
-		}
-	}
-
-	if url == "" {
-		return "", nil
-	}
-
-	return url, nil
-}
+func ExtractNextURL(links []Link) (string, error) { _ = "STUB: not implemented"; return "", nil }

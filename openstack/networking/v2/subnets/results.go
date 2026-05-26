@@ -1,7 +1,6 @@
 package subnets
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -13,13 +12,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a subnet resource.
-func (r commonResult) Extract() (*Subnet, error) {
-	var s struct {
-		Subnet *Subnet `json:"subnet"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Subnet, err
-}
+func (r commonResult) Extract() (*Subnet, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a Subnet.
@@ -137,42 +130,13 @@ type Subnet struct {
 }
 
 func (r *Subnet) UnmarshalJSON(b []byte) error {
-	type tmp Subnet
+	_ = "STUB: not implemented"
 
 	// Support for older neutron time format
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = Subnet(s1.tmp)
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		return nil
-	}
-
-	// Support for newer neutron time format
-	var s2 struct {
-		tmp
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = Subnet(s2.tmp)
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-
 	return nil
 }
+
+// Support for newer neutron time format
 
 // SubnetPage is the page returned by a pager when traversing over a collection
 // of subnets.
@@ -184,33 +148,17 @@ type SubnetPage struct {
 // the end of a page and the pager seeks to traverse over a new one. In order
 // to do this, it needs to construct the next page's URL.
 func (r SubnetPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"subnets_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a SubnetPage struct is empty.
-func (r SubnetPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractSubnets(r)
-	return len(is) == 0, err
-}
+func (r SubnetPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractSubnets accepts a Page struct, specifically a SubnetPage struct,
 // and extracts the elements into a slice of Subnet structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractSubnets(r pagination.Page) ([]Subnet, error) {
-	var s struct {
-		Subnets []Subnet `json:"subnets"`
-	}
-	err := (r.(SubnetPage)).ExtractInto(&s)
-	return s.Subnets, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

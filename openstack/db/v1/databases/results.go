@@ -34,34 +34,17 @@ type DBPage struct {
 }
 
 // IsEmpty checks to see whether the collection is empty.
-func (page DBPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	dbs, err := ExtractDBs(page)
-	return len(dbs) == 0, err
-}
+func (page DBPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL will retrieve the next page URL.
 func (page DBPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"databases_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractDBs will convert a generic pagination struct into a more
 // relevant slice of DB structs.
 func ExtractDBs(page pagination.Page) ([]Database, error) {
-	r := page.(DBPage)
-	var s struct {
-		Databases []Database `json:"databases"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Databases, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

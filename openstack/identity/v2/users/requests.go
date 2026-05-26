@@ -9,9 +9,8 @@ import (
 
 // List lists the existing users.
 func List(client *gophercloud.ServiceClient) pagination.Pager {
-	return pagination.NewPager(client, rootURL(client), func(r pagination.PageResult) pagination.Page {
-		return UserPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CommonOpts are the parameters that are shared between CreateOpts and
@@ -45,34 +44,20 @@ type CreateOptsBuilder interface {
 // ToUserCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToUserCreateMap() (map[string]any, error) {
-	if opts.Name == "" && opts.Username == "" {
-		err := gophercloud.ErrMissingInput{}
-		err.Argument = "users.CreateOpts.Name/users.CreateOpts.Username"
-		err.Info = "Either a Name or Username must be provided"
-		return nil, err
-	}
-	return gophercloud.BuildRequestBody(opts, "user")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is the operation responsible for creating new users.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToUserCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, rootURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get requests details on a single user, either by ID or Name.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, ResourceURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -87,33 +72,24 @@ type UpdateOpts CommonOpts
 
 // ToUserUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToUserUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "user")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is the operation responsible for updating exist users by their ID.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToUserUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, ResourceURL(client, id), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete is the operation responsible for permanently deleting a User.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, ResourceURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListRoles lists the existing roles that can be assigned to users.
 func ListRoles(client *gophercloud.ServiceClient, tenantID, userID string) pagination.Pager {
-	return pagination.NewPager(client, listRolesURL(client, tenantID, userID), func(r pagination.PageResult) pagination.Page {
-		return RolePage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

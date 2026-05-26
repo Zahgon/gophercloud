@@ -65,31 +65,18 @@ type ListOpts struct {
 }
 
 // ToTaskListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToTaskListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToTaskListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of the tasks.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToTaskListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return TaskPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific Image service task based on its ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, taskID string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, taskID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows to add additional parameters to the Create request.
@@ -105,23 +92,12 @@ type CreateOpts struct {
 
 // ToTaskCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToTaskCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new Image service task on the server.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToTaskCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }

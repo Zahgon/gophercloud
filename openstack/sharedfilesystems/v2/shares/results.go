@@ -1,9 +1,6 @@
 package shares
 
 import (
-	"encoding/json"
-	"net/url"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -79,37 +76,14 @@ type Share struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (r *Share) UnmarshalJSON(b []byte) error {
-	type tmp Share
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Share(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *Share) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract will get the Share object from the commonResult
-func (r commonResult) Extract() (*Share, error) {
-	var s struct {
-		Share *Share `json:"share"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Share, err
-}
+func (r commonResult) Extract() (*Share, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {
@@ -123,82 +97,21 @@ type SharePage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r SharePage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-	if mark == invalidMarker {
-		return "", nil
-	}
-
-	q := currentURL.Query()
-	q.Set("offset", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
-func (r SharePage) LastMarker() (string, error) {
-	shares, err := ExtractShares(r)
-	if err != nil {
-		return invalidMarker, err
-	}
-	if len(shares) == 0 {
-		return invalidMarker, nil
-	}
+func (r SharePage) LastMarker() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return invalidMarker, err
-	}
-	queryParams := u.Query()
-	offset := queryParams.Get("offset")
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return invalidMarker, nil
-	}
-
-	iOffset := 0
-	if offset != "" {
-		iOffset, err = strconv.Atoi(offset)
-		if err != nil {
-			return invalidMarker, err
-		}
-	}
-	iLimit, err := strconv.Atoi(limit)
-	if err != nil {
-		return invalidMarker, err
-	}
-	iOffset = iOffset + iLimit
-	offset = strconv.Itoa(iOffset)
-
-	return offset, nil
-}
+// Limit is not present, only one page required
 
 // IsEmpty satisifies the IsEmpty method of the Page interface
-func (r SharePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	shares, err := ExtractShares(r)
-	return len(shares) == 0, err
-}
+func (r SharePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractShares extracts and returns a Share slice. It is used while
 // iterating over a shares.List call.
-func ExtractShares(r pagination.Page) ([]Share, error) {
-	var s struct {
-		Shares []Share `json:"shares"`
-	}
-
-	err := (r.(SharePage)).ExtractInto(&s)
-
-	return s.Shares, err
-}
+func ExtractShares(r pagination.Page) ([]Share, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
@@ -248,20 +161,14 @@ type ExportLocation struct {
 
 // Extract will get the Export Locations from the ListExportLocationsResult
 func (r ListExportLocationsResult) Extract() ([]ExportLocation, error) {
-	var s struct {
-		ExportLocations []ExportLocation `json:"export_locations"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ExportLocations, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract will get the Export Location from the GetExportLocationResult
 func (r GetExportLocationResult) Extract() (*ExportLocation, error) {
-	var s struct {
-		ExportLocation *ExportLocation `json:"export_location"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ExportLocation, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AccessRight contains all information associated with an OpenStack share
@@ -285,11 +192,8 @@ type AccessRight struct {
 
 // Extract will get the GrantAccess object from the commonResult
 func (r GrantAccessResult) Extract() (*AccessRight, error) {
-	var s struct {
-		AccessRight *AccessRight `json:"access"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AccessRight, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GrantAccessResult contains the result body and error from an GrantAccess request.
@@ -304,11 +208,8 @@ type RevokeAccessResult struct {
 
 // Extract will get a slice of AccessRight objects from the commonResult
 func (r ListAccessRightsResult) Extract() ([]AccessRight, error) {
-	var s struct {
-		AccessRights []AccessRight `json:"access_list"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AccessRights, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListAccessRightsResult contains the result body and error from a ListAccessRights request.
@@ -333,11 +234,8 @@ type GetMetadatumResult struct {
 
 // Extract will get the string-string map from GetMetadatumResult
 func (r GetMetadatumResult) Extract() (map[string]string, error) {
-	var s struct {
-		Meta map[string]string `json:"meta"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Meta, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MetadataResult contains the response body and error from GetMetadata, SetMetadata or UpdateMetadata requests.
@@ -347,11 +245,8 @@ type MetadataResult struct {
 
 // Extract will get the string-string map from MetadataResult
 func (r MetadataResult) Extract() (map[string]string, error) {
-	var s struct {
-		Metadata map[string]string `json:"metadata"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Metadata, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DeleteMetadatumResult contains the response body and error from a DeleteMetadatum request.

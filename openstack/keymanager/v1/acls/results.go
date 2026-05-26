@@ -1,7 +1,6 @@
 package acls
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -25,24 +24,7 @@ type ACLDetails struct {
 	Users []string `json:"users"`
 }
 
-func (r *ACLDetails) UnmarshalJSON(b []byte) error {
-	type tmp ACLDetails
-	var s struct {
-		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ACLDetails(s.tmp)
-
-	r.Created = time.Time(s.Created)
-	r.Updated = time.Time(s.Updated)
-
-	return nil
-}
+func (r *ACLDetails) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ACLRef represents an ACL reference.
 type ACLRef string
@@ -52,11 +34,7 @@ type commonResult struct {
 }
 
 // Extract interprets any commonResult as an ACL.
-func (r commonResult) Extract() (*ACL, error) {
-	var s *ACL
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*ACL, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ACLResult is the response from a Get operation. Call its Extract method
 // to interpret it as an ACL.
@@ -70,13 +48,7 @@ type ACLRefResult struct {
 	gophercloud.Result
 }
 
-func (r ACLRefResult) Extract() (*ACLRef, error) {
-	var s struct {
-		ACLRef ACLRef `json:"acl_ref"`
-	}
-	err := r.ExtractInto(&s)
-	return &s.ACLRef, err
-}
+func (r ACLRefResult) Extract() (*ACLRef, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.

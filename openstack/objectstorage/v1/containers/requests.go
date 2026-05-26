@@ -1,12 +1,9 @@
 package containers
 
 import (
-	"bytes"
 	"context"
-	"net/url"
 
 	"github.com/gophercloud/gophercloud/v2"
-	v1 "github.com/gophercloud/gophercloud/v2/openstack/objectstorage/v1"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -33,32 +30,16 @@ type ListOpts struct {
 
 // ToContainerListParams formats a ListOpts into a query string.
 func (opts ListOpts) ToContainerListParams() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List is a function that retrieves containers associated with the account as
 // well as account metadata. It returns a pager which can be iterated with the
 // EachPage function.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	headers := map[string]string{"Accept": "application/json", "Content-Type": "application/json"}
-
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToContainerListParams()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	pager := pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		p := ContainerPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
-	pager.Headers = headers
-	return pager
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -87,76 +68,26 @@ type CreateOpts struct {
 
 // ToContainerCreateMap formats a CreateOpts into a map of headers.
 func (opts CreateOpts) ToContainerCreateMap() (map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, err
-	}
-	for k, v := range opts.Metadata {
-		h["X-Container-Meta-"+k] = v
-	}
-	return h, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is a function that creates a new container.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, containerName string, opts CreateOptsBuilder) (r CreateResult) {
-	url, err := createURL(c, containerName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h := make(map[string]string)
-	if opts != nil {
-		headers, err := opts.ToContainerCreateMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		for k, v := range headers {
-			h[k] = v
-		}
-	}
-	resp, err := c.Request(ctx, "PUT", url, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{201, 202, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // BulkDelete is a function that bulk deletes containers.
 func BulkDelete(ctx context.Context, c *gophercloud.ServiceClient, containers []string) (r BulkDeleteResult) {
-	var body bytes.Buffer
-
-	for i := range containers {
-		if err := v1.CheckContainerName(containers[i]); err != nil {
-			r.Err = err
-			return
-		}
-		body.WriteString(url.PathEscape(containers[i]))
-		body.WriteRune('\n')
-	}
-
-	resp, err := c.Post(ctx, bulkDeleteURL(c), &body, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: map[string]string{
-			"Accept":       "application/json",
-			"Content-Type": "text/plain",
-		},
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(BulkDeleteResult)
 }
 
 // Delete is a function that deletes a container.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, containerName string) (r DeleteResult) {
-	url, err := deleteURL(c, containerName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Delete(ctx, url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -187,48 +118,15 @@ type UpdateOpts struct {
 
 // ToContainerUpdateMap formats a UpdateOpts into a map of headers.
 func (opts UpdateOpts) ToContainerUpdateMap() (map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		return nil, err
-	}
-
-	for k, v := range opts.Metadata {
-		h["X-Container-Meta-"+k] = v
-	}
-
-	for _, k := range opts.RemoveMetadata {
-		h["X-Remove-Container-Meta-"+k] = "remove"
-	}
-
-	return h, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is a function that creates, updates, or deletes a container's
 // metadata.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, containerName string, opts UpdateOptsBuilder) (r UpdateResult) {
-	url, err := updateURL(c, containerName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h := make(map[string]string)
-	if opts != nil {
-		headers, err := opts.ToContainerUpdateMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-
-		for k, v := range headers {
-			h[k] = v
-		}
-	}
-	resp, err := c.Request(ctx, "POST", url, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{201, 202, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // GetOptsBuilder allows extensions to add additional parameters to the Get
@@ -244,34 +142,14 @@ type GetOpts struct {
 
 // ToContainerGetMap formats a GetOpts into a map of headers.
 func (opts GetOpts) ToContainerGetMap() (map[string]string, error) {
-	return gophercloud.BuildHeaders(opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Get is a function that retrieves the metadata of a container. To extract just
 // the custom metadata, pass the GetResult response to the ExtractMetadata
 // function.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, containerName string, opts GetOptsBuilder) (r GetResult) {
-	url, err := getURL(c, containerName)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h := make(map[string]string)
-	if opts != nil {
-		headers, err := opts.ToContainerGetMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-
-		for k, v := range headers {
-			h[k] = v
-		}
-	}
-	resp, err := c.Head(ctx, url, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }

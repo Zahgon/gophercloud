@@ -1,8 +1,6 @@
 package zones
 
 import (
-	"encoding/json"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -15,11 +13,7 @@ type commonResult struct {
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a Zone.
 // An error is returned if the original call or the extraction failed.
-func (r commonResult) Extract() (*Zone, error) {
-	var s *Zone
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Zone, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult is the result of a Create request. Call its Extract method
 // to interpret the result as a Zone.
@@ -56,23 +50,10 @@ type ErrResult struct {
 }
 
 // IsEmpty returns true if the page contains no results.
-func (r ZonePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractZones(r)
-	return len(s) == 0, err
-}
+func (r ZonePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractZones extracts a slice of Zones from a List result.
-func ExtractZones(r pagination.Page) ([]Zone, error) {
-	var s struct {
-		Zones []Zone `json:"zones"`
-	}
-	err := (r.(ZonePage)).ExtractInto(&s)
-	return s.Zones, err
-}
+func ExtractZones(r pagination.Page) ([]Zone, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Zone represents a DNS zone.
 type Zone struct {
@@ -136,43 +117,7 @@ type Zone struct {
 	Links map[string]any `json:"links"`
 }
 
-func (r *Zone) UnmarshalJSON(b []byte) error {
-	type tmp Zone
-	var s struct {
-		tmp
-		CreatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		TransferredAt gophercloud.JSONRFC3339MilliNoZ `json:"transferred_at"`
-		Serial        any                             `json:"serial"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Zone(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-	r.TransferredAt = time.Time(s.TransferredAt)
-
-	switch t := s.Serial.(type) {
-	case float64:
-		r.Serial = int(t)
-	case string:
-		switch t {
-		case "":
-			r.Serial = 0
-		default:
-			serial, err := strconv.ParseFloat(t, 64)
-			if err != nil {
-				return err
-			}
-			r.Serial = int(serial)
-		}
-	}
-
-	return err
-}
+func (r *Zone) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ZoneShare represents a shared zone.
 type ZoneShare struct {
@@ -195,25 +140,7 @@ type ZoneShare struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (r *ZoneShare) UnmarshalJSON(b []byte) error {
-	type tmp ZoneShare
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ZoneShare(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *ZoneShare) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ZoneShareResult is the result of a GetZoneShare request.
 type ZoneShareResult struct {
@@ -222,11 +149,7 @@ type ZoneShareResult struct {
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a Zone.
 // An error is returned if the original call or the extraction failed.
-func (r ZoneShareResult) Extract() (*ZoneShare, error) {
-	var s *ZoneShare
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r ZoneShareResult) Extract() (*ZoneShare, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ZoneSharePage is a single page of ZoneShare results.
 type ZoneSharePage struct {
@@ -234,20 +157,10 @@ type ZoneSharePage struct {
 }
 
 // IsEmpty returns true if the page contains no results.
-func (r ZoneSharePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractZoneShares(r)
-	return len(s) == 0, err
-}
+func (r ZoneSharePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractZoneShares extracts a slice of ZoneShares from a List result.
 func ExtractZoneShares(r pagination.Page) ([]ZoneShare, error) {
-	var s struct {
-		ZoneShares []ZoneShare `json:"shared_zones"`
-	}
-	err := (r.(ZoneSharePage)).ExtractInto(&s)
-	return s.ZoneShares, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -1,12 +1,5 @@
 package pagination
 
-import (
-	"fmt"
-	"reflect"
-
-	"github.com/gophercloud/gophercloud/v2"
-)
-
 // LinkedPageBase may be embedded to implement a page that provides navigational "Next" and "Previous" links within its result.
 type LinkedPageBase struct {
 	PageResult
@@ -22,71 +15,15 @@ type LinkedPageBase struct {
 // It assumes that the links are available in a "links" element of the top-level response object.
 // If this is not the case, override NextPageURL on your result type.
 func (current LinkedPageBase) NextPageURL(endpointURL string) (string, error) {
-	var path []string
-	var key string
-
-	if current.LinkPath == nil {
-		path = []string{"links", "next"}
-	} else {
-		path = current.LinkPath
-	}
-
-	submap, ok := current.Body.(map[string]any)
-	if !ok {
-		err := gophercloud.ErrUnexpectedType{}
-		err.Expected = "map[string]any"
-		err.Actual = fmt.Sprintf("%v", reflect.TypeOf(current.Body))
-		return "", err
-	}
-
-	for {
-		key, path = path[0], path[1:]
-
-		value, ok := submap[key]
-		if !ok {
-			return "", nil
-		}
-
-		if len(path) > 0 {
-			submap, ok = value.(map[string]any)
-			if !ok {
-				err := gophercloud.ErrUnexpectedType{}
-				err.Expected = "map[string]any"
-				err.Actual = fmt.Sprintf("%v", reflect.TypeOf(value))
-				return "", err
-			}
-		} else {
-			if value == nil {
-				// Actual null element.
-				return "", nil
-			}
-
-			url, ok := value.(string)
-			if !ok {
-				err := gophercloud.ErrUnexpectedType{}
-				err.Expected = "string"
-				err.Actual = fmt.Sprintf("%v", reflect.TypeOf(value))
-				return "", err
-			}
-
-			return url, nil
-		}
-	}
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// Actual null element.
 
 // IsEmpty satisifies the IsEmpty method of the Page interface
-func (current LinkedPageBase) IsEmpty() (bool, error) {
-	if b, ok := current.Body.([]any); ok {
-		return len(b) == 0, nil
-	}
-	err := gophercloud.ErrUnexpectedType{}
-	err.Expected = "[]any"
-	err.Actual = fmt.Sprintf("%v", reflect.TypeOf(current.Body))
-	return true, err
-}
+func (current LinkedPageBase) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // GetBody returns the linked page's body. This method is needed to satisfy the
 // Page interface.
-func (current LinkedPageBase) GetBody() any {
-	return current.Body
-}
+func (current LinkedPageBase) GetBody() any { _ = "STUB: not implemented"; return *new(any) }

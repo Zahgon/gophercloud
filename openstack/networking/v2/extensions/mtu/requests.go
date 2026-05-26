@@ -1,10 +1,6 @@
 package mtu
 
 import (
-	"fmt"
-	"net/url"
-
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/networks"
 )
 
@@ -20,18 +16,8 @@ type ListOptsExt struct {
 // ToNetworkListQuery adds the router:external option to the base network
 // list options.
 func (opts ListOptsExt) ToNetworkListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts.ListOptsBuilder)
-	if err != nil {
-		return "", err
-	}
-
-	params := q.Query()
-	if opts.MTU > 0 {
-		params.Add("mtu", fmt.Sprintf("%d", opts.MTU))
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // CreateOptsExt adds an MTU option to the base Network CreateOpts.
@@ -45,19 +31,8 @@ type CreateOptsExt struct {
 
 // ToNetworkCreateMap adds an MTU to the base network creation options.
 func (opts CreateOptsExt) ToNetworkCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.MTU == 0 {
-		return base, nil
-	}
-
-	networkMap := base["network"].(map[string]any)
-	networkMap["mtu"] = opts.MTU
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateOptsExt adds an MTU option to the base Network UpdateOpts.
@@ -71,17 +46,6 @@ type UpdateOptsExt struct {
 
 // ToNetworkUpdateMap adds an MTU to the base network uptade options.
 func (opts UpdateOptsExt) ToNetworkUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.MTU == 0 {
-		return base, nil
-	}
-
-	networkMap := base["network"].(map[string]any)
-	networkMap["mtu"] = opts.MTU
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

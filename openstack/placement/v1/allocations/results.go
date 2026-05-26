@@ -39,11 +39,7 @@ type GetResult struct {
 }
 
 // Extract interprets a GetResult as Allocations.
-func (r GetResult) Extract() (*Allocations, error) {
-	var s Allocations
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r GetResult) Extract() (*Allocations, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // UpdateResult is the result of an Update operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.

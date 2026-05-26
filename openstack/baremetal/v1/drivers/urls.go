@@ -2,18 +2,19 @@ package drivers
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func driversURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("drivers")
-}
+func driversURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func driverDetailsURL(client *gophercloud.ServiceClient, driverName string) string {
-	return client.ServiceURL("drivers", driverName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func driverPropertiesURL(client *gophercloud.ServiceClient, driverName string) string {
-	return client.ServiceURL("drivers", driverName, "properties")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func driverDiskPropertiesURL(client *gophercloud.ServiceClient, driverName string) string {
-	return client.ServiceURL("drivers", driverName, "raid", "logical_disk_properties")
+	_ = "STUB: not implemented"
+	return ""
 }

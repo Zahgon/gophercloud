@@ -37,13 +37,7 @@ type ListOpts struct {
 }
 
 // ToGroupListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), err
-}
+func (opts ListOpts) ToGroupListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // firewall groups. It accepts a ListOpts struct, which allows you to filter
@@ -52,26 +46,14 @@ func (opts ListOpts) ToGroupListQuery() (string, error) {
 // Default group settings return only those firewall groups that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-
-	if opts != nil {
-		query, err := opts.ToGroupListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return GroupPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a particular firewall group based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order
@@ -98,19 +80,14 @@ type CreateOpts struct {
 
 // ToFirewallGroupCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToFirewallGroupCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new firewall group
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToFirewallGroupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder is the interface options structs have to satisfy in order
@@ -134,21 +111,14 @@ type UpdateOpts struct {
 
 // ToFirewallGroupUpdateMap casts a UpdateOpts struct to a map.
 func (opts UpdateOpts) ToFirewallGroupUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update allows firewall groups to be updated.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToFirewallGroupUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Because of fwaas_v2 wait only UUID not string and base updateOpts has omitempty,
@@ -163,16 +133,8 @@ type RemoveIngressPolicyOpts struct {
 }
 
 func RemoveIngressPolicy(ctx context.Context, c *gophercloud.ServiceClient, id string) (r UpdateResult) {
-	b, err := gophercloud.BuildRequestBody(RemoveIngressPolicyOpts{IngressFirewallPolicyID: nil}, "firewall_group")
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 type RemoveEgressPolicyOpts struct {
@@ -180,21 +142,12 @@ type RemoveEgressPolicyOpts struct {
 }
 
 func RemoveEgressPolicy(ctx context.Context, c *gophercloud.ServiceClient, id string) (r UpdateResult) {
-	b, err := gophercloud.BuildRequestBody(RemoveEgressPolicyOpts{EgressFirewallPolicyID: nil}, "firewall_group")
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular firewall group based on its unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

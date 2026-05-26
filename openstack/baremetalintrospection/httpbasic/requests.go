@@ -1,9 +1,6 @@
 package httpbasic
 
 import (
-	"encoding/base64"
-	"fmt"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -15,31 +12,13 @@ type EndpointOpts struct {
 }
 
 func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc := new(gophercloud.ServiceClient)
-	if eo.IronicInspectorEndpoint == "" {
-		return nil, fmt.Errorf("IronicInspectorEndpoint is required")
-	}
-	if eo.IronicInspectorUser == "" || eo.IronicInspectorUserPassword == "" {
-		return nil, fmt.Errorf("IronicInspectorUser and IronicInspectorUserPassword are required")
-	}
-
-	token := []byte(eo.IronicInspectorUser + ":" + eo.IronicInspectorUserPassword)
-	encodedToken := base64.StdEncoding.EncodeToString(token)
-	sc.MoreHeaders = map[string]string{"Authorization": "Basic " + encodedToken}
-	sc.Endpoint = gophercloud.NormalizeURL(eo.IronicInspectorEndpoint)
-	sc.ProviderClient = client
-	return sc, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NewBareMetalIntrospectionHTTPBasic creates a ServiceClient that may be used to access a
 // "http_basic" bare metal introspection service.
 func NewBareMetalIntrospectionHTTPBasic(eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc, err := initClientOpts(&gophercloud.ProviderClient{}, eo)
-	if err != nil {
-		return nil, err
-	}
-
-	sc.Type = "baremetal-introspection"
-
-	return sc, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

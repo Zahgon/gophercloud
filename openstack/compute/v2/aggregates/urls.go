@@ -2,34 +2,36 @@ package aggregates
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func aggregatesListURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("os-aggregates")
-}
+func aggregatesListURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func aggregatesCreateURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("os-aggregates")
-}
+func aggregatesCreateURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func aggregatesDeleteURL(c *gophercloud.ServiceClient, aggregateID string) string {
-	return c.ServiceURL("os-aggregates", aggregateID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func aggregatesGetURL(c *gophercloud.ServiceClient, aggregateID string) string {
-	return c.ServiceURL("os-aggregates", aggregateID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func aggregatesUpdateURL(c *gophercloud.ServiceClient, aggregateID string) string {
-	return c.ServiceURL("os-aggregates", aggregateID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func aggregatesAddHostURL(c *gophercloud.ServiceClient, aggregateID string) string {
-	return c.ServiceURL("os-aggregates", aggregateID, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func aggregatesRemoveHostURL(c *gophercloud.ServiceClient, aggregateID string) string {
-	return c.ServiceURL("os-aggregates", aggregateID, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func aggregatesSetMetadataURL(c *gophercloud.ServiceClient, aggregateID string) string {
-	return c.ServiceURL("os-aggregates", aggregateID, "action")
+	_ = "STUB: not implemented"
+	return ""
 }

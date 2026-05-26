@@ -36,40 +36,29 @@ type CreateOpts struct {
 // ToAttachmentCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToAttachmentCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "attachment")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new Attachment based on the values in CreateOpts. To
 // extract the Attachment object from the response, call the Extract method on
 // the CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToAttachmentCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete will delete the existing Attachment with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves the Attachment with the provided ID. To extract the Attachment
 // object from the response, call the Extract method on the GetResult.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -112,25 +101,15 @@ type ListOpts struct {
 
 // ToAttachmentListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAttachmentListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns Attachments optionally limited by the conditions provided in
 // ListOpts.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToAttachmentListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AttachmentPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -149,34 +128,21 @@ type UpdateOpts struct {
 // ToAttachmentUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToAttachmentUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "attachment")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the Attachment with provided information. To extract the
 // updated Attachment from the response, call the Extract method on the
 // UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToAttachmentUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Complete will complete an attachment for a cinder volume.
 // Available starting in the 3.44 microversion.
 func Complete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r CompleteResult) {
-	b := map[string]any{
-		"os-complete": nil,
-	}
-	resp, err := client.Post(ctx, completeURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CompleteResult)
 }

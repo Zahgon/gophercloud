@@ -59,56 +59,23 @@ type AuthOptions struct {
 
 // ToTokenV2CreateMap builds a token request body from the given AuthOptions.
 func (opts AuthOptions) ToTokenV2CreateMap() (map[string]any, error) {
-	v2Opts := AuthOptionsV2{
-		TenantID:   opts.TenantID,
-		TenantName: opts.TenantName,
-	}
-
-	if opts.Password != "" {
-		v2Opts.PasswordCredentials = &PasswordCredentialsV2{
-			Username: opts.Username,
-			Password: opts.Password,
-		}
-	} else {
-		v2Opts.TokenCredentials = &TokenCredentialsV2{
-			ID: opts.TokenID,
-		}
-	}
-
-	b, err := gophercloud.BuildRequestBody(v2Opts, "auth")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (opts AuthOptions) CanReauth() bool {
-	return opts.AllowReauth
-}
+func (opts AuthOptions) CanReauth() bool { _ = "STUB: not implemented"; return false }
 
 // Create authenticates to the identity service and attempts to acquire a Token.
 // Generally, rather than interact with this call directly, end users should
 // call openstack.AuthenticatedClient(), which abstracts all of the gory details
 // about navigating service catalogs and such.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, auth AuthOptionsBuilder) (r CreateResult) {
-	b, err := auth.ToTokenV2CreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, CreateURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes:     []int{200, 203},
-		OmitHeaders: []string{"X-Auth-Token"},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get validates and retrieves information for user's token.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, token string) (r GetResult) {
-	resp, err := client.Get(ctx, GetURL(client, token), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 203},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }

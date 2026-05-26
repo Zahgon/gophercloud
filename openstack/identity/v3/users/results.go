@@ -1,9 +1,6 @@
 package users
 
 import (
-	"encoding/json"
-	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -43,54 +40,10 @@ type User struct {
 	PasswordExpiresAt time.Time `json:"-"`
 }
 
-func (r *User) UnmarshalJSON(b []byte) error {
-	type tmp User
-	var s struct {
-		tmp
-		Enabled           any                             `json:"enabled"`
-		Extra             map[string]any                  `json:"extra"`
-		PasswordExpiresAt gophercloud.JSONRFC3339MilliNoZ `json:"password_expires_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = User(s.tmp)
+func (r *User) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	r.PasswordExpiresAt = time.Time(s.PasswordExpiresAt)
-
-	switch t := s.Enabled.(type) {
-	case nil:
-		r.Enabled = false
-	case bool:
-		r.Enabled = t
-	case string:
-		r.Enabled, err = strconv.ParseBool(t)
-		if err != nil {
-			return fmt.Errorf("failed to parse Enabled %q: %v", t, err)
-		}
-	default:
-		return fmt.Errorf("unknown type for Enabled: %T (value: %v)", t, t)
-	}
-
-	// Collect other fields and bundle them into Extra
-	// but only if a field titled "extra" wasn't sent.
-	if s.Extra != nil {
-		r.Extra = s.Extra
-	} else {
-		var result any
-		err := json.Unmarshal(b, &result)
-		if err != nil {
-			return err
-		}
-		if resultMap, ok := result.(map[string]any); ok {
-			delete(resultMap, "password_expires_at")
-			r.Extra = gophercloud.RemainingKeys(User{}, resultMap)
-		}
-	}
-
-	return err
-}
+// Collect other fields and bundle them into Extra
+// but only if a field titled "extra" wasn't sent.
 
 type userResult struct {
 	gophercloud.Result
@@ -151,49 +104,22 @@ type UserPage struct {
 }
 
 // IsEmpty determines whether or not a UserPage contains any results.
-func (r UserPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	users, err := ExtractUsers(r)
-	return len(users) == 0, err
-}
+func (r UserPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r UserPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractUsers returns a slice of Users contained in a single page of results.
-func ExtractUsers(r pagination.Page) ([]User, error) {
-	var s struct {
-		Users []User `json:"users"`
-	}
-	err := (r.(UserPage)).ExtractInto(&s)
-	return s.Users, err
-}
+func ExtractUsers(r pagination.Page) ([]User, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any user results as a User.
-func (r userResult) Extract() (*User, error) {
-	var s struct {
-		User *User `json:"user"`
-	}
-	err := r.ExtractInto(&s)
-	return s.User, err
-}
+func (r userResult) Extract() (*User, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract extracts IsMemberOfGroupResult as bool and error values
 func (r IsMemberOfGroupResult) Extract() (bool, error) {
-	return r.isMember, r.Err
+	_ = "STUB: not implemented"
+	return false, nil
 }

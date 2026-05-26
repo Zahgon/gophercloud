@@ -1,8 +1,6 @@
 package attributestags
 
 import (
-	"net/http"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -11,13 +9,7 @@ type tagResult struct {
 }
 
 // Extract interprets tagResult to return the list of tags
-func (r tagResult) Extract() ([]string, error) {
-	var s struct {
-		Tags []string `json:"tags"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Tags, err
-}
+func (r tagResult) Extract() ([]string, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ReplaceAllResult represents the result of a replace operation.
 // Call its Extract method to interpret it as a slice of strings.
@@ -46,12 +38,4 @@ type ConfirmResult struct {
 	gophercloud.Result
 }
 
-func (r ConfirmResult) Extract() (bool, error) {
-	exists := r.Err == nil
-
-	if gophercloud.ResponseCodeIs(r.Err, http.StatusNotFound) {
-		r.Err = nil
-	}
-
-	return exists, r.Err
-}
+func (r ConfirmResult) Extract() (bool, error) { _ = "STUB: not implemented"; return false, nil }

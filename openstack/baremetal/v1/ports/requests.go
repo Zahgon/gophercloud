@@ -2,7 +2,6 @@ package ports
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -50,61 +49,33 @@ type ListOpts struct {
 }
 
 // ToPortListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToPortListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToPortListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List makes a request against the API to list ports accessible to you.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToPortListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return PortPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ToPortListDetailQuery formats a ListOpts into a query string for the list details API.
 func (opts ListOpts) ToPortListDetailQuery() (string, error) {
+	_ = "STUB: not implemented"
 	// Detail endpoint can't filter by Fields
-	if len(opts.Fields) > 0 {
-		return "", fmt.Errorf("fields is not a valid option when getting a detailed listing of ports")
-	}
-
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	return "", nil
 }
 
 // ListDetail - Return a list ports with complete details.
 // Some filtering is possible by passing in flags in "ListOpts",
 // but you cannot limit by the fields returned.
 func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToPortListDetailQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return PortPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get - requests the details off a port, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -147,25 +118,14 @@ type CreateOpts struct {
 
 // ToPortCreateMap assembles a request body based on the contents of a CreateOpts.
 func (opts CreateOpts) ToPortCreateMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create - requests the creation of a port
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	reqBody, err := opts.ToPortCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createURL(client), reqBody, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // TODO Update
@@ -190,31 +150,16 @@ type UpdateOperation struct {
 	Value any      `json:"value,omitempty"`
 }
 
-func (opts UpdateOperation) ToPortUpdateMap() map[string]any {
-	return map[string]any{
-		"op":    opts.Op,
-		"path":  opts.Path,
-		"value": opts.Value,
-	}
-}
+func (opts UpdateOperation) ToPortUpdateMap() map[string]any { _ = "STUB: not implemented"; return nil }
 
 // Update - requests the update of a port
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
-	body := make([]map[string]any, len(opts))
-	for i, patch := range opts {
-		body[i] = patch.ToPortUpdateMap()
-	}
-
-	resp, err := client.Patch(ctx, updateURL(client, id), body, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete - requests the deletion of a port
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

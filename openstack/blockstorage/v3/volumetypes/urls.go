@@ -2,70 +2,78 @@ package volumetypes
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("types")
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("types", id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("types")
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("types", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("types", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecsListURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("types", id, "extra_specs")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecsGetURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("types", id, "extra_specs", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecsCreateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("types", id, "extra_specs")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecUpdateURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("types", id, "extra_specs", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extraSpecDeleteURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("types", id, "extra_specs", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func accessURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("types", id, "os-volume-type-access")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func accessActionURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("types", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createEncryptionURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("types", id, "encryption")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteEncryptionURL(client *gophercloud.ServiceClient, id, encryptionID string) string {
-	return client.ServiceURL("types", id, "encryption", encryptionID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getEncryptionURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("types", id, "encryption")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getEncryptionSpecURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("types", id, "encryption", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateEncryptionURL(client *gophercloud.ServiceClient, id, encryptionID string) string {
-	return client.ServiceURL("types", id, "encryption", encryptionID)
+	_ = "STUB: not implemented"
+	return ""
 }

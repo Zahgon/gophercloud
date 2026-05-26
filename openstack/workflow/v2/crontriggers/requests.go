@@ -2,10 +2,6 @@ package crontriggers
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
-	"net/url"
-	"reflect"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -47,44 +43,27 @@ type CreateOpts struct {
 
 // ToCronTriggerCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToCronTriggerCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.FirstExecutionTime != nil {
-		b["first_execution_time"] = opts.FirstExecutionTime.Format("2006-01-02 15:04")
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new cron trigger.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToCronTriggerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete deletes the specified cron trigger.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves details of a single cron trigger.
 // Use Extract to convert its result into an CronTrigger.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListOptsBuilder allows extension to add additional parameters to the List request.
@@ -143,12 +122,7 @@ type ListFilter struct {
 	Value  string
 }
 
-func (l ListFilter) String() string {
-	if l.Filter != "" {
-		return fmt.Sprintf("%s:%s", l.Filter, l.Value)
-	}
-	return l.Value
-}
+func (l ListFilter) String() string { _ = "STUB: not implemented"; return "" }
 
 // ListDateFilter allows to filter date parameters with different filters.
 // Empty value for Filter checks for equality.
@@ -157,13 +131,7 @@ type ListDateFilter struct {
 	Value  time.Time
 }
 
-func (l ListDateFilter) String() string {
-	v := l.Value.Format(gophercloud.RFC3339ZNoTNoZ)
-	if l.Filter != "" {
-		return fmt.Sprintf("%s:%s", l.Filter, v)
-	}
-	return v
-}
+func (l ListDateFilter) String() string { _ = "STUB: not implemented"; return "" }
 
 // ListIntFilter allows to filter integer parameters with different filters.
 // Empty value for Filter checks for equality.
@@ -172,13 +140,7 @@ type ListIntFilter struct {
 	Value  int
 }
 
-func (l ListIntFilter) String() string {
-	v := fmt.Sprintf("%d", l.Value)
-	if l.Filter != "" {
-		return fmt.Sprintf("%s:%s", l.Filter, v)
-	}
-	return v
-}
+func (l ListIntFilter) String() string { _ = "STUB: not implemented"; return "" }
 
 // FilterType represents a valid filter to use for filtering executions.
 type FilterType string
@@ -206,52 +168,13 @@ const (
 
 // ToCronTriggerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToCronTriggerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	params := q.Query()
-
-	for queryParam, value := range map[string]map[string]any{"workflow_params": opts.WorkflowParams, "workflow_input": opts.WorkflowInput} {
-		if value != nil {
-			b, err := json.Marshal(value)
-			if err != nil {
-				return "", err
-			}
-			params.Add(queryParam, string(b))
-		}
-	}
-
-	for queryParam, value := range map[string]fmt.Stringer{
-		"workflow_name":        opts.WorkflowName,
-		"name":                 opts.Name,
-		"pattern":              opts.Pattern,
-		"remaining_executions": opts.RemainingExecutions,
-		"first_execution_time": opts.FirstExecutionTime,
-		"next_execution_time":  opts.NextExecutionTime,
-		"created_at":           opts.CreatedAt,
-		"updated_at":           opts.UpdatedAt,
-	} {
-		if !reflect.ValueOf(value).IsNil() {
-			params.Add(queryParam, value.String())
-		}
-	}
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List performs a call to list cron triggers.
 // You may provide options to filter the results.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToCronTriggerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return CronTriggerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

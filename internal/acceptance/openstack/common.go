@@ -10,10 +10,6 @@ import (
 
 // PrintExtension prints an extension and all of its attributes.
 func PrintExtension(t *testing.T, extension *extensions.Extension) {
-	t.Logf("Name: %s", extension.Name)
-	t.Logf("Namespace: %s", extension.Namespace)
-	t.Logf("Alias: %s", extension.Alias)
-	t.Logf("Description: %s", extension.Description)
-	t.Logf("Updated: %s", extension.Updated)
-	t.Logf("Links: %v", extension.Links)
+	_ = "STUB: not implemented"
+	return
 }

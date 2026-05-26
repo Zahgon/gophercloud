@@ -34,9 +34,8 @@ type UpdateResult struct {
 
 // Extract is a function that accepts a result and extracts a cluster-template resource.
 func (r commonResult) Extract() (*ClusterTemplate, error) {
-	var s *ClusterTemplate
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Represents a template for a Cluster Template
@@ -87,33 +86,17 @@ type ClusterTemplatePage struct {
 // the end of a page and the pager seeks to traverse over a new one. In order
 // to do this, it needs to construct the next page's URL.
 func (r ClusterTemplatePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a ClusterTemplatePage struct is empty.
-func (r ClusterTemplatePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractClusterTemplates(r)
-	return len(is) == 0, err
-}
+func (r ClusterTemplatePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractClusterTemplates accepts a Page struct, specifically a ClusterTemplatePage struct,
 // and extracts the elements into a slice of cluster templates structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractClusterTemplates(r pagination.Page) ([]ClusterTemplate, error) {
-	var s struct {
-		ClusterTemplates []ClusterTemplate `json:"clustertemplates"`
-	}
-	err := (r.(ClusterTemplatePage)).ExtractInto(&s)
-	return s.ClusterTemplates, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

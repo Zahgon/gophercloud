@@ -46,10 +46,7 @@ type ListOpts struct {
 }
 
 // ToPoolListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToPoolListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToPoolListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // pools. It accepts a ListOpts struct, which allows you to filter and sort
@@ -58,17 +55,8 @@ func (opts ListOpts) ToPoolListQuery() (string, error) {
 // Default policy settings return only those pools that are owned by the
 // project who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToPoolListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return PoolPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 type LBMethod string
@@ -188,27 +176,21 @@ type CreateOpts struct {
 
 // ToPoolCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToPoolCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "pool")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new
 // load balancer pool.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToPoolCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular pool based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -275,50 +257,26 @@ type UpdateOpts struct {
 
 // ToPoolUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToPoolUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "pool")
-	if err != nil {
-		return nil, err
-	}
-
-	m := b["pool"].(map[string]any)
-
-	// allow to unset session_persistence on empty SessionPersistence struct
-	if opts.Persistence != nil && *opts.Persistence == (SessionPersistence{}) {
-		m["session_persistence"] = nil
-	}
-
-	// allow to unset alpn_protocols on empty slice
-	if opts.ALPNProtocols != nil && len(*opts.ALPNProtocols) == 0 {
-		m["alpn_protocols"] = nil
-	}
-
-	// allow to unset tls_versions on empty slice
-	if opts.TLSVersions != nil && len(*opts.TLSVersions) == 0 {
-		m["tls_versions"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// allow to unset session_persistence on empty SessionPersistence struct
+
+// allow to unset alpn_protocols on empty slice
+
+// allow to unset tls_versions on empty slice
 
 // Update allows pools to be updated.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToPoolUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular pool based on its unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListMemberOptsBuilder allows extensions to add additional parameters to the
@@ -348,8 +306,8 @@ type ListMembersOpts struct {
 
 // ToMemberListQuery formats a ListOpts into a query string.
 func (opts ListMembersOpts) ToMembersListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListMembers returns a Pager which allows you to iterate over a collection of
@@ -359,17 +317,8 @@ func (opts ListMembersOpts) ToMembersListQuery() (string, error) {
 // Default policy settings return only those members that are owned by the
 // project who submits the request, unless an admin user submits the request.
 func ListMembers(c *gophercloud.ServiceClient, poolID string, opts ListMembersOptsBuilder) pagination.Pager {
-	url := memberRootURL(c, poolID)
-	if opts != nil {
-		query, err := opts.ToMembersListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return MemberPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateMemberOptsBuilder allows extensions to add additional parameters to the
@@ -426,26 +375,20 @@ type CreateMemberOpts struct {
 
 // ToMemberCreateMap builds a request body from CreateMemberOpts.
 func (opts CreateMemberOpts) ToMemberCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "member")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateMember will create and associate a Member with a particular Pool.
 func CreateMember(ctx context.Context, c *gophercloud.ServiceClient, poolID string, opts CreateMemberOptsBuilder) (r CreateMemberResult) {
-	b, err := opts.ToMemberCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, memberRootURL(c, poolID), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateMemberResult)
 }
 
 // GetMember retrieves a particular Pool Member based on its unique ID.
 func GetMember(ctx context.Context, c *gophercloud.ServiceClient, poolID string, memberID string) (r GetMemberResult) {
-	resp, err := c.Get(ctx, memberResourceURL(c, poolID, memberID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetMemberResult)
 }
 
 // UpdateMemberOptsBuilder allows extensions to add additional parameters to the
@@ -488,21 +431,14 @@ type UpdateMemberOpts struct {
 
 // ToMemberUpdateMap builds a request body from UpdateMemberOpts.
 func (opts UpdateMemberOpts) ToMemberUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "member")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update allows Member to be updated.
 func UpdateMember(ctx context.Context, c *gophercloud.ServiceClient, poolID string, memberID string, opts UpdateMemberOptsBuilder) (r UpdateMemberResult) {
-	b, err := opts.ToMemberUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, memberResourceURL(c, poolID, memberID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateMemberResult)
 }
 
 // BatchUpdateMemberOptsBuilder allows extensions to add additional parameters to the BatchUpdateMembers request.
@@ -558,40 +494,18 @@ type BatchUpdateMemberOpts struct {
 
 // ToBatchMemberUpdateMap builds a request body from BatchUpdateMemberOpts.
 func (opts BatchUpdateMemberOpts) ToBatchMemberUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if b["subnet_id"] == "" {
-		b["subnet_id"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // BatchUpdateMembers updates the pool members in batch
 func BatchUpdateMembers[T BatchUpdateMemberOptsBuilder](ctx context.Context, c *gophercloud.ServiceClient, poolID string, opts []T) (r UpdateMembersResult) {
-	members := []map[string]any{}
-	for _, opt := range opts {
-		b, err := opt.ToBatchMemberUpdateMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		members = append(members, b)
-	}
-
-	b := map[string]any{"members": members}
-
-	resp, err := c.Put(ctx, memberRootURL(c, poolID), b, nil, &gophercloud.RequestOpts{OkCodes: []int{202}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateMembersResult)
 }
 
 // DeleteMember will remove and disassociate a Member from a particular Pool.
 func DeleteMember(ctx context.Context, c *gophercloud.ServiceClient, poolID string, memberID string) (r DeleteMemberResult) {
-	resp, err := c.Delete(ctx, memberResourceURL(c, poolID, memberID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteMemberResult)
 }

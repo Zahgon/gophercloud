@@ -7,10 +7,9 @@ const (
 	enforcementModelPath = "model"
 )
 
-func rootURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL(rootPath)
-}
+func rootURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL(rootPath, id)
+	_ = "STUB: not implemented"
+	return ""
 }

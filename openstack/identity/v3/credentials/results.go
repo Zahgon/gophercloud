@@ -55,44 +55,22 @@ type CredentialPage struct {
 }
 
 // IsEmpty determines whether or not a CredentialPage contains any results.
-func (r CredentialPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	credentials, err := ExtractCredentials(r)
-	return len(credentials) == 0, err
-}
+func (r CredentialPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r CredentialPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Extract a Credential returns a slice of Credentials contained in a single page of results.
 func ExtractCredentials(r pagination.Page) ([]Credential, error) {
-	var s struct {
-		Credentials []Credential `json:"credentials"`
-	}
-	err := (r.(CredentialPage)).ExtractInto(&s)
-	return s.Credentials, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any credential results as a Credential.
 func (r credentialResult) Extract() (*Credential, error) {
-	var s struct {
-		Credential *Credential `json:"credential"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Credential, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

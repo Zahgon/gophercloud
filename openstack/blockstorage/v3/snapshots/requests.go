@@ -27,38 +27,29 @@ type CreateOpts struct {
 // ToSnapshotCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToSnapshotCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "snapshot")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new Snapshot based on the values in CreateOpts. To
 // extract the Snapshot object from the response, call the Extract method on the
 // CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSnapshotCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete will delete the existing Snapshot with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves the Snapshot with the provided ID. To extract the Snapshot
 // object from the response, call the Extract method on the GetResult.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -102,39 +93,21 @@ type ListOpts struct {
 
 // ToSnapshotListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToSnapshotListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns Snapshots optionally limited by the conditions provided in
 // ListOpts.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToSnapshotListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return SnapshotPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListDetail returns Snapshots with additional details optionally limited by the conditions provided in ListOpts.
 func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listDetailsURL(client)
-	if opts != nil {
-		query, err := opts.ToSnapshotListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return SnapshotPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -154,22 +127,15 @@ type UpdateOpts struct {
 // ToSnapshotUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToSnapshotUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "snapshot")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the Snapshot with provided information. To extract the updated
 // Snapshot from the response, call the Extract method on the UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSnapshotUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // UpdateMetadataOptsBuilder allows extensions to add additional parameters to
@@ -188,23 +154,16 @@ type UpdateMetadataOpts struct {
 // ToSnapshotUpdateMetadataMap assembles a request body based on the contents of
 // an UpdateMetadataOpts.
 func (opts UpdateMetadataOpts) ToSnapshotUpdateMetadataMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateMetadata will update the Snapshot with provided information. To
 // extract the updated Snapshot from the response, call the ExtractMetadata
 // method on the UpdateMetadataResult.
 func UpdateMetadata(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r UpdateMetadataResult) {
-	b, err := opts.ToSnapshotUpdateMetadataMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateMetadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateMetadataResult)
 }
 
 // ResetStatusOptsBuilder allows extensions to add additional parameters to the
@@ -224,23 +183,15 @@ type ResetStatusOpts struct {
 // ToSnapshotResetStatusMap assembles a request body based on the contents of a
 // ResetStatusOpts.
 func (opts ResetStatusOpts) ToSnapshotResetStatusMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-reset_status")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResetStatus will reset the existing snapshot status. ResetStatusResult contains only the error.
 // To extract it, call the ExtractErr method on the ResetStatusResult.
 func ResetStatus(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResetStatusOptsBuilder) (r ResetStatusResult) {
-	b, err := opts.ToSnapshotResetStatusMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, resetStatusURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetStatusResult)
 }
 
 // UpdateStatusOptsBuilder allows extensions to add additional parameters to the
@@ -262,34 +213,20 @@ type UpdateStatusOpts struct {
 // ToSnapshotUpdateStatusMap assembles a request body based on the contents of a
 // UpdateStatusOpts.
 func (opts UpdateStatusOpts) ToSnapshotUpdateStatusMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-update_snapshot_status")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateStatus will update the existing snapshot status. UpdateStatusResult contains only the error.
 // To extract it, call the ExtractErr method on the UpdateStatusResult.
 func UpdateStatus(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateStatusOptsBuilder) (r UpdateStatusResult) {
-	b, err := opts.ToSnapshotUpdateStatusMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, updateStatusURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateStatusResult)
 }
 
 // ForceDelete will delete the existing snapshot in any state. ForceDeleteResult contains only the error.
 // To extract it, call the ExtractErr method on the ForceDeleteResult.
 func ForceDelete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ForceDeleteResult) {
-	b := map[string]any{
-		"os-force_delete": struct{}{},
-	}
-	resp, err := client.Post(ctx, forceDeleteURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ForceDeleteResult)
 }

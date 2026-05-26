@@ -63,19 +63,11 @@ type portgroupsResult struct {
 	gophercloud.Result
 }
 
-func (r portgroupsResult) Extract() (*PortGroup, error) {
-	var s PortGroup
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r portgroupsResult) Extract() (*PortGroup, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r portgroupsResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r portgroupsResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractPortGroupsInto(r pagination.Page, v any) error {
-	return r.(PortGroupsPage).ExtractIntoSlicePtr(v, "portgroups")
-}
+func ExtractPortGroupsInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // PortGroupsPage abstracts the raw results of making a List() request against
 // the API.
@@ -84,34 +76,20 @@ type PortGroupsPage struct {
 }
 
 // IsEmpty returns true if a page contains no PortGroup results.
-func (r PortGroupsPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractPortGroups(r)
-	return len(s) == 0, err
-}
+func (r PortGroupsPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r PortGroupsPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"portgroups_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractPortGroups interprets the results of a single page from a List() call,
 // producing a slice of PortGroup entities.
 func ExtractPortGroups(r pagination.Page) ([]PortGroup, error) {
-	var s []PortGroup
-	err := ExtractPortGroupsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResult is the response from a Get operation. Call its Extract

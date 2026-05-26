@@ -1,14 +1,11 @@
 package testing
 
 import (
-	"encoding/json"
-	"net/http"
 	"testing"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/openstack/identity/v3/tokens"
-	th "github.com/gophercloud/gophercloud/v2/testhelper"
 )
 
 const testTokenID = "130f6c17-420e-4a0b-97b0-0c9cf2a05f30"
@@ -305,23 +302,13 @@ var ExpectedDomain = tokens.Domain{
 }
 
 func getGetResult(t *testing.T) tokens.GetResult {
-	result := tokens.GetResult{}
-	result.Header = http.Header{
-		"X-Subject-Token": []string{testTokenID},
-	}
-	err := json.Unmarshal([]byte(TokenOutput), &result.Body)
-	th.AssertNoErr(t, err)
-	return result
+	_ = "STUB: not implemented"
+	return *new(tokens.GetResult)
 }
 
 func getGetDomainResult(t *testing.T) tokens.GetResult {
-	result := tokens.GetResult{}
-	result.Header = http.Header{
-		"X-Subject-Token": []string{testTokenID},
-	}
-	err := json.Unmarshal([]byte(DomainToken), &result.Body)
-	th.AssertNoErr(t, err)
-	return result
+	_ = "STUB: not implemented"
+	return *new(tokens.GetResult)
 }
 
 // ApplicationCredentialTokenOutput is a sample response to a Token call
@@ -385,11 +372,6 @@ var ExpectedApplicationCredential = tokens.ApplicationCredential{
 }
 
 func getGetApplicationCredentialResult(t *testing.T) tokens.GetResult {
-	result := tokens.GetResult{}
-	result.Header = http.Header{
-		"X-Subject-Token": []string{testTokenID},
-	}
-	err := json.Unmarshal([]byte(ApplicationCredentialTokenOutput), &result.Body)
-	th.AssertNoErr(t, err)
-	return result
+	_ = "STUB: not implemented"
+	return *new(tokens.GetResult)
 }

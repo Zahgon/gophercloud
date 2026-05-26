@@ -34,33 +34,14 @@ type UserPage struct {
 }
 
 // IsEmpty checks to see whether the collection is empty.
-func (page UserPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	users, err := ExtractUsers(page)
-	return len(users) == 0, err
-}
+func (page UserPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL will retrieve the next page URL.
 func (page UserPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"users_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractUsers will convert a generic pagination struct into a more
 // relevant slice of User structs.
-func ExtractUsers(r pagination.Page) ([]User, error) {
-	var s struct {
-		Users []User `json:"users"`
-	}
-	err := (r.(UserPage)).ExtractInto(&s)
-	return s.Users, err
-}
+func ExtractUsers(r pagination.Page) ([]User, error) { _ = "STUB: not implemented"; return nil, nil }

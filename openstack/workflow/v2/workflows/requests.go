@@ -2,11 +2,7 @@ package workflows
 
 import (
 	"context"
-	"fmt"
 	"io"
-	"net/url"
-	"reflect"
-	"strings"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -33,47 +29,29 @@ type CreateOpts struct {
 
 // ToWorkflowCreateParams constructs a request query string from CreateOpts.
 func (opts CreateOpts) ToWorkflowCreateParams() (io.Reader, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return opts.Definition, q.String(), err
+	_ = "STUB: not implemented"
+	return *new(io.Reader), "", nil
 }
 
 // Create requests the creation of a new execution.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	url := createURL(client)
-	var b io.Reader
-	if opts != nil {
-		tmpB, query, err := opts.ToWorkflowCreateParams()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-		b = tmpB
-	}
-
-	resp, err := client.Post(ctx, url, b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: map[string]string{
-			"Content-Type": "text/plain",
-			"Accept":       "", // Drop default JSON Accept header
-		},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
+
+// Drop default JSON Accept header
 
 // Delete deletes the specified execution.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get retrieves details of a single execution.
 // Use Extract to convert its result into an Workflow.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListOptsBuilder allows extension to add additional parameters to the List request.
@@ -122,12 +100,7 @@ type ListFilter struct {
 	Value  string
 }
 
-func (l ListFilter) String() string {
-	if l.Filter != "" {
-		return fmt.Sprintf("%s:%s", l.Filter, l.Value)
-	}
-	return l.Value
-}
+func (l ListFilter) String() string { _ = "STUB: not implemented"; return "" }
 
 // ListDateFilter allows to filter date parameters with different filters.
 // Empty value for Filter checks for equality.
@@ -136,13 +109,7 @@ type ListDateFilter struct {
 	Value  time.Time
 }
 
-func (l ListDateFilter) String() string {
-	v := l.Value.Format(gophercloud.RFC3339ZNoTNoZ)
-	if l.Filter != "" {
-		return fmt.Sprintf("%s:%s", l.Filter, v)
-	}
-	return v
-}
+func (l ListDateFilter) String() string { _ = "STUB: not implemented"; return "" }
 
 // FilterType represents a valid filter to use for filtering executions.
 type FilterType string
@@ -170,45 +137,13 @@ const (
 
 // ToWorkflowListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToWorkflowListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	params := q.Query()
-
-	if opts.Tags != nil {
-		params.Add("tags", strings.Join(opts.Tags, ","))
-	}
-
-	for queryParam, value := range map[string]fmt.Stringer{
-		"created_at": opts.CreatedAt,
-		"updated_at": opts.UpdatedAt,
-		"name":       opts.Name,
-		"definition": opts.Definition,
-		"namespace":  opts.Namespace,
-	} {
-		if !reflect.ValueOf(value).IsNil() {
-			params.Add(queryParam, value.String())
-		}
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List performs a call to list cron triggers.
 // You may provide options to filter the results.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToWorkflowListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return WorkflowPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

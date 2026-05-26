@@ -1,8 +1,6 @@
 package services
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -13,13 +11,7 @@ type serviceResult struct {
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a concrete
 // Service. An error is returned if the original call or the extraction failed.
-func (r serviceResult) Extract() (*Service, error) {
-	var s struct {
-		Service *Service `json:"service"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Service, err
-}
+func (r serviceResult) Extract() (*Service, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult is the response from a Create request. Call its Extract method
 // to interpret it as a Service.
@@ -69,44 +61,10 @@ type Service struct {
 	Extra map[string]any `json:"-"`
 }
 
-func (r *Service) UnmarshalJSON(b []byte) error {
-	type tmp Service
-	var s struct {
-		tmp
-		Extra map[string]any `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Service(s.tmp)
+func (r *Service) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	if s.Extra != nil {
-		r.Extra = s.Extra
-	} else {
-		var result any
-		err := json.Unmarshal(b, &result)
-		if err != nil {
-			return err
-		}
-
-		if resultMap, ok := result.(map[string]any); ok {
-			r.Extra = gophercloud.RemainingKeys(Service{}, resultMap)
-
-			// the following code is required for backward compatibility with the
-			// old behavior, when both description and name were in extra
-			if description, ok := resultMap["description"]; ok {
-				r.Extra["description"] = description
-			}
-
-			if name, ok := resultMap["name"]; ok {
-				r.Extra["name"] = name
-			}
-		}
-	}
-
-	return err
-}
+// the following code is required for backward compatibility with the
+// old behavior, when both description and name were in extra
 
 // ServicePage is a single page of Service results.
 type ServicePage struct {
@@ -114,36 +72,17 @@ type ServicePage struct {
 }
 
 // IsEmpty returns true if the ServicePage contains no results.
-func (p ServicePage) IsEmpty() (bool, error) {
-	if p.StatusCode == 204 {
-		return true, nil
-	}
-
-	services, err := ExtractServices(p)
-	return len(services) == 0, err
-}
+func (p ServicePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r ServicePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractServices extracts a slice of Services from a Collection acquired
 // from List.
 func ExtractServices(r pagination.Page) ([]Service, error) {
-	var s struct {
-		Services []Service `json:"services"`
-	}
-	err := (r.(ServicePage)).ExtractInto(&s)
-	return s.Services, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

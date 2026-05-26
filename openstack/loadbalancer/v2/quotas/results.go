@@ -1,8 +1,6 @@
 package quotas
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -11,13 +9,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a Quota resource.
-func (r commonResult) Extract() (*Quota, error) {
-	var s struct {
-		Quota *Quota `json:"quota"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Quota, err
-}
+func (r commonResult) Extract() (*Quota, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a Quota.
@@ -59,41 +51,9 @@ type Quota struct {
 // return the deprecated `load_balancer` or `health_monitor` as quota values
 // instead of `loadbalancer` and `healthmonitor`.
 func (r *Quota) UnmarshalJSON(b []byte) error {
-	type tmp Quota
+	_ = "STUB: not implemented"
 
 	// Support both underscore and non-underscore naming.
-	var s struct {
-		tmp
-		LoadBalancer *int `json:"load_balancer"`
-		Loadbalancer *int `json:"loadbalancer"`
-
-		HealthMonitor *int `json:"health_monitor"`
-		Healthmonitor *int `json:"healthmonitor"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Quota(s.tmp)
-
-	if s.LoadBalancer != nil {
-		r.Loadbalancer = *s.LoadBalancer
-	}
-
-	if s.Loadbalancer != nil {
-		r.Loadbalancer = *s.Loadbalancer
-	}
-
-	if s.HealthMonitor != nil {
-		r.Healthmonitor = *s.HealthMonitor
-	}
-
-	if s.Healthmonitor != nil {
-		r.Healthmonitor = *s.Healthmonitor
-	}
-
 	return nil
 }
 

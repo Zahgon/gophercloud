@@ -41,28 +41,16 @@ type ListOpts struct {
 
 // ToSecGroupListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToSecGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(&opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // security group rules. It accepts a ListOpts struct, which allows you to filter
 // and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToSecGroupListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return SecGroupRulePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 type RuleDirection string
@@ -158,20 +146,15 @@ type CreateOpts struct {
 
 // ToSecGroupRuleCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSecGroupRuleCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "security_group_rule")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is an operation which adds a new security group rule and associates it
 // with an existing security group (whose ID is specified in CreateOpts).
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSecGroupRuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // CreateBulk is an operation which adds new security group rules and associates them
@@ -180,28 +163,19 @@ func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBu
 // they all belong to the same tenant and security group.
 // https://github.com/openstack/neutron/blob/6183792/neutron/db/securitygroups_db.py#L814-L828
 func CreateBulk[createOpts CreateOptsBuilder](ctx context.Context, c *gophercloud.ServiceClient, opts []createOpts) (r CreateBulkResult) {
-	body, err := gophercloud.BuildRequestBody(opts, "security_group_rules")
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := c.Post(ctx, rootURL(c), body, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateBulkResult)
 }
 
 // Get retrieves a particular security group rule based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete will permanently delete a particular security group rule based on its
 // unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

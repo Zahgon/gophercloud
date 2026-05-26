@@ -4,34 +4,39 @@ import "github.com/gophercloud/gophercloud/v2"
 
 const resourcePath = "routers"
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func addInterfaceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "add_router_interface")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func removeInterfaceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "remove_router_interface")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listl3AgentsURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "l3-agents")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func addExternalGatewaysURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "add_external_gateways")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateExternalGatewaysURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "update_external_gateways")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func removeExternalGatewaysURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id, "remove_external_gateways")
+	_ = "STUB: not implemented"
+	return ""
 }

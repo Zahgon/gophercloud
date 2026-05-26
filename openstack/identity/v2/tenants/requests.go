@@ -23,24 +23,12 @@ type ListOpts struct {
 }
 
 // ToTenantListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToTenantListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToTenantListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List enumerates the Tenants to which the current token has access.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToTenantListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return TenantPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOpts represents the options needed when creating new tenant.
@@ -64,28 +52,20 @@ type CreateOptsBuilder interface {
 // ToTenantCreateMap assembles a request body based on the contents of
 // a CreateOpts.
 func (opts CreateOpts) ToTenantCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "tenant")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is the operation responsible for creating new tenant.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToTenantCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get requests details on a single tenant by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -109,26 +89,18 @@ type UpdateOpts struct {
 
 // ToTenantUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToTenantUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "tenant")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update is the operation responsible for updating exist tenants by their TenantID.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToTenantUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete is the operation responsible for permanently deleting a tenant.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -19,24 +19,10 @@ type GetOpts struct {
 }
 
 // ToLimitsQuery formats a GetOpts into a query string.
-func (opts GetOpts) ToLimitsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts GetOpts) ToLimitsQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // Get returns the limits about the currently scoped tenant.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, opts GetOptsBuilder) (r GetResult) {
-	url := getURL(client)
-	if opts != nil {
-		query, err := opts.ToLimitsQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }

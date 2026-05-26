@@ -15,18 +15,8 @@ type PortCreateOptsExt struct {
 
 // ToPortCreateMap casts a CreateOpts struct to a map.
 func (opts PortCreateOptsExt) ToPortCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToPortCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.PortSecurityEnabled != nil {
-		port["port_security_enabled"] = &opts.PortSecurityEnabled
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PortUpdateOptsExt adds port security options to the base ports.UpdateOpts.
@@ -39,18 +29,8 @@ type PortUpdateOptsExt struct {
 
 // ToPortUpdateMap casts a UpdateOpts struct to a map.
 func (opts PortUpdateOptsExt) ToPortUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToPortUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.PortSecurityEnabled != nil {
-		port["port_security_enabled"] = &opts.PortSecurityEnabled
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkCreateOptsExt adds port security options to the base
@@ -64,18 +44,8 @@ type NetworkCreateOptsExt struct {
 
 // ToNetworkCreateMap casts a CreateOpts struct to a map.
 func (opts NetworkCreateOptsExt) ToNetworkCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	network := base["network"].(map[string]any)
-
-	if opts.PortSecurityEnabled != nil {
-		network["port_security_enabled"] = &opts.PortSecurityEnabled
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkUpdateOptsExt adds port security options to the base
@@ -89,16 +59,6 @@ type NetworkUpdateOptsExt struct {
 
 // ToNetworkUpdateMap casts a UpdateOpts struct to a map.
 func (opts NetworkUpdateOptsExt) ToNetworkUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	network := base["network"].(map[string]any)
-
-	if opts.PortSecurityEnabled != nil {
-		network["port_security_enabled"] = &opts.PortSecurityEnabled
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

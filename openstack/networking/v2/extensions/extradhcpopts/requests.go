@@ -30,28 +30,11 @@ type CreateExtraDHCPOpt struct {
 
 // ToPortCreateMap casts a CreateOptsExt struct to a map.
 func (opts CreateOptsExt) ToPortCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToPortCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	// Convert opts.ExtraDHCPOpts to a slice of maps.
-	if opts.ExtraDHCPOpts != nil {
-		extraDHCPOpts := make([]map[string]any, len(opts.ExtraDHCPOpts))
-		for i, opt := range opts.ExtraDHCPOpts {
-			b, err := gophercloud.BuildRequestBody(opt, "")
-			if err != nil {
-				return nil, err
-			}
-			extraDHCPOpts[i] = b
-		}
-		port["extra_dhcp_opts"] = extraDHCPOpts
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Convert opts.ExtraDHCPOpts to a slice of maps.
 
 // UpdateOptsExt adds extra DHCP options to the base ports.UpdateOpts.
 type UpdateOptsExt struct {
@@ -78,25 +61,8 @@ type UpdateExtraDHCPOpt struct {
 
 // ToPortUpdateMap casts an UpdateOpts struct to a map.
 func (opts UpdateOptsExt) ToPortUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToPortUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	// Convert opts.ExtraDHCPOpts to a slice of maps.
-	if opts.ExtraDHCPOpts != nil {
-		extraDHCPOpts := make([]map[string]any, len(opts.ExtraDHCPOpts))
-		for i, opt := range opts.ExtraDHCPOpts {
-			b, err := gophercloud.BuildRequestBody(opt, "")
-			if err != nil {
-				return nil, err
-			}
-			extraDHCPOpts[i] = b
-		}
-		port["extra_dhcp_opts"] = extraDHCPOpts
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Convert opts.ExtraDHCPOpts to a slice of maps.

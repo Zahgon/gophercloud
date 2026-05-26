@@ -32,25 +32,16 @@ type ListOpts struct {
 
 // ToAddressGroupListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAddressGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // address groups. It accepts a ListOpts struct, which allows you to filter
 // and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToAddressGroupListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return AddressGroupPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -81,40 +72,34 @@ type CreateOpts struct {
 
 // ToAddressGroupCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToAddressGroupCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "address_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToAddressesCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToAddressesCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is an operation which creates a new address group and associates it
 // with an existing address group (whose ID is specified in CreateOpts).
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToAddressGroupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular address group based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete will permanently delete a particular address group based on its
 // unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -133,21 +118,14 @@ type UpdateOpts struct {
 
 // ToAddressGroupUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToAddressGroupUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "address_group")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update a particular address group with a complete new set of data.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToAddressGroupUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // UpdateAddressesOpts will add or remove a list of particular addresses from
@@ -165,33 +143,18 @@ type UpdateAddressesBuilder interface {
 
 // ToAddressesCreateMap builds a request body from CreateOpts.
 func (opts UpdateAddressesOpts) ToUpdateAddressesMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddAddresses will add IP addresses to a particular address group.
 func AddAddresses(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateAddressesBuilder) (r AddAddressesResult) {
-	b, err := opts.ToUpdateAddressesMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceAddAddressesURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddAddressesResult)
 }
 
 // RemoveAddresses will remove particular IP addresses from a particular address group.
 func RemoveAddresses(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateAddressesBuilder) (r RemoveAddressesResult) {
-	b, err := opts.ToUpdateAddressesMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceRemoveAddressesURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveAddressesResult)
 }

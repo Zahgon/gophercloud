@@ -57,45 +57,20 @@ type DomainPage struct {
 }
 
 // IsEmpty determines whether or not a page of Domains contains any results.
-func (r DomainPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	domains, err := ExtractDomains(r)
-	return len(domains) == 0, err
-}
+func (r DomainPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r DomainPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractDomains returns a slice of Domains contained in a single page of
 // results.
 func ExtractDomains(r pagination.Page) ([]Domain, error) {
-	var s struct {
-		Domains []Domain `json:"domains"`
-	}
-	err := (r.(DomainPage)).ExtractInto(&s)
-	return s.Domains, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any domainResults as a Domain.
-func (r domainResult) Extract() (*Domain, error) {
-	var s struct {
-		Domain *Domain `json:"domain"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Domain, err
-}
+func (r domainResult) Extract() (*Domain, error) { _ = "STUB: not implemented"; return nil, nil }

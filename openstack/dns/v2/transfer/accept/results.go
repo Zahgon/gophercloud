@@ -1,7 +1,6 @@
 package accept
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -15,9 +14,8 @@ type commonResult struct {
 // Extract interprets a GetResult, CreateResult as a TransferAccept.
 // An error is returned if the original call or the extraction failed.
 func (r commonResult) Extract() (*TransferAccept, error) {
-	var s *TransferAccept
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult is the result of a Create request. Call its Extract method
@@ -38,22 +36,12 @@ type TransferAcceptPage struct {
 }
 
 // IsEmpty returns true if the page contains no results.
-func (r TransferAcceptPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractTransferAccepts(r)
-	return len(s) == 0, err
-}
+func (r TransferAcceptPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractTransferAccepts extracts a slice of TransferAccept from a List result.
 func ExtractTransferAccepts(r pagination.Page) ([]TransferAccept, error) {
-	var s struct {
-		TransferAccepts []TransferAccept `json:"transfer_accepts"`
-	}
-	err := (r.(TransferAcceptPage)).ExtractInto(&s)
-	return s.TransferAccepts, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TransferAccept represents a Zone transfer accept task.
@@ -88,21 +76,4 @@ type TransferAccept struct {
 	Links map[string]any `json:"links"`
 }
 
-func (r *TransferAccept) UnmarshalJSON(b []byte) error {
-	type tmp TransferAccept
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = TransferAccept(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return err
-}
+func (r *TransferAccept) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }

@@ -1,8 +1,6 @@
 package bgpvpns
 
 import (
-	"net/url"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -16,15 +14,9 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a BGP VPN resource.
-func (r commonResult) Extract() (*BGPVPN, error) {
-	var s BGPVPN
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*BGPVPN, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "bgpvpn")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // BGPVPN represents an MPLS network with which Neutron routers and/or networks
 // may be associated
@@ -90,68 +82,27 @@ type BGPVPNPage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r BGPVPNPage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-	if mark == invalidMarker {
-		return "", nil
-	}
-
-	q := currentURL.Query()
-	q.Set("marker", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
-func (r BGPVPNPage) LastMarker() (string, error) {
-	results, err := ExtractBGPVPNs(r)
-	if err != nil {
-		return invalidMarker, err
-	}
-	if len(results) == 0 {
-		return invalidMarker, nil
-	}
+func (r BGPVPNPage) LastMarker() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return invalidMarker, err
-	}
-	queryParams := u.Query()
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return invalidMarker, nil
-	}
-
-	return results[len(results)-1].ID, nil
-}
+// Limit is not present, only one page required
 
 // IsEmpty checks whether a BGPPage struct is empty.
-func (r BGPVPNPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractBGPVPNs(r)
-	return len(is) == 0, err
-}
+func (r BGPVPNPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractBGPVPNs accepts a Page struct, specifically a BGPVPNPage struct,
 // and extracts the elements into a slice of BGPVPN structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractBGPVPNs(r pagination.Page) ([]BGPVPN, error) {
-	var s []BGPVPN
-	err := ExtractBGPVPNsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func ExtractBGPVPNsInto(r pagination.Page, v any) error {
-	return r.(BGPVPNPage).ExtractIntoSlicePtr(v, "bgpvpns")
-}
+func ExtractBGPVPNsInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a BGPVPN.
@@ -183,13 +134,13 @@ type commonNetworkAssociationResult struct {
 
 // Extract is a function that accepts a result and extracts a BGP VPN resource.
 func (r commonNetworkAssociationResult) Extract() (*NetworkAssociation, error) {
-	var s NetworkAssociation
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r commonNetworkAssociationResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "network_association")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NetworkAssociation represents a BGP VPN network association object.
@@ -208,63 +159,35 @@ type NetworkAssociationPage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r NetworkAssociationPage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-	if mark == invalidMarker {
-		return "", nil
-	}
-
-	q := currentURL.Query()
-	q.Set("marker", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
 func (r NetworkAssociationPage) LastMarker() (string, error) {
-	results, err := ExtractNetworkAssociations(r)
-	if err != nil {
-		return invalidMarker, err
-	}
-	if len(results) == 0 {
-		return invalidMarker, nil
-	}
-
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return invalidMarker, err
-	}
-	queryParams := u.Query()
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return invalidMarker, nil
-	}
-
-	return results[len(results)-1].ID, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// Limit is not present, only one page required
 
 // IsEmpty checks whether a NetworkAssociationPage struct is empty.
 func (r NetworkAssociationPage) IsEmpty() (bool, error) {
-	is, err := ExtractNetworkAssociations(r)
-	return len(is) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractNetworkAssociations accepts a Page struct, specifically a NetworkAssociationPage struct,
 // and extracts the elements into a slice of NetworkAssociation structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractNetworkAssociations(r pagination.Page) ([]NetworkAssociation, error) {
-	var s []NetworkAssociation
-	err := ExtractNetworkAssociationsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func ExtractNetworkAssociationsInto(r pagination.Page, v interface{}) error {
-	return r.(NetworkAssociationPage).ExtractIntoSlicePtr(v, "network_associations")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateNetworkAssociationResult represents the result of a create operation. Call its Extract
@@ -291,13 +214,13 @@ type commonRouterAssociationResult struct {
 
 // Extract is a function that accepts a result and extracts a BGP VPN resource.
 func (r commonRouterAssociationResult) Extract() (*RouterAssociation, error) {
-	var s RouterAssociation
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r commonRouterAssociationResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "router_association")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RouterAssociation represents a BGP VPN router association object.
@@ -317,63 +240,35 @@ type RouterAssociationPage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r RouterAssociationPage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-	if mark == invalidMarker {
-		return "", nil
-	}
-
-	q := currentURL.Query()
-	q.Set("marker", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
 func (r RouterAssociationPage) LastMarker() (string, error) {
-	results, err := ExtractRouterAssociations(r)
-	if err != nil {
-		return invalidMarker, err
-	}
-	if len(results) == 0 {
-		return invalidMarker, nil
-	}
-
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return invalidMarker, err
-	}
-	queryParams := u.Query()
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return invalidMarker, nil
-	}
-
-	return results[len(results)-1].ID, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// Limit is not present, only one page required
 
 // IsEmpty checks whether a RouterAssociationPage struct is empty.
 func (r RouterAssociationPage) IsEmpty() (bool, error) {
-	is, err := ExtractRouterAssociations(r)
-	return len(is) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractRouterAssociations accepts a Page struct, specifically a RouterAssociationPage struct,
 // and extracts the elements into a slice of RouterAssociation structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractRouterAssociations(r pagination.Page) ([]RouterAssociation, error) {
-	var s []RouterAssociation
-	err := ExtractRouterAssociationsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func ExtractRouterAssociationsInto(r pagination.Page, v interface{}) error {
-	return r.(RouterAssociationPage).ExtractIntoSlicePtr(v, "router_associations")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRouterAssociationResult represents the result of a create operation. Call its Extract
@@ -406,13 +301,13 @@ type commonPortAssociationResult struct {
 
 // Extract is a function that accepts a result and extracts a BGP VPN resource.
 func (r commonPortAssociationResult) Extract() (*PortAssociation, error) {
-	var s PortAssociation
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r commonPortAssociationResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "port_association")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PortAssociation represents a BGP VPN port association object.
@@ -433,63 +328,32 @@ type PortAssociationPage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r PortAssociationPage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-	if mark == invalidMarker {
-		return "", nil
-	}
-
-	q := currentURL.Query()
-	q.Set("marker", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
 func (r PortAssociationPage) LastMarker() (string, error) {
-	results, err := ExtractPortAssociations(r)
-	if err != nil {
-		return invalidMarker, err
-	}
-	if len(results) == 0 {
-		return invalidMarker, nil
-	}
-
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return invalidMarker, err
-	}
-	queryParams := u.Query()
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return invalidMarker, nil
-	}
-
-	return results[len(results)-1].ID, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// Limit is not present, only one page required
 
 // IsEmpty checks whether a PortAssociationPage struct is empty.
-func (r PortAssociationPage) IsEmpty() (bool, error) {
-	is, err := ExtractPortAssociations(r)
-	return len(is) == 0, err
-}
+func (r PortAssociationPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractPortAssociations accepts a Page struct, specifically a PortAssociationPage struct,
 // and extracts the elements into a slice of PortAssociation structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractPortAssociations(r pagination.Page) ([]PortAssociation, error) {
-	var s []PortAssociation
-	err := ExtractPortAssociationsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func ExtractPortAssociationsInto(r pagination.Page, v interface{}) error {
-	return r.(PortAssociationPage).ExtractIntoSlicePtr(v, "port_associations")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreatePortAssociationResult represents the result of a create operation. Call its Extract

@@ -1,16 +1,7 @@
 package servers
 
 import (
-	"bytes"
 	"context"
-	"encoding/base64"
-	"encoding/json"
-	"fmt"
-	"io"
-	"maps"
-	"net"
-	"regexp"
-	"strings"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -96,39 +87,18 @@ type ListOpts struct {
 }
 
 // ToServerListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToServerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToServerListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ListSimple makes a request against the API to list servers accessible to you.
 func ListSimple(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToServerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ServerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // List makes a request against the API to list servers details accessible to you.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToServerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ServerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // SchedulerHintOptsBuilder builds the scheduler hints into a serializable format.
@@ -169,114 +139,24 @@ type SchedulerHintOpts struct {
 
 // ToSchedulerHintsMap assembles a request body for scheduler hints.
 func (opts SchedulerHintOpts) ToSchedulerHintsMap() (map[string]any, error) {
-	sh := make(map[string]any)
-
-	uuidRegex, _ := regexp.Compile("^[a-z0-9]{8}-[a-z0-9]{4}-[1-5][a-z0-9]{3}-[a-z0-9]{4}-[a-z0-9]{12}$")
-
-	if opts.Group != "" {
-		if !uuidRegex.MatchString(opts.Group) {
-			err := gophercloud.ErrInvalidInput{}
-			err.Argument = "servers.schedulerhints.SchedulerHintOpts.Group"
-			err.Value = opts.Group
-			err.Info = "Group must be a UUID"
-			return nil, err
-		}
-		sh["group"] = opts.Group
-	}
-
-	if len(opts.DifferentHost) > 0 {
-		for _, diffHost := range opts.DifferentHost {
-			if !uuidRegex.MatchString(diffHost) {
-				err := gophercloud.ErrInvalidInput{}
-				err.Argument = "servers.schedulerhints.SchedulerHintOpts.DifferentHost"
-				err.Value = opts.DifferentHost
-				err.Info = "The hosts must be in UUID format."
-				return nil, err
-			}
-		}
-		sh["different_host"] = opts.DifferentHost
-	}
-
-	if len(opts.SameHost) > 0 {
-		for _, sameHost := range opts.SameHost {
-			if !uuidRegex.MatchString(sameHost) {
-				err := gophercloud.ErrInvalidInput{}
-				err.Argument = "servers.schedulerhints.SchedulerHintOpts.SameHost"
-				err.Value = opts.SameHost
-				err.Info = "The hosts must be in UUID format."
-				return nil, err
-			}
-		}
-		sh["same_host"] = opts.SameHost
-	}
-
-	/*
-		Query can be something simple like:
-			 [">=", "$free_ram_mb", 1024]
-
-			Or more complex like:
-				['and',
-					['>=', '$free_ram_mb', 1024],
-					['>=', '$free_disk_mb', 200 * 1024]
-				]
-
-		Because of the possible complexity, just make sure the length is a minimum of 3.
-	*/
-	if len(opts.Query) > 0 {
-		if len(opts.Query) < 3 {
-			err := gophercloud.ErrInvalidInput{}
-			err.Argument = "servers.schedulerhints.SchedulerHintOpts.Query"
-			err.Value = opts.Query
-			err.Info = "Must be a conditional statement in the format of [op,variable,value]"
-			return nil, err
-		}
-
-		// The query needs to be sent as a marshalled string.
-		b, err := json.Marshal(opts.Query)
-		if err != nil {
-			err := gophercloud.ErrInvalidInput{}
-			err.Argument = "servers.schedulerhints.SchedulerHintOpts.Query"
-			err.Value = opts.Query
-			err.Info = "Must be a conditional statement in the format of [op,variable,value]"
-			return nil, err
-		}
-
-		sh["query"] = string(b)
-	}
-
-	if opts.TargetCell != "" {
-		sh["target_cell"] = opts.TargetCell
-	}
-
-	if len(opts.DifferentCell) > 0 {
-		sh["different_cell"] = opts.DifferentCell
-	}
-
-	if opts.BuildNearHostIP != "" {
-		if _, _, err := net.ParseCIDR(opts.BuildNearHostIP); err != nil {
-			err := gophercloud.ErrInvalidInput{}
-			err.Argument = "servers.schedulerhints.SchedulerHintOpts.BuildNearHostIP"
-			err.Value = opts.BuildNearHostIP
-			err.Info = "Must be a valid subnet in the form 192.168.1.1/24"
-			return nil, err
-		}
-		ipParts := strings.Split(opts.BuildNearHostIP, "/")
-		sh["build_near_host_ip"] = ipParts[0]
-		sh["cidr"] = "/" + ipParts[1]
-	}
-
-	if opts.AdditionalProperties != nil {
-		for k, v := range opts.AdditionalProperties {
-			sh[k] = v
-		}
-	}
-
-	if len(sh) == 0 {
-		return sh, nil
-	}
-
-	return map[string]any{"os:scheduler_hints": sh}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+/*
+	Query can be something simple like:
+		 [">=", "$free_ram_mb", 1024]
+
+		Or more complex like:
+			['and',
+				['>=', '$free_ram_mb', 1024],
+				['>=', '$free_disk_mb', 200 * 1024]
+			]
+
+	Because of the possible complexity, just make sure the length is a minimum of 3.
+*/
+
+// The query needs to be sent as a marshalled string.
 
 // Network is used within CreateOpts to control a new server's network
 // attachments.
@@ -401,16 +281,7 @@ type File struct {
 }
 
 // MarshalJSON marshals the escaped file, base64 encoding the contents.
-func (f *File) MarshalJSON() ([]byte, error) {
-	file := struct {
-		Path     string `json:"path"`
-		Contents string `json:"contents"`
-	}{
-		Path:     f.Path,
-		Contents: base64.StdEncoding.EncodeToString(f.Contents),
-	}
-	return json.Marshal(file)
-}
+func (f *File) MarshalJSON() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DiskConfig represents one of the two possible settings for the DiskConfig
 // option when creating, rebuilding, or resizing servers: Auto or Manual.
@@ -521,120 +392,37 @@ type CreateOpts struct {
 // ToServerCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToServerCreateMap() (map[string]any, error) {
+	_ = "STUB: not implemented"
 	// We intentionally don't envelope the body here since we want to strip
 	// some fields out and modify others
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.UserData != nil {
-		var userData string
-		if _, err := base64.StdEncoding.DecodeString(string(opts.UserData)); err != nil {
-			userData = base64.StdEncoding.EncodeToString(opts.UserData)
-		} else {
-			userData = string(opts.UserData)
-		}
-		b["user_data"] = &userData
-	}
-
-	if len(opts.SecurityGroups) > 0 {
-		securityGroups := make([]map[string]any, len(opts.SecurityGroups))
-		for i, groupName := range opts.SecurityGroups {
-			securityGroups[i] = map[string]any{"name": groupName}
-		}
-		b["security_groups"] = securityGroups
-	}
-
-	switch v := opts.Networks.(type) {
-	case []Network:
-		if len(v) > 0 {
-			networks := make([]map[string]any, len(v))
-			for i, net := range v {
-				networks[i] = make(map[string]any)
-				if net.UUID != "" {
-					networks[i]["uuid"] = net.UUID
-				}
-				if net.Port != "" {
-					networks[i]["port"] = net.Port
-				}
-				if net.FixedIP != "" {
-					networks[i]["fixed_ip"] = net.FixedIP
-				}
-				if net.Tag != "" {
-					networks[i]["tag"] = net.Tag
-				}
-			}
-			b["networks"] = networks
-		}
-	case string:
-		if v == "auto" || v == "none" {
-			b["networks"] = v
-		} else {
-			return nil, fmt.Errorf(`networks must be a slice of Network struct or a string with "auto" or "none" values, current value is %q`, v)
-		}
-	}
-
-	if opts.Min != 0 {
-		b["min_count"] = opts.Min
-	}
-
-	if opts.Max != 0 {
-		b["max_count"] = opts.Max
-	}
-
-	// Now we do our enveloping
-	b = map[string]any{"server": b}
-
-	return b, nil
+	return nil, nil
 }
+
+// Now we do our enveloping
 
 // Create requests a server to be provisioned to the user in the current tenant.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder, hintOpts SchedulerHintOptsBuilder) (r CreateResult) {
-	b, err := opts.ToServerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	if hintOpts != nil {
-		sh, err := hintOpts.ToSchedulerHintsMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		maps.Copy(b, sh)
-	}
-
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete requests that a server previously provisioned be removed from your
 // account.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ForceDelete forces the deletion of a server.
 func ForceDelete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ActionResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"forceDelete": ""}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // Get requests details on a single server, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 203},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional attributes to the
@@ -666,34 +454,21 @@ type UpdateOpts struct {
 
 // ToServerUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToServerUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "server")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update requests that various attributes of the indicated server be changed.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToServerUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // ChangeAdminPassword alters the administrator or root password for a specified
 // server.
 func ChangeAdminPassword(ctx context.Context, client *gophercloud.ServiceClient, id, newPassword string) (r ActionResult) {
-	b := map[string]any{
-		"changePassword": map[string]string{
-			"adminPass": newPassword,
-		},
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // RebootMethod describes the mechanisms by which a server reboot can be requested.
@@ -722,7 +497,8 @@ type RebootOpts struct {
 
 // ToServerRebootMap builds a body for the reboot request.
 func (opts RebootOpts) ToServerRebootMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "reboot")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 /*
@@ -741,14 +517,8 @@ E.g., in Linux, asking it to enter runlevel 6, or executing
 "sudo shutdown -r now", or by asking Windows to rtart the machine.
 */
 func Reboot(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RebootOptsBuilder) (r ActionResult) {
-	b, err := opts.ToServerRebootMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // RebuildOptsBuilder allows extensions to provide additional parameters to the
@@ -789,32 +559,15 @@ type RebuildOpts struct {
 
 // ToServerRebuildMap formats a RebuildOpts struct into a map for use in JSON
 func (opts RebuildOpts) ToServerRebuildMap() (map[string]any, error) {
-	if opts.DiskConfig != "" && opts.DiskConfig != Auto && opts.DiskConfig != Manual {
-		err := gophercloud.ErrInvalidInput{}
-		err.Argument = "servers.RebuildOpts.DiskConfig"
-		err.Info = "Must be either diskconfig.Auto or diskconfig.Manual"
-		return nil, err
-	}
-
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return map[string]any{"rebuild": b}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Rebuild will reprovision the server according to the configuration options
 // provided in the RebuildOpts struct.
 func Rebuild(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RebuildOptsBuilder) (r RebuildResult) {
-	b, err := opts.ToServerRebuildMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RebuildResult)
 }
 
 // ResizeOptsBuilder allows extensions to add additional parameters to the
@@ -836,14 +589,8 @@ type ResizeOpts struct {
 // ToServerResizeMap formats a ResizeOpts as a map that can be used as a JSON
 // request body for the Resize request.
 func (opts ResizeOpts) ToServerResizeMap() (map[string]any, error) {
-	if opts.DiskConfig != "" && opts.DiskConfig != Auto && opts.DiskConfig != Manual {
-		err := gophercloud.ErrInvalidInput{}
-		err.Argument = "servers.ResizeOpts.DiskConfig"
-		err.Info = "Must be either diskconfig.Auto or diskconfig.Manual"
-		return nil, err
-	}
-
-	return gophercloud.BuildRequestBody(opts, "resize")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Resize instructs the provider to change the flavor of the server.
@@ -856,32 +603,22 @@ func (opts ResizeOpts) ToServerResizeMap() (map[string]any, error) {
 // configuration. If you like it, call ConfirmResize() to commit the resize
 // permanently. Otherwise, call RevertResize() to restore the old configuration.
 func Resize(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResizeOptsBuilder) (r ActionResult) {
-	b, err := opts.ToServerResizeMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // ConfirmResize confirms a previous resize operation on a server.
 // See Resize() for more details.
 func ConfirmResize(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ActionResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"confirmResize": nil}, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{201, 202, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // RevertResize cancels a previous resize operation on a server.
 // See Resize() for more details.
 func RevertResize(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ActionResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"revertResize": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // ResetMetadataOptsBuilder allows extensions to add additional parameters to
@@ -896,13 +633,15 @@ type MetadataOpts map[string]string
 // ToMetadataResetMap assembles a body for a Reset request based on the contents
 // of a MetadataOpts.
 func (opts MetadataOpts) ToMetadataResetMap() (map[string]any, error) {
-	return map[string]any{"metadata": opts}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToMetadataUpdateMap assembles a body for an Update request based on the
 // contents of a MetadataOpts.
 func (opts MetadataOpts) ToMetadataUpdateMap() (map[string]any, error) {
-	return map[string]any{"metadata": opts}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResetMetadata will create multiple new key-value pairs for the given server
@@ -911,23 +650,14 @@ func (opts MetadataOpts) ToMetadataUpdateMap() (map[string]any, error) {
 // create the new metadata provided. To keep any already-existing metadata,
 // use the UpdateMetadatas or UpdateMetadata function.
 func ResetMetadata(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResetMetadataOptsBuilder) (r ResetMetadataResult) {
-	b, err := opts.ToMetadataResetMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, metadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetMetadataResult)
 }
 
 // Metadata requests all the metadata for the given server ID.
 func Metadata(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetMetadataResult) {
-	resp, err := client.Get(ctx, metadataURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetMetadataResult)
 }
 
 // UpdateMetadataOptsBuilder allows extensions to add additional parameters to
@@ -940,16 +670,8 @@ type UpdateMetadataOptsBuilder interface {
 // the given server ID. This operation does not affect already-existing metadata
 // that is not specified by opts.
 func UpdateMetadata(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r UpdateMetadataResult) {
-	b, err := opts.ToMetadataUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, metadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateMetadataResult)
 }
 
 // MetadatumOptsBuilder allows extensions to add additional parameters to the
@@ -964,65 +686,43 @@ type MetadatumOpts map[string]string
 // ToMetadatumCreateMap assembles a body for a Create request based on the
 // contents of a MetadataumOpts.
 func (opts MetadatumOpts) ToMetadatumCreateMap() (map[string]any, string, error) {
-	if len(opts) != 1 {
-		err := gophercloud.ErrInvalidInput{}
-		err.Argument = "servers.MetadatumOpts"
-		err.Info = "Must have 1 and only 1 key-value pair"
-		return nil, "", err
-	}
-	metadatum := map[string]any{"meta": opts}
-	var key string
-	for k := range metadatum["meta"].(MetadatumOpts) {
-		key = k
-	}
-	return metadatum, key, nil
+	_ = "STUB: not implemented"
+	return nil, "", nil
 }
 
 // CreateMetadatum will create or update the key-value pair with the given key
 // for the given server ID.
 func CreateMetadatum(ctx context.Context, client *gophercloud.ServiceClient, id string, opts MetadatumOptsBuilder) (r CreateMetadatumResult) {
-	b, key, err := opts.ToMetadatumCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, metadatumURL(client, id, key), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateMetadatumResult)
 }
 
 // Metadatum requests the key-value pair with the given key for the given
 // server ID.
 func Metadatum(ctx context.Context, client *gophercloud.ServiceClient, id, key string) (r GetMetadatumResult) {
-	resp, err := client.Get(ctx, metadatumURL(client, id, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetMetadatumResult)
 }
 
 // DeleteMetadatum will delete the key-value pair with the given key for the
 // given server ID.
 func DeleteMetadatum(ctx context.Context, client *gophercloud.ServiceClient, id, key string) (r DeleteMetadatumResult) {
-	resp, err := client.Delete(ctx, metadatumURL(client, id, key), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteMetadatumResult)
 }
 
 // ListAddresses makes a request against the API to list the servers IP
 // addresses.
 func ListAddresses(client *gophercloud.ServiceClient, id string) pagination.Pager {
-	return pagination.NewPager(client, listAddressesURL(client, id), func(r pagination.PageResult) pagination.Page {
-		return AddressPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListAddressesByNetwork makes a request against the API to list the servers IP
 // addresses for the given network.
 func ListAddressesByNetwork(client *gophercloud.ServiceClient, id, network string) pagination.Pager {
-	return pagination.NewPager(client, listAddressesByNetworkURL(client, id, network), func(r pagination.PageResult) pagination.Page {
-		return NetworkAddressPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateImageOptsBuilder allows extensions to add additional parameters to the
@@ -1044,55 +744,26 @@ type CreateImageOpts struct {
 // ToServerCreateImageMap formats a CreateImageOpts structure into a request
 // body.
 func (opts CreateImageOpts) ToServerCreateImageMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "createImage")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateImage makes a request against the nova API to schedule an image to be
 // created of the server
 func CreateImage(ctx context.Context, client *gophercloud.ServiceClient, id string, opts CreateImageOptsBuilder) (r CreateImageResult) {
-	b, err := opts.ToServerCreateImageMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes:          []int{202},
-		KeepResponseBody: true,
-	})
-
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	if r.Err != nil {
-		return
-	}
-	defer resp.Body.Close()
-
-	if v := r.Header.Get("Content-Type"); v != "application/json" {
-		return
-	}
-
-	// The response body is expected to be a small JSON object containing only "image_id".
-	// Read it fully into memory so the response body can be closed immediately.
-	// If the caller doesn't read from the buffer, it can still be safely garbage collected.
-
-	var buf bytes.Buffer
-
-	_, r.Err = io.Copy(&buf, resp.Body)
-	if r.Err != nil {
-		return
-	}
-
-	r.Body = &buf
-
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateImageResult)
 }
+
+// The response body is expected to be a small JSON object containing only "image_id".
+// Read it fully into memory so the response body can be closed immediately.
+// If the caller doesn't read from the buffer, it can still be safely garbage collected.
 
 // GetPassword makes a request against the nova API to get the encrypted
 // administrative password.
 func GetPassword(ctx context.Context, client *gophercloud.ServiceClient, serverId string) (r GetPasswordResult) {
-	resp, err := client.Get(ctx, passwordURL(client, serverId), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetPasswordResult)
 }
 
 // ShowConsoleOutputOptsBuilder is the interface types must satisfy in order to be
@@ -1110,21 +781,14 @@ type ShowConsoleOutputOpts struct {
 
 // ToServerShowConsoleOutputMap formats a ShowConsoleOutputOpts structure into a request body.
 func (opts ShowConsoleOutputOpts) ToServerShowConsoleOutputMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-getConsoleOutput")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ShowConsoleOutput makes a request against the nova API to get console log from the server
 func ShowConsoleOutput(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ShowConsoleOutputOptsBuilder) (r ShowConsoleOutputResult) {
-	b, err := opts.ToServerShowConsoleOutputMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ShowConsoleOutputResult)
 }
 
 // EvacuateOptsBuilder allows extensions to add additional parameters to the
@@ -1147,52 +811,38 @@ type EvacuateOpts struct {
 
 // ToServerGroupCreateMap constructs a request body from CreateOpts.
 func (opts EvacuateOpts) ToEvacuateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "evacuate")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Evacuate will Evacuate a failed instance to another host.
 func Evacuate(ctx context.Context, client *gophercloud.ServiceClient, id string, opts EvacuateOptsBuilder) (r EvacuateResult) {
-	b, err := opts.ToEvacuateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(EvacuateResult)
 }
 
 // InjectNetworkInfo will inject the network info into a server
 func InjectNetworkInfo(ctx context.Context, client *gophercloud.ServiceClient, id string) (r InjectNetworkResult) {
-	b := map[string]any{
-		"injectNetworkInfo": nil,
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(InjectNetworkResult)
 }
 
 // Lock is the operation responsible for locking a Compute server.
 func Lock(ctx context.Context, client *gophercloud.ServiceClient, id string) (r LockResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"lock": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(LockResult)
 }
 
 // Unlock is the operation responsible for unlocking a Compute server.
 func Unlock(ctx context.Context, client *gophercloud.ServiceClient, id string) (r UnlockResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"unlock": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UnlockResult)
 }
 
 // Migrate will initiate a migration of the instance to another host.
 func Migrate(ctx context.Context, client *gophercloud.ServiceClient, id string) (r MigrateResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"migrate": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MigrateResult)
 }
 
 // LiveMigrateOptsBuilder allows extensions to add additional parameters to the
@@ -1220,33 +870,26 @@ type LiveMigrateOpts struct {
 
 // ToLiveMigrateMap constructs a request body from LiveMigrateOpts.
 func (opts LiveMigrateOpts) ToLiveMigrateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "os-migrateLive")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // LiveMigrate will initiate a live-migration (without rebooting) of the instance to another host.
 func LiveMigrate(ctx context.Context, client *gophercloud.ServiceClient, id string, opts LiveMigrateOptsBuilder) (r MigrateResult) {
-	b, err := opts.ToLiveMigrateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(MigrateResult)
 }
 
 // Pause is the operation responsible for pausing a Compute server.
 func Pause(ctx context.Context, client *gophercloud.ServiceClient, id string) (r PauseResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"pause": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(PauseResult)
 }
 
 // Unpause is the operation responsible for unpausing a Compute server.
 func Unpause(ctx context.Context, client *gophercloud.ServiceClient, id string) (r UnpauseResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"unpause": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UnpauseResult)
 }
 
 // RescueOptsBuilder is an interface that allows extensions to override the
@@ -1272,38 +915,26 @@ type RescueOpts struct {
 // ToServerRescueMap formats a RescueOpts as a map that can be used as a JSON
 // request body for the Rescue request.
 func (opts RescueOpts) ToServerRescueMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "rescue")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Rescue instructs the provider to place the server into RESCUE mode.
 func Rescue(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RescueOptsBuilder) (r RescueResult) {
-	b, err := opts.ToServerRescueMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RescueResult)
 }
 
 // Unrescue instructs the provider to return the server from RESCUE mode.
 func Unrescue(ctx context.Context, client *gophercloud.ServiceClient, id string) (r UnrescueResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"unrescue": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UnrescueResult)
 }
 
 // ResetNetwork will reset the network of a server
 func ResetNetwork(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ResetNetworkResult) {
-	b := map[string]any{
-		"resetNetwork": nil,
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetNetworkResult)
 }
 
 // ServerState refers to the states usable in ResetState Action
@@ -1319,24 +950,20 @@ const (
 
 // ResetState will reset the state of a server
 func ResetState(ctx context.Context, client *gophercloud.ServiceClient, id string, state ServerState) (r ResetStateResult) {
-	stateMap := map[string]any{"state": state}
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"os-resetState": stateMap}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetStateResult)
 }
 
 // Shelve is the operation responsible for shelving a Compute server.
 func Shelve(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ShelveResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"shelve": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ShelveResult)
 }
 
 // ShelveOffload is the operation responsible for Shelve-Offload a Compute server.
 func ShelveOffload(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ShelveOffloadResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"shelveOffload": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ShelveOffloadResult)
 }
 
 // UnshelveOptsBuilder allows extensions to add additional parameters to the
@@ -1353,56 +980,38 @@ type UnshelveOpts struct {
 }
 
 func (opts UnshelveOpts) ToUnshelveMap() (map[string]any, error) {
+	_ = "STUB: not implemented"
 	// Key 'availabilty_zone' is required if the unshelve action is an object
 	// i.e {"unshelve": {}} will be rejected
-	b, err := gophercloud.BuildRequestBody(opts, "unshelve")
-	if err != nil {
-		return nil, err
-	}
-
-	if _, ok := b["unshelve"].(map[string]any)["availability_zone"]; !ok {
-		b["unshelve"] = nil
-	}
-
-	return b, err
+	return nil, nil
 }
 
 // Unshelve is the operation responsible for unshelve a Compute server.
 func Unshelve(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UnshelveOptsBuilder) (r UnshelveResult) {
-	b, err := opts.ToUnshelveMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UnshelveResult)
 }
 
 // Start is the operation responsible for starting a Compute server.
 func Start(ctx context.Context, client *gophercloud.ServiceClient, id string) (r StartResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"os-start": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(StartResult)
 }
 
 // Stop is the operation responsible for stopping a Compute server.
 func Stop(ctx context.Context, client *gophercloud.ServiceClient, id string) (r StopResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"os-stop": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(StopResult)
 }
 
 // Suspend is the operation responsible for suspending a Compute server.
 func Suspend(ctx context.Context, client *gophercloud.ServiceClient, id string) (r SuspendResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"suspend": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SuspendResult)
 }
 
 // Resume is the operation responsible for resuming a Compute server.
 func Resume(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ResumeResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"resume": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResumeResult)
 }

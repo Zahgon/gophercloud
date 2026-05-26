@@ -2,9 +2,6 @@ package ports
 
 import (
 	"context"
-	"fmt"
-	"net/url"
-	"slices"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -52,32 +49,10 @@ type FixedIPOpts struct {
 	SubnetID        string
 }
 
-func (f FixedIPOpts) toParams() []string {
-	var res []string
-	if f.IPAddress != "" {
-		res = append(res, fmt.Sprintf("ip_address=%s", f.IPAddress))
-	}
-	if f.IPAddressSubstr != "" {
-		res = append(res, fmt.Sprintf("ip_address_substr=%s", f.IPAddressSubstr))
-	}
-	if f.SubnetID != "" {
-		res = append(res, fmt.Sprintf("subnet_id=%s", f.SubnetID))
-	}
-	return res
-}
+func (f FixedIPOpts) toParams() []string { _ = "STUB: not implemented"; return nil }
 
 // ToPortListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToPortListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	params := q.Query()
-	for _, fixedIP := range opts.FixedIPs {
-		for _, fixedIPParam := range fixedIP.toParams() {
-			params.Add("fixed_ips", fixedIPParam)
-		}
-	}
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), err
-}
+func (opts ListOpts) ToPortListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // ports. It accepts a ListOpts struct, which allows you to filter and sort
@@ -87,24 +62,14 @@ func (opts ListOpts) ToPortListQuery() (string, error) {
 // who submits the request, unless the request is submitted by a user with
 // administrative rights.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToPortListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return PortPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific port based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -133,50 +98,24 @@ type CreateOpts struct {
 
 // ToPortCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToPortCreateMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "port")
-	if err != nil {
-		return nil, err
-	}
-
-	return AddValueSpecs(body)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddValueSpecs expands the 'value_specs' object and removes 'value_specs'
 // from the request body. It will return error if the value specs would overwrite
 // an existing field or contains forbidden keys.
 func AddValueSpecs(body map[string]any) (map[string]any, error) {
+	_ = "STUB: not implemented"
 	// Banned the same as in heat. See https://github.com/openstack/heat/blob/dd7319e373b88812cb18897f742b5196a07227ea/heat/engine/resources/openstack/neutron/neutron.py#L59
-	bannedKeys := []string{"shared", "tenant_id"}
-	port := body["port"].(map[string]any)
-
-	if port["value_specs"] != nil {
-		for k, v := range port["value_specs"].(map[string]any) {
-			if slices.Contains(bannedKeys, k) {
-				return nil, fmt.Errorf("forbidden key in value_specs: %s", k)
-			}
-			if _, ok := port[k]; ok {
-				return nil, fmt.Errorf("value_specs would overwrite key: %s", k)
-			}
-			port[k] = v
-		}
-		delete(port, "value_specs")
-	}
-	body["port"] = port
-
-	return body, nil
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and creates a new network using the values
 // provided. You must remember to provide a NetworkID value.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToPortCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -207,42 +146,19 @@ type UpdateOpts struct {
 
 // ToPortUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToPortUpdateMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "port")
-	if err != nil {
-		return nil, err
-	}
-	return AddValueSpecs(body)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing port using the
 // values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToPortUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-	resp, err := c.Put(ctx, updateURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete accepts a unique ID and deletes the port associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

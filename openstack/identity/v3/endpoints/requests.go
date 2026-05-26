@@ -41,19 +41,14 @@ type CreateOpts struct {
 
 // ToEndpointCreateMap builds a request body from the Endpoint Create options.
 func (opts CreateOpts) ToEndpointCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "endpoint")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create inserts a new Endpoint into the service catalog.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToEndpointCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, listURL(client), &b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // ListOptsBuilder allows extensions to add parameters to the List request.
@@ -77,31 +72,21 @@ type ListOpts struct {
 
 // ToEndpointListParams builds a list request from the List options.
 func (opts ListOpts) ToEndpointListParams() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List enumerates endpoints in a paginated collection, optionally filtered
 // by ListOpts criteria.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	u := listURL(client)
-	if opts != nil {
-		q, err := gophercloud.BuildQueryString(opts)
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		u += q.String()
-	}
-	return pagination.NewPager(client, u, func(r pagination.PageResult) pagination.Page {
-		return EndpointPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details on a single endpoint, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, endpointURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add parameters to the Update request.
@@ -139,24 +124,18 @@ type UpdateOpts struct {
 
 // ToEndpointUpdateMap builds an update request body from the Update options.
 func (opts UpdateOpts) ToEndpointUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "endpoint")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update changes an existing endpoint with new data.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, endpointID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToEndpointUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, endpointURL(client, endpointID), &b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete removes an endpoint from the service catalog.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, endpointID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, endpointURL(client, endpointID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -42,20 +42,10 @@ type EndpointPage struct {
 }
 
 // IsEmpty returns true if no Endpoints were returned.
-func (r EndpointPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	es, err := ExtractEndpoints(r)
-	return len(es) == 0, err
-}
+func (r EndpointPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractEndpoints extracts an Endpoint slice from a Page.
 func ExtractEndpoints(r pagination.Page) ([]Endpoint, error) {
-	var s struct {
-		Endpoints []Endpoint `json:"endpoints"`
-	}
-	err := (r.(EndpointPage)).ExtractInto(&s)
-	return s.Endpoints, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

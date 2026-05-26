@@ -1,10 +1,8 @@
 package usage
 
 import (
-	"encoding/json"
 	"time"
 
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -36,24 +34,7 @@ type TenantUsage struct {
 }
 
 // UnmarshalJSON sets *u to a copy of data.
-func (u *TenantUsage) UnmarshalJSON(b []byte) error {
-	type tmp TenantUsage
-	var s struct {
-		tmp
-		Start gophercloud.JSONRFC3339MilliNoZ `json:"start"`
-		Stop  gophercloud.JSONRFC3339MilliNoZ `json:"stop"`
-	}
-
-	if err := json.Unmarshal(b, &s); err != nil {
-		return err
-	}
-	*u = TenantUsage(s.tmp)
-
-	u.Start = time.Time(s.Start)
-	u.Stop = time.Time(s.Stop)
-
-	return nil
-}
+func (u *TenantUsage) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ServerUsage is a detailed set of information about a specific instance inside a tenant
 type ServerUsage struct {
@@ -95,24 +76,7 @@ type ServerUsage struct {
 }
 
 // UnmarshalJSON sets *u to a copy of data.
-func (u *ServerUsage) UnmarshalJSON(b []byte) error {
-	type tmp ServerUsage
-	var s struct {
-		tmp
-		EndedAt   gophercloud.JSONRFC3339MilliNoZ `json:"ended_at"`
-		StartedAt gophercloud.JSONRFC3339MilliNoZ `json:"started_at"`
-	}
-
-	if err := json.Unmarshal(b, &s); err != nil {
-		return err
-	}
-	*u = ServerUsage(s.tmp)
-
-	u.EndedAt = time.Time(s.EndedAt)
-	u.StartedAt = time.Time(s.StartedAt)
-
-	return nil
-}
+func (u *ServerUsage) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // SingleTenantPage stores a single, only page of TenantUsage results from a
 // SingleTenant call.
@@ -121,35 +85,19 @@ type SingleTenantPage struct {
 }
 
 // IsEmpty determines whether or not a SingleTenantPage is empty.
-func (r SingleTenantPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	ks, err := ExtractSingleTenant(r)
-	return ks == nil, err
-}
+func (r SingleTenantPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r SingleTenantPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"tenant_usage_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractSingleTenant interprets a SingleTenantPage as a TenantUsage result.
 func ExtractSingleTenant(page pagination.Page) (*TenantUsage, error) {
-	var s struct {
-		TenantUsage *TenantUsage `json:"tenant_usage"`
-	}
-	err := (page.(SingleTenantPage)).ExtractInto(&s)
-	return s.TenantUsage, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AllTenantsPage stores a single, only page of TenantUsage results from a
@@ -160,32 +108,16 @@ type AllTenantsPage struct {
 
 // ExtractAllTenants interprets a AllTenantsPage as a TenantUsage result.
 func ExtractAllTenants(page pagination.Page) ([]TenantUsage, error) {
-	var s struct {
-		TenantUsages []TenantUsage `json:"tenant_usages"`
-	}
-	err := (page.(AllTenantsPage)).ExtractInto(&s)
-	return s.TenantUsages, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // IsEmpty determines whether or not an AllTenantsPage is empty.
-func (r AllTenantsPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	usages, err := ExtractAllTenants(r)
-	return len(usages) == 0, err
-}
+func (r AllTenantsPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r AllTenantsPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"tenant_usages_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }

@@ -29,31 +29,17 @@ type VolumeTypePage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no Volume Types.
-func (r VolumeTypePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	volumetypes, err := ExtractVolumeTypes(r)
-	return len(volumetypes) == 0, err
-}
+func (r VolumeTypePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func (page VolumeTypePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"volume_type_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractVolumeTypes extracts and returns Volumes. It is used while iterating over a volumetypes.List call.
 func ExtractVolumeTypes(r pagination.Page) ([]VolumeType, error) {
-	var s []VolumeType
-	err := ExtractVolumeTypesInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -61,21 +47,13 @@ type commonResult struct {
 }
 
 // Extract will get the Volume Type object out of the commonResult object.
-func (r commonResult) Extract() (*VolumeType, error) {
-	var s VolumeType
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*VolumeType, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractInto converts our response data into a volume type struct
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "volume_type")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // ExtractVolumeTypesInto similar to ExtractInto but operates on a `list` of volume types
-func ExtractVolumeTypesInto(r pagination.Page, v any) error {
-	return r.(VolumeTypePage).ExtractIntoSlicePtr(v, "volume_types")
-}
+func ExtractVolumeTypesInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // GetResult contains the response body and error from a Get request.
 type GetResult struct {
@@ -118,11 +96,8 @@ type CreateExtraSpecsResult struct {
 
 // Extract interprets any extraSpecsResult as ExtraSpecs, if possible.
 func (r extraSpecsResult) Extract() (map[string]string, error) {
-	var s struct {
-		ExtraSpecs map[string]string `json:"extra_specs"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ExtraSpecs, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // extraSpecResult contains the result of a call for individual a single
@@ -151,9 +126,8 @@ type DeleteExtraSpecResult struct {
 
 // Extract interprets any extraSpecResult as an ExtraSpec, if possible.
 func (r extraSpecResult) Extract() (map[string]string, error) {
-	var s map[string]string
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // VolumeTypeAccess represents an ACL of project access to a specific Volume Type.
@@ -171,22 +145,12 @@ type AccessPage struct {
 }
 
 // IsEmpty indicates whether an AccessPage is empty.
-func (page AccessPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	v, err := ExtractAccesses(page)
-	return len(v) == 0, err
-}
+func (page AccessPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAccesses interprets a page of results as a slice of VolumeTypeAccess.
 func ExtractAccesses(r pagination.Page) ([]VolumeTypeAccess, error) {
-	var s struct {
-		VolumeTypeAccesses []VolumeTypeAccess `json:"volume_type_access"`
-	}
-	err := (r.(AccessPage)).ExtractInto(&s)
-	return s.VolumeTypeAccesses, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddAccessResult is the response from a AddAccess request. Call its
@@ -221,15 +185,12 @@ type encryptionResult struct {
 }
 
 func (r encryptionResult) Extract() (*EncryptionType, error) {
-	var s EncryptionType
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractInto converts our response data into a volume type struct
-func (r encryptionResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "encryption")
-}
+func (r encryptionResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 type CreateEncryptionResult struct {
 	encryptionResult
@@ -274,9 +235,8 @@ type encryptionShowResult struct {
 
 // Extract interprets any extraSpecResult as an ExtraSpec, if possible.
 func (r encryptionShowResult) Extract() (*GetEncryptionType, error) {
-	var s GetEncryptionType
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type GetEncryptionResult struct {
@@ -289,9 +249,8 @@ type encryptionShowSpecResult struct {
 
 // Extract interprets any empty interface Result as an empty interface.
 func (r encryptionShowSpecResult) Extract() (map[string]any, error) {
-	var s map[string]any
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type GetEncryptionSpecResult struct {

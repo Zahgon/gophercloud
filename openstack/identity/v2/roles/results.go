@@ -26,23 +26,10 @@ type RolePage struct {
 }
 
 // IsEmpty determines whether or not a page of Roles contains any results.
-func (r RolePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	users, err := ExtractRoles(r)
-	return len(users) == 0, err
-}
+func (r RolePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractRoles returns a slice of roles contained in a single page of results.
-func ExtractRoles(r pagination.Page) ([]Role, error) {
-	var s struct {
-		Roles []Role `json:"roles"`
-	}
-	err := (r.(RolePage)).ExtractInto(&s)
-	return s.Roles, err
-}
+func ExtractRoles(r pagination.Page) ([]Role, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // UserRoleResult represents the result of either an AddUserRole or
 // a DeleteUserRole operation. Call its ExtractErr method to determine

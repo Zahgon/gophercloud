@@ -1,7 +1,6 @@
 package recordsets
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -14,11 +13,7 @@ type commonResult struct {
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a RecordSet.
 // An error is returned if the original call or the extraction failed.
-func (r commonResult) Extract() (*RecordSet, error) {
-	var s *RecordSet
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*RecordSet, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult is the result of a Create operation. Call its Extract method to
 // interpret the result as a RecordSet.
@@ -50,22 +45,12 @@ type DeleteResult struct {
 }
 
 // IsEmpty returns true if the page contains no results.
-func (r RecordSetPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractRecordSets(r)
-	return len(s) == 0, err
-}
+func (r RecordSetPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractRecordSets extracts a slice of RecordSets from a List result.
 func ExtractRecordSets(r pagination.Page) ([]RecordSet, error) {
-	var s struct {
-		RecordSets []RecordSet `json:"recordsets"`
-	}
-	err := (r.(RecordSetPage)).ExtractInto(&s)
-	return s.RecordSets, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RecordSet represents a DNS Record Set.
@@ -123,34 +108,4 @@ type RecordSet struct {
 	} `json:"metadata"`
 }
 
-func (r *RecordSet) UnmarshalJSON(b []byte) error {
-	type tmp RecordSet
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		Links     map[string]any                  `json:"links"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = RecordSet(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	if s.Links != nil {
-		for rel, href := range s.Links {
-			if v, ok := href.(string); ok {
-				link := gophercloud.Link{
-					Rel:  rel,
-					Href: v,
-				}
-				r.Links = append(r.Links, link)
-			}
-		}
-	}
-
-	return err
-}
+func (r *RecordSet) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }

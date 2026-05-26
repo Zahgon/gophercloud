@@ -1,9 +1,6 @@
 package dns
 
 import (
-	"net/url"
-
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/extensions/layer3/floatingips"
 	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/networks"
 	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/ports"
@@ -18,19 +15,8 @@ type PortListOptsExt struct {
 
 // ToPortListQuery adds the DNS options to the base port list options.
 func (opts PortListOptsExt) ToPortListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts.ListOptsBuilder)
-	if err != nil {
-		return "", err
-	}
-
-	params := q.Query()
-
-	if opts.DNSName != "" {
-		params.Add("dns_name", opts.DNSName)
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // PortCreateOptsExt adds port DNS options to the base ports.CreateOpts.
@@ -45,18 +31,8 @@ type PortCreateOptsExt struct {
 
 // ToPortCreateMap casts a CreateOpts struct to a map.
 func (opts PortCreateOptsExt) ToPortCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToPortCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.DNSName != "" {
-		port["dns_name"] = opts.DNSName
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PortUpdateOptsExt adds DNS options to the base ports.UpdateOpts
@@ -71,18 +47,8 @@ type PortUpdateOptsExt struct {
 
 // ToPortUpdateMap casts an UpdateOpts struct to a map.
 func (opts PortUpdateOptsExt) ToPortUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToPortUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.DNSName != nil {
-		port["dns_name"] = *opts.DNSName
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // FloatingIPCreateOptsExt adds floating IP DNS options to the base floatingips.CreateOpts.
@@ -100,22 +66,8 @@ type FloatingIPCreateOptsExt struct {
 
 // ToFloatingIPCreateMap casts a CreateOpts struct to a map.
 func (opts FloatingIPCreateOptsExt) ToFloatingIPCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToFloatingIPCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	floatingip := base["floatingip"].(map[string]any)
-
-	if opts.DNSName != "" {
-		floatingip["dns_name"] = opts.DNSName
-	}
-
-	if opts.DNSDomain != "" {
-		floatingip["dns_domain"] = opts.DNSDomain
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkCreateOptsExt adds network DNS options to the base networks.CreateOpts.
@@ -130,18 +82,8 @@ type NetworkCreateOptsExt struct {
 
 // ToNetworkCreateMap casts a CreateOpts struct to a map.
 func (opts NetworkCreateOptsExt) ToNetworkCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	network := base["network"].(map[string]any)
-
-	if opts.DNSDomain != "" {
-		network["dns_domain"] = opts.DNSDomain
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkUpdateOptsExt adds network DNS options to the base networks.UpdateOpts
@@ -156,16 +98,6 @@ type NetworkUpdateOptsExt struct {
 
 // ToNetworkUpdateMap casts an UpdateOpts struct to a map.
 func (opts NetworkUpdateOptsExt) ToNetworkUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	network := base["network"].(map[string]any)
-
-	if opts.DNSDomain != nil {
-		network["dns_domain"] = *opts.DNSDomain
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

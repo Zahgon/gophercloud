@@ -2,9 +2,6 @@ package images
 
 import (
 	"context"
-	"fmt"
-	"net/url"
-	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -95,46 +92,12 @@ type ListOpts struct {
 }
 
 // ToImageListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToImageListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	params := q.Query()
-
-	if opts.CreatedAtQuery != nil {
-		createdAt := opts.CreatedAtQuery.Date.Format(time.RFC3339)
-		if v := opts.CreatedAtQuery.Filter; v != "" {
-			createdAt = fmt.Sprintf("%s:%s", v, createdAt)
-		}
-
-		params.Add("created_at", createdAt)
-	}
-
-	if opts.UpdatedAtQuery != nil {
-		updatedAt := opts.UpdatedAtQuery.Date.Format(time.RFC3339)
-		if v := opts.UpdatedAtQuery.Filter; v != "" {
-			updatedAt = fmt.Sprintf("%s:%s", v, updatedAt)
-		}
-
-		params.Add("updated_at", updatedAt)
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-
-	return q.String(), err
-}
+func (opts ListOpts) ToImageListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List implements image list request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToImageListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return ImagePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add parameters to the Create request.
@@ -188,58 +151,32 @@ type CreateOpts struct {
 // ToImageCreateMap assembles a request body based on the contents of
 // a CreateOpts.
 func (opts CreateOpts) ToImageCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Properties != nil {
-		for k, v := range opts.Properties {
-			b[k] = v
-		}
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create implements create image request.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToImageCreateMap()
-	if err != nil {
-		r.Err = err
-		return r
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{201}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete implements image delete request.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get implements image get request.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Update implements image updated request.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToImageUpdateMap()
-	if err != nil {
-		r.Err = err
-		return r
-	}
-	resp, err := client.Patch(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes:     []int{200},
-		MoreHeaders: map[string]string{"Content-Type": "application/openstack-images-v2.1-json-patch"},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -257,12 +194,8 @@ type UpdateOpts []Patch
 // ToImageUpdateMap assembles a request body based on the contents of
 // UpdateOpts.
 func (opts UpdateOpts) ToImageUpdateMap() ([]any, error) {
-	m := make([]any, len(opts))
-	for i, patch := range opts {
-		patchJSON := patch.ToImagePatchMap()
-		m[i] = patchJSON
-	}
-	return m, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Patch represents a single update to an existing image. Multiple updates
@@ -277,13 +210,7 @@ type UpdateVisibility struct {
 }
 
 // ToImagePatchMap assembles a request body based on UpdateVisibility.
-func (r UpdateVisibility) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/visibility",
-		"value": r.Visibility,
-	}
-}
+func (r UpdateVisibility) ToImagePatchMap() map[string]any { _ = "STUB: not implemented"; return nil }
 
 // ReplaceImageHidden represents an updated os_hidden property request.
 type ReplaceImageHidden struct {
@@ -291,13 +218,7 @@ type ReplaceImageHidden struct {
 }
 
 // ToImagePatchMap assembles a request body based on ReplaceImageHidden.
-func (r ReplaceImageHidden) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/os_hidden",
-		"value": r.NewHidden,
-	}
-}
+func (r ReplaceImageHidden) ToImagePatchMap() map[string]any { _ = "STUB: not implemented"; return nil }
 
 // ReplaceImageName represents an updated image_name property request.
 type ReplaceImageName struct {
@@ -305,13 +226,7 @@ type ReplaceImageName struct {
 }
 
 // ToImagePatchMap assembles a request body based on ReplaceImageName.
-func (r ReplaceImageName) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/name",
-		"value": r.NewName,
-	}
-}
+func (r ReplaceImageName) ToImagePatchMap() map[string]any { _ = "STUB: not implemented"; return nil }
 
 // ReplaceImageChecksum represents an updated checksum property request.
 type ReplaceImageChecksum struct {
@@ -320,11 +235,8 @@ type ReplaceImageChecksum struct {
 
 // ReplaceImageChecksum assembles a request body based on ReplaceImageChecksum.
 func (r ReplaceImageChecksum) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/checksum",
-		"value": r.Checksum,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReplaceImageTags represents an updated tags property request.
@@ -333,13 +245,7 @@ type ReplaceImageTags struct {
 }
 
 // ToImagePatchMap assembles a request body based on ReplaceImageTags.
-func (r ReplaceImageTags) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/tags",
-		"value": r.NewTags,
-	}
-}
+func (r ReplaceImageTags) ToImagePatchMap() map[string]any { _ = "STUB: not implemented"; return nil }
 
 // ReplaceImageMinDisk represents an updated min_disk property request.
 type ReplaceImageMinDisk struct {
@@ -348,11 +254,8 @@ type ReplaceImageMinDisk struct {
 
 // ToImagePatchMap assembles a request body based on ReplaceImageTags.
 func (r ReplaceImageMinDisk) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/min_disk",
-		"value": r.NewMinDisk,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReplaceImageMinRam represents an updated min_ram property request.
@@ -361,13 +264,7 @@ type ReplaceImageMinRam struct {
 }
 
 // ToImagePatchMap assembles a request body based on ReplaceImageTags.
-func (r ReplaceImageMinRam) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/min_ram",
-		"value": r.NewMinRam,
-	}
-}
+func (r ReplaceImageMinRam) ToImagePatchMap() map[string]any { _ = "STUB: not implemented"; return nil }
 
 // ReplaceImageProtected represents an updated protected property request.
 type ReplaceImageProtected struct {
@@ -376,11 +273,8 @@ type ReplaceImageProtected struct {
 
 // ToImagePatchMap assembles a request body based on ReplaceImageProtected
 func (r ReplaceImageProtected) ToImagePatchMap() map[string]any {
-	return map[string]any{
-		"op":    "replace",
-		"path":  "/protected",
-		"value": r.NewProtected,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateOp represents a valid update operation.
@@ -401,14 +295,6 @@ type UpdateImageProperty struct {
 
 // ToImagePatchMap assembles a request body based on UpdateImageProperty.
 func (r UpdateImageProperty) ToImagePatchMap() map[string]any {
-	updateMap := map[string]any{
-		"op":   r.Op,
-		"path": fmt.Sprintf("/%s", r.Name),
-	}
-
-	if r.Op != RemoveOp {
-		updateMap["value"] = r.Value
-	}
-
-	return updateMap
+	_ = "STUB: not implemented"
+	return nil
 }

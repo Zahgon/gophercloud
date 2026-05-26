@@ -84,10 +84,8 @@ type resourceProviderResult struct {
 
 // Extract interpets any resourceProviderResult-base result as a ResourceProvider.
 func (r resourceProviderResult) Extract() (*ResourceProvider, error) {
-	var s ResourceProvider
-	err := r.ExtractInto(&s)
-
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult is the result of a Create operation. Call its Extract
@@ -121,21 +119,14 @@ type ResourceProvidersPage struct {
 
 // IsEmpty determines if a ResourceProvidersPage contains any results.
 func (page ResourceProvidersPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	resourceProviders, err := ExtractResourceProviders(page)
-	return len(resourceProviders) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractResourceProviders returns a slice of ResourceProvider from a List operation.
 func ExtractResourceProviders(r pagination.Page) ([]ResourceProvider, error) {
-	var s struct {
-		ResourceProviders []ResourceProvider `json:"resource_providers"`
-	}
-	err := (r.(ResourceProvidersPage)).ExtractInto(&s)
-	return s.ResourceProviders, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetUsagesResult is the response of a Get usage operations. Call its Extract method
@@ -146,9 +137,8 @@ type GetUsagesResult struct {
 
 // Extract interprets a GetUsagesResult as a ResourceProviderUsage.
 func (r GetUsagesResult) Extract() (*ResourceProviderUsage, error) {
-	var s ResourceProviderUsage
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetInventoriesResult is the response of a Get inventories operations. Call its Extract method
@@ -159,9 +149,8 @@ type GetInventoriesResult struct {
 
 // Extract interprets a GetInventoriesResult as a ResourceProviderInventories.
 func (r GetInventoriesResult) Extract() (*ResourceProviderInventories, error) {
-	var s ResourceProviderInventories
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetInventoryResult is the response of a Get inventory operation. Call its Extract method
@@ -172,9 +161,8 @@ type GetInventoryResult struct {
 
 // Extract interprets a GetInventoryResult as a ResourceProviderInventory.
 func (r GetInventoryResult) Extract() (*ResourceProviderInventory, error) {
-	var s ResourceProviderInventory
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateInventoryResult is the response of an Update inventory operation. Call its Extract method
@@ -185,9 +173,8 @@ type UpdateInventoryResult struct {
 
 // Extract interprets a UpdateInventoryResult as a ResourceProviderInventory.
 func (r UpdateInventoryResult) Extract() (*ResourceProviderInventory, error) {
-	var s ResourceProviderInventory
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetAllocationsResult is the response of a Get allocations operations. Call its Extract method
@@ -198,9 +185,8 @@ type GetAllocationsResult struct {
 
 // Extract interprets a GetAllocationsResult as a ResourceProviderAllocations.
 func (r GetAllocationsResult) Extract() (*ResourceProviderAllocations, error) {
-	var s ResourceProviderAllocations
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetTraitsResult is the response of a Get traits operations. Call its Extract method
@@ -211,9 +197,8 @@ type GetTraitsResult struct {
 
 // Extract interprets a GetTraitsResult as a ResourceProviderTraits.
 func (r GetTraitsResult) Extract() (*ResourceProviderTraits, error) {
-	var s ResourceProviderTraits
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetAggregatesResult is the response of a Get aggregates operations. Call its Extract method
@@ -224,7 +209,6 @@ type GetAggregatesResult struct {
 
 // Extract interprets a GetAggregatesResult as a ResourceProviderAggregates.
 func (r GetAggregatesResult) Extract() (*ResourceProviderAggregates, error) {
-	var s ResourceProviderAggregates
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

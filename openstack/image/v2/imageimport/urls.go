@@ -8,10 +8,9 @@ const (
 	resourcePath = "import"
 )
 
-func infoURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(infoPath, resourcePath)
-}
+func infoURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func importURL(c *gophercloud.ServiceClient, imageID string) string {
-	return c.ServiceURL(rootPath, imageID, resourcePath)
+	_ = "STUB: not implemented"
+	return ""
 }

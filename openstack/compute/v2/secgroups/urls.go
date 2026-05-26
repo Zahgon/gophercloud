@@ -8,25 +8,25 @@ const (
 )
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(secgrouppath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(secgrouppath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func listByServerURL(c *gophercloud.ServiceClient, serverID string) string {
-	return c.ServiceURL("servers", serverID, secgrouppath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func rootRuleURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rulepath)
-}
+func rootRuleURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceRuleURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rulepath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func serverActionURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("servers", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }

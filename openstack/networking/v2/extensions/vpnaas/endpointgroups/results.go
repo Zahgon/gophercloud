@@ -34,13 +34,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts an endpoint group.
-func (r commonResult) Extract() (*EndpointGroup, error) {
-	var s struct {
-		Service *EndpointGroup `json:"endpoint_group"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Service, err
-}
+func (r commonResult) Extract() (*EndpointGroup, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // EndpointGroupPage is the page returned by a pager when traversing over a
 // collection of Policies.
@@ -52,35 +46,19 @@ type EndpointGroupPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r EndpointGroupPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"endpoint_groups_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether an EndpointGroupPage struct is empty.
-func (r EndpointGroupPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractEndpointGroups(r)
-	return len(is) == 0, err
-}
+func (r EndpointGroupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractEndpointGroups accepts a Page struct, specifically an EndpointGroupPage struct,
 // and extracts the elements into a slice of Endpoint group structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractEndpointGroups(r pagination.Page) ([]EndpointGroup, error) {
-	var s struct {
-		EndpointGroups []EndpointGroup `json:"endpoint_groups"`
-	}
-	err := (r.(EndpointGroupPage)).ExtractInto(&s)
-	return s.EndpointGroups, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult represents the result of a create operation. Call its Extract

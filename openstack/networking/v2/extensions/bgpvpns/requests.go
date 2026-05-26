@@ -25,34 +25,18 @@ type ListOpts struct {
 }
 
 // ToBGPVPNListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToBGPVPNListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
-}
+func (opts ListOpts) ToBGPVPNListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List the BGP VPNs
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	query, err := opts.ToBGPVPNListQuery()
-	if err != nil {
-		return pagination.Pager{Err: err}
-	}
-	url += query
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		p := BGPVPNPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieve the specific BGP VPN by its uuid
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -77,26 +61,20 @@ type CreateOpts struct {
 
 // ToBGPVPNCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToBGPVPNCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "bgpvpn")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create a BGP VPN
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToBGPVPNCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete accepts a unique ID and deletes the BGP VPN associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -117,21 +95,14 @@ type UpdateOpts struct {
 
 // ToBGPVPNUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToBGPVPNUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "bgpvpn")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accept a BGP VPN ID and an UpdateOpts and update the BGP VPN
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToBGPVPNUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // ListNetworkAssociationsOptsBuilder allows extensions to add additional
@@ -151,27 +122,15 @@ type ListNetworkAssociationsOpts struct {
 // ToNetworkAssociationsListQuery formats a ListNetworkAssociationsOpts into a
 // query string.
 func (opts ListNetworkAssociationsOpts) ToNetworkAssociationsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListNetworkAssociations pages over the network associations of a specified
 // BGP VPN.
 func ListNetworkAssociations(c *gophercloud.ServiceClient, id string, opts ListNetworkAssociationsOptsBuilder) pagination.Pager {
-	url := listNetworkAssociationsURL(c, id)
-	query, err := opts.ToNetworkAssociationsListQuery()
-	if err != nil {
-		return pagination.Pager{Err: err}
-	}
-	url += query
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		p := NetworkAssociationPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateNetworkAssociationOptsBuilder allows extensions to add additional
@@ -191,36 +150,29 @@ type CreateNetworkAssociationOpts struct {
 // ToNetworkAssociationCreateMap builds a request body from
 // CreateNetworkAssociationOpts.
 func (opts CreateNetworkAssociationOpts) ToNetworkAssociationCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "network_association")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateNetworkAssociation creates a new network association for a specified
 // BGP VPN.
 func CreateNetworkAssociation(ctx context.Context, client *gophercloud.ServiceClient, id string, opts CreateNetworkAssociationOptsBuilder) (r CreateNetworkAssociationResult) {
-	b, err := opts.ToNetworkAssociationCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createNetworkAssociationURL(client, id), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateNetworkAssociationResult)
 }
 
 // GetNetworkAssociation retrieves a specific network association by BGP VPN id
 // and network association id.
 func GetNetworkAssociation(ctx context.Context, c *gophercloud.ServiceClient, bgpVpnID string, id string) (r GetNetworkAssociationResult) {
-	resp, err := c.Get(ctx, getNetworkAssociationURL(c, bgpVpnID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetNetworkAssociationResult)
 }
 
 // DeleteNetworkAssociation deletes a specific network association by BGP VPN id
 // and network association id.
 func DeleteNetworkAssociation(ctx context.Context, c *gophercloud.ServiceClient, bgpVpnID string, id string) (r DeleteNetworkAssociationResult) {
-	resp, err := c.Delete(ctx, deleteNetworkAssociationURL(c, bgpVpnID, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteNetworkAssociationResult)
 }
 
 // ListRouterAssociationsOptsBuilder allows extensions to add additional
@@ -240,27 +192,15 @@ type ListRouterAssociationsOpts struct {
 // ToRouterAssociationsListQuery formats a ListRouterAssociationsOpts into a
 // query string.
 func (opts ListRouterAssociationsOpts) ToRouterAssociationsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListRouterAssociations pages over the router associations of a specified
 // BGP VPN.
 func ListRouterAssociations(c *gophercloud.ServiceClient, id string, opts ListRouterAssociationsOptsBuilder) pagination.Pager {
-	url := listRouterAssociationsURL(c, id)
-	query, err := opts.ToRouterAssociationsListQuery()
-	if err != nil {
-		return pagination.Pager{Err: err}
-	}
-	url += query
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		p := RouterAssociationPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateRouterAssociationOptsBuilder allows extensions to add additional
@@ -281,36 +221,29 @@ type CreateRouterAssociationOpts struct {
 // ToRouterAssociationCreateMap builds a request body from
 // CreateRouterAssociationOpts.
 func (opts CreateRouterAssociationOpts) ToRouterAssociationCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "router_association")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateRouterAssociation creates a new router association for a specified
 // BGP VPN.
 func CreateRouterAssociation(ctx context.Context, client *gophercloud.ServiceClient, id string, opts CreateRouterAssociationOptsBuilder) (r CreateRouterAssociationResult) {
-	b, err := opts.ToRouterAssociationCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createRouterAssociationURL(client, id), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateRouterAssociationResult)
 }
 
 // GetRouterAssociation retrieves a specific router association by BGP VPN id
 // and router association id.
 func GetRouterAssociation(ctx context.Context, c *gophercloud.ServiceClient, bgpVpnID string, id string) (r GetRouterAssociationResult) {
-	resp, err := c.Get(ctx, getRouterAssociationURL(c, bgpVpnID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetRouterAssociationResult)
 }
 
 // DeleteRouterAssociation deletes a specific router association by BGP VPN id
 // and router association id.
 func DeleteRouterAssociation(ctx context.Context, c *gophercloud.ServiceClient, bgpVpnID string, id string) (r DeleteRouterAssociationResult) {
-	resp, err := c.Delete(ctx, deleteRouterAssociationURL(c, bgpVpnID, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteRouterAssociationResult)
 }
 
 // UpdateRouterAssociationOptsBuilder allows extensions to add additional
@@ -328,21 +261,14 @@ type UpdateRouterAssociationOpts struct {
 // ToRouterAssociationUpdateMap builds a request body from
 // UpdateRouterAssociationOpts.
 func (opts UpdateRouterAssociationOpts) ToRouterAssociationUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "router_association")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateRouterAssociation updates a router association for a specified BGP VPN.
 func UpdateRouterAssociation(ctx context.Context, client *gophercloud.ServiceClient, bgpVpnID string, id string, opts UpdateRouterAssociationOptsBuilder) (r UpdateRouterAssociationResult) {
-	b, err := opts.ToRouterAssociationUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateRouterAssociationURL(client, bgpVpnID, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateRouterAssociationResult)
 }
 
 // ListPortAssociationsOptsBuilder allows extensions to add additional
@@ -362,27 +288,15 @@ type ListPortAssociationsOpts struct {
 // ToPortAssociationsListQuery formats a ListPortAssociationsOpts into a
 // query string.
 func (opts ListPortAssociationsOpts) ToPortAssociationsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListPortAssociations pages over the port associations of a specified
 // BGP VPN.
 func ListPortAssociations(c *gophercloud.ServiceClient, id string, opts ListPortAssociationsOptsBuilder) pagination.Pager {
-	url := listPortAssociationsURL(c, id)
-	query, err := opts.ToPortAssociationsListQuery()
-	if err != nil {
-		return pagination.Pager{Err: err}
-	}
-	url += query
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		p := PortAssociationPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // PortRoutes represents the routes to be advertised by a BGP VPN port
@@ -412,36 +326,29 @@ type CreatePortAssociationOpts struct {
 // ToPortAssociationCreateMap builds a request body from
 // CreatePortAssociationOpts.
 func (opts CreatePortAssociationOpts) ToPortAssociationCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "port_association")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreatePortAssociation creates a new port association for a specified
 // BGP VPN.
 func CreatePortAssociation(ctx context.Context, client *gophercloud.ServiceClient, id string, opts CreatePortAssociationOptsBuilder) (r CreatePortAssociationResult) {
-	b, err := opts.ToPortAssociationCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createPortAssociationURL(client, id), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreatePortAssociationResult)
 }
 
 // GetPortAssociation retrieves a specific port association by BGP VPN id
 // and port association id.
 func GetPortAssociation(ctx context.Context, c *gophercloud.ServiceClient, bgpVpnID string, id string) (r GetPortAssociationResult) {
-	resp, err := c.Get(ctx, getPortAssociationURL(c, bgpVpnID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetPortAssociationResult)
 }
 
 // DeletePortAssociation deletes a specific port association by BGP VPN id
 // and port association id.
 func DeletePortAssociation(ctx context.Context, c *gophercloud.ServiceClient, bgpVpnID string, id string) (r DeletePortAssociationResult) {
-	resp, err := c.Delete(ctx, deletePortAssociationURL(c, bgpVpnID, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeletePortAssociationResult)
 }
 
 // UpdatePortAssociationOptsBuilder allows extensions to add additional
@@ -460,19 +367,12 @@ type UpdatePortAssociationOpts struct {
 // ToPortAssociationUpdateMap builds a request body from
 // UpdatePortAssociationOpts.
 func (opts UpdatePortAssociationOpts) ToPortAssociationUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "port_association")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdatePortAssociation updates a port association for a specified BGP VPN.
 func UpdatePortAssociation(ctx context.Context, client *gophercloud.ServiceClient, bgpVpnID string, id string, opts UpdatePortAssociationOptsBuilder) (r UpdatePortAssociationResult) {
-	b, err := opts.ToPortAssociationUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updatePortAssociationURL(client, bgpVpnID, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdatePortAssociationResult)
 }

@@ -1,9 +1,6 @@
 package services
 
 import (
-	"encoding/json"
-	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -41,49 +38,17 @@ type Service struct {
 }
 
 // UnmarshalJSON to override default
-func (r *Service) UnmarshalJSON(b []byte) error {
-	type tmp Service
-	var s struct {
-		tmp
-		ID        any                             `json:"id"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Service(s.tmp)
+func (r *Service) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	// OpenStack Compute service returns ID in string representation since
-	// 2.53 microversion API (Pike release).
-	switch t := s.ID.(type) {
-	case int:
-		r.ID = strconv.Itoa(t)
-	case float64:
-		r.ID = strconv.Itoa(int(t))
-	case string:
-		r.ID = t
-	default:
-		return fmt.Errorf("ID has unexpected type: %T", t)
-	}
-
-	return nil
-}
+// OpenStack Compute service returns ID in string representation since
+// 2.53 microversion API (Pike release).
 
 type serviceResult struct {
 	gophercloud.Result
 }
 
 // Extract interprets any UpdateResult as a service, if possible.
-func (r serviceResult) Extract() (*Service, error) {
-	var s struct {
-		Service Service `json:"service"`
-	}
-	err := r.ExtractInto(&s)
-	return &s.Service, err
-}
+func (r serviceResult) Extract() (*Service, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // UpdateResult is the response from an Update operation. Call its Extract
 // method to interpret it as a Server.
@@ -97,21 +62,11 @@ type ServicePage struct {
 }
 
 // IsEmpty determines whether or not a page of Services contains any results.
-func (page ServicePage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	services, err := ExtractServices(page)
-	return len(services) == 0, err
-}
+func (page ServicePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func ExtractServices(r pagination.Page) ([]Service, error) {
-	var s struct {
-		Service []Service `json:"services"`
-	}
-	err := (r.(ServicePage)).ExtractInto(&s)
-	return s.Service, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DeleteResult is the response from a Delete operation. Call its ExtractErr

@@ -4,6 +4,4 @@ package apiversions
 // could not be found.
 type ErrVersionNotFound struct{}
 
-func (e ErrVersionNotFound) Error() string {
-	return "Unable to find requested API version"
-}
+func (e ErrVersionNotFound) Error() string { _ = "STUB: not implemented"; return "" }

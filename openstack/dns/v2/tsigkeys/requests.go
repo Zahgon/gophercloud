@@ -36,30 +36,20 @@ type ListOpts struct {
 
 // ToTSIGKeyListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTSIGKeyListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List implements a TSIG key List request.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := baseURL(client)
-	if opts != nil {
-		query, err := opts.ToTSIGKeyListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return TSIGKeyPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get returns information about a TSIG key, given its ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, tsigkeyID string) (r GetResult) {
-	resp, err := client.Get(ctx, tsigkeyURL(client, tsigkeyID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional attributes to the
@@ -88,21 +78,14 @@ type CreateOpts struct {
 
 // ToTSIGKeyCreateMap formats a CreateOpts structure into a request body.
 func (opts CreateOpts) ToTSIGKeyCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create implements a TSIG key create request.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToTSIGKeyCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, baseURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional attributes to the
@@ -131,28 +114,18 @@ type UpdateOpts struct {
 
 // ToTSIGKeyUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToTSIGKeyUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update implements a TSIG key update request.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, tsigkeyID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToTSIGKeyUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, tsigkeyURL(client, tsigkeyID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete implements a TSIG key delete request.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, tsigkeyID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, tsigkeyURL(client, tsigkeyID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

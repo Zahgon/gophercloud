@@ -33,23 +33,16 @@ type CreateOpts struct {
 // ToReplicaCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToReplicaCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "share_replica")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new Share Replica based on the values in CreateOpts. To extract
 // the Replica object from the response, call the Extract method on the
 // CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToReplicaCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // ListOpts holds options for listing Share Replicas. This object is passed to the
@@ -73,74 +66,46 @@ type ListOptsBuilder interface {
 
 // ToReplicaListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToReplicaListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns []Replica optionally limited by the conditions provided in ListOpts.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToReplicaListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		p := ReplicaPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListDetail returns []Replica optionally limited by the conditions provided in ListOpts.
 func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToReplicaListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		p := ReplicaPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Delete will delete an existing Replica with the given UUID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Get will get a single share with given UUID
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ListExportLocations will list replicaID's export locations.
 // Minimum supported microversion for ListExportLocations is 2.47.
 func ListExportLocations(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ListExportLocationsResult) {
-	resp, err := client.Get(ctx, listExportLocationsURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListExportLocationsResult)
 }
 
 // GetExportLocation will get replicaID's export location by an ID.
 // Minimum supported microversion for GetExportLocation is 2.47.
 func GetExportLocation(ctx context.Context, client *gophercloud.ServiceClient, replicaID string, id string) (r GetExportLocationResult) {
-	resp, err := client.Get(ctx, getExportLocationURL(client, replicaID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetExportLocationResult)
 }
 
 // PromoteOptsBuilder allows extensions to add additional parameters to the
@@ -160,33 +125,22 @@ type PromoteOpts struct {
 // ToReplicaPromoteMap assembles a request body based on the contents of a
 // PromoteOpts.
 func (opts PromoteOpts) ToReplicaPromoteMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "promote")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Promote will promote an existing Replica to active state. PromoteResult contains only the error.
 // To extract it, call the ExtractErr method on the PromoteResult.
 func Promote(ctx context.Context, client *gophercloud.ServiceClient, id string, opts PromoteOptsBuilder) (r PromoteResult) {
-	b, err := opts.ToReplicaPromoteMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(PromoteResult)
 }
 
 // Resync a replica with its active mirror. ResyncResult contains only the error.
 // To extract it, call the ExtractErr method on the ResyncResult.
 func Resync(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ResyncResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"resync": nil}, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResyncResult)
 }
 
 // ResetStatusOptsBuilder allows extensions to add additional parameters to the
@@ -206,23 +160,16 @@ type ResetStatusOpts struct {
 // ToReplicaResetStatusMap assembles a request body based on the contents of an
 // ResetStatusOpts.
 func (opts ResetStatusOpts) ToReplicaResetStatusMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "reset_status")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResetStatus will reset the Share Replica status with provided information.
 // ResetStatusResult contains only the error. To extract it, call the ExtractErr
 // method on the ResetStatusResult.
 func ResetStatus(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResetStatusOptsBuilder) (r ResetStatusResult) {
-	b, err := opts.ToReplicaResetStatusMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetStatusResult)
 }
 
 // ResetStateOptsBuilder allows extensions to add additional parameters to the
@@ -242,32 +189,22 @@ type ResetStateOpts struct {
 // ToReplicaResetStateMap assembles a request body based on the contents of an
 // ResetStateOpts.
 func (opts ResetStateOpts) ToReplicaResetStateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "reset_replica_state")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResetState will reset the Share Replica state with provided information.
 // ResetStateResult contains only the error. To extract it, call the ExtractErr
 // method on the ResetStateResult.
 func ResetState(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ResetStateOptsBuilder) (r ResetStateResult) {
-	b, err := opts.ToReplicaResetStateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, actionURL(client, id), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ResetStateResult)
 }
 
 // ForceDelete force-deletes a Share Replica in any state. ForceDeleteResult
 // contains only the error. To extract it, call the ExtractErr method on the
 // ForceDeleteResult. Administrator only.
 func ForceDelete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ForceDeleteResult) {
-	resp, err := client.Post(ctx, actionURL(client, id), map[string]any{"force_delete": nil}, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ForceDeleteResult)
 }

@@ -31,8 +31,4 @@ type ImportMethods struct {
 }
 
 // Extract is a function that accepts a result and extracts ImportInfo.
-func (r commonResult) Extract() (*ImportInfo, error) {
-	var s *ImportInfo
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*ImportInfo, error) { _ = "STUB: not implemented"; return nil, nil }

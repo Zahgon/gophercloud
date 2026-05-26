@@ -2,34 +2,30 @@ package replicas
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("share-replicas")
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("share-replicas")
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listDetailURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("share-replicas", "detail")
-}
+func listDetailURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("share-replicas", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("share-replicas", id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
 func listExportLocationsURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("share-replicas", id, "export-locations")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getExportLocationURL(c *gophercloud.ServiceClient, replicaID, id string) string {
-	return c.ServiceURL("share-replicas", replicaID, "export-locations", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func actionURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("share-replicas", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }

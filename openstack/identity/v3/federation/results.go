@@ -136,13 +136,7 @@ type mappingResult struct {
 }
 
 // Extract interprets any mappingResult as a Mapping.
-func (c mappingResult) Extract() (*Mapping, error) {
-	var s struct {
-		Mapping *Mapping `json:"mapping"`
-	}
-	err := c.ExtractInto(&s)
-	return s.Mapping, err
-}
+func (c mappingResult) Extract() (*Mapping, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateMappingResult is the response from a CreateMapping operation.
 // Call its Extract method to interpret it as a Mapping.
@@ -174,36 +168,17 @@ type MappingsPage struct {
 }
 
 // IsEmpty determines whether or not a page of Mappings contains any results.
-func (c MappingsPage) IsEmpty() (bool, error) {
-	if c.StatusCode == 204 {
-		return true, nil
-	}
-
-	mappings, err := ExtractMappings(c)
-	return len(mappings) == 0, err
-}
+func (c MappingsPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (c MappingsPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := c.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractMappings returns a slice of Mappings contained in a single page of
 // results.
 func ExtractMappings(r pagination.Page) ([]Mapping, error) {
-	var s struct {
-		Mappings []Mapping `json:"mappings"`
-	}
-	err := (r.(MappingsPage)).ExtractInto(&s)
-	return s.Mappings, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

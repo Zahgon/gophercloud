@@ -25,26 +25,8 @@ type CreateOptsExt struct {
 
 // ToPortCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOptsExt) ToPortCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToPortCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.HostID != "" {
-		port["binding:host_id"] = opts.HostID
-	}
-
-	if opts.VNICType != "" {
-		port["binding:vnic_type"] = opts.VNICType
-	}
-
-	if opts.Profile != nil {
-		port["binding:profile"] = opts.Profile
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateOptsExt adds port binding options to the base ports.UpdateOpts
@@ -68,29 +50,8 @@ type UpdateOptsExt struct {
 
 // ToPortUpdateMap casts an UpdateOpts struct to a map.
 func (opts UpdateOptsExt) ToPortUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToPortUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	port := base["port"].(map[string]any)
-
-	if opts.HostID != nil {
-		port["binding:host_id"] = *opts.HostID
-	}
-
-	if opts.VNICType != "" {
-		port["binding:vnic_type"] = opts.VNICType
-	}
-
-	if opts.Profile != nil {
-		if len(opts.Profile) == 0 {
-			// send null instead of the empty json object ("{}")
-			port["binding:profile"] = nil
-		} else {
-			port["binding:profile"] = opts.Profile
-		}
-	}
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// send null instead of the empty json object ("{}")

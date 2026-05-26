@@ -12,19 +12,11 @@ type conductorResult struct {
 }
 
 // Extract interprets any conductorResult as a Conductor, if possible.
-func (r conductorResult) Extract() (*Conductor, error) {
-	var s Conductor
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r conductorResult) Extract() (*Conductor, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r conductorResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r conductorResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
-func ExtractConductorInto(r pagination.Page, v any) error {
-	return r.(ConductorPage).ExtractIntoSlicePtr(v, "conductors")
-}
+func ExtractConductorInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // Conductor represents a conductor in the OpenStack Bare Metal API.
 type Conductor struct {
@@ -56,34 +48,20 @@ type ConductorPage struct {
 }
 
 // IsEmpty returns true if a page contains no conductor results.
-func (r ConductorPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractConductors(r)
-	return len(s) == 0, err
-}
+func (r ConductorPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r ConductorPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"conductor_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractConductors interprets the results of a single page from a List() call,
 // producing a slice of Conductor entities.
 func ExtractConductors(r pagination.Page) ([]Conductor, error) {
-	var s []Conductor
-	err := ExtractConductorInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResult is the response from a Get operation. Call its Extract

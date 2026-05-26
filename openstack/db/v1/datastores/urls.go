@@ -2,18 +2,19 @@ package datastores
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func baseURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("datastores")
-}
+func baseURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, dsID string) string {
-	return c.ServiceURL("datastores", dsID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func versionsURL(c *gophercloud.ServiceClient, dsID string) string {
-	return c.ServiceURL("datastores", dsID, "versions")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func versionURL(c *gophercloud.ServiceClient, dsID, versionID string) string {
-	return c.ServiceURL("datastores", dsID, "versions", versionID)
+	_ = "STUB: not implemented"
+	return ""
 }

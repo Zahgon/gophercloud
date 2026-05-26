@@ -32,26 +32,12 @@ type ListOpts struct {
 }
 
 // ToQueueListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToQueueListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToQueueListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List instructs OpenStack to provide a list of queues.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToQueueListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	pager := pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return QueuePage{pagination.LinkedPageBase{PageResult: r}}
-	})
-	return pager
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -101,36 +87,14 @@ type CreateOpts struct {
 
 // ToQueueCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToQueueCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		for key, value := range opts.Extra {
-			b[key] = value
-		}
-
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new queue.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToQueueCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	queueName := b["queue_name"].(string)
-	delete(b, "queue_name")
-
-	resp, err := client.Put(ctx, createURL(client, queueName), b, r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -159,58 +123,35 @@ const (
 
 // ToQueueUpdateMap constructs a request body from UpdateOpts.
 func (opts BatchUpdateOpts) ToQueueUpdateMap() ([]map[string]any, error) {
-	queuesUpdates := make([]map[string]any, len(opts))
-	for i, queue := range opts {
-		queueMap, err := queue.ToMap()
-		if err != nil {
-			return nil, err
-		}
-		queuesUpdates[i] = queueMap
-	}
-	return queuesUpdates, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToMap constructs a request body from UpdateOpts.
-func (opts UpdateOpts) ToMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
-}
+func (opts UpdateOpts) ToMap() (map[string]any, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Update Updates the specified queue.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts UpdateOptsBuilder) (r UpdateResult) {
-	resp, err := client.Patch(ctx, updateURL(client, queueName), opts, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201, 204},
-		MoreHeaders: map[string]string{
-			"Content-Type": "application/openstack-messaging-v2.0-json-patch"},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Get requests details on a single queue, by name.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, queueName string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, queueName), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete deletes the specified queue.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, queueName string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, queueName), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // GetStats returns statistics for the specified queue.
 func GetStats(ctx context.Context, client *gophercloud.ServiceClient, queueName string) (r StatResult) {
-	resp, err := client.Get(ctx, statURL(client, queueName), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(StatResult)
 }
 
 type SharePath string
@@ -245,25 +186,14 @@ type ShareOptsBuilder interface {
 
 // ToShareQueueMap formats a ShareOpts structure into a request body.
 func (opts ShareOpts) ToQueueShareMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Share creates a pre-signed URL for a given queue.
 func Share(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts ShareOptsBuilder) (r ShareResult) {
-	b, err := opts.ToQueueShareMap()
-	if err != nil {
-		r.Err = err
-		return r
-	}
-	resp, err := client.Post(ctx, shareURL(client, queueName), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ShareResult)
 }
 
 type PurgeResource string
@@ -286,25 +216,12 @@ type PurgeOptsBuilder interface {
 
 // ToPurgeQueueMap formats a PurgeOpts structure into a request body
 func (opts PurgeOpts) ToQueuePurgeMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Purge purges particular resource of the queue.
 func Purge(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts PurgeOptsBuilder) (r PurgeResult) {
-	b, err := opts.ToQueuePurgeMap()
-	if err != nil {
-		r.Err = err
-		return r
-	}
-
-	resp, err := client.Post(ctx, purgeURL(client, queueName), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(PurgeResult)
 }

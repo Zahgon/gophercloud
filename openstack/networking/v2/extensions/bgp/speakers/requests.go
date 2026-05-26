@@ -9,17 +9,14 @@ import (
 
 // List the bgp speakers
 func List(c *gophercloud.ServiceClient) pagination.Pager {
-	url := listURL(c)
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return BGPSpeakerPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieve the specific bgp speaker by its uuid
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOpts represents options used to create a BGP Speaker.
@@ -39,26 +36,20 @@ type CreateOptsBuilder interface {
 
 // ToSpeakerCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSpeakerCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts and create a BGP Speaker.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSpeakerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete accepts a unique ID and deletes the bgp speaker associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, speakerID string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, speakerID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // UpdateOpts represents options used to update a BGP Speaker.
@@ -70,7 +61,8 @@ type UpdateOpts struct {
 
 // ToSpeakerUpdateMap build a request body from UpdateOpts
 func (opts UpdateOpts) ToSpeakerUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateOptsBuilder allow the extensions to add additional parameters to the
@@ -81,16 +73,8 @@ type UpdateOptsBuilder interface {
 
 // Update accepts a UpdateOpts and update the BGP Speaker.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, speakerID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSpeakerUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateURL(c, speakerID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // AddBGPPeerOpts represents options used to add a BGP Peer to a BGP Speaker
@@ -105,21 +89,14 @@ type AddBGPPeerOptsBuilder interface {
 
 // ToBGPSpeakerAddBGPPeerMap build a request body from AddBGPPeerOpts
 func (opts AddBGPPeerOpts) ToBGPSpeakerAddBGPPeerMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddBGPPeer add the BGP peer to the speaker a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/add_bgp_peer
 func AddBGPPeer(ctx context.Context, c *gophercloud.ServiceClient, bgpSpeakerID string, opts AddBGPPeerOptsBuilder) (r AddBGPPeerResult) {
-	b, err := opts.ToBGPSpeakerAddBGPPeerMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, addBGPPeerURL(c, bgpSpeakerID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddBGPPeerResult)
 }
 
 // RemoveBGPPeerOpts represents options used to remove a BGP Peer to a BGP Speaker
@@ -132,29 +109,20 @@ type RemoveBGPPeerOptsBuilder interface {
 
 // ToBGPSpeakerRemoveBGPPeerMap build a request body from RemoveBGPPeerOpts
 func (opts RemoveBGPPeerOpts) ToBGPSpeakerRemoveBGPPeerMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveBGPPeer remove the BGP peer from the speaker, a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/add_bgp_peer
 func RemoveBGPPeer(ctx context.Context, c *gophercloud.ServiceClient, bgpSpeakerID string, opts RemoveBGPPeerOptsBuilder) (r RemoveBGPPeerResult) {
-	b, err := opts.ToBGPSpeakerRemoveBGPPeerMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, removeBGPPeerURL(c, bgpSpeakerID), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveBGPPeerResult)
 }
 
 // GetAdvertisedRoutes a.k.a. GET /v2.0/bgp-speakers/{bgp-speaker-id}/get_advertised_routes
 func GetAdvertisedRoutes(c *gophercloud.ServiceClient, bgpSpeakerID string) pagination.Pager {
-	url := getAdvertisedRoutesURL(c, bgpSpeakerID)
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return AdvertisedRoutePage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // AddGatewayNetworkOptsBuilder declare a function that build AddGatewayNetworkOpts into a request body.
@@ -170,21 +138,14 @@ type AddGatewayNetworkOpts struct {
 
 // ToBGPSpeakerAddGatewayNetworkMap implements the function
 func (opts AddGatewayNetworkOpts) ToBGPSpeakerAddGatewayNetworkMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddGatewayNetwork a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/add_gateway_network
 func AddGatewayNetwork(ctx context.Context, c *gophercloud.ServiceClient, bgpSpeakerID string, opts AddGatewayNetworkOptsBuilder) (r AddGatewayNetworkResult) {
-	b, err := opts.ToBGPSpeakerAddGatewayNetworkMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, addGatewayNetworkURL(c, bgpSpeakerID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddGatewayNetworkResult)
 }
 
 // RemoveGatewayNetworkOptsBuilder declare a function that build RemoveGatewayNetworkOpts into a request body.
@@ -197,19 +158,12 @@ type RemoveGatewayNetworkOpts AddGatewayNetworkOpts
 
 // ToBGPSpeakerRemoveGatewayNetworkMap implement the function
 func (opts RemoveGatewayNetworkOpts) ToBGPSpeakerRemoveGatewayNetworkMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveGatewayNetwork a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/remove_gateway_network
 func RemoveGatewayNetwork(ctx context.Context, c *gophercloud.ServiceClient, bgpSpeakerID string, opts RemoveGatewayNetworkOptsBuilder) (r RemoveGatewayNetworkResult) {
-	b, err := opts.ToBGPSpeakerRemoveGatewayNetworkMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, removeGatewayNetworkURL(c, bgpSpeakerID), b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveGatewayNetworkResult)
 }

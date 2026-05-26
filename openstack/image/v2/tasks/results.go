@@ -67,11 +67,7 @@ type Task struct {
 }
 
 // Extract interprets any commonResult as a Task.
-func (r commonResult) Extract() (*Task, error) {
-	var s *Task
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Task, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // TaskPage represents the results of a List request.
 type TaskPage struct {
@@ -79,39 +75,15 @@ type TaskPage struct {
 }
 
 // IsEmpty returns true if a TaskPage contains no Tasks results.
-func (r TaskPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	tasks, err := ExtractTasks(r)
-	return len(tasks) == 0, err
-}
+func (r TaskPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to
 // the next page of results.
 func (r TaskPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-
-	if s.Next == "" {
-		return "", nil
-	}
-
-	return nextPageURL(endpointURL, s.Next)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractTasks interprets the results of a single page from a List() call,
 // producing a slice of Task entities.
-func ExtractTasks(r pagination.Page) ([]Task, error) {
-	var s struct {
-		Tasks []Task `json:"tasks"`
-	}
-	err := (r.(TaskPage)).ExtractInto(&s)
-	return s.Tasks, err
-}
+func ExtractTasks(r pagination.Page) ([]Task, error) { _ = "STUB: not implemented"; return nil, nil }

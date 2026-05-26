@@ -7,6 +7,4 @@ const (
 	resourcePath = "providers"
 )
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath, resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

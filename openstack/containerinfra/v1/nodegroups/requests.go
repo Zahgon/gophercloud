@@ -12,9 +12,8 @@ import (
 // Use the Extract method of the returned GetResult to extract the
 // node group from the result.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, clusterID, nodeGroupID string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, clusterID, nodeGroupID), &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 type ListOptsBuilder interface {
@@ -37,8 +36,8 @@ type ListOpts struct {
 }
 
 func (opts ListOpts) ToNodeGroupsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request to the Magnum API to retrieve node groups
@@ -55,17 +54,8 @@ func (opts ListOpts) ToNodeGroupsListQuery() (string, error) {
 // are returned, all other fields are omitted
 // and will have their zero value when extracted.
 func List(client *gophercloud.ServiceClient, clusterID string, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client, clusterID)
-	if opts != nil {
-		query, err := opts.ToNodeGroupsListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return NodeGroupPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 type CreateOptsBuilder interface {
@@ -94,7 +84,8 @@ type CreateOpts struct {
 }
 
 func (opts CreateOpts) ToNodeGroupCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create makes a request to the Magnum API to create a node group
@@ -102,14 +93,8 @@ func (opts CreateOpts) ToNodeGroupCreateMap() (map[string]any, error) {
 // Use the Extract method of the returned CreateResult to extract the
 // returned node group.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, clusterID string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToNodeGroupCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client, clusterID), b, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{202}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 type UpdateOptsBuilder interface {
@@ -135,7 +120,8 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToResourceUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update makes a request to the Magnum API to update a field of
@@ -144,23 +130,12 @@ func (opts UpdateOpts) ToResourceUpdateMap() (map[string]any, error) {
 // Use the Extract method of the returned UpdateResult to extract the
 // updated node group from the result.
 func Update[T UpdateOptsBuilder](ctx context.Context, client *gophercloud.ServiceClient, clusterID string, nodeGroupID string, opts []T) (r UpdateResult) {
-	var o []map[string]any
-	for _, opt := range opts {
-		b, err := opt.ToResourceUpdateMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		o = append(o, b)
-	}
-	resp, err := client.Patch(ctx, updateURL(client, clusterID, nodeGroupID), o, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{202}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete makes a request to the Magnum API to delete a node group.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, clusterID, nodeGroupID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, clusterID, nodeGroupID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

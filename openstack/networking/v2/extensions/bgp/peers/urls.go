@@ -6,35 +6,39 @@ const urlBase = "bgp-peers"
 
 // return /v2.0/bgp-peers/{bgp-peer-id}
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(urlBase, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgp-peers
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(urlBase)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 // return /v2.0/bgp-peers/{bgp-peer-id}
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return resourceURL(c, id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
 // return /v2.0/bgp-peers
 func listURL(c *gophercloud.ServiceClient) string {
-	return rootURL(c)
+	_ = "STUB: not implemented"
+
+	// return /v2.0/bgp-peers
+	return ""
 }
 
-// return /v2.0/bgp-peers
 func createURL(c *gophercloud.ServiceClient) string {
-	return rootURL(c)
+	_ = "STUB: not implemented"
+
+	// return /v2.0/bgp-peers/{bgp-peer-id}
+	return ""
 }
 
-// return /v2.0/bgp-peers/{bgp-peer-id}
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return resourceURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
+
+	// return /v2.0/bgp-peers/{bgp-peer-id}
 }
 
-// return /v2.0/bgp-peers/{bgp-peer-id}
 func updateURL(c *gophercloud.ServiceClient, id string) string {
-	return resourceURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
 }

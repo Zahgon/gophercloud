@@ -2,42 +2,43 @@ package oauth1
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func consumersURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("OS-OAUTH1", "consumers")
-}
+func consumersURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func consumerURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("OS-OAUTH1", "consumers", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func requestTokenURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("OS-OAUTH1", "request_token")
-}
+func requestTokenURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func authorizeTokenURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("OS-OAUTH1", "authorize", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createAccessTokenURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("OS-OAUTH1", "access_token")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func userAccessTokensURL(c *gophercloud.ServiceClient, userID string) string {
-	return c.ServiceURL("users", userID, "OS-OAUTH1", "access_tokens")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func userAccessTokenURL(c *gophercloud.ServiceClient, userID string, id string) string {
-	return c.ServiceURL("users", userID, "OS-OAUTH1", "access_tokens", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func userAccessTokenRolesURL(c *gophercloud.ServiceClient, userID string, id string) string {
-	return c.ServiceURL("users", userID, "OS-OAUTH1", "access_tokens", id, "roles")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func userAccessTokenRoleURL(c *gophercloud.ServiceClient, userID string, id string, roleID string) string {
-	return c.ServiceURL("users", userID, "OS-OAUTH1", "access_tokens", id, "roles", roleID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func authURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("auth", "tokens")
-}
+func authURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

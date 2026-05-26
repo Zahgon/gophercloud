@@ -2,7 +2,6 @@ package tokens
 
 import (
 	"context"
-	"maps"
 
 	"github.com/gophercloud/gophercloud/v2"
 )
@@ -76,71 +75,33 @@ type AuthOptions struct {
 
 // ToTokenV3CreateMap builds a request body from AuthOptions.
 func (opts *AuthOptions) ToTokenV3CreateMap(scope map[string]any) (map[string]any, error) {
-	gophercloudAuthOpts := gophercloud.AuthOptions{
-		Username:                    opts.Username,
-		UserID:                      opts.UserID,
-		Password:                    opts.Password,
-		Passcode:                    opts.Passcode,
-		DomainID:                    opts.DomainID,
-		DomainName:                  opts.DomainName,
-		AllowReauth:                 opts.AllowReauth,
-		TokenID:                     opts.TokenID,
-		ApplicationCredentialID:     opts.ApplicationCredentialID,
-		ApplicationCredentialName:   opts.ApplicationCredentialName,
-		ApplicationCredentialSecret: opts.ApplicationCredentialSecret,
-	}
-
-	return gophercloudAuthOpts.ToTokenV3CreateMap(scope)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToTokenV3ScopeMap builds a scope request body from AuthOptions.
 func (opts *AuthOptions) ToTokenV3ScopeMap() (map[string]any, error) {
-	scope := gophercloud.AuthScope(opts.Scope)
-
-	gophercloudAuthOpts := gophercloud.AuthOptions{
-		Scope:      &scope,
-		DomainID:   opts.DomainID,
-		DomainName: opts.DomainName,
-	}
-
-	return gophercloudAuthOpts.ToTokenV3ScopeMap()
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (opts *AuthOptions) CanReauth() bool {
-	if opts.Passcode != "" {
-		// cannot reauth using TOTP passcode
-		return false
-	}
+func (opts *AuthOptions) CanReauth() bool { _ = "STUB: not implemented"; return false }
 
-	return opts.AllowReauth
-}
+// cannot reauth using TOTP passcode
 
 // ToTokenV3HeadersMap allows AuthOptions to satisfy the AuthOptionsBuilder
 // interface in the v3 tokens package.
 func (opts *AuthOptions) ToTokenV3HeadersMap(map[string]any) (map[string]string, error) {
+	_ = "STUB: not implemented"
+
+	// Create authenticates and either generates a new token, or changes the Scope
+	// of an existing token.
 	return nil, nil
 }
 
-// Create authenticates and either generates a new token, or changes the Scope
-// of an existing token.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts AuthOptionsBuilder) (r CreateResult) {
-	scope, err := opts.ToTokenV3ScopeMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	b, err := opts.ToTokenV3CreateMap(scope)
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := c.Post(ctx, tokenURL(c), b, &r.Body, &gophercloud.RequestOpts{
-		OmitHeaders: []string{"X-Auth-Token"},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // GetOptsBuilder allows extensions to add additional parameters to
@@ -160,27 +121,14 @@ type GetOpts struct {
 
 // ToTokenGetParams formats GetOpts into request headers.
 func (opts GetOpts) ToTokenGetParams() (map[string]string, error) {
-	return gophercloud.BuildHeaders(opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Get validates and retrieves information about another token.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, token string, opts GetOptsBuilder) (r GetResult) {
-	h := map[string]string{xSubjectTokenHeader: token}
-	if opts != nil {
-		b, err := opts.ToTokenGetParams()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		maps.Copy(h, b)
-	}
-
-	resp, err := c.Get(ctx, tokenURL(c), &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200, 203},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ValidateOptsBuilder allows extensions to add additional parameters to
@@ -200,36 +148,18 @@ type ValidateOpts struct {
 
 // ToTokenValidateParams formats ValidateOpts into request headers.
 func (opts ValidateOpts) ToTokenValidateParams() (map[string]string, error) {
-	return gophercloud.BuildHeaders(opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Validate determines if a specified token is valid or not.
 func Validate(ctx context.Context, c *gophercloud.ServiceClient, token string, opts ValidateOptsBuilder) (bool, error) {
-	h := map[string]string{xSubjectTokenHeader: token}
-	if opts != nil {
-		b, err := opts.ToTokenValidateParams()
-		if err != nil {
-			return false, err
-		}
-		maps.Copy(h, b)
-	}
-
-	resp, err := c.Head(ctx, tokenURL(c), &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200, 204, 404},
-	})
-	if err != nil {
-		return false, err
-	}
-
-	return resp.StatusCode == 200 || resp.StatusCode == 204, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // Revoke immediately makes specified token invalid.
 func Revoke(ctx context.Context, c *gophercloud.ServiceClient, token string) (r RevokeResult) {
-	resp, err := c.Delete(ctx, tokenURL(c), &gophercloud.RequestOpts{
-		MoreHeaders: map[string]string{xSubjectTokenHeader: token},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RevokeResult)
 }

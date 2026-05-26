@@ -12,19 +12,8 @@ type CreateOptsExt struct {
 
 // ToNetworkCreateMap adds segments to the base network creation options.
 func (opts CreateOptsExt) ToNetworkCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Segments == nil {
-		return base, nil
-	}
-
-	providerMap := base["network"].(map[string]any)
-	providerMap["segments"] = opts.Segments
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateOptsExt adds a Segments option to the base Network UpdateOpts.
@@ -35,17 +24,6 @@ type UpdateOptsExt struct {
 
 // ToNetworkUpdateMap adds segments to the base network update options.
 func (opts UpdateOptsExt) ToNetworkUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Segments == nil {
-		return base, nil
-	}
-
-	providerMap := base["network"].(map[string]any)
-	providerMap["segments"] = opts.Segments
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

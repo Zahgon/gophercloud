@@ -7,57 +7,71 @@ const (
 )
 
 func resourceProvidersListURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL(apiName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getResourceProviderUsagesURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "usages")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getResourceProviderInventoriesURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "inventories")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteResourceProviderInventoriesURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "inventories")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getResourceProviderInventoryURL(client *gophercloud.ServiceClient, resourceProviderID, resourceClass string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "inventories", resourceClass)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateResourceProviderInventoryURL(client *gophercloud.ServiceClient, resourceProviderID, resourceClass string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "inventories", resourceClass)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteResourceProviderInventoryURL(client *gophercloud.ServiceClient, resourceProviderID, resourceClass string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "inventories", resourceClass)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getResourceProviderAllocationsURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "allocations")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getResourceProviderTraitsURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "traits")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getResourceProviderAggregatesURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "aggregates")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateResourceProviderAggregatesURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
-	return client.ServiceURL(apiName, resourceProviderID, "aggregates")
+	_ = "STUB: not implemented"
+	return ""
 }

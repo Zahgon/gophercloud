@@ -1,7 +1,6 @@
 package introspection
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -15,28 +14,25 @@ type introspectionResult struct {
 
 // Extract interprets any introspectionResult as an Introspection, if possible.
 func (r introspectionResult) Extract() (*Introspection, error) {
-	var s Introspection
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractInto will extract a response body into an Introspection struct.
-func (r introspectionResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r introspectionResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // ExtractIntrospectionsInto will extract a collection of introspectResult pages into a
 // slice of Introspection entities.
 func ExtractIntrospectionsInto(r pagination.Page, v any) error {
-	return r.(IntrospectionPage).ExtractIntoSlicePtr(v, "introspection")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExtractIntrospections interprets the results of a single page from a
 // ListIntrospections() call, producing a slice of Introspection entities.
 func ExtractIntrospections(r pagination.Page) ([]Introspection, error) {
-	var s []Introspection
-	err := ExtractIntrospectionsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // IntrospectionPage abstracts the raw results of making a ListIntrospections()
@@ -72,71 +68,20 @@ type Introspection struct {
 }
 
 // IsEmpty returns true if a page contains no Introspection results.
-func (r IntrospectionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractIntrospections(r)
-	return len(s) == 0, err
-}
+func (r IntrospectionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r IntrospectionPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"introspection_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // UnmarshalJSON trie to convert values for started_at and finished_at from the
 // json response into RFC3339 standard. Since Introspection API can remove the
 // Z from the format, if the conversion fails, it falls back to an RFC3339
 // with no Z format supported by gophercloud.
-func (r *Introspection) UnmarshalJSON(b []byte) error {
-	type tmp Introspection
-	var s struct {
-		tmp
-		StartedAt  string `json:"started_at"`
-		FinishedAt string `json:"finished_at"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Introspection(s.tmp)
-
-	if s.StartedAt != "" {
-		t, err := time.Parse(time.RFC3339, s.StartedAt)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.StartedAt)
-			if err != nil {
-				return err
-			}
-		}
-		r.StartedAt = t
-	}
-
-	if s.FinishedAt != "" {
-		t, err := time.Parse(time.RFC3339, s.FinishedAt)
-		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.FinishedAt)
-			if err != nil {
-				return err
-			}
-		}
-		r.FinishedAt = t
-	}
-
-	return nil
-}
+func (r *Introspection) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // GetIntrospectionStatusResult is the response from a GetIntrospectionStatus operation.
 // Call its Extract method to interpret it as an Introspection.
@@ -190,11 +135,7 @@ type BaseInterfaceType struct {
 }
 
 // Extract interprets any IntrospectionDataResult as IntrospectionData, if possible.
-func (r DataResult) Extract() (*Data, error) {
-	var s Data
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r DataResult) Extract() (*Data, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DataResult represents the response from a GetIntrospectionData operation.
 // Call its Extract method to interpret it as a Data.

@@ -1,7 +1,6 @@
 package configurations
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -21,24 +20,7 @@ type Config struct {
 	Values               map[string]any
 }
 
-func (r *Config) UnmarshalJSON(b []byte) error {
-	type tmp Config
-	var s struct {
-		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Config(s.tmp)
-
-	r.Created = time.Time(s.Created)
-	r.Updated = time.Time(s.Updated)
-
-	return nil
-}
+func (r *Config) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ConfigPage contains a page of Config resources in a paginated collection.
 type ConfigPage struct {
@@ -46,22 +28,12 @@ type ConfigPage struct {
 }
 
 // IsEmpty indicates whether a ConfigPage is empty.
-func (r ConfigPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractConfigs(r)
-	return len(is) == 0, err
-}
+func (r ConfigPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractConfigs will retrieve a slice of Config structs from a page.
 func ExtractConfigs(r pagination.Page) ([]Config, error) {
-	var s struct {
-		Configs []Config `json:"configurations"`
-	}
-	err := (r.(ConfigPage)).ExtractInto(&s)
-	return s.Configs, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -69,13 +41,7 @@ type commonResult struct {
 }
 
 // Extract will retrieve a Config resource from an operation result.
-func (r commonResult) Extract() (*Config, error) {
-	var s struct {
-		Config *Config `json:"configuration"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Config, err
-}
+func (r commonResult) Extract() (*Config, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
@@ -117,23 +83,10 @@ type ParamPage struct {
 }
 
 // IsEmpty indicates whether a ParamPage is empty.
-func (r ParamPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractParams(r)
-	return len(is) == 0, err
-}
+func (r ParamPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractParams will retrieve a slice of Param structs from a page.
-func ExtractParams(r pagination.Page) ([]Param, error) {
-	var s struct {
-		Params []Param `json:"configuration-parameters"`
-	}
-	err := (r.(ParamPage)).ExtractInto(&s)
-	return s.Params, err
-}
+func ExtractParams(r pagination.Page) ([]Param, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ParamResult represents the result of an operation which retrieves details
 // about a particular configuration param.
@@ -142,8 +95,4 @@ type ParamResult struct {
 }
 
 // Extract will retrieve a param from an operation result.
-func (r ParamResult) Extract() (*Param, error) {
-	var s *Param
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r ParamResult) Extract() (*Param, error) { _ = "STUB: not implemented"; return nil, nil }

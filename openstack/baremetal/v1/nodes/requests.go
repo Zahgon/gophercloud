@@ -2,7 +2,6 @@ package nodes
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -137,62 +136,34 @@ type ListOpts struct {
 }
 
 // ToNodeListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToNodeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToNodeListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List makes a request against the API to list nodes accessible to you.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToNodeListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return NodePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ToNodeListDetailQuery formats a ListOpts into a query string for the list details API.
 func (opts ListOpts) ToNodeListDetailQuery() (string, error) {
+	_ = "STUB: not implemented"
 	// Detail endpoint can't filter by Fields
-	if len(opts.Fields) > 0 {
-		return "", fmt.Errorf("fields is not a valid option when getting a detailed listing of nodes")
-	}
-
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	return "", nil
 }
 
 // Return a list of bare metal Nodes with complete details. Some filtering is possible by passing in flags in ListOpts,
 // but you cannot limit by the fields returned.
 func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+	_ = "STUB: not implemented"
 	// This URL is deprecated. In the future, we should compare the microversion and if >= 1.43, hit the listURL
 	// with ListOpts{Detail: true,}
-	url := listDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToNodeListDetailQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return NodePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	return *new(pagination.Pager)
 }
 
 // Get requests details on a single node, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -286,25 +257,14 @@ type CreateOpts struct {
 
 // ToNodeCreateMap assembles a request body based on the contents of a CreateOpts.
 func (opts CreateOpts) ToNodeCreateMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests a node to be created
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	reqBody, err := opts.ToNodeCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createURL(client), reqBody, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 type Patch interface {
@@ -329,53 +289,34 @@ type UpdateOperation struct {
 }
 
 func (opts UpdateOperation) ToNodeUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update requests that a node be updated
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
-	body := make([]map[string]any, len(opts))
-	for i, patch := range opts {
-		result, err := patch.ToNodeUpdateMap()
-		if err != nil {
-			r.Err = err
-			return
-		}
-
-		body[i] = result
-	}
-	resp, err := client.Patch(ctx, updateURL(client, id), body, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete requests that a node be removed
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // Request that Ironic validate whether the Node’s driver has enough information to manage the Node. This polls each
 // interface on the driver, and returns the status of that interface.
 func Validate(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ValidateResult) {
-	resp, err := client.Get(ctx, validateURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ValidateResult)
 }
 
 // Inject NMI (Non-Masking Interrupts) for the given Node. This feature can be used for hardware diagnostics, and
 // actual support depends on a driver.
 func InjectNMI(ctx context.Context, client *gophercloud.ServiceClient, id string) (r InjectNMIResult) {
-	resp, err := client.Put(ctx, injectNMIURL(client, id), map[string]string{}, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(InjectNMIResult)
 }
 
 type BootDeviceOpts struct {
@@ -391,46 +332,27 @@ type BootDeviceOptsBuilder interface {
 
 // ToBootDeviceSetMap assembles a request body based on the contents of a BootDeviceOpts.
 func (opts BootDeviceOpts) ToBootDeviceMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Set the boot device for the given Node, and set it persistently or for one-time boot. The exact behaviour
 // of this depends on the hardware driver.
 func SetBootDevice(ctx context.Context, client *gophercloud.ServiceClient, id string, bootDevice BootDeviceOptsBuilder) (r SetBootDeviceResult) {
-	reqBody, err := bootDevice.ToBootDeviceMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, bootDeviceURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SetBootDeviceResult)
 }
 
 // Get the current boot device for the given Node.
 func GetBootDevice(ctx context.Context, client *gophercloud.ServiceClient, id string) (r BootDeviceResult) {
-	resp, err := client.Get(ctx, bootDeviceURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(BootDeviceResult)
 }
 
 // Retrieve the acceptable set of supported boot devices for a specific Node.
 func GetSupportedBootDevices(ctx context.Context, client *gophercloud.ServiceClient, id string) (r SupportedBootDeviceResult) {
-	resp, err := client.Get(ctx, supportedBootDeviceURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SupportedBootDeviceResult)
 }
 
 // An interface type for a deploy (or clean) step.
@@ -494,28 +416,15 @@ type ProvisionStateOpts struct {
 
 // ToProvisionStateMap assembles a request body based on the contents of a CreateOpts.
 func (opts ProvisionStateOpts) ToProvisionStateMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Request a change to the Node’s provision state. Acceptable target states depend on the Node’s current provision
 // state. More detailed documentation of the Ironic State Machine is available in the developer docs.
 func ChangeProvisionState(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ProvisionStateOptsBuilder) (r ChangeStateResult) {
-	reqBody, err := opts.ToProvisionStateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, provisionStateURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ChangeStateResult)
 }
 
 type TargetPowerState string
@@ -542,27 +451,14 @@ type PowerStateOpts struct {
 
 // ToPowerStateMap assembles a request body based on the contents of a PowerStateOpts.
 func (opts PowerStateOpts) ToPowerStateMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Request to change a Node's power state.
 func ChangePowerState(ctx context.Context, client *gophercloud.ServiceClient, id string, opts PowerStateOptsBuilder) (r ChangePowerStateResult) {
-	reqBody, err := opts.ToPowerStateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, powerStateURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ChangePowerStateResult)
 }
 
 // This is the desired RAID configuration on the bare metal node.
@@ -641,37 +537,14 @@ type LogicalDisk struct {
 }
 
 func (opts RAIDConfigOpts) ToRAIDConfigMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if body["logical_disks"] != nil {
-		for _, v := range body["logical_disks"].([]any) {
-			if logicalDisk, ok := v.(map[string]any); ok {
-				if logicalDisk["size_gb"] == nil {
-					logicalDisk["size_gb"] = "MAX"
-				}
-			}
-		}
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Request to change a Node's RAID config.
 func SetRAIDConfig(ctx context.Context, client *gophercloud.ServiceClient, id string, raidConfigOptsBuilder RAIDConfigOptsBuilder) (r ChangeStateResult) {
-	reqBody, err := raidConfigOptsBuilder.ToRAIDConfigMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, raidConfigURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ChangeStateResult)
 }
 
 // ListBIOSSettingsOptsBuilder allows extensions to add additional parameters to the
@@ -691,42 +564,21 @@ type ListBIOSSettingsOpts struct {
 
 // ToListBIOSSettingsOptsQuery formats a ListBIOSSettingsOpts into a query string
 func (opts ListBIOSSettingsOpts) ToListBIOSSettingsOptsQuery() (string, error) {
-	if opts.Detail && len(opts.Fields) > 0 {
-		return "", fmt.Errorf("cannot have both fields and detail options for BIOS settings")
-	}
-
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Get the current BIOS Settings for the given Node.
 // To use the opts requires microversion 1.74.
 func ListBIOSSettings(ctx context.Context, client *gophercloud.ServiceClient, id string, opts ListBIOSSettingsOptsBuilder) (r ListBIOSSettingsResult) {
-	url := biosListSettingsURL(client, id)
-	if opts != nil {
-
-		query, err := opts.ToListBIOSSettingsOptsQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-
-	resp, err := client.Get(ctx, url, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListBIOSSettingsResult)
 }
 
 // Get one BIOS Setting for the given Node.
 func GetBIOSSetting(ctx context.Context, client *gophercloud.ServiceClient, id string, setting string) (r GetBIOSSettingResult) {
-	resp, err := client.Get(ctx, biosGetSettingURL(client, id, setting), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetBIOSSettingResult)
 }
 
 // CallVendorPassthruOpts defines query options that can be passed to any VendorPassthruCall
@@ -736,32 +588,20 @@ type CallVendorPassthruOpts struct {
 
 // ToGetSubscriptionMap assembles a query based on the contents of a CallVendorPassthruOpts
 func ToGetAllSubscriptionMap(opts CallVendorPassthruOpts) (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Get all vendor_passthru methods available for the given Node.
 func GetVendorPassthruMethods(ctx context.Context, client *gophercloud.ServiceClient, id string) (r VendorPassthruMethodsResult) {
-	resp, err := client.Get(ctx, vendorPassthruMethodsURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(VendorPassthruMethodsResult)
 }
 
 // Get all subscriptions available for the given Node.
 func GetAllSubscriptions(ctx context.Context, client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts) (r GetAllSubscriptionsVendorPassthruResult) {
-	query, err := ToGetAllSubscriptionMap(method)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Get(ctx, url, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetAllSubscriptionsVendorPassthruResult)
 }
 
 // The desired subscription id on the baremetal node.
@@ -771,32 +611,14 @@ type GetSubscriptionOpts struct {
 
 // ToGetSubscriptionMap assembles a query based on the contents of CallVendorPassthruOpts and a request body based on the contents of a GetSubscriptionOpts
 func ToGetSubscriptionMap(method CallVendorPassthruOpts, opts GetSubscriptionOpts) (string, map[string]any, error) {
-	q, err := gophercloud.BuildQueryString(method)
-	if err != nil {
-		return q.String(), nil, err
-	}
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return q.String(), nil, err
-	}
-
-	return q.String(), body, nil
+	_ = "STUB: not implemented"
+	return "", nil, nil
 }
 
 // Get a subscription on the given Node.
 func GetSubscription(ctx context.Context, client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts GetSubscriptionOpts) (r SubscriptionVendorPassthruResult) {
-	query, reqBody, err := ToGetSubscriptionMap(method, subscriptionOpts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Get(ctx, url, &r.Body, &gophercloud.RequestOpts{
-		JSONBody: reqBody,
-		OkCodes:  []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SubscriptionVendorPassthruResult)
 }
 
 // The desired subscription to be deleted from the baremetal node.
@@ -806,31 +628,14 @@ type DeleteSubscriptionOpts struct {
 
 // ToDeleteSubscriptionMap assembles a query based on the contents of CallVendorPassthruOpts and a request body based on the contents of a DeleteSubscriptionOpts
 func ToDeleteSubscriptionMap(method CallVendorPassthruOpts, opts DeleteSubscriptionOpts) (string, map[string]any, error) {
-	q, err := gophercloud.BuildQueryString(method)
-	if err != nil {
-		return q.String(), nil, err
-	}
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return q.String(), nil, err
-	}
-	return q.String(), body, nil
+	_ = "STUB: not implemented"
+	return "", nil, nil
 }
 
 // Delete a subscription on the given node.
 func DeleteSubscription(ctx context.Context, client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts DeleteSubscriptionOpts) (r DeleteSubscriptionVendorPassthruResult) {
-	query, reqBody, err := ToDeleteSubscriptionMap(method, subscriptionOpts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Delete(ctx, url, &gophercloud.RequestOpts{
-		JSONBody: reqBody,
-		OkCodes:  []int{200, 202, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return r
+	_ = "STUB: not implemented"
+	return *new(DeleteSubscriptionVendorPassthruResult)
 }
 
 // The desired subscription to be created from the baremetal node.
@@ -844,30 +649,14 @@ type CreateSubscriptionOpts struct {
 
 // ToCreateSubscriptionMap assembles a query based on the contents of CallVendorPassthruOpts and a request body based on the contents of a CreateSubscriptionOpts
 func ToCreateSubscriptionMap(method CallVendorPassthruOpts, opts CreateSubscriptionOpts) (string, map[string]any, error) {
-	q, err := gophercloud.BuildQueryString(method)
-	if err != nil {
-		return q.String(), nil, err
-	}
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return q.String(), nil, err
-	}
-	return q.String(), body, nil
+	_ = "STUB: not implemented"
+	return "", nil, nil
 }
 
 // Creates a subscription on the given node.
 func CreateSubscription(ctx context.Context, client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts CreateSubscriptionOpts) (r SubscriptionVendorPassthruResult) {
-	query, reqBody, err := ToCreateSubscriptionMap(method, subscriptionOpts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Post(ctx, url, reqBody, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return r
+	_ = "STUB: not implemented"
+	return *new(SubscriptionVendorPassthruResult)
 }
 
 // MaintenanceOpts for a request to set the node's maintenance mode.
@@ -882,54 +671,32 @@ type MaintenanceOptsBuilder interface {
 
 // ToMaintenanceMap assembles a request body based on the contents of a MaintenanceOpts.
 func (opts MaintenanceOpts) ToMaintenanceMap() (map[string]any, error) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Request to set the Node's maintenance mode.
 func SetMaintenance(ctx context.Context, client *gophercloud.ServiceClient, id string, opts MaintenanceOptsBuilder) (r SetMaintenanceResult) {
-	reqBody, err := opts.ToMaintenanceMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Put(ctx, maintenanceURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SetMaintenanceResult)
 }
 
 // Request to unset the Node's maintenance mode.
 func UnsetMaintenance(ctx context.Context, client *gophercloud.ServiceClient, id string) (r SetMaintenanceResult) {
-	resp, err := client.Delete(ctx, maintenanceURL(client, id), &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SetMaintenanceResult)
 }
 
 // GetInventory return stored data from successful inspection.
 func GetInventory(ctx context.Context, client *gophercloud.ServiceClient, id string) (r InventoryResult) {
-	resp, err := client.Get(ctx, inventoryURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(InventoryResult)
 }
 
 // ListFirmware return the list of Firmware components for the given Node.
 func ListFirmware(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ListFirmwareResult) {
-	resp, err := client.Get(ctx, firmwareListURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListFirmwareResult)
 }
 
 type VirtualMediaDeviceType string
@@ -960,22 +727,14 @@ type AttachVirtualMediaOptsBuilder interface {
 }
 
 func (opts AttachVirtualMediaOpts) ToAttachVirtualMediaMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Request to attach a virtual media device to the Node.
 func AttachVirtualMedia(ctx context.Context, client *gophercloud.ServiceClient, id string, opts AttachVirtualMediaOptsBuilder) (r VirtualMediaAttachResult) {
-	reqBody, err := opts.ToAttachVirtualMediaMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, virtualMediaURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(VirtualMediaAttachResult)
 }
 
 // The desired virtual media detachment on the baremetal node.
@@ -988,35 +747,21 @@ type DetachVirtualMediaOptsBuilder interface {
 }
 
 func (opts DetachVirtualMediaOpts) ToDetachVirtualMediaOptsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Request to detach a virtual media device from the Node.
 func DetachVirtualMedia(ctx context.Context, client *gophercloud.ServiceClient, id string, opts DetachVirtualMediaOptsBuilder) (r VirtualMediaDetachResult) {
-	query, err := opts.ToDetachVirtualMediaOptsQuery()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Delete(ctx, virtualMediaURL(client, id)+query, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(VirtualMediaDetachResult)
 }
 
 // Request the list of virtual media devices attached to the Node.
 // Requires microversion 1.93 or later.
 func GetVirtualMedia(ctx context.Context, client *gophercloud.ServiceClient, id string) (r VirtualMediaGetResult) {
-
-	resp, err := client.Get(ctx, virtualMediaURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(VirtualMediaGetResult)
 }
 
 // VirtualInterfaceOpts defines options for attaching a VIF to a node
@@ -1037,42 +782,24 @@ type VirtualInterfaceOptsBuilder interface {
 
 // ToVirtualInterfaceMap assembles a request body based on the contents of a VirtualInterfaceOpts.
 func (opts VirtualInterfaceOpts) ToVirtualInterfaceMap() (map[string]any, error) {
-	if opts.PortUUID != "" && opts.PortgroupUUID != "" {
-		return nil, fmt.Errorf("cannot specify both port_uuid and portgroup_uuid")
-	}
-
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListVirtualInterfaces returns a list of VIFs that are attached to the node.
 func ListVirtualInterfaces(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ListVirtualInterfacesResult) {
-	resp, err := client.Get(ctx, virtualInterfaceURL(client, id), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListVirtualInterfacesResult)
 }
 
 // AttachVirtualInterface attaches a VIF to a node.
 func AttachVirtualInterface(ctx context.Context, client *gophercloud.ServiceClient, id string, opts VirtualInterfaceOptsBuilder) (r VirtualInterfaceAttachResult) {
-	reqBody, err := opts.ToVirtualInterfaceMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, virtualInterfaceURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(VirtualInterfaceAttachResult)
 }
 
 // DetachVirtualInterface detaches a VIF from a node.
 func DetachVirtualInterface(ctx context.Context, client *gophercloud.ServiceClient, id string, vifID string) (r VirtualInterfaceDetachResult) {
-	resp, err := client.Delete(ctx, virtualInterfaceDeleteURL(client, id, vifID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(VirtualInterfaceDetachResult)
 }

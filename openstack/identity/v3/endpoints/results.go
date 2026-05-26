@@ -11,13 +11,7 @@ type commonResult struct {
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a concrete
 // Endpoint. An error is returned if the original call or the extraction failed.
-func (r commonResult) Extract() (*Endpoint, error) {
-	var s struct {
-		Endpoint *Endpoint `json:"endpoint"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Endpoint, err
-}
+func (r commonResult) Extract() (*Endpoint, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract method
 // to interpret it as an Endpoint.
@@ -77,20 +71,10 @@ type EndpointPage struct {
 }
 
 // IsEmpty returns true if no Endpoints were returned.
-func (r EndpointPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	es, err := ExtractEndpoints(r)
-	return len(es) == 0, err
-}
+func (r EndpointPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractEndpoints extracts an Endpoint slice from a Page.
 func ExtractEndpoints(r pagination.Page) ([]Endpoint, error) {
-	var s struct {
-		Endpoints []Endpoint `json:"endpoints"`
-	}
-	err := (r.(EndpointPage)).ExtractInto(&s)
-	return s.Endpoints, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

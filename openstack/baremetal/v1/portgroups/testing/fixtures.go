@@ -1,14 +1,11 @@
 package testing
 
 import (
-	"fmt"
-	"net/http"
 	"testing"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2/openstack/baremetal/v1/portgroups"
 	th "github.com/gophercloud/gophercloud/v2/testhelper"
-	"github.com/gophercloud/gophercloud/v2/testhelper/client"
 )
 
 // PortGroupsListBody is the JSON response for listing all portgroups.
@@ -193,79 +190,31 @@ var (
 // HandlePortGroupListSuccessfully sets up the test server to respond to a
 // portgroup List request.
 func HandlePortGroupListSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/portgroups", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.Header().Add("Content-Type", "application/json")
-		if err := r.ParseForm(); err != nil {
-			t.Errorf("Failed to parse request form: %v", err)
-		}
-
-		marker := r.Form.Get("marker")
-		switch marker {
-		case "":
-			// Return both portgroups.
-			fmt.Fprint(w, PortGroupsListBody)
-		case "d2b42f0d-c7e6-4f08-b9bc-e8b23a6ee796":
-			// No portgroups remain.
-			fmt.Fprintf(w, `{ "portgroups": [] }`)
-		default:
-			t.Fatalf("/portgroups invoked with unexpected marker=[%s]", marker)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
+
+// Return both portgroups.
+
+// No portgroups remain.
 
 // HandlePortGroupCreationSuccessfully sets up the test server to respond to a PortGroup creation request
 // with a given response.
 func HandlePortGroupCreationSuccessfully(t *testing.T, fakeServer th.FakeServer, response string) {
-	fakeServer.Mux.HandleFunc("/portgroups", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestJSONRequest(t, r, `{
-      "node_uuid": "f9c9a846-c53f-4b17-9f0c-dd9f459d35c8",
-      "address": "00:1a:2b:3c:4d:5e",
-      "name": "bond0",
-      "mode": "active-backup",
-      "standalone_ports_supported": true,
-      "properties": {
-          "miimon": "100",
-          "updelay": "1000",
-          "downdelay": "1000",
-          "xmit_hash_policy": "layer2"
-      },
-      "extra": {
-          "description": "Primary network bond",
-          "location": "rack-3-unit-12"
-      }
-  }`)
-
-		w.WriteHeader(http.StatusAccepted)
-		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprint(w, response)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandlePortGroupDeletionSuccessfully sets up the test server to respond to a
 // portgroup Deletion (DELETE) request for PortGroup2.
 func HandlePortGroupDeletionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/portgroups/d2b42f0d-c7e6-4f08-b9bc-e8b23a6ee796",
-		func(w http.ResponseWriter, r *http.Request) {
-			th.TestMethod(t, r, "DELETE")
-			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-			w.WriteHeader(http.StatusNoContent)
-		})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandlePortGroupGetSuccessfully sets up the test server to respond to a
 // portgroup Get request for PortGroup1.
 func HandlePortGroupGetSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/portgroups/d2b42f0d-c7e6-4f08-b9bc-e8b23a6ee796",
-		func(w http.ResponseWriter, r *http.Request) {
-			th.TestMethod(t, r, "GET")
-			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-			th.TestHeader(t, r, "Accept", "application/json")
-
-			w.Header().Add("Content-Type", "application/json")
-			fmt.Fprint(w, SinglePortGroupBody)
-		})
+	_ = "STUB: not implemented"
+	return
 }

@@ -6,14 +6,14 @@ const (
 	resTypesPath = "resource_types"
 )
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resTypesPath)
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func getSchemaURL(c *gophercloud.ServiceClient, resourceType string) string {
-	return c.ServiceURL(resTypesPath, resourceType)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func generateTemplateURL(c *gophercloud.ServiceClient, resourceType string) string {
-	return c.ServiceURL(resTypesPath, resourceType, "template")
+	_ = "STUB: not implemented"
+	return ""
 }

@@ -32,30 +32,22 @@ type CreateOpts struct {
 // ToShareNetworkCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToShareNetworkCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "share_network")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create will create a new ShareNetwork based on the values in CreateOpts. To
 // extract the ShareNetwork object from the response, call the Extract method
 // on the CreateResult.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToShareNetworkCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete will delete the existing ShareNetwork with the provided ID.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List
@@ -99,34 +91,21 @@ type ListOpts struct {
 
 // ToShareNetworkListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToShareNetworkListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListDetail returns ShareNetworks optionally limited by the conditions provided in ListOpts.
 func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToShareNetworkListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		p := ShareNetworkPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves the ShareNetwork with the provided ID. To extract the ShareNetwork
 // object from the response, call the Extract method on the GetResult.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -154,22 +133,15 @@ type UpdateOpts struct {
 // ToShareNetworkUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToShareNetworkUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "share_network")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the ShareNetwork with provided information. To extract the updated
 // ShareNetwork from the response, call the Extract method on the UpdateResult.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToShareNetworkUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // AddSecurityServiceOptsBuilder allows extensions to add additional parameters to the
@@ -188,22 +160,15 @@ type AddSecurityServiceOpts struct {
 // ToShareNetworkAddSecurityServiceMap assembles a request body based on the contents of an
 // AddSecurityServiceOpts.
 func (opts AddSecurityServiceOpts) ToShareNetworkAddSecurityServiceMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "add_security_service")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddSecurityService will add the security service to a ShareNetwork. To extract the updated
 // ShareNetwork from the response, call the Extract method on the UpdateResult.
 func AddSecurityService(ctx context.Context, client *gophercloud.ServiceClient, id string, opts AddSecurityServiceOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToShareNetworkAddSecurityServiceMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, addSecurityServiceURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // RemoveSecurityServiceOptsBuilder allows extensions to add additional parameters to the
@@ -222,20 +187,13 @@ type RemoveSecurityServiceOpts struct {
 // ToShareNetworkRemoveSecurityServiceMap assembles a request body based on the contents of an
 // RemoveSecurityServiceOpts.
 func (opts RemoveSecurityServiceOpts) ToShareNetworkRemoveSecurityServiceMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "remove_security_service")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveSecurityService will remove the security service from a ShareNetwork. To extract the updated
 // ShareNetwork from the response, call the Extract method on the UpdateResult.
 func RemoveSecurityService(ctx context.Context, client *gophercloud.ServiceClient, id string, opts RemoveSecurityServiceOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToShareNetworkRemoveSecurityServiceMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, removeSecurityServiceURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }

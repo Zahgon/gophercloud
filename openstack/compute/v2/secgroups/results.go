@@ -1,9 +1,6 @@
 package secgroups
 
 import (
-	"encoding/json"
-	"strconv"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -28,28 +25,7 @@ type SecurityGroup struct {
 	TenantID string `json:"tenant_id"`
 }
 
-func (r *SecurityGroup) UnmarshalJSON(b []byte) error {
-	type tmp SecurityGroup
-	var s struct {
-		tmp
-		ID any `json:"id"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = SecurityGroup(s.tmp)
-
-	switch t := s.ID.(type) {
-	case float64:
-		r.ID = strconv.FormatFloat(t, 'f', -1, 64)
-	case string:
-		r.ID = t
-	}
-
-	return err
-}
+func (r *SecurityGroup) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // Rule represents a security group rule, a policy which determines how a
 // security group operates and what inbound traffic it allows in.
@@ -78,36 +54,7 @@ type Rule struct {
 	Group Group
 }
 
-func (r *Rule) UnmarshalJSON(b []byte) error {
-	type tmp Rule
-	var s struct {
-		tmp
-		ID            any `json:"id"`
-		ParentGroupID any `json:"parent_group_id"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Rule(s.tmp)
-
-	switch t := s.ID.(type) {
-	case float64:
-		r.ID = strconv.FormatFloat(t, 'f', -1, 64)
-	case string:
-		r.ID = t
-	}
-
-	switch t := s.ParentGroupID.(type) {
-	case float64:
-		r.ParentGroupID = strconv.FormatFloat(t, 'f', -1, 64)
-	case string:
-		r.ParentGroupID = t
-	}
-
-	return err
-}
+func (r *Rule) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // IPRange represents the IP range whose traffic will be accepted by the
 // security group.
@@ -128,23 +75,13 @@ type SecurityGroupPage struct {
 
 // IsEmpty determines whether or not a page of Security Groups contains any
 // results.
-func (page SecurityGroupPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	users, err := ExtractSecurityGroups(page)
-	return len(users) == 0, err
-}
+func (page SecurityGroupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractSecurityGroups returns a slice of SecurityGroups contained in a
 // single page of results.
 func ExtractSecurityGroups(r pagination.Page) ([]SecurityGroup, error) {
-	var s struct {
-		SecurityGroups []SecurityGroup `json:"security_groups"`
-	}
-	err := (r.(SecurityGroupPage)).ExtractInto(&s)
-	return s.SecurityGroups, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -170,13 +107,7 @@ type UpdateResult struct {
 }
 
 // Extract will extract a SecurityGroup struct from most responses.
-func (r commonResult) Extract() (*SecurityGroup, error) {
-	var s struct {
-		SecurityGroup *SecurityGroup `json:"security_group"`
-	}
-	err := r.ExtractInto(&s)
-	return s.SecurityGroup, err
-}
+func (r commonResult) Extract() (*SecurityGroup, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateRuleResult represents the result when adding rules to a security group.
 // Call its Extract method to interpret the result as a Rule.
@@ -185,13 +116,7 @@ type CreateRuleResult struct {
 }
 
 // Extract will extract a Rule struct from a CreateRuleResult.
-func (r CreateRuleResult) Extract() (*Rule, error) {
-	var s struct {
-		Rule *Rule `json:"security_group_rule"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Rule, err
-}
+func (r CreateRuleResult) Extract() (*Rule, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DeleteResult is the response from delete operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.

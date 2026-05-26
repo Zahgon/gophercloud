@@ -37,22 +37,15 @@ type VolumeAttachmentPage struct {
 
 // IsEmpty determines whether or not a VolumeAttachmentPage is empty.
 func (page VolumeAttachmentPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	va, err := ExtractVolumeAttachments(page)
-	return len(va) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractVolumeAttachments interprets a page of results as a slice of
 // VolumeAttachment.
 func ExtractVolumeAttachments(r pagination.Page) ([]VolumeAttachment, error) {
-	var s struct {
-		VolumeAttachments []VolumeAttachment `json:"volumeAttachments"`
-	}
-	err := (r.(VolumeAttachmentPage)).ExtractInto(&s)
-	return s.VolumeAttachments, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // VolumeAttachmentResult is the result from a volume attachment operation.
@@ -63,11 +56,8 @@ type VolumeAttachmentResult struct {
 // Extract is a method that attempts to interpret any VolumeAttachment resource
 // response as a VolumeAttachment struct.
 func (r VolumeAttachmentResult) Extract() (*VolumeAttachment, error) {
-	var s struct {
-		VolumeAttachment *VolumeAttachment `json:"volumeAttachment"`
-	}
-	err := r.ExtractInto(&s)
-	return s.VolumeAttachment, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult is the response from a Create operation. Call its Extract method

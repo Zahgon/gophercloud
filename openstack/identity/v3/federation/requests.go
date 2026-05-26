@@ -9,9 +9,8 @@ import (
 
 // ListMappings enumerates the mappings.
 func ListMappings(client *gophercloud.ServiceClient) pagination.Pager {
-	return pagination.NewPager(client, mappingsRootURL(client), func(r pagination.PageResult) pagination.Page {
-		return MappingsPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateMappingOptsBuilder allows extensions to add additional parameters to
@@ -28,28 +27,20 @@ type CreateMappingOpts struct {
 
 // ToMappingCreateMap formats a CreateMappingOpts into a create request.
 func (opts CreateMappingOpts) ToMappingCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "mapping")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateMapping creates a new Mapping.
 func CreateMapping(ctx context.Context, client *gophercloud.ServiceClient, mappingID string, opts CreateMappingOptsBuilder) (r CreateMappingResult) {
-	b, err := opts.ToMappingCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(ctx, mappingsResourceURL(client, mappingID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateMappingResult)
 }
 
 // GetMapping retrieves details on a single mapping, by ID.
 func GetMapping(ctx context.Context, client *gophercloud.ServiceClient, mappingID string) (r GetMappingResult) {
-	resp, err := client.Get(ctx, mappingsResourceURL(client, mappingID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetMappingResult)
 }
 
 // UpdateMappingOptsBuilder allows extensions to add additional parameters to
@@ -66,26 +57,18 @@ type UpdateMappingOpts struct {
 
 // ToMappingUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateMappingOpts) ToMappingUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "mapping")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateMapping updates an existing mapping.
 func UpdateMapping(ctx context.Context, client *gophercloud.ServiceClient, mappingID string, opts UpdateMappingOptsBuilder) (r UpdateMappingResult) {
-	b, err := opts.ToMappingUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, mappingsResourceURL(client, mappingID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateMappingResult)
 }
 
 // DeleteMapping deletes a mapping.
 func DeleteMapping(ctx context.Context, client *gophercloud.ServiceClient, mappingID string) (r DeleteMappingResult) {
-	resp, err := client.Delete(ctx, mappingsResourceURL(client, mappingID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteMappingResult)
 }

@@ -60,35 +60,19 @@ type ServicePage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r ServicePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"vpnservices_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a ServicePage struct is empty.
-func (r ServicePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractServices(r)
-	return len(is) == 0, err
-}
+func (r ServicePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractServices accepts a Page struct, specifically a Service struct,
 // and extracts the elements into a slice of Service structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractServices(r pagination.Page) ([]Service, error) {
-	var s struct {
-		Services []Service `json:"vpnservices"`
-	}
-	err := (r.(ServicePage)).ExtractInto(&s)
-	return s.Services, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResult represents the result of a get operation. Call its Extract
@@ -98,13 +82,7 @@ type GetResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a VPN service.
-func (r commonResult) Extract() (*Service, error) {
-	var s struct {
-		Service *Service `json:"vpnservice"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Service, err
-}
+func (r commonResult) Extract() (*Service, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a Service.

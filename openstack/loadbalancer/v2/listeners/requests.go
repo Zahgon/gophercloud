@@ -80,8 +80,8 @@ type ListOpts struct {
 
 // ToListenerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToListenerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
@@ -91,17 +91,8 @@ func (opts ListOpts) ToListenerListQuery() (string, error) {
 // Default policy settings return only those listeners that are owned by the
 // project who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToListenerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return ListenerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -228,7 +219,8 @@ type CreateOpts struct {
 
 // ToListenerCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToListenerCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "listener")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create is an operation which provisions a new Listeners based on the
@@ -239,21 +231,14 @@ func (opts CreateOpts) ToListenerCreateMap() (map[string]any, error) {
 // Users with an admin role can create Listeners on behalf of other projects by
 // specifying a ProjectID attribute different than their own.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToListenerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular Listeners based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -353,56 +338,31 @@ type UpdateOpts struct {
 
 // ToListenerUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToListenerUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "listener")
-	if err != nil {
-		return nil, err
-	}
-
-	m := b["listener"].(map[string]any)
-
-	// allow to unset default_pool_id on empty string
-	if m["default_pool_id"] == "" {
-		m["default_pool_id"] = nil
-	}
-
-	// allow to unset alpn_protocols on empty slice
-	if opts.ALPNProtocols != nil && len(*opts.ALPNProtocols) == 0 {
-		m["alpn_protocols"] = nil
-	}
-
-	// allow to unset tls_versions on empty slice
-	if opts.TLSVersions != nil && len(*opts.TLSVersions) == 0 {
-		m["tls_versions"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// allow to unset default_pool_id on empty string
+
+// allow to unset alpn_protocols on empty slice
+
+// allow to unset tls_versions on empty slice
 
 // Update is an operation which modifies the attributes of the specified
 // Listener.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToListenerUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular Listeners based on its unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // GetStats will return the shows the current statistics of a particular Listeners.
 func GetStats(ctx context.Context, c *gophercloud.ServiceClient, id string) (r StatsResult) {
-	resp, err := c.Get(ctx, statisticsRootURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(StatsResult)
 }

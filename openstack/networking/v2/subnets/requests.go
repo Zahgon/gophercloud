@@ -2,7 +2,6 @@ package subnets
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -47,10 +46,7 @@ type ListOpts struct {
 }
 
 // ToSubnetListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToSubnetListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToSubnetListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // subnets. It accepts a ListOpts struct, which allows you to filter and sort
@@ -60,24 +56,14 @@ func (opts ListOpts) ToSubnetListQuery() (string, error) {
 // who submits the request, unless the request is submitted by a user with
 // administrative rights.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToSubnetListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return SubnetPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific subnet based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -156,30 +142,16 @@ type CreateOpts struct {
 
 // ToSubnetCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSubnetCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "subnet")
-	if err != nil {
-		return nil, err
-	}
-
-	if m := b["subnet"].(map[string]any); m["gateway_ip"] == "" {
-		m["gateway_ip"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and creates a new subnet using the values
 // provided. You must remember to provide a valid NetworkID, CIDR and IP
 // version.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToSubnetCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -231,48 +203,19 @@ type UpdateOpts struct {
 
 // ToSubnetUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToSubnetUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "subnet")
-	if err != nil {
-		return nil, err
-	}
-
-	if m := b["subnet"].(map[string]any); m["gateway_ip"] == "" {
-		m["gateway_ip"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing subnet using the
 // values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToSubnetUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-
-	resp, err := c.Put(ctx, updateURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200, 201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete accepts a unique ID and deletes the subnet associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

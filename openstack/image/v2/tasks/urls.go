@@ -1,55 +1,28 @@
 package tasks
 
 import (
-	"net/url"
-	"strings"
-
 	"github.com/gophercloud/gophercloud/v2"
-	"github.com/gophercloud/gophercloud/v2/openstack/utils"
 )
 
 const resourcePath = "tasks"
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, taskID string) string {
-	return c.ServiceURL(resourcePath, taskID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return rootURL(c)
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func getURL(c *gophercloud.ServiceClient, taskID string) string {
-	return resourceURL(c, taskID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return rootURL(c)
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func nextPageURL(endpointURL, requestedNext string) (string, error) {
-	base, err := utils.BaseEndpoint(endpointURL)
-	if err != nil {
-		return "", err
-	}
-
-	requestedNextURL, err := url.Parse(requestedNext)
-	if err != nil {
-		return "", err
-	}
-
-	base = gophercloud.NormalizeURL(base)
-	nextPath := base + strings.TrimPrefix(requestedNextURL.Path, "/")
-
-	nextURL, err := url.Parse(nextPath)
-	if err != nil {
-		return "", err
-	}
-
-	nextURL.RawQuery = requestedNextURL.RawQuery
-
-	return nextURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }

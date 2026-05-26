@@ -9,18 +9,19 @@ const (
 	removePath   = "remove_rule"
 )
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath, resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, resourcePath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func insertURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, resourcePath, id, insertPath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func removeURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, resourcePath, id, removePath)
+	_ = "STUB: not implemented"
+	return ""
 }

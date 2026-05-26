@@ -107,68 +107,19 @@ type GetResult struct {
 }
 
 // ExtractToken returns the just-created Token from a CreateResult.
-func (r CreateResult) ExtractToken() (*Token, error) {
-	var s struct {
-		Access struct {
-			Token struct {
-				Expires string         `json:"expires"`
-				ID      string         `json:"id"`
-				Tenant  tenants.Tenant `json:"tenant"`
-			} `json:"token"`
-		} `json:"access"`
-	}
-
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return nil, err
-	}
-
-	expiresTs, err := time.Parse(gophercloud.RFC3339Milli, s.Access.Token.Expires)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Token{
-		ID:        s.Access.Token.ID,
-		ExpiresAt: expiresTs,
-		Tenant:    s.Access.Token.Tenant,
-	}, nil
-}
+func (r CreateResult) ExtractToken() (*Token, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractTokenID implements the gophercloud.AuthResult interface. The returned
 // string is the same as the ID field of the Token struct returned from
 // ExtractToken().
-func (r CreateResult) ExtractTokenID() (string, error) {
-	var s struct {
-		Access struct {
-			Token struct {
-				ID string `json:"id"`
-			} `json:"token"`
-		} `json:"access"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Access.Token.ID, err
-}
+func (r CreateResult) ExtractTokenID() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ExtractServiceCatalog returns the ServiceCatalog that was generated along
 // with the user's Token.
 func (r CreateResult) ExtractServiceCatalog() (*ServiceCatalog, error) {
-	var s struct {
-		Access struct {
-			Entries []CatalogEntry `json:"serviceCatalog"`
-		} `json:"access"`
-	}
-	err := r.ExtractInto(&s)
-	return &ServiceCatalog{Entries: s.Access.Entries}, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractUser returns the User from a GetResult.
-func (r GetResult) ExtractUser() (*User, error) {
-	var s struct {
-		Access struct {
-			User User `json:"user"`
-		} `json:"access"`
-	}
-	err := r.ExtractInto(&s)
-	return &s.Access.User, err
-}
+func (r GetResult) ExtractUser() (*User, error) { _ = "STUB: not implemented"; return nil, nil }

@@ -2,42 +2,43 @@ package sharetypes
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("types")
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("types", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return createURL(c)
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func getDefaultURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("types", "default")
-}
+func getDefaultURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func getExtraSpecsURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("types", id, "extra_specs")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func setExtraSpecsURL(c *gophercloud.ServiceClient, id string) string {
-	return getExtraSpecsURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func unsetExtraSpecsURL(c *gophercloud.ServiceClient, id string, key string) string {
-	return c.ServiceURL("types", id, "extra_specs", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func showAccessURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("types", id, "share_type_access")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func addAccessURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("types", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func removeAccessURL(c *gophercloud.ServiceClient, id string) string {
-	return addAccessURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
 }

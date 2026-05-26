@@ -63,69 +63,31 @@ type ResourceList struct {
 
 // Extract interprets any CreateResult as a ResourceList.
 func (r CreateResult) Extract() (ResourceList, error) {
-	var s ResourceList
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return *new(ResourceList), nil
 }
 
 // Extract interprets any PopResult as a list of PopMessage.
-func (r PopResult) Extract() ([]PopMessage, error) {
-	var s struct {
-		PopMessages []PopMessage `json:"messages"`
-	}
-	err := r.ExtractInto(&s)
-	return s.PopMessages, err
-}
+func (r PopResult) Extract() ([]PopMessage, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any GetMessagesResult as a list of Message.
-func (r GetMessagesResult) Extract() ([]Message, error) {
-	var s struct {
-		Messages []Message `json:"messages"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Messages, err
-}
+func (r GetMessagesResult) Extract() ([]Message, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any GetResult as a Message.
-func (r GetResult) Extract() (Message, error) {
-	var s Message
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r GetResult) Extract() (Message, error) { _ = "STUB: not implemented"; return *new(Message), nil }
 
 // ExtractMessage extracts message into a  list of Message.
 func ExtractMessages(r pagination.Page) ([]Message, error) {
-	var s struct {
-		Messages []Message `json:"messages"`
-	}
-	err := (r.(MessagePage)).ExtractInto(&s)
-	return s.Messages, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // IsEmpty determines if a MessagePage contains any results.
-func (r MessagePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractMessages(r)
-	return len(s) == 0, err
-}
+func (r MessagePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r MessagePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-
-	next, err := gophercloud.ExtractNextURL(s.Links)
-	if err != nil {
-		return "", err
-	}
-	return nextPageURL(endpointURL, next)
+	_ = "STUB: not implemented"
+	return "", nil
 }

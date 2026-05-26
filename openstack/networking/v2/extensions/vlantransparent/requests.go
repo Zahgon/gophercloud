@@ -1,10 +1,6 @@
 package vlantransparent
 
 import (
-	"net/url"
-	"strconv"
-
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/networks"
 )
 
@@ -17,19 +13,8 @@ type ListOptsExt struct {
 // ToNetworkListQuery adds the vlan_transparent option to the base network
 // list options.
 func (opts ListOptsExt) ToNetworkListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts.ListOptsBuilder)
-	if err != nil {
-		return "", err
-	}
-
-	params := q.Query()
-	if opts.VLANTransparent != nil {
-		v := strconv.FormatBool(*opts.VLANTransparent)
-		params.Add("vlan_transparent", v)
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // CreateOptsExt is the structure used when creating new vlan-transparent
@@ -43,19 +28,8 @@ type CreateOptsExt struct {
 // ToNetworkCreateMap adds the vlan_transparent option to the base network
 // creation options.
 func (opts CreateOptsExt) ToNetworkCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.VLANTransparent == nil {
-		return base, nil
-	}
-
-	networkMap := base["network"].(map[string]any)
-	networkMap["vlan_transparent"] = opts.VLANTransparent
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateOptsExt is the structure used when updating existing vlan-transparent
@@ -68,17 +42,6 @@ type UpdateOptsExt struct {
 
 // ToNetworkUpdateMap casts an UpdateOpts struct to a map.
 func (opts UpdateOptsExt) ToNetworkUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.VLANTransparent == nil {
-		return base, nil
-	}
-
-	networkMap := base["network"].(map[string]any)
-	networkMap["vlan_transparent"] = opts.VLANTransparent
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

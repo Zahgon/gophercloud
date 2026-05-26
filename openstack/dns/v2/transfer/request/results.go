@@ -1,7 +1,6 @@
 package request
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -15,9 +14,8 @@ type commonResult struct {
 // Extract interprets a GetResult, CreateResult or UpdateResult as a TransferRequest.
 // An error is returned if the original call or the extraction failed.
 func (r commonResult) Extract() (*TransferRequest, error) {
-	var s *TransferRequest
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult is the result of a Create request. Call its Extract method
@@ -50,22 +48,12 @@ type TransferRequestPage struct {
 }
 
 // IsEmpty returns true if the page contains no results.
-func (r TransferRequestPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	s, err := ExtractTransferRequests(r)
-	return len(s) == 0, err
-}
+func (r TransferRequestPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractTransferRequests extracts a slice of TransferRequest from a List result.
 func ExtractTransferRequests(r pagination.Page) ([]TransferRequest, error) {
-	var s struct {
-		TransferRequests []TransferRequest `json:"transfer_requests"`
-	}
-	err := (r.(TransferRequestPage)).ExtractInto(&s)
-	return s.TransferRequests, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TransferRequest represents a Zone transfer request task.
@@ -107,21 +95,4 @@ type TransferRequest struct {
 	Links map[string]any `json:"links"`
 }
 
-func (r *TransferRequest) UnmarshalJSON(b []byte) error {
-	type tmp TransferRequest
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = TransferRequest(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return err
-}
+func (r *TransferRequest) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }

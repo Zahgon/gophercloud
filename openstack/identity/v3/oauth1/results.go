@@ -1,8 +1,6 @@
 package oauth1
 
 import (
-	"encoding/json"
-	"net/url"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -51,48 +49,23 @@ type GetConsumerResult struct {
 }
 
 // IsEmpty determines whether or not a page of Consumers contains any results.
-func (c ConsumersPage) IsEmpty() (bool, error) {
-	if c.StatusCode == 204 {
-		return true, nil
-	}
-
-	consumers, err := ExtractConsumers(c)
-	return len(consumers) == 0, err
-}
+func (c ConsumersPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (c ConsumersPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := c.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractConsumers returns a slice of Consumers contained in a single page of
 // results.
 func ExtractConsumers(r pagination.Page) ([]Consumer, error) {
-	var s struct {
-		Consumers []Consumer `json:"consumers"`
-	}
-	err := (r.(ConsumersPage)).ExtractInto(&s)
-	return s.Consumers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any consumer result as a Consumer.
-func (c consumerResult) Extract() (*Consumer, error) {
-	var s struct {
-		Consumer *Consumer `json:"consumer"`
-	}
-	err := c.ExtractInto(&s)
-	return s.Consumer, err
-}
+func (c consumerResult) Extract() (*Consumer, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Token contains an OAuth1 token.
 type Token struct {
@@ -112,31 +85,7 @@ type TokenResult struct {
 }
 
 // Extract interprets any OAuth1 token result as a Token.
-func (r TokenResult) Extract() (*Token, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-
-	values, err := url.ParseQuery(string(r.Body))
-	if err != nil {
-		return nil, err
-	}
-
-	token := &Token{
-		OAuthToken:       values.Get("oauth_token"),
-		OAuthTokenSecret: values.Get("oauth_token_secret"),
-	}
-
-	if v := values.Get("oauth_expires_at"); v != "" {
-		if t, err := time.Parse(gophercloud.RFC3339Milli, v); err != nil {
-			return nil, err
-		} else {
-			token.OAuthExpiresAt = &t
-		}
-	}
-
-	return token, nil
-}
+func (r TokenResult) Extract() (*Token, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // AuthorizedToken contains an OAuth1 authorized token info.
 type AuthorizedToken struct {
@@ -150,11 +99,8 @@ type AuthorizeTokenResult struct {
 
 // Extract interprets AuthorizeTokenResult result as a AuthorizedToken.
 func (r AuthorizeTokenResult) Extract() (*AuthorizedToken, error) {
-	var s struct {
-		AuthorizedToken *AuthorizedToken `json:"token"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AuthorizedToken, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AccessToken represents an AccessToken response as a struct.
@@ -166,25 +112,7 @@ type AccessToken struct {
 	ExpiresAt         *time.Time `json:"-"`
 }
 
-func (r *AccessToken) UnmarshalJSON(b []byte) error {
-	type tmp AccessToken
-	var s struct {
-		tmp
-		ExpiresAt *gophercloud.JSONRFC3339Milli `json:"expires_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = AccessToken(s.tmp)
-
-	if s.ExpiresAt != nil {
-		t := time.Time(*s.ExpiresAt)
-		r.ExpiresAt = &t
-	}
-
-	return nil
-}
+func (r *AccessToken) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type GetAccessTokenResult struct {
 	gophercloud.Result
@@ -192,11 +120,8 @@ type GetAccessTokenResult struct {
 
 // Extract interprets any GetAccessTokenResult result as an AccessToken.
 func (r GetAccessTokenResult) Extract() (*AccessToken, error) {
-	var s struct {
-		AccessToken *AccessToken `json:"access_token"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AccessToken, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RevokeAccessTokenResult is the response from a Delete operation. Call its
@@ -211,38 +136,19 @@ type AccessTokensPage struct {
 }
 
 // IsEmpty determines whether or not a an AccessTokensPage contains any results.
-func (r AccessTokensPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	accessTokens, err := ExtractAccessTokens(r)
-	return len(accessTokens) == 0, err
-}
+func (r AccessTokensPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r AccessTokensPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractAccessTokens returns a slice of AccessTokens contained in a single
 // page of results.
 func ExtractAccessTokens(r pagination.Page) ([]AccessToken, error) {
-	var s struct {
-		AccessTokens []AccessToken `json:"access_tokens"`
-	}
-	err := (r.(AccessTokensPage)).ExtractInto(&s)
-	return s.AccessTokens, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AccessTokenRole represents an Access Token Role struct.
@@ -258,38 +164,19 @@ type AccessTokenRolesPage struct {
 }
 
 // IsEmpty determines whether or not a an AccessTokensPage contains any results.
-func (r AccessTokenRolesPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	accessTokenRoles, err := ExtractAccessTokenRoles(r)
-	return len(accessTokenRoles) == 0, err
-}
+func (r AccessTokenRolesPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r AccessTokenRolesPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractAccessTokenRoles returns a slice of AccessTokenRole contained in a
 // single page of results.
 func ExtractAccessTokenRoles(r pagination.Page) ([]AccessTokenRole, error) {
-	var s struct {
-		AccessTokenRoles []AccessTokenRole `json:"roles"`
-	}
-	err := (r.(AccessTokenRolesPage)).ExtractInto(&s)
-	return s.AccessTokenRoles, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type GetAccessTokenRoleResult struct {
@@ -298,11 +185,8 @@ type GetAccessTokenRoleResult struct {
 
 // Extract interprets any GetAccessTokenRoleResult result as an AccessTokenRole.
 func (r GetAccessTokenRoleResult) Extract() (*AccessTokenRole, error) {
-	var s struct {
-		AccessTokenRole *AccessTokenRole `json:"role"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AccessTokenRole, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // OAuth1 is an OAuth1 object, returned in OAuth1 token result.

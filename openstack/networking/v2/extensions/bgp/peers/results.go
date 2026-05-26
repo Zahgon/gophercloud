@@ -12,15 +12,9 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a bgp peer resource.
-func (r commonResult) Extract() (*BGPPeer, error) {
-	var s BGPPeer
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*BGPPeer, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, jroot)
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // BGP peer
 type BGPPeer struct {
@@ -53,27 +47,17 @@ type BGPPeerPage struct {
 }
 
 // IsEmpty checks whether a BGPPage struct is empty.
-func (r BGPPeerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractBGPPeers(r)
-	return len(is) == 0, err
-}
+func (r BGPPeerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractBGPPeers accepts a Page struct, specifically a BGPPeerPage struct,
 // and extracts the elements into a slice of BGPPeer structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractBGPPeers(r pagination.Page) ([]BGPPeer, error) {
-	var s []BGPPeer
-	err := ExtractBGPPeersInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func ExtractBGPPeersInto(r pagination.Page, v any) error {
-	return r.(BGPPeerPage).ExtractIntoSlicePtr(v, "bgp_peers")
-}
+func ExtractBGPPeersInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a BGPPeer.

@@ -2,38 +2,41 @@ package containers
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("containers")
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func getURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("containers", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("containers")
-}
+func createURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("containers", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listConsumersURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("containers", id, "consumers")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createConsumerURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("containers", id, "consumers")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteConsumerURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("containers", id, "consumers")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createSecretRefURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("containers", id, "secrets")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteSecretRefURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("containers", id, "secrets")
+	_ = "STUB: not implemented"
+	return ""
 }

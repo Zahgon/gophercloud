@@ -55,13 +55,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a Tap Mirror.
-func (r commonResult) Extract() (*TapMirror, error) {
-	var s struct {
-		TapMirror *TapMirror `json:"tap_mirror"`
-	}
-	err := r.ExtractInto(&s)
-	return s.TapMirror, err
-}
+func (r commonResult) Extract() (*TapMirror, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // TapMirrorPage is the page returned by a pager when traversing over a
 // collection of Policies.
@@ -73,35 +67,19 @@ type TapMirrorPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r TapMirrorPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"tap_mirrors_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether an TapMirrorPage struct is empty.
-func (r TapMirrorPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractTapMirrors(r)
-	return len(is) == 0, err
-}
+func (r TapMirrorPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractTapMirrors accepts a Page struct, specifically an TapMirrorPage struct,
 // and extracts the elements into a slice of Tap Mirror structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractTapMirrors(r pagination.Page) ([]TapMirror, error) {
-	var s struct {
-		TapMirrors []TapMirror `json:"tap_mirrors"`
-	}
-	err := (r.(TapMirrorPage)).ExtractInto(&s)
-	return s.TapMirrors, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult represents the result of a create operation. Call its Extract

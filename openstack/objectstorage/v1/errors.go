@@ -1,28 +1,12 @@
 package v1
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
-func CheckContainerName(s string) error {
-	if len(s) < 1 {
-		return ErrEmptyContainerName{}
-	}
-	if strings.ContainsRune(s, '/') {
-		return ErrInvalidContainerName{name: s}
-	}
-	return nil
-}
+func CheckContainerName(s string) error { _ = "STUB: not implemented"; return nil }
 
-func CheckObjectName(s string) error {
-	if s == "" {
-		return ErrEmptyObjectName{}
-	}
-	return nil
-}
+func CheckObjectName(s string) error { _ = "STUB: not implemented"; return nil }
 
 // ErrInvalidContainerName signals a container name containing an illegal
 // character.
@@ -31,24 +15,18 @@ type ErrInvalidContainerName struct {
 	gophercloud.BaseError
 }
 
-func (e ErrInvalidContainerName) Error() string {
-	return fmt.Sprintf("invalid name %q: a container name cannot contain a slash (/) character", e.name)
-}
+func (e ErrInvalidContainerName) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrEmptyContainerName signals an empty container name.
 type ErrEmptyContainerName struct {
 	gophercloud.BaseError
 }
 
-func (e ErrEmptyContainerName) Error() string {
-	return "a container name must not be empty"
-}
+func (e ErrEmptyContainerName) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrEmptyObjectName signals an empty container name.
 type ErrEmptyObjectName struct {
 	gophercloud.BaseError
 }
 
-func (e ErrEmptyObjectName) Error() string {
-	return "an object name must not be empty"
-}
+func (e ErrEmptyObjectName) Error() string { _ = "STUB: not implemented"; return "" }

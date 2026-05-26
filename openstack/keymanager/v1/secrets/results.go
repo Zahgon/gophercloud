@@ -1,7 +1,6 @@
 package secrets
 
 import (
-	"encoding/json"
 	"io"
 	"time"
 
@@ -48,37 +47,14 @@ type Secret struct {
 	Updated time.Time `json:"-"`
 }
 
-func (r *Secret) UnmarshalJSON(b []byte) error {
-	type tmp Secret
-	var s struct {
-		tmp
-		Created    gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated    gophercloud.JSONRFC3339NoZ `json:"updated"`
-		Expiration gophercloud.JSONRFC3339NoZ `json:"expiration"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Secret(s.tmp)
-
-	r.Created = time.Time(s.Created)
-	r.Updated = time.Time(s.Updated)
-	r.Expiration = time.Time(s.Expiration)
-
-	return nil
-}
+func (r *Secret) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract interprets any commonResult as a Secret.
-func (r commonResult) Extract() (*Secret, error) {
-	var s *Secret
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Secret, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract method
 // to interpret it as a secrets.
@@ -116,17 +92,7 @@ type PayloadResult struct {
 // is forward-only - meaning that it can only be read once and not rewound. You
 // can recreate a reader from the output of this function by using
 // bytes.NewReader(downloadBytes)
-func (r PayloadResult) Extract() ([]byte, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	defer r.Body.Close()
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	return body, nil
-}
+func (r PayloadResult) Extract() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // SecretPage is a single page of secrets results.
 type SecretPage struct {
@@ -134,36 +100,19 @@ type SecretPage struct {
 }
 
 // IsEmpty determines whether or not a page of secrets contains any results.
-func (r SecretPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	secrets, err := ExtractSecrets(r)
-	return len(secrets) == 0, err
-}
+func (r SecretPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r SecretPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next     string `json:"next"`
-		Previous string `json:"previous"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractSecrets returns a slice of Secrets contained in a single page of
 // results.
 func ExtractSecrets(r pagination.Page) ([]Secret, error) {
-	var s struct {
-		Secrets []Secret `json:"secrets"`
-	}
-	err := (r.(SecretPage)).ExtractInto(&s)
-	return s.Secrets, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MetadataResult is the result of a metadata request. Call its Extract method
@@ -174,11 +123,8 @@ type MetadataResult struct {
 
 // Extract interprets any MetadataResult as map[string]string.
 func (r MetadataResult) Extract() (map[string]string, error) {
-	var s struct {
-		Metadata map[string]string `json:"metadata"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Metadata, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MetadataCreateResult is the result of a metadata create request. Call its
@@ -189,9 +135,8 @@ type MetadataCreateResult struct {
 
 // Extract interprets any MetadataCreateResult as a map[string]string.
 func (r MetadataCreateResult) Extract() (map[string]string, error) {
-	var s map[string]string
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Metadatum represents an individual metadata.
@@ -207,11 +152,7 @@ type MetadatumResult struct {
 }
 
 // Extract interprets any MetadatumResult as a map[string]string.
-func (r MetadatumResult) Extract() (*Metadatum, error) {
-	var s *Metadatum
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r MetadatumResult) Extract() (*Metadatum, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // MetadatumCreateResult is the response from a metadata Create operation. Call
 // its ExtractErr method to determine if the request succeeded or failed.

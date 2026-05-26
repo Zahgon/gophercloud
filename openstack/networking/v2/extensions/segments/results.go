@@ -26,40 +26,24 @@ type SegmentPage struct {
 	pagination.LinkedPageBase
 }
 
-func (r SegmentPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractSegments(r)
-	return len(is) == 0, err
-}
+func (r SegmentPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func ExtractSegments(r pagination.Page) ([]Segment, error) {
-	var s []Segment
-	err := ExtractSegmentsInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractSegmentsInto extracts the elements into a slice of Segment structs.
-func ExtractSegmentsInto(r pagination.Page, v any) error {
-	return r.(SegmentPage).ExtractIntoSlicePtr(v, "segments")
-}
+func ExtractSegmentsInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // Segment results
 type commonResult struct {
 	gophercloud.Result
 }
 
-func (r commonResult) Extract() (*Segment, error) {
-	var s Segment
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*Segment, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "segment")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 type GetResult struct {
 	commonResult

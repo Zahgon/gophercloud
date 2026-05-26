@@ -2,19 +2,9 @@ package claims
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func (r CreateResult) Extract() ([]Messages, error) {
-	var s struct {
-		Messages []Messages `json:"messages"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Messages, err
-}
+func (r CreateResult) Extract() ([]Messages, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r GetResult) Extract() (*Claim, error) {
-	var s *Claim
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r GetResult) Extract() (*Claim, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult is the response of a Create operations.
 type CreateResult struct {

@@ -2,7 +2,6 @@ package metrics
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 )
@@ -18,18 +17,8 @@ type prometheusResponse struct {
 // checkResponse unmarshals the Prometheus envelope and returns an error if
 // the response status is "error".
 func checkResponse(body any) (*prometheusResponse, error) {
-	b, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	var resp prometheusResponse
-	if err := json.Unmarshal(b, &resp); err != nil {
-		return nil, err
-	}
-	if resp.Status == "error" {
-		return &resp, fmt.Errorf("prometheus %s: %s", resp.ErrorType, resp.Error)
-	}
-	return &resp, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // QueryResult is the result of a Query request.
@@ -38,20 +27,7 @@ type QueryResult struct {
 }
 
 // Extract interprets a QueryResult as QueryData.
-func (r QueryResult) Extract() (*QueryData, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	resp, err := checkResponse(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	var data QueryData
-	if err := json.Unmarshal(resp.Data, &data); err != nil {
-		return nil, err
-	}
-	return &data, nil
-}
+func (r QueryResult) Extract() (*QueryData, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // LabelsResult is the result of a Labels request.
 type LabelsResult struct {
@@ -59,20 +35,7 @@ type LabelsResult struct {
 }
 
 // Extract interprets a LabelsResult as a slice of label name strings.
-func (r LabelsResult) Extract() ([]string, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	resp, err := checkResponse(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	var data []string
-	if err := json.Unmarshal(resp.Data, &data); err != nil {
-		return nil, err
-	}
-	return data, nil
-}
+func (r LabelsResult) Extract() ([]string, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // LabelValuesResult is the result of a LabelValues request.
 type LabelValuesResult struct {
@@ -80,20 +43,7 @@ type LabelValuesResult struct {
 }
 
 // Extract interprets a LabelValuesResult as a slice of label value strings.
-func (r LabelValuesResult) Extract() ([]string, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	resp, err := checkResponse(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	var data []string
-	if err := json.Unmarshal(resp.Data, &data); err != nil {
-		return nil, err
-	}
-	return data, nil
-}
+func (r LabelValuesResult) Extract() ([]string, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // SeriesResult is the result of a Series request.
 type SeriesResult struct {
@@ -102,18 +52,8 @@ type SeriesResult struct {
 
 // Extract interprets a SeriesResult as a slice of label-set maps.
 func (r SeriesResult) Extract() ([]map[string]string, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	resp, err := checkResponse(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	var data []map[string]string
-	if err := json.Unmarshal(resp.Data, &data); err != nil {
-		return nil, err
-	}
-	return data, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // TargetsResult is the result of a Targets request.
@@ -122,20 +62,7 @@ type TargetsResult struct {
 }
 
 // Extract interprets a TargetsResult as TargetsData.
-func (r TargetsResult) Extract() (*TargetsData, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	resp, err := checkResponse(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	var data TargetsData
-	if err := json.Unmarshal(resp.Data, &data); err != nil {
-		return nil, err
-	}
-	return &data, nil
-}
+func (r TargetsResult) Extract() (*TargetsData, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // RuntimeInfoResult is the result of a RuntimeInfo request.
 type RuntimeInfoResult struct {
@@ -144,18 +71,8 @@ type RuntimeInfoResult struct {
 
 // Extract interprets a RuntimeInfoResult as RuntimeInfoData.
 func (r RuntimeInfoResult) Extract() (*RuntimeInfoData, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	resp, err := checkResponse(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	var data RuntimeInfoData
-	if err := json.Unmarshal(resp.Data, &data); err != nil {
-		return nil, err
-	}
-	return &data, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CleanTombstonesResult is the result of a CleanTombstones request.
@@ -175,18 +92,8 @@ type SnapshotResult struct {
 
 // Extract interprets a SnapshotResult as SnapshotData.
 func (r SnapshotResult) Extract() (*SnapshotData, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	resp, err := checkResponse(r.Body)
-	if err != nil {
-		return nil, err
-	}
-	var data SnapshotData
-	if err := json.Unmarshal(resp.Data, &data); err != nil {
-		return nil, err
-	}
-	return &data, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // QueryData represents the data field of a Prometheus instant query response.

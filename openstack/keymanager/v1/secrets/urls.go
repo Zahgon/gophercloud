@@ -2,34 +2,36 @@ package secrets
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("secrets")
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func getURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("secrets", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("secrets")
-}
+func createURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("secrets", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("secrets", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func payloadURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("secrets", id, "payload")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func metadataURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("secrets", id, "metadata")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func metadatumURL(client *gophercloud.ServiceClient, id, key string) string {
-	return client.ServiceURL("secrets", id, "metadata", key)
+	_ = "STUB: not implemented"
+	return ""
 }

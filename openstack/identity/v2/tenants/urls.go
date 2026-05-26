@@ -2,22 +2,21 @@ package tenants
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("tenants")
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func getURL(client *gophercloud.ServiceClient, tenantID string) string {
-	return client.ServiceURL("tenants", tenantID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL("tenants")
-}
+func createURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(client *gophercloud.ServiceClient, tenantID string) string {
-	return client.ServiceURL("tenants", tenantID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(client *gophercloud.ServiceClient, tenantID string) string {
-	return client.ServiceURL("tenants", tenantID)
+	_ = "STUB: not implemented"
+	return ""
 }

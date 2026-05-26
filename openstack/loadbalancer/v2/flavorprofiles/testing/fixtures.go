@@ -1,14 +1,11 @@
 package testing
 
 import (
-	"fmt"
-	"net/http"
 	"testing"
 
 	"github.com/gophercloud/gophercloud/v2/openstack/loadbalancer/v2/flavorprofiles"
 
 	th "github.com/gophercloud/gophercloud/v2/testhelper"
-	"github.com/gophercloud/gophercloud/v2/testhelper/client"
 )
 
 const FlavorProfilesListBody = `
@@ -83,77 +80,26 @@ var (
 )
 
 func HandleFlavorProfileListSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavorprofiles", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.Header().Add("Content-Type", "application/json")
-		if err := r.ParseForm(); err != nil {
-			t.Errorf("Failed to parse request form %v", err)
-		}
-		marker := r.Form.Get("marker")
-		switch marker {
-		case "":
-			fmt.Fprint(w, FlavorProfilesListBody)
-		case "3a0d060b-fcec-4250-9ab6-940b806a12dd":
-			fmt.Fprint(w, `{ "flavors": [] }`)
-		default:
-			t.Fatalf("/v2.0/lbaas/flavors invoked with unexpected marker=[%s]", marker)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorProfileCreationSuccessfully(t *testing.T, fakeServer th.FakeServer, response string) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavorprofiles", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestJSONRequest(t, r, `{
-			"flavorprofile": {
-				"name": "amphora-test",
-				"provider_name": "amphora",
-				"flavor_data": "{\"loadbalancer_topology\": \"ACTIVE_STANDBY\"}"
-			}
-		}`)
-
-		w.WriteHeader(http.StatusAccepted)
-		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprint(w, response)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorProfileGetSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavorprofiles/dcd65be5-f117-4260-ab3d-b32cc5bd1272", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-
-		fmt.Fprint(w, SingleFlavorProfileBody)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorProfileDeletionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavorprofiles/dcd65be5-f117-4260-ab3d-b32cc5bd1272", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "DELETE")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.WriteHeader(http.StatusNoContent)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleFlavorProfileUpdateSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/flavorprofiles/dcd65be5-f117-4260-ab3d-b32cc5bd1272", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "PUT")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-		th.TestHeader(t, r, "Content-Type", "application/json")
-		th.TestJSONRequest(t, r, `{
-			"flavorprofile": {
-				"name": "amphora-test-updated",
-				"provider_name": "amphora",
-				"flavor_data": "{\"loadbalancer_topology\": \"SINGLE\"}"
-			}
-		}`)
-
-		fmt.Fprint(w, PostUpdateFlavorBody)
-	})
+	_ = "STUB: not implemented"
+	return
 }

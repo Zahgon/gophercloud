@@ -1,8 +1,6 @@
 package tags
 
 import (
-	"net/http"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -11,13 +9,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a tags resource.
-func (r commonResult) Extract() ([]string, error) {
-	var s struct {
-		Tags []string `json:"tags"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Tags, err
-}
+func (r commonResult) Extract() ([]string, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type ListResult struct {
 	commonResult
@@ -28,15 +20,7 @@ type CheckResult struct {
 	gophercloud.Result
 }
 
-func (r CheckResult) Extract() (bool, error) {
-	exists := r.Err == nil
-
-	if gophercloud.ResponseCodeIs(r.Err, http.StatusNotFound) {
-		r.Err = nil
-	}
-
-	return exists, r.Err
-}
+func (r CheckResult) Extract() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ReplaceAllResult is the result from the ReplaceAll operation.
 type ReplaceAllResult struct {

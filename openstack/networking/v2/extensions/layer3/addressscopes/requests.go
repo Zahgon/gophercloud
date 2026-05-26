@@ -34,8 +34,8 @@ type ListOpts struct {
 
 // ToAddressScopeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAddressScopeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
@@ -46,24 +46,14 @@ func (opts ListOpts) ToAddressScopeListQuery() (string, error) {
 // of the user submitting the request, unless the user has the administrative
 // role.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(c)
-	if opts != nil {
-		query, err := opts.ToAddressScopeListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return AddressScopePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves a specific address-scope based on its ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows to add additional parameters to the
@@ -92,21 +82,14 @@ type CreateOpts struct {
 
 // ToAddressScopeCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToAddressScopeCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "address_scope")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create requests the creation of a new address-scope on the server.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToAddressScopeCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -126,27 +109,19 @@ type UpdateOpts struct {
 
 // ToAddressScopeUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToAddressScopeUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "address_scope")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update accepts a UpdateOpts struct and updates an existing address-scope
 // using the values provided.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, addressScopeID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToAddressScopeUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateURL(c, addressScopeID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete accepts a unique ID and deletes the address-scope associated with it.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

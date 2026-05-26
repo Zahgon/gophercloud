@@ -1,10 +1,6 @@
 package containers
 
 import (
-	"encoding/json"
-	"fmt"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -30,67 +26,23 @@ type ContainerPage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no container names.
-func (r ContainerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	names, err := ExtractNames(r)
-	return len(names) == 0, err
-}
+func (r ContainerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // LastMarker returns the last container name in a ListResult.
-func (r ContainerPage) LastMarker() (string, error) {
-	names, err := ExtractNames(r)
-	if err != nil {
-		return "", err
-	}
-	if len(names) == 0 {
-		return "", nil
-	}
-	return names[len(names)-1], nil
-}
+func (r ContainerPage) LastMarker() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ExtractInfo is a function that takes a ListResult and returns the
 // containers' information.
 func ExtractInfo(r pagination.Page) ([]Container, error) {
-	var s []Container
-	err := (r.(ContainerPage)).ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractNames is a function that takes a ListResult and returns the
 // containers' names.
 func ExtractNames(page pagination.Page) ([]string, error) {
-	casted := page.(ContainerPage)
-	ct := casted.Header.Get("Content-Type")
-
-	switch {
-	case strings.HasPrefix(ct, "application/json"):
-		parsed, err := ExtractInfo(page)
-		if err != nil {
-			return nil, err
-		}
-
-		names := make([]string, 0, len(parsed))
-		for _, container := range parsed {
-			names = append(names, container.Name)
-		}
-		return names, nil
-	case strings.HasPrefix(ct, "text/plain") || ct == "":
-		names := make([]string, 0, 50)
-
-		body := string(page.(ContainerPage).Body.([]uint8))
-		for _, name := range strings.Split(body, "\n") {
-			if len(name) > 0 {
-				names = append(names, name)
-			}
-		}
-
-		return names, nil
-	default:
-		return nil, fmt.Errorf("cannot extract names from response with content-type: [%s]", ct)
-	}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetHeader represents the headers returned in the response from a Get request.
@@ -115,36 +67,10 @@ type GetHeader struct {
 	SyncTo           string    `json:"X-Sync-To"`
 }
 
-func (r *GetHeader) UnmarshalJSON(b []byte) error {
-	type tmp GetHeader
-	var s struct {
-		tmp
-		Write           string                  `json:"X-Container-Write"`
-		Read            string                  `json:"X-Container-Read"`
-		Date            gophercloud.JSONRFC1123 `json:"Date"`
-		VersionsEnabled string                  `json:"X-Versions-Enabled"`
-	}
+func (r *GetHeader) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = GetHeader(s.tmp)
-
-	r.Read = strings.Split(s.Read, ",")
-	r.Write = strings.Split(s.Write, ",")
-
-	r.Date = time.Time(s.Date)
-
-	if s.VersionsEnabled != "" {
-		// custom unmarshaller here is required to handle boolean value
-		// that starts with a capital letter
-		r.VersionsEnabled, err = strconv.ParseBool(s.VersionsEnabled)
-	}
-
-	return err
-}
+// custom unmarshaller here is required to handle boolean value
+// that starts with a capital letter
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
@@ -152,26 +78,13 @@ type GetResult struct {
 }
 
 // Extract will return a struct of headers returned from a call to Get.
-func (r GetResult) Extract() (*GetHeader, error) {
-	var s GetHeader
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r GetResult) Extract() (*GetHeader, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractMetadata is a function that takes a GetResult (of type *http.Response)
 // and returns the custom metadata associated with the container.
 func (r GetResult) ExtractMetadata() (map[string]string, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	metadata := make(map[string]string)
-	for k, v := range r.Header {
-		if strings.HasPrefix(k, "X-Container-Meta-") {
-			key := strings.TrimPrefix(k, "X-Container-Meta-")
-			metadata[key] = v[0]
-		}
-	}
-	return metadata, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateHeader represents the headers returned in the response from a Create
@@ -183,23 +96,7 @@ type CreateHeader struct {
 	TransID       string    `json:"X-Trans-Id"`
 }
 
-func (r *CreateHeader) UnmarshalJSON(b []byte) error {
-	type tmp CreateHeader
-	var s struct {
-		tmp
-		Date gophercloud.JSONRFC1123 `json:"Date"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = CreateHeader(s.tmp)
-
-	r.Date = time.Time(s.Date)
-
-	return err
-}
+func (r *CreateHeader) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // CreateResult represents the result of a create operation. To extract the
 // the headers from the HTTP response, call its Extract method.
@@ -209,11 +106,7 @@ type CreateResult struct {
 
 // Extract will return a struct of headers returned from a call to Create.
 // To extract the headers from the HTTP response, call its Extract method.
-func (r CreateResult) Extract() (*CreateHeader, error) {
-	var s CreateHeader
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r CreateResult) Extract() (*CreateHeader, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // UpdateHeader represents the headers returned in the response from a Update
 // request.
@@ -224,23 +117,7 @@ type UpdateHeader struct {
 	TransID       string    `json:"X-Trans-Id"`
 }
 
-func (r *UpdateHeader) UnmarshalJSON(b []byte) error {
-	type tmp UpdateHeader
-	var s struct {
-		tmp
-		Date gophercloud.JSONRFC1123 `json:"Date"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = UpdateHeader(s.tmp)
-
-	r.Date = time.Time(s.Date)
-
-	return err
-}
+func (r *UpdateHeader) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // UpdateResult represents the result of an update operation. To extract the
 // the headers from the HTTP response, call its Extract method.
@@ -249,11 +126,7 @@ type UpdateResult struct {
 }
 
 // Extract will return a struct of headers returned from a call to Update.
-func (r UpdateResult) Extract() (*UpdateHeader, error) {
-	var s UpdateHeader
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r UpdateResult) Extract() (*UpdateHeader, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DeleteHeader represents the headers returned in the response from a Delete
 // request.
@@ -264,23 +137,7 @@ type DeleteHeader struct {
 	TransID       string    `json:"X-Trans-Id"`
 }
 
-func (r *DeleteHeader) UnmarshalJSON(b []byte) error {
-	type tmp DeleteHeader
-	var s struct {
-		tmp
-		Date gophercloud.JSONRFC1123 `json:"Date"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = DeleteHeader(s.tmp)
-
-	r.Date = time.Time(s.Date)
-
-	return err
-}
+func (r *DeleteHeader) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // DeleteResult represents the result of a delete operation. To extract the
 // headers from the HTTP response, call its Extract method.
@@ -289,11 +146,7 @@ type DeleteResult struct {
 }
 
 // Extract will return a struct of headers returned from a call to Delete.
-func (r DeleteResult) Extract() (*DeleteHeader, error) {
-	var s DeleteHeader
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r DeleteResult) Extract() (*DeleteHeader, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type BulkDeleteResponse struct {
 	ResponseStatus string     `json:"Response Status"`
@@ -312,7 +165,6 @@ type BulkDeleteResult struct {
 // Extract will return a BulkDeleteResponse struct returned from a BulkDelete
 // call.
 func (r BulkDeleteResult) Extract() (*BulkDeleteResponse, error) {
-	var s BulkDeleteResponse
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

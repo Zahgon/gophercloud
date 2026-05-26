@@ -2,7 +2,6 @@ package floatingips
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -43,25 +42,16 @@ type ListOpts struct {
 
 // ToNetworkListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToFloatingIPListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // floating IP resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToFloatingIPListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return FloatingIPPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -87,7 +77,8 @@ type CreateOpts struct {
 // ToFloatingIPCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
 // interface
 func (opts CreateOpts) ToFloatingIPCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "floatingip")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values provided to create a
@@ -115,21 +106,14 @@ func (opts CreateOpts) ToFloatingIPCreateMap() (map[string]any, error) {
 // are already associated with another resource, the operation will fail and
 // returns a 409 error code.
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToFloatingIPCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular floating IP resource based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -156,16 +140,8 @@ type UpdateOpts struct {
 // ToFloatingIPUpdateMap allows UpdateOpts to satisfy the UpdateOptsBuilder
 // interface
 func (opts UpdateOpts) ToFloatingIPUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "floatingip")
-	if err != nil {
-		return nil, err
-	}
-
-	if m := b["floatingip"].(map[string]any); m["port_id"] == "" {
-		m["port_id"] = nil
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update allows floating IP resources to be updated. Currently, the only way to
@@ -173,34 +149,14 @@ func (opts UpdateOpts) ToFloatingIPUpdateMap() (map[string]any, error) {
 // disassociated it from all ports. See UpdateOpts for instructions of how to
 // do this.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToFloatingIPUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular floating IP resource. Please
 // ensure this is what you want - you can also disassociate the IP from existing
 // internal ports.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -1,7 +1,6 @@
 package volumes
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -20,22 +19,7 @@ type Attachment struct {
 }
 
 // UnmarshalJSON is our unmarshalling helper
-func (r *Attachment) UnmarshalJSON(b []byte) error {
-	type tmp Attachment
-	var s struct {
-		tmp
-		AttachedAt gophercloud.JSONRFC3339MilliNoZ `json:"attached_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Attachment(s.tmp)
-
-	r.AttachedAt = time.Time(s.AttachedAt)
-
-	return err
-}
+func (r *Attachment) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // Volume contains all the information associated with an OpenStack Volume.
 type Volume struct {
@@ -89,24 +73,7 @@ type Volume struct {
 }
 
 // UnmarshalJSON another unmarshalling function
-func (r *Volume) UnmarshalJSON(b []byte) error {
-	type tmp Volume
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Volume(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return err
-}
+func (r *Volume) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // VolumePage is a pagination.pager that is returned from a call to the List function.
 type VolumePage struct {
@@ -114,31 +81,17 @@ type VolumePage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no Volumes.
-func (r VolumePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	volumes, err := ExtractVolumes(r)
-	return len(volumes) == 0, err
-}
+func (r VolumePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func (page VolumePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"volumes_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractVolumes extracts and returns Volumes. It is used while iterating over a volumes.List call.
 func ExtractVolumes(r pagination.Page) ([]Volume, error) {
-	var s []Volume
-	err := ExtractVolumesInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -146,21 +99,13 @@ type commonResult struct {
 }
 
 // Extract will get the Volume object out of the commonResult object.
-func (r commonResult) Extract() (*Volume, error) {
-	var s Volume
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*Volume, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ExtractInto converts our response data into a volume struct
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "volume")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // ExtractVolumesInto similar to ExtractInto but operates on a `list` of volumes
-func ExtractVolumesInto(r pagination.Page, v any) error {
-	return r.(VolumePage).ExtractIntoSlicePtr(v, "volumes")
-}
+func ExtractVolumesInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {
@@ -250,11 +195,8 @@ type ExtendSizeResult struct {
 // This will be a generic map[string]any and the results will be
 // dependent on the type of connection made.
 func (r InitializeConnectionResult) Extract() (map[string]any, error) {
-	var s struct {
-		ConnectionInfo map[string]any `json:"connection_info"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ConnectionInfo, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ImageVolumeType contains volume type information obtained from UploadImage
@@ -291,26 +233,7 @@ type ImageVolumeType struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (r *ImageVolumeType) UnmarshalJSON(b []byte) error {
-	type tmp ImageVolumeType
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		DeletedAt gophercloud.JSONRFC3339MilliNoZ `json:"deleted_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ImageVolumeType(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-	r.DeletedAt = time.Time(s.DeletedAt)
-
-	return err
-}
+func (r *ImageVolumeType) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // VolumeImage contains information about volume uploaded to an image service.
 type VolumeImage struct {
@@ -353,31 +276,13 @@ type VolumeImage struct {
 	VolumeType ImageVolumeType `json:"volume_type"`
 }
 
-func (r *VolumeImage) UnmarshalJSON(b []byte) error {
-	type tmp VolumeImage
-	var s struct {
-		tmp
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = VolumeImage(s.tmp)
-
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return err
-}
+func (r *VolumeImage) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // Extract will get an object with info about the uploaded image out of the
 // UploadImageResult object.
 func (r UploadImageResult) Extract() (VolumeImage, error) {
-	var s struct {
-		VolumeImage VolumeImage `json:"os-volume_upload_image"`
-	}
-	err := r.ExtractInto(&s)
-	return s.VolumeImage, err
+	_ = "STUB: not implemented"
+	return *new(VolumeImage), nil
 }
 
 // ForceDeleteResult contains the response body and error from a ForceDelete request.

@@ -1,11 +1,5 @@
 package capsules
 
-import (
-	"encoding/json"
-
-	yaml "go.yaml.in/yaml/v3"
-)
-
 // Template is a structure that represents OpenStack Zun Capsule templates
 type Template struct {
 	// Bin stores the contents of the template or environment.
@@ -17,11 +11,4 @@ type Template struct {
 }
 
 // Parse will parse the contents and then validate. The contents MUST be either JSON or YAML.
-func (t *Template) Parse() error {
-	if jerr := json.Unmarshal(t.Bin, &t.Parsed); jerr != nil {
-		if yerr := yaml.Unmarshal(t.Bin, &t.Parsed); yerr != nil {
-			return ErrInvalidDataFormat{}
-		}
-	}
-	return nil
-}
+func (t *Template) Parse() error { _ = "STUB: not implemented"; return nil }

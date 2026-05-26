@@ -18,23 +18,13 @@ type APIVersionPage struct {
 }
 
 // IsEmpty checks whether an APIVersionPage struct is empty.
-func (r APIVersionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractAPIVersions(r)
-	return len(is) == 0, err
-}
+func (r APIVersionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAPIVersions takes a collection page, extracts all of the elements,
 // and returns them a slice of APIVersion structs. It is effectively a cast.
 func ExtractAPIVersions(r pagination.Page) ([]APIVersion, error) {
-	var s struct {
-		Versions []APIVersion `json:"versions"`
-	}
-	err := (r.(APIVersionPage)).ExtractInto(&s)
-	return s.Versions, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // APIVersionResource represents a generic API resource. It contains the name
@@ -53,12 +43,8 @@ type APIVersionResourcePage struct {
 // IsEmpty is a concrete function which indicates whether an
 // APIVersionResourcePage is empty or not.
 func (r APIVersionResourcePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractVersionResources(r)
-	return len(is) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractVersionResources accepts a Page struct, specifically a
@@ -66,9 +52,6 @@ func (r APIVersionResourcePage) IsEmpty() (bool, error) {
 // APIVersionResource structs. In other words, the collection is mapped into
 // a relevant slice.
 func ExtractVersionResources(r pagination.Page) ([]APIVersionResource, error) {
-	var s struct {
-		APIVersionResources []APIVersionResource `json:"resources"`
-	}
-	err := (r.(APIVersionResourcePage)).ExtractInto(&s)
-	return s.APIVersionResources, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

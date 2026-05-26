@@ -30,20 +30,14 @@ type AvailabilityZoneProfilePage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r AvailabilityZoneProfilePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"availabilityzoneprofiles_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a AvailabilityZoneProfilePage struct is empty.
 func (r AvailabilityZoneProfilePage) IsEmpty() (bool, error) {
-	is, err := ExtractAvailabilityZoneProfiles(r)
-	return len(is) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractAvailabilityZoneProfiles accepts a Page struct, specifically a
@@ -51,11 +45,8 @@ func (r AvailabilityZoneProfilePage) IsEmpty() (bool, error) {
 // of Flavor structs. In other words, a generic collection is mapped into a
 // relevant slice.
 func ExtractAvailabilityZoneProfiles(r pagination.Page) ([]AvailabilityZoneProfile, error) {
-	var s struct {
-		AvailabilityZoneProfiles []AvailabilityZoneProfile `json:"availability_zone_profiles"`
-	}
-	err := (r.(AvailabilityZoneProfilePage)).ExtractInto(&s)
-	return s.AvailabilityZoneProfiles, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -64,11 +55,8 @@ type commonResult struct {
 
 // Extract is a function that accepts a result and extracts a flavor.
 func (r commonResult) Extract() (*AvailabilityZoneProfile, error) {
-	var s struct {
-		AvailabilityZoneProfile *AvailabilityZoneProfile `json:"availability_zone_profile"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AvailabilityZoneProfile, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateResult represents the result of a create operation. Call its Extract

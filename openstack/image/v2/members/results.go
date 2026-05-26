@@ -18,11 +18,7 @@ type Member struct {
 }
 
 // Extract Member model from a request.
-func (r commonResult) Extract() (*Member, error) {
-	var s *Member
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Member, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // MemberPage is a single page of Members results.
 type MemberPage struct {
@@ -32,22 +28,12 @@ type MemberPage struct {
 // ExtractMembers returns a slice of Members contained in a single page
 // of results.
 func ExtractMembers(r pagination.Page) ([]Member, error) {
-	var s struct {
-		Members []Member `json:"members"`
-	}
-	err := r.(MemberPage).ExtractInto(&s)
-	return s.Members, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // IsEmpty determines whether or not a MemberPage contains any results.
-func (r MemberPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	members, err := ExtractMembers(r)
-	return len(members) == 0, err
-}
+func (r MemberPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 type commonResult struct {
 	gophercloud.Result

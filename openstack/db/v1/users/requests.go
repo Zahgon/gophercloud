@@ -36,31 +36,15 @@ type CreateOpts struct {
 }
 
 // ToMap is a convenience function for creating sub-maps for individual users.
-func (opts CreateOpts) ToMap() (map[string]any, error) {
-	if opts.Name == "root" {
-		err := gophercloud.ErrInvalidInput{}
-		err.Argument = "users.CreateOpts.Name"
-		err.Value = "root"
-		err.Info = "root is a reserved user name and cannot be used"
-		return nil, err
-	}
-	return gophercloud.BuildRequestBody(opts, "")
-}
+func (opts CreateOpts) ToMap() (map[string]any, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // BatchCreateOpts allows multiple users to be created at once.
 type BatchCreateOpts []CreateOpts
 
 // ToUserCreateMap will generate a JSON map.
 func (opts BatchCreateOpts) ToUserCreateMap() (map[string]any, error) {
-	users := make([]map[string]any, len(opts))
-	for i, opt := range opts {
-		user, err := opt.ToMap()
-		if err != nil {
-			return nil, err
-		}
-		users[i] = user
-	}
-	return map[string]any{"users": users}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create asynchronously provisions a new user for the specified database
@@ -68,28 +52,20 @@ func (opts BatchCreateOpts) ToUserCreateMap() (map[string]any, error) {
 // assigned for a particular user, the user will be granted all privileges
 // for those specified databases. "root" is a reserved name and cannot be used.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, instanceID string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToUserCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, baseURL(client, instanceID), &b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // List will list all the users associated with a specified database instance,
 // along with their associated databases. This operation will not return any
 // system users or administrators for a database.
 func List(client *gophercloud.ServiceClient, instanceID string) pagination.Pager {
-	return pagination.NewPager(client, baseURL(client, instanceID), func(r pagination.PageResult) pagination.Page {
-		return UserPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Delete will permanently delete a user from a specified database instance.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, instanceID, userName string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, userURL(client, instanceID, userName), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

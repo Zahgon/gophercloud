@@ -6,135 +6,160 @@ const urlBase = "bgpvpn/bgpvpns"
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(urlBase, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(urlBase)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return resourceURL(c, id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
 // return /v2.0/bgpvpn/bgpvpns
 func listURL(c *gophercloud.ServiceClient) string {
-	return rootURL(c)
+	_ = "STUB: not implemented"
+
+	// return /v2.0/bgpvpn/bgpvpns
+	return ""
 }
 
-// return /v2.0/bgpvpn/bgpvpns
 func createURL(c *gophercloud.ServiceClient) string {
-	return rootURL(c)
+	_ = "STUB: not implemented"
+
+	// return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}
+	return ""
 }
 
-// return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return resourceURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
+
+	// return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}
 }
 
-// return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}
 func updateURL(c *gophercloud.ServiceClient, id string) string {
-	return resourceURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
+
+	// return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/network_associations
 }
 
-// return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/network_associations
 func networkAssociationsURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return c.ServiceURL(urlBase, bgpVpnID, "network_associations")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/network_associations/{network-association-id}
 func networkAssociationResourceURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return c.ServiceURL(urlBase, bgpVpnID, "network_associations", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/network_associations
 func listNetworkAssociationsURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return networkAssociationsURL(c, bgpVpnID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/network_associations
 func createNetworkAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return networkAssociationsURL(c, bgpVpnID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/network_associations/{network-association-id}
 func getNetworkAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return networkAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/network_associations/{network-association-id}
 func deleteNetworkAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return networkAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/router_associations
 func routerAssociationsURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return c.ServiceURL(urlBase, bgpVpnID, "router_associations")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/router_associations/{router-association-id}
 func routerAssociationResourceURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return c.ServiceURL(urlBase, bgpVpnID, "router_associations", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/router_associations
 func listRouterAssociationsURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return routerAssociationsURL(c, bgpVpnID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/router_associations
 func createRouterAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return routerAssociationsURL(c, bgpVpnID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/router_associations/{router-association-id}
 func getRouterAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return routerAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/router_associations/{router-association-id}
 func updateRouterAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return routerAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/router_associations/{router-association-id}
 func deleteRouterAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return routerAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/port_associations
 func portAssociationsURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return c.ServiceURL(urlBase, bgpVpnID, "port_associations")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/port_associations/{port-association-id}
 func portAssociationResourceURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return c.ServiceURL(urlBase, bgpVpnID, "port_associations", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/port_associations
 func listPortAssociationsURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return portAssociationsURL(c, bgpVpnID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/port_associations
 func createPortAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string) string {
-	return portAssociationsURL(c, bgpVpnID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/port_associations/{port-association-id}
 func getPortAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return portAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/port_associations/{port-association-id}
 func updatePortAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return portAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // return /v2.0/bgpvpn/bgpvpns/{bgpvpn-id}/port_associations/{port-association-id}
 func deletePortAssociationURL(c *gophercloud.ServiceClient, bgpVpnID string, id string) string {
-	return portAssociationResourceURL(c, bgpVpnID, id)
+	_ = "STUB: not implemented"
+	return ""
 }

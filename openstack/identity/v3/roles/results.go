@@ -1,8 +1,6 @@
 package roles
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -31,35 +29,10 @@ type Role struct {
 	Options map[Option]any `json:"options"`
 }
 
-func (r *Role) UnmarshalJSON(b []byte) error {
-	type tmp Role
-	var s struct {
-		tmp
-		Extra map[string]any `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Role(s.tmp)
+func (r *Role) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Collect other fields and bundle them into Extra
-	// but only if a field titled "extra" wasn't sent.
-	if s.Extra != nil {
-		r.Extra = s.Extra
-	} else {
-		var result any
-		err := json.Unmarshal(b, &result)
-		if err != nil {
-			return err
-		}
-		if resultMap, ok := result.(map[string]any); ok {
-			r.Extra = gophercloud.RemainingKeys(Role{}, resultMap)
-		}
-	}
-
-	return err
-}
+// Collect other fields and bundle them into Extra
+// but only if a field titled "extra" wasn't sent.
 
 type roleResult struct {
 	gophercloud.Result
@@ -95,48 +68,20 @@ type RolePage struct {
 }
 
 // IsEmpty determines whether or not a page of Roles contains any results.
-func (r RolePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	roles, err := ExtractRoles(r)
-	return len(roles) == 0, err
-}
+func (r RolePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r RolePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractProjects returns a slice of Roles contained in a single page of
 // results.
-func ExtractRoles(r pagination.Page) ([]Role, error) {
-	var s struct {
-		Roles []Role `json:"roles"`
-	}
-	err := (r.(RolePage)).ExtractInto(&s)
-	return s.Roles, err
-}
+func ExtractRoles(r pagination.Page) ([]Role, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any roleResults as a Role.
-func (r roleResult) Extract() (*Role, error) {
-	var s struct {
-		Role *Role `json:"role"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Role, err
-}
+func (r roleResult) Extract() (*Role, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // RoleAssignment is the result of a role assignments query.
 type RoleAssignment struct {
@@ -191,35 +136,20 @@ type RoleAssignmentPage struct {
 }
 
 // IsEmpty returns true if the RoleAssignmentPage contains no results.
-func (r RoleAssignmentPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	roleAssignments, err := ExtractRoleAssignments(r)
-	return len(roleAssignments) == 0, err
-}
+func (r RoleAssignmentPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to
 // the next page of results.
 func (r RoleAssignmentPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next string `json:"next"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractRoleAssignments extracts a slice of RoleAssignments from a Collection
 // acquired from List.
 func ExtractRoleAssignments(r pagination.Page) ([]RoleAssignment, error) {
-	var s struct {
-		RoleAssignments []RoleAssignment `json:"role_assignments"`
-	}
-	err := (r.(RoleAssignmentPage)).ExtractInto(&s)
-	return s.RoleAssignments, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AssignmentResult represents the result of an assign operation.
@@ -278,9 +208,8 @@ type RoleInferenceRule struct {
 }
 
 func (r impliedRoleResult) Extract() (*RoleInferenceRule, error) {
-	var s = &RoleInferenceRule{}
-	err := r.ExtractInto(s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type ListImpliedRolesResult struct {
@@ -321,9 +250,8 @@ type RoleInferenceRuleList struct {
 }
 
 func (r ListImpliedRolesResult) Extract() (*RoleInferenceRuleList, error) {
-	var s = &RoleInferenceRuleList{}
-	err := r.ExtractInto(s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type DeleteImpliedRoleResult struct {

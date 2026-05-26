@@ -5,9 +5,8 @@ import (
 )
 
 func getURL(c *gophercloud.ServiceClient, version string) string {
-	return c.ServiceURL(version)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL()
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

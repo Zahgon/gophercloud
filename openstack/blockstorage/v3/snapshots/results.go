@@ -1,7 +1,6 @@
 package snapshots
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -79,55 +78,22 @@ type SnapshotPage struct {
 }
 
 // UnmarshalJSON converts our JSON API response into our snapshot struct
-func (r *Snapshot) UnmarshalJSON(b []byte) error {
-	type tmp Snapshot
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Snapshot(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return err
-}
+func (r *Snapshot) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // IsEmpty returns true if a SnapshotPage contains no Snapshots.
-func (r SnapshotPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	volumes, err := ExtractSnapshots(r)
-	return len(volumes) == 0, err
-}
+func (r SnapshotPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL uses the response's embedded link reference to navigate to the
 // next page of results.
 func (r SnapshotPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"snapshots_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractSnapshots extracts and returns Snapshots. It is used while iterating over a snapshots.List call.
 func ExtractSnapshots(r pagination.Page) ([]Snapshot, error) {
-	var s struct {
-		Snapshots []Snapshot `json:"snapshots"`
-	}
-	err := (r.(SnapshotPage)).ExtractInto(&s)
-	return s.Snapshots, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateMetadataResult contains the response body and error from an UpdateMetadata request.
@@ -137,11 +103,8 @@ type UpdateMetadataResult struct {
 
 // ExtractMetadata returns the metadata from a response from snapshots.UpdateMetadata.
 func (r UpdateMetadataResult) ExtractMetadata() (map[string]any, error) {
-	if r.Err != nil {
-		return nil, r.Err
-	}
-	m := r.Body.(map[string]any)["metadata"]
-	return m.(map[string]any), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -149,13 +112,7 @@ type commonResult struct {
 }
 
 // Extract will get the Snapshot object out of the commonResult object.
-func (r commonResult) Extract() (*Snapshot, error) {
-	var s struct {
-		Snapshot *Snapshot `json:"snapshot"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Snapshot, err
-}
+func (r commonResult) Extract() (*Snapshot, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ResetStatusResult contains the response error from a ResetStatus request.
 type ResetStatusResult struct {

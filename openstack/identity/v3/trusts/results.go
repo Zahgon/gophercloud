@@ -35,48 +35,20 @@ type GetResult struct {
 }
 
 // IsEmpty determines whether or not a page of Trusts contains any results.
-func (t TrustPage) IsEmpty() (bool, error) {
-	if t.StatusCode == 204 {
-		return true, nil
-	}
-
-	roles, err := ExtractTrusts(t)
-	return len(roles) == 0, err
-}
+func (t TrustPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (t TrustPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := t.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractProjects returns a slice of Trusts contained in a single page of
 // results.
-func ExtractTrusts(r pagination.Page) ([]Trust, error) {
-	var s struct {
-		Trusts []Trust `json:"trusts"`
-	}
-	err := (r.(TrustPage)).ExtractInto(&s)
-	return s.Trusts, err
-}
+func ExtractTrusts(r pagination.Page) ([]Trust, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any trust result as a Trust.
-func (t trustResult) Extract() (*Trust, error) {
-	var s struct {
-		Trust *Trust `json:"trust"`
-	}
-	err := t.ExtractInto(&s)
-	return s.Trust, err
-}
+func (t trustResult) Extract() (*Trust, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Trust represents a delegated authorization request between two
 // identities.
@@ -112,51 +84,23 @@ type RolesPage struct {
 }
 
 // IsEmpty determines whether or not a a Page contains any results.
-func (r RolesPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	accessTokenRoles, err := ExtractRoles(r)
-	return len(accessTokenRoles) == 0, err
-}
+func (r RolesPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r RolesPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractRoles returns a slice of Role contained in a single page of results.
-func ExtractRoles(r pagination.Page) ([]Role, error) {
-	var s struct {
-		Roles []Role `json:"roles"`
-	}
-	err := (r.(RolesPage)).ExtractInto(&s)
-	return s.Roles, err
-}
+func ExtractRoles(r pagination.Page) ([]Role, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type GetRoleResult struct {
 	gophercloud.Result
 }
 
 // Extract interprets any GetRoleResult result as an Role.
-func (r GetRoleResult) Extract() (*Role, error) {
-	var s struct {
-		Role *Role `json:"role"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Role, err
-}
+func (r GetRoleResult) Extract() (*Role, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type CheckRoleResult struct {
 	gophercloud.ErrResult

@@ -1,7 +1,6 @@
 package loadbalancers
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -89,43 +88,11 @@ type AdditionalVip struct {
 	IPAddress string `json:"ip_address,omitempty"`
 }
 
-func (r *LoadBalancer) UnmarshalJSON(b []byte) error {
-	type tmp LoadBalancer
+func (r *LoadBalancer) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Support for older neutron time format
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
+// Support for older neutron time format
 
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = LoadBalancer(s1.tmp)
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		return nil
-	}
-
-	// Support for newer neutron time format
-	var s2 struct {
-		tmp
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = LoadBalancer(s2.tmp)
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-
-	return nil
-}
+// Support for newer neutron time format
 
 // StatusTree represents the status of a loadbalancer.
 type StatusTree struct {
@@ -159,35 +126,19 @@ type LoadBalancerPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r LoadBalancerPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"loadbalancers_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a LoadBalancerPage struct is empty.
-func (r LoadBalancerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractLoadBalancers(r)
-	return len(is) == 0, err
-}
+func (r LoadBalancerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractLoadBalancers accepts a Page struct, specifically a LoadbalancerPage
 // struct, and extracts the elements into a slice of LoadBalancer structs. In
 // other words, a generic collection is mapped into a relevant slice.
 func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) {
-	var s struct {
-		LoadBalancers []LoadBalancer `json:"loadbalancers"`
-	}
-	err := (r.(LoadBalancerPage)).ExtractInto(&s)
-	return s.LoadBalancers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -195,13 +146,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a loadbalancer.
-func (r commonResult) Extract() (*LoadBalancer, error) {
-	var s struct {
-		LoadBalancer *LoadBalancer `json:"loadbalancer"`
-	}
-	err := r.ExtractInto(&s)
-	return s.LoadBalancer, err
-}
+func (r commonResult) Extract() (*LoadBalancer, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetStatusesResult represents the result of a GetStatuses operation.
 // Call its Extract method to interpret it as a StatusTree.
@@ -212,11 +157,8 @@ type GetStatusesResult struct {
 // Extract is a function that accepts a result and extracts the status of
 // a Loadbalancer.
 func (r GetStatusesResult) Extract() (*StatusTree, error) {
-	var s struct {
-		Statuses *StatusTree `json:"statuses"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Statuses, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // StatsResult represents the result of a GetStats operation.
@@ -227,13 +169,7 @@ type StatsResult struct {
 
 // Extract is a function that accepts a result and extracts the status of
 // a Loadbalancer.
-func (r StatsResult) Extract() (*Stats, error) {
-	var s struct {
-		Stats *Stats `json:"stats"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Stats, err
-}
+func (r StatsResult) Extract() (*Stats, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a LoadBalancer.

@@ -42,13 +42,7 @@ type DeleteResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a QoS policy resource.
-func (r commonResult) Extract() (*Policy, error) {
-	var s struct {
-		Policy *Policy `json:"policy"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Policy, err
-}
+func (r commonResult) Extract() (*Policy, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Policy represents a QoS policy.
 type Policy struct {
@@ -98,34 +92,18 @@ type PolicyPage struct {
 // the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r PolicyPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"policies_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a PolicyPage is empty.
-func (r PolicyPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractPolicies(r)
-	return len(is) == 0, err
-}
+func (r PolicyPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractPolicies accepts a PolicyPage, and extracts the elements into a slice of Policies.
 func ExtractPolicies(r pagination.Page) ([]Policy, error) {
-	var s []Policy
-	err := ExtractPolicysInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractPoliciesInto extracts the elements into a slice of RBAC Policy structs.
-func ExtractPolicysInto(r pagination.Page, v any) error {
-	return r.(PolicyPage).ExtractIntoSlicePtr(v, "policies")
-}
+func ExtractPolicysInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }

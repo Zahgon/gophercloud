@@ -2,10 +2,6 @@ package availabilityzones
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("os-availability-zone")
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listDetailURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("os-availability-zone", "detail")
-}
+func listDetailURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

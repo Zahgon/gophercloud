@@ -7,10 +7,9 @@ const (
 	mappingsPath = "mappings"
 )
 
-func mappingsRootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath, mappingsPath)
-}
+func mappingsRootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func mappingsResourceURL(c *gophercloud.ServiceClient, mappingID string) string {
-	return c.ServiceURL(rootPath, mappingsPath, mappingID)
+	_ = "STUB: not implemented"
+	return ""
 }

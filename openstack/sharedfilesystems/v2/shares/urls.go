@@ -2,86 +2,98 @@ package shares
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("shares")
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listDetailURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("shares", "detail")
-}
+func listDetailURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
 func updateURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listExportLocationsURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "export_locations")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getExportLocationURL(c *gophercloud.ServiceClient, shareID, id string) string {
-	return c.ServiceURL("shares", shareID, "export_locations", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func grantAccessURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func revokeAccessURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listAccessRightsURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func extendURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func shrinkURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func revertURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func resetStatusURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func forceDeleteURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func unmanageURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getMetadataURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "metadata")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getMetadatumURL(c *gophercloud.ServiceClient, id, key string) string {
-	return c.ServiceURL("shares", id, "metadata", key)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func setMetadataURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "metadata")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateMetadataURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("shares", id, "metadata")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteMetadatumURL(c *gophercloud.ServiceClient, id, key string) string {
-	return c.ServiceURL("shares", id, "metadata", key)
+	_ = "STUB: not implemented"
+	return ""
 }

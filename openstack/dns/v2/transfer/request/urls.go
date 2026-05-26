@@ -8,14 +8,14 @@ const (
 	resourcePath = "transfer_requests"
 )
 
-func baseURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath, tasksPath, resourcePath)
-}
+func baseURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func createURL(c *gophercloud.ServiceClient, zoneID string) string {
-	return c.ServiceURL(rootPath, zoneID, tasksPath, resourcePath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func resourceURL(c *gophercloud.ServiceClient, transferID string) string {
-	return c.ServiceURL(rootPath, tasksPath, resourcePath, transferID)
+	_ = "STUB: not implemented"
+	return ""
 }

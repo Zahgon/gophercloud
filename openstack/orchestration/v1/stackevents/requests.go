@@ -9,9 +9,8 @@ import (
 
 // Find retrieves stack events for the given stack name.
 func Find(ctx context.Context, c *gophercloud.ServiceClient, stackName string) (r FindResult) {
-	resp, err := c.Get(ctx, findURL(c, stackName), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(FindResult)
 }
 
 // SortDir is a type for specifying in which direction to sort a list of events.
@@ -100,25 +99,14 @@ type ListOpts struct {
 
 // ToStackEventListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToStackEventListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list resources for the given stack.
 func List(client *gophercloud.ServiceClient, stackName, stackID string, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client, stackName, stackID)
-	if opts != nil {
-		query, err := opts.ToStackEventListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		p := EventPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListResourceEventsOptsBuilder allows extensions to add additional parameters to the
@@ -157,30 +145,18 @@ type ListResourceEventsOpts struct {
 
 // ToResourceEventListQuery formats a ListResourceEventsOpts into a query string.
 func (opts ListResourceEventsOpts) ToResourceEventListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListResourceEvents makes a request against the API to list resources for the given stack.
 func ListResourceEvents(client *gophercloud.ServiceClient, stackName, stackID, resourceName string, opts ListResourceEventsOptsBuilder) pagination.Pager {
-	url := listResourceEventsURL(client, stackName, stackID, resourceName)
-	if opts != nil {
-		query, err := opts.ToResourceEventListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		p := EventPage{pagination.MarkerPageBase{PageResult: r}}
-		p.Owner = p
-		return p
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retreives data for the given stack resource.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, stackName, stackID, resourceName, eventID string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, stackName, stackID, resourceName, eventID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }

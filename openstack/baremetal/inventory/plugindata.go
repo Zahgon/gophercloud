@@ -1,10 +1,5 @@
 package inventory
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type ExtraDataItem map[string]any
 
 type ExtraDataSection map[string]ExtraDataItem
@@ -47,30 +42,7 @@ type LLDPTLVType struct {
 }
 
 // UnmarshalJSON interprets an LLDP TLV [key, value] pair as an LLDPTLVType structure
-func (r *LLDPTLVType) UnmarshalJSON(data []byte) error {
-	var list []any
-	if err := json.Unmarshal(data, &list); err != nil {
-		return err
-	}
-
-	if len(list) != 2 {
-		return fmt.Errorf("invalid LLDP TLV key-value pair")
-	}
-
-	fieldtype, ok := list[0].(float64)
-	if !ok {
-		return fmt.Errorf("LLDP TLV key is not number")
-	}
-
-	value, ok := list[1].(string)
-	if !ok {
-		return fmt.Errorf("LLDP TLV value is not string")
-	}
-
-	r.Type = int(fieldtype)
-	r.Value = value
-	return nil
-}
+func (r *LLDPTLVType) UnmarshalJSON(data []byte) error { _ = "STUB: not implemented"; return nil }
 
 type HardwareManager struct {
 	Name    string `json:"name"`

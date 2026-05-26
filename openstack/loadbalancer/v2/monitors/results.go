@@ -1,9 +1,6 @@
 package monitors
 
 import (
-	"encoding/json"
-	"strconv"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -99,25 +96,7 @@ type Monitor struct {
 	Tags []string `json:"tags"`
 }
 
-func (r *Monitor) UnmarshalJSON(b []byte) error {
-	type tmp Monitor
-	var s struct {
-		tmp
-		HTTPVersion float64 `json:"http_version"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-
-	*r = Monitor(s.tmp)
-	if s.HTTPVersion != 0 {
-		r.HTTPVersion = strconv.FormatFloat(s.HTTPVersion, 'f', 1, 64)
-	}
-
-	return nil
-}
+func (r *Monitor) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // MonitorPage is the page returned by a pager when traversing over a
 // collection of health monitors.
@@ -129,37 +108,19 @@ type MonitorPage struct {
 // the end of a page and the pager seeks to traverse over a new one. In order
 // to do this, it needs to construct the next page's URL.
 func (r MonitorPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"healthmonitors_links"`
-	}
-
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a MonitorPage struct is empty.
-func (r MonitorPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractMonitors(r)
-	return len(is) == 0, err
-}
+func (r MonitorPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractMonitors accepts a Page struct, specifically a MonitorPage struct,
 // and extracts the elements into a slice of Monitor structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractMonitors(r pagination.Page) ([]Monitor, error) {
-	var s struct {
-		Monitors []Monitor `json:"healthmonitors"`
-	}
-	err := (r.(MonitorPage)).ExtractInto(&s)
-	return s.Monitors, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -167,13 +128,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a monitor.
-func (r commonResult) Extract() (*Monitor, error) {
-	var s struct {
-		Monitor *Monitor `json:"healthmonitor"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Monitor, err
-}
+func (r commonResult) Extract() (*Monitor, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a Monitor.

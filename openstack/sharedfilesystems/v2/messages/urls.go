@@ -2,14 +2,11 @@ package messages
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("messages")
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("messages", id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return getURL(c, id)
+	_ = "STUB: not implemented"
+	return ""
 }

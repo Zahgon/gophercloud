@@ -1,7 +1,6 @@
 package instanceactions
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -33,22 +32,7 @@ type InstanceAction struct {
 }
 
 // UnmarshalJSON converts our JSON API response into our instance action struct
-func (i *InstanceAction) UnmarshalJSON(b []byte) error {
-	type tmp InstanceAction
-	var s struct {
-		tmp
-		StartTime gophercloud.JSONRFC3339MilliNoZ `json:"start_time"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*i = InstanceAction(s.tmp)
-
-	i.StartTime = time.Time(s.StartTime)
-
-	return err
-}
+func (i *InstanceAction) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // InstanceActionPage abstracts the raw results of making a List() request
 // against the API. As OpenStack extensions may freely alter the response bodies
@@ -59,21 +43,13 @@ type InstanceActionPage struct {
 }
 
 // IsEmpty returns true if an InstanceActionPage contains no instance actions.
-func (r InstanceActionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	instanceactions, err := ExtractInstanceActions(r)
-	return len(instanceactions) == 0, err
-}
+func (r InstanceActionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractInstanceActions interprets a page of results as a slice
 // of InstanceAction.
 func ExtractInstanceActions(r pagination.Page) ([]InstanceAction, error) {
-	var resp []InstanceAction
-	err := ExtractInstanceActionsInto(r, &resp)
-	return resp, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Event represents an event of instance action.
@@ -103,24 +79,7 @@ type Event struct {
 }
 
 // UnmarshalJSON converts our JSON API response into our instance action struct.
-func (e *Event) UnmarshalJSON(b []byte) error {
-	type tmp Event
-	var s struct {
-		tmp
-		StartTime  gophercloud.JSONRFC3339MilliNoZ `json:"start_time"`
-		FinishTime gophercloud.JSONRFC3339MilliNoZ `json:"finish_time"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*e = Event(s.tmp)
-
-	e.StartTime = time.Time(s.StartTime)
-	e.FinishTime = time.Time(s.FinishTime)
-
-	return err
-}
+func (e *Event) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // InstanceActionDetail represents the details of an Action.
 type InstanceActionDetail struct {
@@ -155,23 +114,7 @@ type InstanceActionDetail struct {
 }
 
 // UnmarshalJSON converts our JSON API response into our instance action struct
-func (i *InstanceActionDetail) UnmarshalJSON(b []byte) error {
-	type tmp InstanceActionDetail
-	var s struct {
-		tmp
-		UpdatedAt *gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		StartTime gophercloud.JSONRFC3339MilliNoZ  `json:"start_time"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*i = InstanceActionDetail(s.tmp)
-
-	i.UpdatedAt = (*time.Time)(s.UpdatedAt)
-	i.StartTime = time.Time(s.StartTime)
-	return err
-}
+func (i *InstanceActionDetail) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // InstanceActionResult is the result handler of Get.
 type InstanceActionResult struct {
@@ -180,15 +123,13 @@ type InstanceActionResult struct {
 
 // Extract interprets a result as an InstanceActionDetail.
 func (r InstanceActionResult) Extract() (InstanceActionDetail, error) {
-	var s InstanceActionDetail
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return *new(InstanceActionDetail), nil
 }
 
-func (r InstanceActionResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "instanceAction")
-}
+func (r InstanceActionResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 func ExtractInstanceActionsInto(r pagination.Page, v any) error {
-	return r.(InstanceActionPage).ExtractIntoSlicePtr(v, "instanceActions")
+	_ = "STUB: not implemented"
+	return nil
 }

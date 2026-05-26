@@ -26,8 +26,4 @@ type GetResult struct {
 }
 
 // Extract interprets a GetResult as Usages (microversion 1.38+).
-func (r GetResult) Extract() (*Usages, error) {
-	var s Usages
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r GetResult) Extract() (*Usages, error) { _ = "STUB: not implemented"; return nil, nil }

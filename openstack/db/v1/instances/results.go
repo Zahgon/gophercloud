@@ -1,7 +1,6 @@
 package instances
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -48,22 +47,7 @@ type Address struct {
 	Address string
 }
 
-func (r *Fault) UnmarshalJSON(b []byte) error {
-	type tmp Fault
-	var s struct {
-		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Fault(s.tmp)
-
-	r.Created = time.Time(s.Created)
-
-	return nil
-}
+func (r *Fault) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // Instance represents a remote MySQL instance.
 type Instance struct {
@@ -114,24 +98,7 @@ type Instance struct {
 	Addresses []Address
 }
 
-func (r *Instance) UnmarshalJSON(b []byte) error {
-	type tmp Instance
-	var s struct {
-		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Instance(s.tmp)
-
-	r.Created = time.Time(s.Created)
-	r.Updated = time.Time(s.Updated)
-
-	return nil
-}
+func (r *Instance) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
@@ -158,13 +125,7 @@ type ConfigurationResult struct {
 }
 
 // Extract will extract an Instance from various result structs.
-func (r commonResult) Extract() (*Instance, error) {
-	var s struct {
-		Instance *Instance `json:"instance"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Instance, err
-}
+func (r commonResult) Extract() (*Instance, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // InstancePage represents a single page of a paginated instance collection.
 type InstancePage struct {
@@ -172,35 +133,19 @@ type InstancePage struct {
 }
 
 // IsEmpty checks to see whether the collection is empty.
-func (page InstancePage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	instances, err := ExtractInstances(page)
-	return len(instances) == 0, err
-}
+func (page InstancePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL will retrieve the next page URL.
 func (page InstancePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"instances_links"`
-	}
-	err := page.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractInstances will convert a generic pagination struct into a more
 // relevant slice of Instance structs.
 func ExtractInstances(r pagination.Page) ([]Instance, error) {
-	var s struct {
-		Instances []Instance `json:"instances"`
-	}
-	err := (r.(InstancePage)).ExtractInto(&s)
-	return s.Instances, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // EnableRootUserResult represents the result of an operation to enable the root user.
@@ -210,11 +155,8 @@ type EnableRootUserResult struct {
 
 // Extract will extract root user information from a UserRootResult.
 func (r EnableRootUserResult) Extract() (*users.User, error) {
-	var s struct {
-		User *users.User `json:"user"`
-	}
-	err := r.ExtractInto(&s)
-	return s.User, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ActionResult represents the result of action requests, such as: restarting
@@ -231,6 +173,4 @@ type IsRootEnabledResult struct {
 }
 
 // Extract is used to extract the data from a IsRootEnabledResult.
-func (r IsRootEnabledResult) Extract() (bool, error) {
-	return r.Body.(map[string]any)["rootEnabled"] == true, r.Err
-}
+func (r IsRootEnabledResult) Extract() (bool, error) { _ = "STUB: not implemented"; return false, nil }

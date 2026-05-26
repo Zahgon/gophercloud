@@ -1,8 +1,6 @@
 package openstack
 
 import (
-	"os"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -34,104 +32,14 @@ by sourcing an `openrc` file), then:
 	provider, err := openstack.AuthenticatedClient(context.TODO(), opts)
 */
 func AuthOptionsFromEnv() (gophercloud.AuthOptions, error) {
-	authURL := os.Getenv("OS_AUTH_URL")
-	username := os.Getenv("OS_USERNAME")
-	userID := os.Getenv("OS_USERID")
-	password := os.Getenv("OS_PASSWORD")
-	passcode := os.Getenv("OS_PASSCODE")
-	tenantID := os.Getenv("OS_TENANT_ID")
-	tenantName := os.Getenv("OS_TENANT_NAME")
-	domainID := os.Getenv("OS_DOMAIN_ID")
-	domainName := os.Getenv("OS_DOMAIN_NAME")
-	applicationCredentialID := os.Getenv("OS_APPLICATION_CREDENTIAL_ID")
-	applicationCredentialName := os.Getenv("OS_APPLICATION_CREDENTIAL_NAME")
-	applicationCredentialSecret := os.Getenv("OS_APPLICATION_CREDENTIAL_SECRET")
-	systemScope := os.Getenv("OS_SYSTEM_SCOPE")
-
-	// If OS_PROJECT_ID is set, overwrite tenantID with the value.
-	if v := os.Getenv("OS_PROJECT_ID"); v != "" {
-		tenantID = v
-	}
-
-	// If OS_PROJECT_NAME is set, overwrite tenantName with the value.
-	if v := os.Getenv("OS_PROJECT_NAME"); v != "" {
-		tenantName = v
-	}
-
-	if authURL == "" {
-		err := gophercloud.ErrMissingEnvironmentVariable{
-			EnvironmentVariable: "OS_AUTH_URL",
-		}
-		return nilOptions, err
-	}
-
-	if userID == "" && username == "" {
-		// Empty username and userID could be ignored, when applicationCredentialID and applicationCredentialSecret are set
-		if applicationCredentialID == "" && applicationCredentialSecret == "" {
-			err := gophercloud.ErrMissingAnyoneOfEnvironmentVariables{
-				EnvironmentVariables: []string{"OS_USERID", "OS_USERNAME"},
-			}
-			return nilOptions, err
-		}
-	}
-
-	if password == "" && passcode == "" && applicationCredentialID == "" && applicationCredentialName == "" {
-		err := gophercloud.ErrMissingEnvironmentVariable{
-			// silently ignore TOTP passcode warning, since it is not a common auth method
-			EnvironmentVariable: "OS_PASSWORD",
-		}
-		return nilOptions, err
-	}
-
-	if (applicationCredentialID != "" || applicationCredentialName != "") && applicationCredentialSecret == "" {
-		err := gophercloud.ErrMissingEnvironmentVariable{
-			EnvironmentVariable: "OS_APPLICATION_CREDENTIAL_SECRET",
-		}
-		return nilOptions, err
-	}
-
-	if domainID == "" && domainName == "" && tenantID == "" && tenantName != "" {
-		err := gophercloud.ErrMissingEnvironmentVariable{
-			EnvironmentVariable: "OS_PROJECT_ID",
-		}
-		return nilOptions, err
-	}
-
-	if applicationCredentialID == "" && applicationCredentialName != "" && applicationCredentialSecret != "" {
-		if userID == "" && username == "" {
-			return nilOptions, gophercloud.ErrMissingAnyoneOfEnvironmentVariables{
-				EnvironmentVariables: []string{"OS_USERID", "OS_USERNAME"},
-			}
-		}
-		if username != "" && domainID == "" && domainName == "" {
-			return nilOptions, gophercloud.ErrMissingAnyoneOfEnvironmentVariables{
-				EnvironmentVariables: []string{"OS_DOMAIN_ID", "OS_DOMAIN_NAME"},
-			}
-		}
-	}
-
-	var scope *gophercloud.AuthScope
-	if systemScope == "all" {
-		scope = &gophercloud.AuthScope{
-			System: true,
-		}
-	}
-
-	ao := gophercloud.AuthOptions{
-		IdentityEndpoint:            authURL,
-		UserID:                      userID,
-		Username:                    username,
-		Password:                    password,
-		Passcode:                    passcode,
-		TenantID:                    tenantID,
-		TenantName:                  tenantName,
-		DomainID:                    domainID,
-		DomainName:                  domainName,
-		ApplicationCredentialID:     applicationCredentialID,
-		ApplicationCredentialName:   applicationCredentialName,
-		ApplicationCredentialSecret: applicationCredentialSecret,
-		Scope:                       scope,
-	}
-
-	return ao, nil
+	_ = "STUB: not implemented"
+	return *new(gophercloud.AuthOptions), nil
 }
+
+// If OS_PROJECT_ID is set, overwrite tenantID with the value.
+
+// If OS_PROJECT_NAME is set, overwrite tenantName with the value.
+
+// Empty username and userID could be ignored, when applicationCredentialID and applicationCredentialSecret are set
+
+// silently ignore TOTP passcode warning, since it is not a common auth method

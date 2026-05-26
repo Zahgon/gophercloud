@@ -9,7 +9,6 @@ import (
 const TokenID = client.TokenID
 
 func ServiceClient(fakeServer th.FakeServer) *gophercloud.ServiceClient {
-	sc := client.ServiceClient(fakeServer)
-	sc.ResourceBase = sc.Endpoint + "v2.0/"
-	return sc
+	_ = "STUB: not implemented"
+	return nil
 }

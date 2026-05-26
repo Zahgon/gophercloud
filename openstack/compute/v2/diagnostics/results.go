@@ -10,7 +10,6 @@ type serverDiagnosticsResult struct {
 
 // Extract interprets any diagnostic response as a map
 func (r serverDiagnosticsResult) Extract() (map[string]any, error) {
-	var s map[string]any
-	err := r.ExtractInto(&s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

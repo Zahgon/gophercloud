@@ -2,7 +2,6 @@ package gophercloud
 
 import (
 	"context"
-	"slices"
 )
 
 // Availability indicates to whom a specific service endpoint is accessible:
@@ -109,33 +108,15 @@ type EndpointLocator func(context.Context, EndpointOpts) (string, error)
 //
 // It sets EndpointOpts fields if not already set, including a default type.
 // Currently, EndpointOpts.Availability defaults to the public endpoint.
-func (eo *EndpointOpts) ApplyDefaults(t string) {
-	if eo.Type == "" {
-		eo.Type = t
-	}
-	if eo.Availability == "" {
-		eo.Availability = AvailabilityPublic
-	}
-	if len(eo.Aliases) == 0 {
-		if aliases, ok := ServiceTypeAliases[eo.Type]; ok {
-			// happy path: user requested a service type by its official name
-			eo.Aliases = slices.Clone(aliases)
-		} else {
-			// unhappy path: user requested a service type by its alias or an
-			// invalid/unsupported service type
-			// TODO(stephenfin): This should probably be an error in v3
-			for t, aliases := range ServiceTypeAliases {
-				if slices.Contains(aliases, eo.Type) {
-					// we intentionally override the service type, even if it
-					// was explicitly requested by the user
-					eo.Type = t
-					eo.Aliases = slices.Clone(aliases)
-				}
-			}
-		}
-	}
-}
+func (eo *EndpointOpts) ApplyDefaults(t string) { _ = "STUB: not implemented"; return }
 
-func (eo *EndpointOpts) Types() []string {
-	return append([]string{eo.Type}, eo.Aliases...)
-}
+// happy path: user requested a service type by its official name
+
+// unhappy path: user requested a service type by its alias or an
+// invalid/unsupported service type
+// TODO(stephenfin): This should probably be an error in v3
+
+// we intentionally override the service type, even if it
+// was explicitly requested by the user
+
+func (eo *EndpointOpts) Types() []string { _ = "STUB: not implemented"; return nil }

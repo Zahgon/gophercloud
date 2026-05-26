@@ -1,10 +1,6 @@
 package external
 
 import (
-	"net/url"
-	"strconv"
-
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/networks"
 )
 
@@ -17,19 +13,8 @@ type ListOptsExt struct {
 // ToNetworkListQuery adds the router:external option to the base network
 // list options.
 func (opts ListOptsExt) ToNetworkListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts.ListOptsBuilder)
-	if err != nil {
-		return "", err
-	}
-
-	params := q.Query()
-	if opts.External != nil {
-		v := strconv.FormatBool(*opts.External)
-		params.Add("router:external", v)
-	}
-
-	q = &url.URL{RawQuery: params.Encode()}
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // CreateOptsExt is the structure used when creating new external network
@@ -43,19 +28,8 @@ type CreateOptsExt struct {
 // ToNetworkCreateMap adds the router:external options to the base network
 // creation options.
 func (opts CreateOptsExt) ToNetworkCreateMap() (map[string]any, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.External == nil {
-		return base, nil
-	}
-
-	networkMap := base["network"].(map[string]any)
-	networkMap["router:external"] = opts.External
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateOptsExt is the structure used when updating existing external network
@@ -68,17 +42,6 @@ type UpdateOptsExt struct {
 
 // ToNetworkUpdateMap casts an UpdateOpts struct to a map.
 func (opts UpdateOptsExt) ToNetworkUpdateMap() (map[string]any, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.External == nil {
-		return base, nil
-	}
-
-	networkMap := base["network"].(map[string]any)
-	networkMap["router:external"] = opts.External
-
-	return base, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

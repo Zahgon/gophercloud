@@ -1,13 +1,10 @@
 package testing
 
 import (
-	"fmt"
-	"net/http"
 	"testing"
 
 	"github.com/gophercloud/gophercloud/v2/openstack/common/extensions"
 	th "github.com/gophercloud/gophercloud/v2/testhelper"
-	"github.com/gophercloud/gophercloud/v2/testhelper/client"
 )
 
 // ListOutput provides a single page of Extension results.
@@ -65,26 +62,13 @@ var SingleExtension = &extensions.Extension{
 // HandleListExtensionsSuccessfully creates an HTTP handler at `/extensions` on the test handler
 // mux that response with a list containing a single tenant.
 func HandleListExtensionsSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/extensions", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.Header().Add("Content-Type", "application/json")
-
-		fmt.Fprint(w, ListOutput)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // HandleGetExtensionSuccessfully creates an HTTP handler at `/extensions/agent` that responds with
 // a JSON payload corresponding to SingleExtension.
 func HandleGetExtensionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/extensions/agent", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-
-		fmt.Fprint(w, GetOutput)
-	})
+	_ = "STUB: not implemented"
+	return
 }

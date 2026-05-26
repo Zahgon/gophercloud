@@ -26,35 +26,19 @@ type TenantPage struct {
 }
 
 // IsEmpty determines whether or not a page of Tenants contains any results.
-func (r TenantPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	tenants, err := ExtractTenants(r)
-	return len(tenants) == 0, err
-}
+func (r TenantPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the tenants_links section of the result.
 func (r TenantPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"tenants_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractTenants returns a slice of Tenants contained in a single page of
 // results.
 func ExtractTenants(r pagination.Page) ([]Tenant, error) {
-	var s struct {
-		Tenants []Tenant `json:"tenants"`
-	}
-	err := (r.(TenantPage)).ExtractInto(&s)
-	return s.Tenants, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type tenantResult struct {
@@ -62,13 +46,7 @@ type tenantResult struct {
 }
 
 // Extract interprets any tenantResults as a Tenant.
-func (r tenantResult) Extract() (*Tenant, error) {
-	var s struct {
-		Tenant *Tenant `json:"tenant"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Tenant, err
-}
+func (r tenantResult) Extract() (*Tenant, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get request. Call its Extract method to
 // interpret it as a Tenant.

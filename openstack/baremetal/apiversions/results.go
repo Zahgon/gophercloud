@@ -36,27 +36,7 @@ type ListResult struct {
 }
 
 // Extract is a function that accepts a get result and extracts an API version resource.
-func (r GetResult) Extract() (*APIVersion, error) {
-	var s struct {
-		Version APIVersion `json:"version"`
-	}
-
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return nil, err
-	}
-
-	return &s.Version, nil
-}
+func (r GetResult) Extract() (*APIVersion, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract is a function that accepts a list result and extracts an APIVersions resource
-func (r ListResult) Extract() (*APIVersions, error) {
-	var version APIVersions
-
-	err := r.ExtractInto(&version)
-	if err != nil {
-		return nil, err
-	}
-
-	return &version, nil
-}
+func (r ListResult) Extract() (*APIVersions, error) { _ = "STUB: not implemented"; return nil, nil }

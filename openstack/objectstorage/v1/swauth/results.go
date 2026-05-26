@@ -20,8 +20,4 @@ type AuthResult struct {
 
 // Extract is a method that attempts to interpret any Swauth authentication
 // response as a AuthResult struct.
-func (r GetAuthResult) Extract() (*AuthResult, error) {
-	var s *AuthResult
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r GetAuthResult) Extract() (*AuthResult, error) { _ = "STUB: not implemented"; return nil, nil }

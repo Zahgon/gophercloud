@@ -25,13 +25,7 @@ type commonResult struct {
 }
 
 // Extract will get the ShareType object out of the commonResult object.
-func (r commonResult) Extract() (*ShareType, error) {
-	var s struct {
-		ShareType *ShareType `json:"share_type"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ShareType, err
-}
+func (r commonResult) Extract() (*ShareType, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {
@@ -49,23 +43,13 @@ type ShareTypePage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no ShareTypes.
-func (r ShareTypePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	shareTypes, err := ExtractShareTypes(r)
-	return len(shareTypes) == 0, err
-}
+func (r ShareTypePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractShareTypes extracts and returns ShareTypes. It is used while
 // iterating over a sharetypes.List call.
 func ExtractShareTypes(r pagination.Page) ([]ShareType, error) {
-	var s struct {
-		ShareTypes []ShareType `json:"share_types"`
-	}
-	err := (r.(ShareTypePage)).ExtractInto(&s)
-	return s.ShareTypes, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetDefaultResult contains the response body and error from a Get Default request.
@@ -83,11 +67,8 @@ type extraSpecsResult struct {
 
 // Extract will get the ExtraSpecs object out of the commonResult object.
 func (r extraSpecsResult) Extract() (ExtraSpecs, error) {
-	var s struct {
-		Specs ExtraSpecs `json:"extra_specs"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Specs, err
+	_ = "STUB: not implemented"
+	return *new(ExtraSpecs), nil
 }
 
 // GetExtraSpecsResult contains the response body and error from a Get Extra Specs request.
@@ -125,11 +106,8 @@ type ShowAccessResult struct {
 
 // Extract will get the ShareTypeAccess objects out of the shareTypeAccessResult object.
 func (r ShowAccessResult) Extract() ([]ShareTypeAccess, error) {
-	var s struct {
-		ShareTypeAccess []ShareTypeAccess `json:"share_type_access"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ShareTypeAccess, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddAccessResult contains the response body and error from a Add Access request.

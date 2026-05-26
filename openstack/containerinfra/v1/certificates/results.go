@@ -24,11 +24,7 @@ type UpdateResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a certificate resource.
-func (r commonResult) Extract() (*Certificate, error) {
-	var s *Certificate
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Certificate, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Represents a Certificate
 type Certificate struct {

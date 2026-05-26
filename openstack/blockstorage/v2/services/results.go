@@ -1,10 +1,8 @@
 package services
 
 import (
-	"encoding/json"
 	"time"
 
-	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -47,22 +45,7 @@ type Service struct {
 }
 
 // UnmarshalJSON to override default
-func (r *Service) UnmarshalJSON(b []byte) error {
-	type tmp Service
-	var s struct {
-		tmp
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Service(s.tmp)
-
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *Service) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ServicePage represents a single page of all Services from a List request.
 type ServicePage struct {
@@ -70,19 +53,9 @@ type ServicePage struct {
 }
 
 // IsEmpty determines whether or not a page of Services contains any results.
-func (page ServicePage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	services, err := ExtractServices(page)
-	return len(services) == 0, err
-}
+func (page ServicePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func ExtractServices(r pagination.Page) ([]Service, error) {
-	var s struct {
-		Service []Service `json:"services"`
-	}
-	err := (r.(ServicePage)).ExtractInto(&s)
-	return s.Service, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

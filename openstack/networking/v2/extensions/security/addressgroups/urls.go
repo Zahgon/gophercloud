@@ -4,18 +4,19 @@ import "github.com/gophercloud/gophercloud/v2"
 
 const rootPath = "address-groups"
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func resourceAddAddressesURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, id, "add_addresses")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func resourceRemoveAddressesURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, id, "remove_addresses")
+	_ = "STUB: not implemented"
+	return ""
 }

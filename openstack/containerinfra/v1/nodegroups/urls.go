@@ -5,21 +5,26 @@ import (
 )
 
 func getURL(c *gophercloud.ServiceClient, clusterID, nodeGroupID string) string {
-	return c.ServiceURL("clusters", clusterID, "nodegroups", nodeGroupID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listURL(c *gophercloud.ServiceClient, clusterID string) string {
-	return c.ServiceURL("clusters", clusterID, "nodegroups")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createURL(c *gophercloud.ServiceClient, clusterID string) string {
-	return c.ServiceURL("clusters", clusterID, "nodegroups")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(c *gophercloud.ServiceClient, clusterID, nodeGroupID string) string {
-	return c.ServiceURL("clusters", clusterID, "nodegroups", nodeGroupID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(c *gophercloud.ServiceClient, clusterID, nodeGroupID string) string {
-	return c.ServiceURL("clusters", clusterID, "nodegroups", nodeGroupID)
+	_ = "STUB: not implemented"
+	return ""
 }

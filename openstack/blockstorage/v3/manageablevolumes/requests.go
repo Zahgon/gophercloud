@@ -41,21 +41,13 @@ type ManageExistingOpts struct {
 
 // ToManageExistingMap assembles a request body based on the contents of a ManageExistingOpts.
 func (opts ManageExistingOpts) ToManageExistingMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "volume")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ManageExisting will manage an existing volume based on the values in ManageExistingOpts.
 // To extract the Volume object from response, call the Extract method on the ManageExistingResult.
 func ManageExisting(ctx context.Context, client *gophercloud.ServiceClient, opts ManageExistingOptsBuilder) (r ManageExistingResult) {
-	b, err := opts.ToManageExistingMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ManageExistingResult)
 }

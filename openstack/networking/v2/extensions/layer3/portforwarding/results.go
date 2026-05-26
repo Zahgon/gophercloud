@@ -61,14 +61,11 @@ type DeleteResult struct {
 
 // Extract will extract a Port Forwarding resource from a result.
 func (r commonResult) Extract() (*PortForwarding, error) {
-	var s PortForwarding
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "port_forwarding")
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // PortForwardingPage is the page returned by a pager when traversing over a
 // collection of port forwardings.
@@ -80,33 +77,17 @@ type PortForwardingPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r PortForwardingPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"port_forwarding_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a PortForwardingPage struct is empty.
-func (r PortForwardingPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractPortForwardings(r)
-	return len(is) == 0, err
-}
+func (r PortForwardingPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractPortForwardings accepts a Page struct, specifically a PortForwardingPage
 // struct, and extracts the elements into a slice of PortForwarding structs. In
 // other words, a generic collection is mapped into a relevant slice.
 func ExtractPortForwardings(r pagination.Page) ([]PortForwarding, error) {
-	var s struct {
-		PortForwardings []PortForwarding `json:"port_forwardings"`
-	}
-	err := (r.(PortForwardingPage)).ExtractInto(&s)
-	return s.PortForwardings, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -1,7 +1,6 @@
 package agents
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -16,13 +15,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts an agent resource.
-func (r commonResult) Extract() (*Agent, error) {
-	var s struct {
-		Agent *Agent `json:"agent"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Agent, err
-}
+func (r commonResult) Extract() (*Agent, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as an Agent.
@@ -118,26 +111,7 @@ type Agent struct {
 }
 
 // UnmarshalJSON helps to convert the timestamps into the time.Time type.
-func (r *Agent) UnmarshalJSON(b []byte) error {
-	type tmp Agent
-	var s struct {
-		tmp
-		CreatedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		StartedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"started_at"`
-		HeartbeatTimestamp gophercloud.JSONRFC3339ZNoTNoZ `json:"heartbeat_timestamp"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Agent(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.StartedAt = time.Time(s.StartedAt)
-	r.HeartbeatTimestamp = time.Time(s.HeartbeatTimestamp)
-
-	return nil
-}
+func (r *Agent) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // AgentPage stores a single page of Agents from a List() API call.
 type AgentPage struct {
@@ -148,35 +122,16 @@ type AgentPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r AgentPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"agents_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty determines whether or not a AgentPage is empty.
-func (r AgentPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	agents, err := ExtractAgents(r)
-	return len(agents) == 0, err
-}
+func (r AgentPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAgents interprets the results of a single page from a List()
 // API call, producing a slice of Agents structs.
-func ExtractAgents(r pagination.Page) ([]Agent, error) {
-	var s struct {
-		Agents []Agent `json:"agents"`
-	}
-	err := (r.(AgentPage)).ExtractInto(&s)
-	return s.Agents, err
-}
+func ExtractAgents(r pagination.Page) ([]Agent, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ListDHCPNetworksResult is the response from a List operation.
 // Call its Extract method to interpret it as networks.
@@ -186,12 +141,8 @@ type ListDHCPNetworksResult struct {
 
 // Extract interprets any ListDHCPNetworksResult as an array of networks.
 func (r ListDHCPNetworksResult) Extract() ([]networks.Network, error) {
-	var s struct {
-		Networks []networks.Network `json:"networks"`
-	}
-
-	err := r.ExtractInto(&s)
-	return s.Networks, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListBGPSpeakersResult is the respone of agents/{id}/bgp-speakers
@@ -200,22 +151,14 @@ type ListBGPSpeakersResult struct {
 }
 
 func (r ListBGPSpeakersResult) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	speakers, err := ExtractBGPSpeakers(r)
-	return len(speakers) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractBGPSpeakers inteprets the ListBGPSpeakersResult into an array of BGP speakers
 func ExtractBGPSpeakers(r pagination.Page) ([]speakers.BGPSpeaker, error) {
-	var s struct {
-		Speakers []speakers.BGPSpeaker `json:"bgp_speakers"`
-	}
-
-	err := (r.(ListBGPSpeakersResult)).ExtractInto(&s)
-	return s.Speakers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListL3RoutersResult is the response from a List operation.
@@ -240,10 +183,6 @@ type RemoveL3RouterResult struct {
 
 // Extract interprets any ListL3RoutesResult as an array of routers.
 func (r ListL3RoutersResult) Extract() ([]routers.Router, error) {
-	var s struct {
-		Routers []routers.Router `json:"routers"`
-	}
-
-	err := r.ExtractInto(&s)
-	return s.Routers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

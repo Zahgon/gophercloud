@@ -8,18 +8,19 @@ const (
 	memberPath   = "members"
 )
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath, resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, resourcePath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func memberRootURL(c *gophercloud.ServiceClient, poolId string) string {
-	return c.ServiceURL(rootPath, resourcePath, poolId, memberPath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func memberResourceURL(c *gophercloud.ServiceClient, poolID string, memberID string) string {
-	return c.ServiceURL(rootPath, resourcePath, poolID, memberPath, memberID)
+	_ = "STUB: not implemented"
+	return ""
 }

@@ -9,13 +9,13 @@ const (
 )
 
 func ResourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(userPath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(userPath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func listRolesURL(c *gophercloud.ServiceClient, tenantID, userID string) string {
-	return c.ServiceURL(tenantPath, tenantID, userPath, userID, rolePath)
+	_ = "STUB: not implemented"
+	return ""
 }

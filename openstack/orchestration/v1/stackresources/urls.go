@@ -3,33 +3,38 @@ package stackresources
 import "github.com/gophercloud/gophercloud/v2"
 
 func findURL(c *gophercloud.ServiceClient, stackName string) string {
-	return c.ServiceURL("stacks", stackName, "resources")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listURL(c *gophercloud.ServiceClient, stackName, stackID string) string {
-	return c.ServiceURL("stacks", stackName, stackID, "resources")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getURL(c *gophercloud.ServiceClient, stackName, stackID, resourceName string) string {
-	return c.ServiceURL("stacks", stackName, stackID, "resources", resourceName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func metadataURL(c *gophercloud.ServiceClient, stackName, stackID, resourceName string) string {
-	return c.ServiceURL("stacks", stackName, stackID, "resources", resourceName, "metadata")
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func listTypesURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("resource_types")
-}
+func listTypesURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func schemaURL(c *gophercloud.ServiceClient, typeName string) string {
-	return c.ServiceURL("resource_types", typeName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func templateURL(c *gophercloud.ServiceClient, typeName string) string {
-	return c.ServiceURL("resource_types", typeName, "template")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func markUnhealthyURL(c *gophercloud.ServiceClient, stackName, stackID, resourceName string) string {
-	return c.ServiceURL("stacks", stackName, stackID, "resources", resourceName)
+	_ = "STUB: not implemented"
+	return ""
 }

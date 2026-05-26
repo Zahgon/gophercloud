@@ -6,11 +6,7 @@ import (
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a Quota.
 // An error is returned if the original call or the extraction failed.
-func (r Result) Extract() (*Quota, error) {
-	var s *Quota
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r Result) Extract() (*Quota, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ListResult is the result of a Create request. Call its Extract method
 // to interpret the result as a Zone.

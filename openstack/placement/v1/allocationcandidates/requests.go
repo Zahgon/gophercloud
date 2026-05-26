@@ -95,46 +95,12 @@ type ListOpts struct {
 
 // ToAllocationCandidatesListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAllocationCandidatesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-
-	params := q.Query()
-	for suffix, group := range opts.ResourceGroups {
-		if group.Resources != "" {
-			params.Add("resources"+suffix, group.Resources)
-		}
-		for _, required := range group.Required {
-			if required != "" {
-				params.Add("required"+suffix, required)
-			}
-		}
-		if group.MemberOf != "" {
-			params.Add("member_of"+suffix, group.MemberOf)
-		}
-		if group.InTree != "" {
-			params.Add("in_tree"+suffix, group.InTree)
-		}
-	}
-	q.RawQuery = params.Encode()
-
-	return q.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list allocation candidates.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-
-	if opts != nil {
-		query, err := opts.ToAllocationCandidatesListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AllocationCandidatesPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

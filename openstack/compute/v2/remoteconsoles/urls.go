@@ -9,9 +9,11 @@ const (
 )
 
 func rootURL(c *gophercloud.ServiceClient, serverID string) string {
-	return c.ServiceURL(rootPath, serverID, resourcePath)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func createURL(c *gophercloud.ServiceClient, serverID string) string {
-	return rootURL(c, serverID)
+	_ = "STUB: not implemented"
+	return ""
 }

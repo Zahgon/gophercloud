@@ -36,30 +36,20 @@ type ListOpts struct {
 
 // ToContainerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToContainerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List retrieves a list of containers.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToContainerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ContainerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details of a container.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to
@@ -82,28 +72,20 @@ type CreateOpts struct {
 
 // ToContainerCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToContainerCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create creates a new container.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToContainerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete deletes a container.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListConsumersOptsBuilder allows extensions to add additional parameters to
@@ -124,23 +106,14 @@ type ListConsumersOpts struct {
 // ToContainerListConsumersQuery formats a ListConsumersOpts into a query
 // string.
 func (opts ListConsumersOpts) ToContainerListConsumersQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListConsumers retrieves a list of consumers from a container.
 func ListConsumers(client *gophercloud.ServiceClient, containerID string, opts ListConsumersOptsBuilder) pagination.Pager {
-	url := listConsumersURL(client, containerID)
-	if opts != nil {
-		query, err := opts.ToContainerListConsumersQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ConsumerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateConsumerOptsBuilder allows extensions to add additional parameters to
@@ -161,21 +134,14 @@ type CreateConsumerOpts struct {
 // ToContainerConsumerCreateMap formats a CreateConsumerOpts into a create
 // request.
 func (opts CreateConsumerOpts) ToContainerConsumerCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateConsumer creates a new consumer.
 func CreateConsumer(ctx context.Context, client *gophercloud.ServiceClient, containerID string, opts CreateConsumerOptsBuilder) (r CreateConsumerResult) {
-	b, err := opts.ToContainerConsumerCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createConsumerURL(client, containerID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateConsumerResult)
 }
 
 // DeleteConsumerOptsBuilder allows extensions to add additional parameters to
@@ -196,26 +162,14 @@ type DeleteConsumerOpts struct {
 // ToContainerConsumerDeleteMap formats a DeleteConsumerOpts into a create
 // request.
 func (opts DeleteConsumerOpts) ToContainerConsumerDeleteMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DeleteConsumer deletes a consumer.
 func DeleteConsumer(ctx context.Context, client *gophercloud.ServiceClient, containerID string, opts DeleteConsumerOptsBuilder) (r DeleteConsumerResult) {
-	url := deleteConsumerURL(client, containerID)
-
-	b, err := opts.ToContainerConsumerDeleteMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Request(ctx, "DELETE", url, &gophercloud.RequestOpts{
-		JSONBody:     b,
-		JSONResponse: &r.Body,
-		OkCodes:      []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteConsumerResult)
 }
 
 // SecretRefBuilder allows extensions to add additional parameters to the
@@ -227,37 +181,18 @@ type SecretRefBuilder interface {
 // ToContainerSecretRefMap formats a SecretRefBuilder into a create
 // request.
 func (opts SecretRef) ToContainerSecretRefMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateSecret creates a new consumer.
 func CreateSecretRef(ctx context.Context, client *gophercloud.ServiceClient, containerID string, opts SecretRefBuilder) (r CreateSecretRefResult) {
-	b, err := opts.ToContainerSecretRefMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createSecretRefURL(client, containerID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateSecretRefResult)
 }
 
 // DeleteSecret deletes a consumer.
 func DeleteSecretRef(ctx context.Context, client *gophercloud.ServiceClient, containerID string, opts SecretRefBuilder) (r DeleteSecretRefResult) {
-	url := deleteSecretRefURL(client, containerID)
-
-	b, err := opts.ToContainerSecretRefMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Request(ctx, "DELETE", url, &gophercloud.RequestOpts{
-		JSONBody: b,
-		OkCodes:  []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteSecretRefResult)
 }

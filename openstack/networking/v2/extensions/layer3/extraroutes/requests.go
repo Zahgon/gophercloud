@@ -21,33 +21,18 @@ type Opts struct {
 
 // ToExtraRoutesUpdateMap builds a body based on Opts.
 func (opts Opts) ToExtraRoutesUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "router")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Add allows routers to be updated with a list of routes to be added.
 func Add(ctx context.Context, c *gophercloud.ServiceClient, id string, opts OptsBuilder) (r AddResult) {
-	b, err := opts.ToExtraRoutesUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, addExtraRoutesURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(AddResult)
 }
 
 // Remove allows routers to be updated with a list of routes to be removed.
 func Remove(ctx context.Context, c *gophercloud.ServiceClient, id string, opts OptsBuilder) (r RemoveResult) {
-	b, err := opts.ToExtraRoutesUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, removeExtraRoutesURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RemoveResult)
 }

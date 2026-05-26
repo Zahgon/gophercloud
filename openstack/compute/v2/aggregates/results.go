@@ -1,7 +1,6 @@
 package aggregates
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -46,26 +45,7 @@ type Aggregate struct {
 }
 
 // UnmarshalJSON to override default
-func (r *Aggregate) UnmarshalJSON(b []byte) error {
-	type tmp Aggregate
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		DeletedAt gophercloud.JSONRFC3339MilliNoZ `json:"deleted_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Aggregate(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-	r.DeletedAt = time.Time(s.DeletedAt)
-
-	return nil
-}
+func (r *Aggregate) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // AggregatesPage represents a single page of all Aggregates from a List
 // request.
@@ -74,35 +54,19 @@ type AggregatesPage struct {
 }
 
 // IsEmpty determines whether or not a page of Aggregates contains any results.
-func (page AggregatesPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	aggregates, err := ExtractAggregates(page)
-	return len(aggregates) == 0, err
-}
+func (page AggregatesPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAggregates interprets a page of results as a slice of Aggregates.
 func ExtractAggregates(p pagination.Page) ([]Aggregate, error) {
-	var a struct {
-		Aggregates []Aggregate `json:"aggregates"`
-	}
-	err := (p.(AggregatesPage)).ExtractInto(&a)
-	return a.Aggregates, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type aggregatesResult struct {
 	gophercloud.Result
 }
 
-func (r aggregatesResult) Extract() (*Aggregate, error) {
-	var s struct {
-		Aggregate *Aggregate `json:"aggregate"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Aggregate, err
-}
+func (r aggregatesResult) Extract() (*Aggregate, error) { _ = "STUB: not implemented"; return nil, nil }
 
 type CreateResult struct {
 	aggregatesResult

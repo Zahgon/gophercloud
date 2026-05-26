@@ -12,15 +12,9 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a bgp speaker resource.
-func (r commonResult) Extract() (*BGPSpeaker, error) {
-	var s BGPSpeaker
-	err := r.ExtractInto(&s)
-	return &s, err
-}
+func (r commonResult) Extract() (*BGPSpeaker, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (r commonResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, jroot)
-}
+func (r commonResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // BGPSpeaker BGP Speaker
 type BGPSpeaker struct {
@@ -62,30 +56,20 @@ type BGPSpeakerPage struct {
 }
 
 // IsEmpty checks whether a BGPSpeakerPage struct is empty.
-func (r BGPSpeakerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractBGPSpeakers(r)
-	return len(is) == 0, err
-}
+func (r BGPSpeakerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractBGPSpeakers accepts a Page struct, specifically a BGPSpeakerPage struct,
 // and extracts the elements into a slice of BGPSpeaker structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractBGPSpeakers(r pagination.Page) ([]BGPSpeaker, error) {
-	var s []BGPSpeaker
-	err := ExtractBGPSpeakersInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractBGPSpeakersInto accepts a Page struct and an any. The former contains
 // a list of BGPSpeaker and the later should be used to store the result that would be
 // extracted from the former.
-func ExtractBGPSpeakersInto(r pagination.Page, v any) error {
-	return r.(BGPSpeakerPage).ExtractIntoSlicePtr(v, "bgp_speakers")
-}
+func ExtractBGPSpeakersInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a BGPSpeaker.
@@ -118,14 +102,11 @@ type AddBGPPeerResult struct {
 
 // Extract is a function that accepts a result and extracts a AddBGPPeerResult resource
 func (r AddBGPPeerResult) Extract() (*AddBGPPeerOpts, error) {
-	var s AddBGPPeerOpts
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (r AddBGPPeerResult) ExtractInto(v any) error {
-	return r.ExtractIntoStructPtr(v, "")
-}
+func (r AddBGPPeerResult) ExtractInto(v any) error { _ = "STUB: not implemented"; return nil }
 
 // RemoveBGPPeerResult represent the response of the PUT /v2.0/bgp-speakers/{bgp-speaker-id}/remove-bgp-peer
 // There is no body content for the response of a successful DELETE request.
@@ -148,26 +129,19 @@ type AdvertisedRoutePage struct {
 }
 
 // IsEmpty checks whether a AdvertisedRoutePage struct is empty.
-func (r AdvertisedRoutePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractAdvertisedRoutes(r)
-	return len(is) == 0, err
-}
+func (r AdvertisedRoutePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAdvertisedRoutes accepts a Page struct, a.k.a. AdvertisedRoutePage struct,
 // and extracts the elements into a slice of AdvertisedRoute structs.
 func ExtractAdvertisedRoutes(r pagination.Page) ([]AdvertisedRoute, error) {
-	var s []AdvertisedRoute
-	err := ExtractAdvertisedRoutesInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractAdvertisedRoutesInto extract the advertised routes from the first param into the 2nd
 func ExtractAdvertisedRoutesInto(r pagination.Page, v any) error {
-	return r.(AdvertisedRoutePage).ExtractIntoSlicePtr(v, "advertised_routes")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddGatewayNetworkResult represents the data that would be PUT to
@@ -177,9 +151,8 @@ type AddGatewayNetworkResult struct {
 }
 
 func (r AddGatewayNetworkResult) Extract() (*AddGatewayNetworkOpts, error) {
-	var s AddGatewayNetworkOpts
-	err := r.ExtractInto(&s)
-	return &s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveGatewayNetworkResult represents the data that would be PUT to

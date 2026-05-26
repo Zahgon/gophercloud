@@ -8,17 +8,21 @@ const (
 )
 
 func createURL(client *gophercloud.ServiceClient, queueName string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName, "claims")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func getURL(client *gophercloud.ServiceClient, queueName string, claimID string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName, "claims", claimID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(client *gophercloud.ServiceClient, queueName string, claimID string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName, "claims", claimID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(client *gophercloud.ServiceClient, queueName string, claimID string) string {
-	return client.ServiceURL(apiVersion, apiName, queueName, "claims", claimID)
+	_ = "STUB: not implemented"
+	return ""
 }

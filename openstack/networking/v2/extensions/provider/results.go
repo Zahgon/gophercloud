@@ -1,10 +1,5 @@
 package provider
 
-import (
-	"encoding/json"
-	"strconv"
-)
-
 // NetworkProviderExt represents an extended form of a Network with additional
 // fields.
 type NetworkProviderExt struct {
@@ -38,25 +33,4 @@ type Segment struct {
 	SegmentationID  int    `json:"provider:segmentation_id"`
 }
 
-func (r *NetworkProviderExt) UnmarshalJSON(b []byte) error {
-	type tmp NetworkProviderExt
-	var networkProviderExt struct {
-		tmp
-		SegmentationID any `json:"provider:segmentation_id"`
-	}
-
-	if err := json.Unmarshal(b, &networkProviderExt); err != nil {
-		return err
-	}
-
-	*r = NetworkProviderExt(networkProviderExt.tmp)
-
-	switch t := networkProviderExt.SegmentationID.(type) {
-	case float64:
-		r.SegmentationID = strconv.FormatFloat(t, 'f', -1, 64)
-	case string:
-		r.SegmentationID = string(t)
-	}
-
-	return nil
-}
+func (r *NetworkProviderExt) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }

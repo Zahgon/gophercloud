@@ -1,8 +1,6 @@
 package regions
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -25,35 +23,10 @@ type Region struct {
 	ParentRegionID string `json:"parent_region_id"`
 }
 
-func (r *Region) UnmarshalJSON(b []byte) error {
-	type tmp Region
-	var s struct {
-		tmp
-		Extra map[string]any `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Region(s.tmp)
+func (r *Region) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Collect other fields and bundle them into Extra
-	// but only if a field titled "extra" wasn't sent.
-	if s.Extra != nil {
-		r.Extra = s.Extra
-	} else {
-		var result any
-		err := json.Unmarshal(b, &result)
-		if err != nil {
-			return err
-		}
-		if resultMap, ok := result.(map[string]any); ok {
-			r.Extra = gophercloud.RemainingKeys(Region{}, resultMap)
-		}
-	}
-
-	return err
-}
+// Collect other fields and bundle them into Extra
+// but only if a field titled "extra" wasn't sent.
 
 type regionResult struct {
 	gophercloud.Result
@@ -89,44 +62,19 @@ type RegionPage struct {
 }
 
 // IsEmpty determines whether or not a page of Regions contains any results.
-func (r RegionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	regions, err := ExtractRegions(r)
-	return len(regions) == 0, err
-}
+func (r RegionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r RegionPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractRegions returns a slice of Regions contained in a single page of results.
 func ExtractRegions(r pagination.Page) ([]Region, error) {
-	var s struct {
-		Regions []Region `json:"regions"`
-	}
-	err := (r.(RegionPage)).ExtractInto(&s)
-	return s.Regions, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any region results as a Region.
-func (r regionResult) Extract() (*Region, error) {
-	var s struct {
-		Region *Region `json:"region"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Region, err
-}
+func (r regionResult) Extract() (*Region, error) { _ = "STUB: not implemented"; return nil, nil }

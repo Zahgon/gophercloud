@@ -28,11 +28,7 @@ type GetResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a cluster resource.
-func (r commonResult) Extract() (*Cluster, error) {
-	var s *Cluster
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Cluster, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // UpdateResult is the response of a Update operations.
 type UpdateResult struct {
@@ -49,37 +45,13 @@ type ResizeResult struct {
 	commonResult
 }
 
-func (r CreateResult) Extract() (string, error) {
-	var s struct {
-		UUID string
-	}
-	err := r.ExtractInto(&s)
-	return s.UUID, err
-}
+func (r CreateResult) Extract() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-func (r UpdateResult) Extract() (string, error) {
-	var s struct {
-		UUID string
-	}
-	err := r.ExtractInto(&s)
-	return s.UUID, err
-}
+func (r UpdateResult) Extract() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-func (r UpgradeResult) Extract() (string, error) {
-	var s struct {
-		UUID string
-	}
-	err := r.ExtractInto(&s)
-	return s.UUID, err
-}
+func (r UpgradeResult) Extract() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-func (r ResizeResult) Extract() (string, error) {
-	var s struct {
-		UUID string
-	}
-	err := r.ExtractInto(&s)
-	return s.UUID, err
-}
+func (r ResizeResult) Extract() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 type Cluster struct {
 	APIAddress         string             `json:"api_address"`
@@ -124,30 +96,14 @@ type ClusterPage struct {
 }
 
 func (r ClusterPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a ClusterPage struct is empty.
-func (r ClusterPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractClusters(r)
-	return len(is) == 0, err
-}
+func (r ClusterPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 func ExtractClusters(r pagination.Page) ([]Cluster, error) {
-	var s struct {
-		Clusters []Cluster `json:"clusters"`
-	}
-	err := (r.(ClusterPage)).ExtractInto(&s)
-	return s.Clusters, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

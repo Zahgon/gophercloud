@@ -1,5 +1,3 @@
 package ptr
 
-func To[T any](v T) *T {
-	return &v
-}
+func To[T any](v T) *T { _ = "STUB: not implemented"; return nil }

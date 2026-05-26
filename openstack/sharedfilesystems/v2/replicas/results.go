@@ -1,9 +1,6 @@
 package replicas
 
 import (
-	"encoding/json"
-	"net/url"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -40,37 +37,14 @@ type Replica struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (r *Replica) UnmarshalJSON(b []byte) error {
-	type tmp Replica
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Replica(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *Replica) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract will get the Replica object from the commonResult.
-func (r commonResult) Extract() (*Replica, error) {
-	var s struct {
-		Replica *Replica `json:"share_replica"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Replica, err
-}
+func (r commonResult) Extract() (*Replica, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {
@@ -84,84 +58,28 @@ type ReplicaPage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r ReplicaPage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-	if mark == invalidMarker {
-		return "", nil
-	}
-
-	q := currentURL.Query()
-	q.Set("offset", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
-func (r ReplicaPage) LastMarker() (string, error) {
-	replicas, err := ExtractReplicas(r)
-	if err != nil {
-		return invalidMarker, err
-	}
-	if len(replicas) == 0 {
-		return invalidMarker, nil
-	}
+func (r ReplicaPage) LastMarker() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return invalidMarker, err
-	}
-	queryParams := u.Query()
-	offset := queryParams.Get("offset")
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return invalidMarker, nil
-	}
-
-	iOffset := 0
-	if offset != "" {
-		iOffset, err = strconv.Atoi(offset)
-		if err != nil {
-			return invalidMarker, err
-		}
-	}
-	iLimit, err := strconv.Atoi(limit)
-	if err != nil {
-		return invalidMarker, err
-	}
-	iOffset = iOffset + iLimit
-	offset = strconv.Itoa(iOffset)
-
-	return offset, nil
-}
+// Limit is not present, only one page required
 
 // IsEmpty satisifies the IsEmpty method of the Page interface.
-func (r ReplicaPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	replicas, err := ExtractReplicas(r)
-	return len(replicas) == 0, err
-}
+func (r ReplicaPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractReplicas extracts and returns Replicas. It is used while iterating
 // over a replicas.List or replicas.ListDetail calls.
 func ExtractReplicas(r pagination.Page) ([]Replica, error) {
-	var s []Replica
-	err := ExtractReplicasInto(r, &s)
-	return s, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractReplicasInto similar to ExtractReplicas but operates on a `list` of
 // replicas.
-func ExtractReplicasInto(r pagination.Page, v any) error {
-	return r.(ReplicaPage).ExtractIntoSlicePtr(v, "share_replicas")
-}
+func ExtractReplicasInto(r pagination.Page, v any) error { _ = "STUB: not implemented"; return nil }
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
@@ -211,41 +129,18 @@ type ExportLocation struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (r *ExportLocation) UnmarshalJSON(b []byte) error {
-	type tmp ExportLocation
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ExportLocation(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
-
-	return nil
-}
+func (r *ExportLocation) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // Extract will get the Export Locations from the ListExportLocationsResult
 func (r ListExportLocationsResult) Extract() ([]ExportLocation, error) {
-	var s struct {
-		ExportLocations []ExportLocation `json:"export_locations"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ExportLocations, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract will get the Export Location from the GetExportLocationResult
 func (r GetExportLocationResult) Extract() (*ExportLocation, error) {
-	var s struct {
-		ExportLocation *ExportLocation `json:"export_location"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ExportLocation, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // PromoteResult contains the error from an Promote request.

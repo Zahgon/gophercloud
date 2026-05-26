@@ -20,31 +20,18 @@ type ListOpts struct {
 }
 
 // ToRegionListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToRegionListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToRegionListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List enumerates the Regions to which the current token has access.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToRegionListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return RegionPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details on a single region, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to
@@ -70,34 +57,14 @@ type CreateOpts struct {
 
 // ToRegionCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToRegionCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "region")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["region"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create creates a new Region.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToRegionCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -126,45 +93,32 @@ type UpdateOpts struct {
 
 // ToRegionUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToRegionUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "region")
-	if err != nil {
-		return nil, err
-	}
+	_ = "STUB: not implemented"
+	return nil, nil
+}
 
-	/*
-		// Due to a bug in Keystone, the Extra column of the Region table
-		// is not updatable, see: https://bugs.launchpad.net/keystone/+bug/1729933
-		// The following lines should be uncommented once the fix is merged.
+/*
+	// Due to a bug in Keystone, the Extra column of the Region table
+	// is not updatable, see: https://bugs.launchpad.net/keystone/+bug/1729933
+	// The following lines should be uncommented once the fix is merged.
 
-		if opts.Extra != nil {
-			if v, ok := b["region"].(map[string]any); ok {
-				for key, value := range opts.Extra {
-					v[key] = value
-				}
+	if opts.Extra != nil {
+		if v, ok := b["region"].(map[string]any); ok {
+			for key, value := range opts.Extra {
+				v[key] = value
 			}
 		}
-	*/
-
-	return b, nil
-}
+	}
+*/
 
 // Update updates an existing Region.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, regionID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRegionUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, updateURL(client, regionID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete deletes a region.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, regionID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, regionID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

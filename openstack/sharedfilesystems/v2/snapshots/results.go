@@ -1,9 +1,6 @@
 package snapshots
 
 import (
-	"encoding/json"
-	"net/url"
-	"strconv"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -40,35 +37,14 @@ type Snapshot struct {
 	Links []map[string]string `json:"links"`
 }
 
-func (r *Snapshot) UnmarshalJSON(b []byte) error {
-	type tmp Snapshot
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Snapshot(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-
-	return nil
-}
+func (r *Snapshot) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
 }
 
 // Extract will get the Snapshot object from the commonResult
-func (r commonResult) Extract() (*Snapshot, error) {
-	var s struct {
-		Snapshot *Snapshot `json:"snapshot"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Snapshot, err
-}
+func (r commonResult) Extract() (*Snapshot, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult contains the response body and error from a Create request.
 type CreateResult struct {
@@ -82,81 +58,23 @@ type SnapshotPage struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (r SnapshotPage) NextPageURL(endpointURL string) (string, error) {
-	currentURL := r.URL
-	mark, err := r.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-	if mark == invalidMarker {
-		return "", nil
-	}
-
-	q := currentURL.Query()
-	q.Set("offset", mark)
-	currentURL.RawQuery = q.Encode()
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LastMarker returns the last offset in a ListResult.
-func (r SnapshotPage) LastMarker() (string, error) {
-	snapshots, err := ExtractSnapshots(r)
-	if err != nil {
-		return invalidMarker, err
-	}
-	if len(snapshots) == 0 {
-		return invalidMarker, nil
-	}
+func (r SnapshotPage) LastMarker() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	u, err := url.Parse(r.String())
-	if err != nil {
-		return invalidMarker, err
-	}
-	queryParams := u.Query()
-	offset := queryParams.Get("offset")
-	limit := queryParams.Get("limit")
-
-	// Limit is not present, only one page required
-	if limit == "" {
-		return invalidMarker, nil
-	}
-
-	iOffset := 0
-	if offset != "" {
-		iOffset, err = strconv.Atoi(offset)
-		if err != nil {
-			return invalidMarker, err
-		}
-	}
-	iLimit, err := strconv.Atoi(limit)
-	if err != nil {
-		return invalidMarker, err
-	}
-	iOffset = iOffset + iLimit
-	offset = strconv.Itoa(iOffset)
-
-	return offset, nil
-}
+// Limit is not present, only one page required
 
 // IsEmpty satisifies the IsEmpty method of the Page interface
-func (r SnapshotPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	snapshots, err := ExtractSnapshots(r)
-	return len(snapshots) == 0, err
-}
+func (r SnapshotPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractSnapshots extracts and returns a Snapshot slice. It is used while
 // iterating over a snapshots.List call.
 func ExtractSnapshots(r pagination.Page) ([]Snapshot, error) {
-	var s struct {
-		Snapshots []Snapshot `json:"snapshots"`
-	}
-
-	err := (r.(SnapshotPage)).ExtractInto(&s)
-
-	return s.Snapshots, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DeleteResult contains the response body and error from a Delete request.

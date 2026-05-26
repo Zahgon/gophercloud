@@ -1,8 +1,6 @@
 package capsules
 
 import (
-	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -15,27 +13,12 @@ type commonResult struct {
 
 // ExtractBase is a function that accepts a result and extracts
 // a base a capsule resource.
-func (r commonResult) ExtractBase() (*Capsule, error) {
-	var s *Capsule
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) ExtractBase() (*Capsule, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract is a function that accepts a result and extracts a capsule result.
 // The result will be returned as an any where it should be able to
 // be casted as either a Capsule or CapsuleV132.
-func (r commonResult) Extract() (any, error) {
-	s, err := r.ExtractBase()
-	if err == nil {
-		return s, nil
-	}
-
-	if _, ok := err.(*json.UnmarshalTypeError); !ok {
-		return s, err
-	}
-
-	return r.ExtractV132()
-}
+func (r commonResult) Extract() (any, error) { _ = "STUB: not implemented"; return *new(any), nil }
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
@@ -229,48 +212,19 @@ type Address struct {
 // the end of a page and the pager seeks to traverse over a new one. In order
 // to do this, it needs to construct the next page's URL.
 func (r CapsulePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next string `json:"next"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a CapsulePage struct is empty.
-func (r CapsulePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractCapsules(r)
-	if err != nil {
-		return false, err
-	}
-
-	if v, ok := is.([]Capsule); ok {
-		return len(v) == 0, nil
-	}
-
-	if v, ok := is.([]CapsuleV132); ok {
-		return len(v) == 0, nil
-	}
-
-	return false, fmt.Errorf("unable to determine Capsule type")
-}
+func (r CapsulePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractCapsulesBase accepts a Page struct, specifically a CapsulePage struct,
 // and extracts the elements into a slice of Capsule structs. In other words,
 // a generic collection is mapped into the relevant slice.
 func ExtractCapsulesBase(r pagination.Page) ([]Capsule, error) {
-	var s struct {
-		Capsules []Capsule `json:"capsules"`
-	}
-
-	err := (r.(CapsulePage)).ExtractInto(&s)
-	return s.Capsules, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ExtractCapsules accepts a Page struct, specifically a CapsulePage struct,
@@ -278,98 +232,24 @@ func ExtractCapsulesBase(r pagination.Page) ([]Capsule, error) {
 // This interface should be able to be casted as either a Capsule or
 // CapsuleV132 struct
 func ExtractCapsules(r pagination.Page) (any, error) {
-	s, err := ExtractCapsulesBase(r)
-	if err == nil {
-		return s, nil
-	}
-
-	if _, ok := err.(*json.UnmarshalTypeError); !ok {
-		return nil, err
-	}
-
-	return ExtractCapsulesV132(r)
+	_ = "STUB: not implemented"
+	return *new(any), nil
 }
 
 func (r *Capsule) UnmarshalJSON(b []byte) error {
-	type tmp Capsule
+	_ = "STUB: not implemented"
 
 	// Support for "older" zun time formats.
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoT `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoT `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = Capsule(s1.tmp)
-
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		return nil
-	}
-
-	// Support for "new" zun time formats.
-	var s2 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = Capsule(s2.tmp)
-
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-
 	return nil
 }
+
+// Support for "new" zun time formats.
 
 func (r *Container) UnmarshalJSON(b []byte) error {
-	type tmp Container
+	_ = "STUB: not implemented"
 
 	// Support for "older" zun time formats.
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoT `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoT `json:"updated_at"`
-		StartedAt gophercloud.JSONRFC3339ZNoT `json:"started_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = Container(s1.tmp)
-
-		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
-		r.StartedAt = time.Time(s1.StartedAt)
-
-		return nil
-	}
-
-	// Support for "new" zun time formats.
-	var s2 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
-		StartedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"started_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = Container(s2.tmp)
-
-	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
-	r.StartedAt = time.Time(s2.StartedAt)
-
 	return nil
 }
+
+// Support for "new" zun time formats.

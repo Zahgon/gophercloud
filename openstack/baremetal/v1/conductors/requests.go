@@ -2,7 +2,6 @@ package conductors
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -40,34 +39,18 @@ type ListOpts struct {
 
 // ToConductorListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToConductorListQuery() (string, error) {
-	if opts.Detail && len(opts.Fields) > 0 {
-		return "", fmt.Errorf("cannot have both fields and detail options for conductors")
-	}
-
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list conductors accessible to you.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToConductorListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ConductorPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get requests details on a single conductor by hostname
 func Get(ctx context.Context, client *gophercloud.ServiceClient, name string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, name), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }

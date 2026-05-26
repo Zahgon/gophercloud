@@ -4,22 +4,15 @@ import "github.com/gophercloud/gophercloud/v2"
 
 const resourcePath = "os-keypairs"
 
-func resourceURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(resourcePath)
-}
+func resourceURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return resourceURL(c)
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return resourceURL(c)
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func getURL(c *gophercloud.ServiceClient, name string) string {
-	return c.ServiceURL(resourcePath, name)
-}
+func getURL(c *gophercloud.ServiceClient, name string) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, name string) string {
-	return getURL(c, name)
+	_ = "STUB: not implemented"
+	return ""
 }

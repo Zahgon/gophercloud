@@ -1,8 +1,6 @@
 package groups
 
 import (
-	"encoding/json"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
@@ -28,35 +26,10 @@ type Group struct {
 	Name string `json:"name"`
 }
 
-func (r *Group) UnmarshalJSON(b []byte) error {
-	type tmp Group
-	var s struct {
-		tmp
-		Extra map[string]any `json:"extra"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Group(s.tmp)
+func (r *Group) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Collect other fields and bundle them into Extra
-	// but only if a field titled "extra" wasn't sent.
-	if s.Extra != nil {
-		r.Extra = s.Extra
-	} else {
-		var result any
-		err := json.Unmarshal(b, &result)
-		if err != nil {
-			return err
-		}
-		if resultMap, ok := result.(map[string]any); ok {
-			r.Extra = gophercloud.RemainingKeys(Group{}, resultMap)
-		}
-	}
-
-	return err
-}
+// Collect other fields and bundle them into Extra
+// but only if a field titled "extra" wasn't sent.
 
 type groupResult struct {
 	gophercloud.Result
@@ -92,44 +65,16 @@ type GroupPage struct {
 }
 
 // IsEmpty determines whether or not a page of Groups contains any results.
-func (r GroupPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	groups, err := ExtractGroups(r)
-	return len(groups) == 0, err
-}
+func (r GroupPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r GroupPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractGroups returns a slice of Groups contained in a single page of results.
-func ExtractGroups(r pagination.Page) ([]Group, error) {
-	var s struct {
-		Groups []Group `json:"groups"`
-	}
-	err := (r.(GroupPage)).ExtractInto(&s)
-	return s.Groups, err
-}
+func ExtractGroups(r pagination.Page) ([]Group, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extract interprets any group results as a Group.
-func (r groupResult) Extract() (*Group, error) {
-	var s struct {
-		Group *Group `json:"group"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Group, err
-}
+func (r groupResult) Extract() (*Group, error) { _ = "STUB: not implemented"; return nil, nil }

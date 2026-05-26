@@ -2,7 +2,6 @@ package routers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/gophercloud/v2/pagination"
@@ -40,13 +39,7 @@ type ListOpts struct {
 }
 
 // ToRouterListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToRouterListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(&opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
-}
+func (opts ListOpts) ToRouterListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List returns a Pager which allows you to iterate over a collection of
 // routers. It accepts a ListOpts struct, which allows you to filter and sort
@@ -55,17 +48,8 @@ func (opts ListOpts) ToRouterListQuery() (string, error) {
 // Default policy settings return only those routers that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(c)
-	if opts != nil {
-		query, err := opts.ToRouterListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return RouterPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -89,7 +73,8 @@ type CreateOpts struct {
 
 // ToRouterCreateMap builds a create request body from CreateOpts.
 func (opts CreateOpts) ToRouterCreateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "router")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new
@@ -101,21 +86,14 @@ func (opts CreateOpts) ToRouterCreateMap() (map[string]any, error) {
 // an external network (it is external if its `router:external' field is set to
 // true).
 func Create(ctx context.Context, c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToRouterCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves a particular router based on its unique ID.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(ctx, resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -141,7 +119,8 @@ type UpdateOpts struct {
 
 // ToRouterUpdateMap builds an update body based on UpdateOpts.
 func (opts UpdateOpts) ToRouterUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "router")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update allows routers to be updated. You can update the name, administrative
@@ -150,34 +129,14 @@ func (opts UpdateOpts) ToRouterUpdateMap() (map[string]any, error) {
 // the update of router interfaces. To do this, use the AddInterface and
 // RemoveInterface functions.
 func Update(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRouterUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	h, err := gophercloud.BuildHeaders(opts)
-	if err != nil {
-		r.Err = err
-		return
-	}
-	for k := range h {
-		if k == "If-Match" {
-			h[k] = fmt.Sprintf("revision_number=%s", h[k])
-		}
-	}
-	resp, err := c.Put(ctx, resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will permanently delete a particular router based on its unique ID.
 func Delete(ctx context.Context, c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(ctx, resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // AddInterfaceOptsBuilder allows extensions to add additional parameters to
@@ -194,7 +153,8 @@ type AddInterfaceOpts struct {
 
 // ToRouterAddInterfaceMap builds a request body from AddInterfaceOpts.
 func (opts AddInterfaceOpts) ToRouterAddInterfaceMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddInterface attaches a subnet to an internal router interface. You must
@@ -219,16 +179,8 @@ func (opts AddInterfaceOpts) ToRouterAddInterfaceMap() (map[string]any, error) {
 // completes, the device ID of the port is set to the router ID, and the
 // device owner attribute is set to `network:router_interface'.
 func AddInterface(ctx context.Context, c *gophercloud.ServiceClient, id string, opts AddInterfaceOptsBuilder) (r InterfaceResult) {
-	b, err := opts.ToRouterAddInterfaceMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, addInterfaceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(InterfaceResult)
 }
 
 // RemoveInterfaceOptsBuilder allows extensions to add additional parameters to
@@ -247,7 +199,8 @@ type RemoveInterfaceOpts struct {
 // ToRouterRemoveInterfaceMap builds a request body based on
 // RemoveInterfaceOpts.
 func (opts RemoveInterfaceOpts) ToRouterRemoveInterfaceMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveInterface removes an internal router interface, which detaches a
@@ -264,23 +217,14 @@ func (opts RemoveInterfaceOpts) ToRouterRemoveInterfaceMap() (map[string]any, er
 // returned. After this operation completes, the port connecting the router
 // with the subnet is removed from the subnet for the network.
 func RemoveInterface(ctx context.Context, c *gophercloud.ServiceClient, id string, opts RemoveInterfaceOptsBuilder) (r InterfaceResult) {
-	b, err := opts.ToRouterRemoveInterfaceMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, removeInterfaceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(InterfaceResult)
 }
 
 // ListL3Agents returns a list of l3-agents scheduled for a specific router.
 func ListL3Agents(c *gophercloud.ServiceClient, id string) (result pagination.Pager) {
-	return pagination.NewPager(c, listl3AgentsURL(c, id), func(r pagination.PageResult) pagination.Page {
-		return ListL3AgentsPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // AddExternalGatewaysOptsBuilder allows extensions to add additional parameters
@@ -297,22 +241,15 @@ type AddExternalGatewaysOpts struct {
 
 // ToRouterAddExternalGatewaysMap builds a request body from AddExternalGatewaysOpts.
 func (opts AddExternalGatewaysOpts) ToRouterAddExternalGatewaysMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "router")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AddExternalGateways adds external gateways to a router.
 // This requires the external-gateway-multihoming extension.
 func AddExternalGateways(ctx context.Context, c *gophercloud.ServiceClient, id string, opts AddExternalGatewaysOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRouterAddExternalGatewaysMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, addExternalGatewaysURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // UpdateExternalGatewaysOptsBuilder allows extensions to add additional
@@ -329,22 +266,15 @@ type UpdateExternalGatewaysOpts struct {
 
 // ToRouterUpdateExternalGatewaysMap builds a request body from UpdateExternalGatewaysOpts.
 func (opts UpdateExternalGatewaysOpts) ToRouterUpdateExternalGatewaysMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "router")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // UpdateExternalGateways updates external gateways of a router.
 // This requires the external-gateway-multihoming extension.
 func UpdateExternalGateways(ctx context.Context, c *gophercloud.ServiceClient, id string, opts UpdateExternalGatewaysOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRouterUpdateExternalGatewaysMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, updateExternalGatewaysURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // RemoveExternalGatewaysOptsBuilder allows extensions to add additional
@@ -361,20 +291,13 @@ type RemoveExternalGatewaysOpts struct {
 
 // ToRouterRemoveExternalGatewaysMap builds a request body from RemoveExternalGatewaysOpts.
 func (opts RemoveExternalGatewaysOpts) ToRouterRemoveExternalGatewaysMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "router")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // RemoveExternalGateways removes external gateways from a router.
 // This requires the external-gateway-multihoming extension.
 func RemoveExternalGateways(ctx context.Context, c *gophercloud.ServiceClient, id string, opts RemoveExternalGatewaysOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRouterRemoveExternalGatewaysMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(ctx, removeExternalGatewaysURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }

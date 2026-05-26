@@ -7,5 +7,6 @@ const (
 )
 
 func assignURL(client *gophercloud.ServiceClient, targetType, targetID, actorType, actorID, roleID string) string {
-	return client.ServiceURL(inheritPath, targetType, targetID, actorType, actorID, "roles", roleID, "inherited_to_projects")
+	_ = "STUB: not implemented"
+	return ""
 }

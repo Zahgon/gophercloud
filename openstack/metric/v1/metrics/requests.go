@@ -25,24 +25,14 @@ type QueryOpts struct {
 
 // ToMetricQueryQuery formats QueryOpts into a query string.
 func (opts QueryOpts) ToMetricQueryQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Query performs a Prometheus instant query.
 func Query(ctx context.Context, client *gophercloud.ServiceClient, opts QueryOptsBuilder) (r QueryResult) {
-	url := queryURL(client)
-	if opts != nil {
-		query, err := opts.ToMetricQueryQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(QueryResult)
 }
 
 // LabelsOptsBuilder allows extensions to add parameters to the Labels request.
@@ -64,24 +54,14 @@ type LabelsOpts struct {
 
 // ToMetricLabelsQuery formats LabelsOpts into a query string.
 func (opts LabelsOpts) ToMetricLabelsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Labels returns a list of label names.
 func Labels(ctx context.Context, client *gophercloud.ServiceClient, opts LabelsOptsBuilder) (r LabelsResult) {
-	url := labelsURL(client)
-	if opts != nil {
-		query, err := opts.ToMetricLabelsQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(LabelsResult)
 }
 
 // LabelValuesOptsBuilder allows extensions to add parameters to the LabelValues request.
@@ -103,24 +83,14 @@ type LabelValuesOpts struct {
 
 // ToMetricLabelValuesQuery formats LabelValuesOpts into a query string.
 func (opts LabelValuesOpts) ToMetricLabelValuesQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // LabelValues returns a list of label values for a given label name.
 func LabelValues(ctx context.Context, client *gophercloud.ServiceClient, name string, opts LabelValuesOptsBuilder) (r LabelValuesResult) {
-	url := labelValuesURL(client, name)
-	if opts != nil {
-		query, err := opts.ToMetricLabelValuesQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(LabelValuesResult)
 }
 
 // SeriesOptsBuilder allows extensions to add parameters to the Series request.
@@ -142,24 +112,14 @@ type SeriesOpts struct {
 
 // ToMetricSeriesQuery formats SeriesOpts into a query string.
 func (opts SeriesOpts) ToMetricSeriesQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Series returns the list of time series that match certain label sets.
 func Series(ctx context.Context, client *gophercloud.ServiceClient, opts SeriesOptsBuilder) (r SeriesResult) {
-	url := seriesURL(client)
-	if opts != nil {
-		query, err := opts.ToMetricSeriesQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SeriesResult)
 }
 
 // TargetsOptsBuilder allows extensions to add parameters to the Targets request.
@@ -175,40 +135,26 @@ type TargetsOpts struct {
 
 // ToMetricTargetsQuery formats TargetsOpts into a query string.
 func (opts TargetsOpts) ToMetricTargetsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Targets returns an overview of the current state of Prometheus target discovery.
 func Targets(ctx context.Context, client *gophercloud.ServiceClient, opts TargetsOptsBuilder) (r TargetsResult) {
-	url := targetsURL(client)
-	if opts != nil {
-		query, err := opts.ToMetricTargetsQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(TargetsResult)
 }
 
 // RuntimeInfo returns runtime information about the Prometheus server.
 func RuntimeInfo(ctx context.Context, client *gophercloud.ServiceClient) (r RuntimeInfoResult) {
-	resp, err := client.Get(ctx, runtimeInfoURL(client), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(RuntimeInfoResult)
 }
 
 // CleanTombstones removes deleted data from disk and cleans up the existing tombstones.
 func CleanTombstones(ctx context.Context, client *gophercloud.ServiceClient) (r CleanTombstonesResult) {
-	resp, err := client.Post(ctx, cleanTombstonesURL(client), nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CleanTombstonesResult)
 }
 
 // DeleteSeriesOptsBuilder allows extensions to add parameters to the DeleteSeries request.
@@ -230,34 +176,19 @@ type DeleteSeriesOpts struct {
 
 // ToMetricDeleteSeriesQuery formats DeleteSeriesOpts into a query string.
 func (opts DeleteSeriesOpts) ToMetricDeleteSeriesQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // DeleteSeries deletes data for a selection of series in a time range.
 func DeleteSeries(ctx context.Context, client *gophercloud.ServiceClient, opts DeleteSeriesOptsBuilder) (r DeleteSeriesResult) {
-	url := deleteSeriesURL(client)
-	if opts != nil {
-		query, err := opts.ToMetricDeleteSeriesQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
-	}
-	resp, err := client.Post(ctx, url, nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteSeriesResult)
 }
 
 // Snapshot creates a snapshot of all current data into snapshots/<datetime>-<rand>
 // under the TSDB's data directory and returns the directory as response.
 func Snapshot(ctx context.Context, client *gophercloud.ServiceClient) (r SnapshotResult) {
-	resp, err := client.Post(ctx, snapshotURL(client), nil, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(SnapshotResult)
 }

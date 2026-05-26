@@ -2,7 +2,6 @@ package networkipavailabilities
 
 import (
 	"encoding/json"
-	"fmt"
 	"math/big"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -21,11 +20,8 @@ type GetResult struct {
 
 // Extract is a function that accepts a result and extracts a NetworkIPAvailability.
 func (r commonResult) Extract() (*NetworkIPAvailability, error) {
-	var s struct {
-		NetworkIPAvailability *NetworkIPAvailability `json:"network_ip_availability"`
-	}
-	err := r.ExtractInto(&s)
-	return s.NetworkIPAvailability, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkIPAvailability represents availability details for a single network.
@@ -59,49 +55,16 @@ type NetworkIPAvailability struct {
 // big.Int.UnmarshalJSON cannot parse. This function handles both plain integer
 // and scientific notation forms.
 func parseBigIntFromNumber(n json.Number) (*big.Int, error) {
-	s := string(n)
+	_ = "STUB: not implemented"
 
 	// Fast path: plain integer notation
-	bi := new(big.Int)
-	if _, ok := bi.SetString(s, 10); ok {
-		return bi, nil
-	}
-
-	// Slow path: scientific notation from float64 round-trip
-	bf := new(big.Float).SetPrec(256)
-	if _, _, err := bf.Parse(s, 10); err != nil {
-		return nil, fmt.Errorf("networkipavailabilities: cannot parse %q as an integer: %w", s, err)
-	}
-	result, _ := bf.Int(nil)
-	return result, nil
+	return nil, nil
 }
 
+// Slow path: scientific notation from float64 round-trip
+
 func (r *NetworkIPAvailability) UnmarshalJSON(b []byte) error {
-	type tmp NetworkIPAvailability
-	var s struct {
-		tmp
-		TotalIPs json.Number `json:"total_ips"`
-		UsedIPs  json.Number `json:"used_ips"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = NetworkIPAvailability(s.tmp)
-
-	totalIPs, err := parseBigIntFromNumber(s.TotalIPs)
-	if err != nil {
-		return err
-	}
-	r.TotalIPs = totalIPs.String()
-
-	usedIPs, err := parseBigIntFromNumber(s.UsedIPs)
-	if err != nil {
-		return err
-	}
-	r.UsedIPs = usedIPs.String()
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -126,34 +89,7 @@ type SubnetIPAvailability struct {
 	UsedIPs string `json:"-"`
 }
 
-func (r *SubnetIPAvailability) UnmarshalJSON(b []byte) error {
-	type tmp SubnetIPAvailability
-	var s struct {
-		tmp
-		TotalIPs json.Number `json:"total_ips"`
-		UsedIPs  json.Number `json:"used_ips"`
-	}
-
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = SubnetIPAvailability(s.tmp)
-
-	totalIPs, err := parseBigIntFromNumber(s.TotalIPs)
-	if err != nil {
-		return err
-	}
-	r.TotalIPs = totalIPs.String()
-
-	usedIPs, err := parseBigIntFromNumber(s.UsedIPs)
-	if err != nil {
-		return err
-	}
-	r.UsedIPs = usedIPs.String()
-
-	return nil
-}
+func (r *SubnetIPAvailability) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // NetworkIPAvailabilityPage stores a single page of NetworkIPAvailabilities
 // from the List call.
@@ -163,23 +99,13 @@ type NetworkIPAvailabilityPage struct {
 
 // IsEmpty determines whether or not a NetworkIPAvailability is empty.
 func (r NetworkIPAvailabilityPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	networkipavailabilities, err := ExtractNetworkIPAvailabilities(r)
-	return len(networkipavailabilities) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // ExtractNetworkIPAvailabilities interprets the results of a single page from
 // a List() API call, producing a slice of NetworkIPAvailabilities structures.
 func ExtractNetworkIPAvailabilities(r pagination.Page) ([]NetworkIPAvailability, error) {
-	var s struct {
-		NetworkIPAvailabilities []NetworkIPAvailability `json:"network_ip_availabilities"`
-	}
-	err := (r.(NetworkIPAvailabilityPage)).ExtractInto(&s)
-	if err != nil {
-		return nil, err
-	}
-	return s.NetworkIPAvailabilities, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

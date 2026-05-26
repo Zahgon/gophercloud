@@ -35,31 +35,18 @@ type ListOpts struct {
 }
 
 // ToZoneListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToZoneListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToZoneListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List implements a zone List request.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := baseURL(client)
-	if opts != nil {
-		query, err := opts.ToZoneListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ZonePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get returns information about a zone, given its ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, zoneID string) (r GetResult) {
-	resp, err := client.Get(ctx, zoneURL(client, zoneID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional attributes to the
@@ -94,30 +81,14 @@ type CreateOpts struct {
 
 // ToZoneCreateMap formats an CreateOpts structure into a request body.
 func (opts CreateOpts) ToZoneCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.TTL > 0 {
-		b["ttl"] = opts.TTL
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create implements a zone create request.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToZoneCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, baseURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional attributes to the
@@ -143,40 +114,20 @@ type UpdateOpts struct {
 
 // ToZoneUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToZoneUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.TTL > 0 {
-		b["ttl"] = opts.TTL
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update implements a zone update request.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, zoneID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToZoneUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, zoneURL(client, zoneID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete implements a zone delete request.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, zoneID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, zoneURL(client, zoneID), &gophercloud.RequestOpts{
-		OkCodes:      []int{202},
-		JSONResponse: &r.Body,
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListSharesOptsBuilder allows extensions to add additional parameters to the List
@@ -192,33 +143,20 @@ type ListSharesOpts struct {
 
 // ToZoneListSharesHeadersMap formats a ListSharesOpts into header parameters.
 func (opts ListSharesOpts) ToZoneListSharesHeadersMap() (map[string]string, error) {
-	return gophercloud.BuildHeaders(opts)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListShares implements a zone list shares request.
 func ListShares(client *gophercloud.ServiceClient, zoneID string, opts ListSharesOptsBuilder) pagination.Pager {
-	var h map[string]string
-	var err error
-
-	if opts != nil {
-		h, err = opts.ToZoneListSharesHeadersMap()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-	}
-
-	pager := pagination.NewPager(client, sharesBaseURL(client, zoneID), func(r pagination.PageResult) pagination.Page {
-		return ZoneSharePage{pagination.LinkedPageBase{PageResult: r}}
-	})
-	pager.Headers = h
-	return pager
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetShare returns information about a shared zone, given its ID.
 func GetShare(ctx context.Context, client *gophercloud.ServiceClient, zoneID, shareID string) (r ZoneShareResult) {
-	resp, err := client.Get(ctx, shareURL(client, zoneID, shareID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ZoneShareResult)
 }
 
 // request body for sharing a zone.
@@ -234,31 +172,18 @@ type ShareZoneOpts struct {
 
 // ToShareMap constructs a request body from a ShareZoneOpts.
 func (opts ShareZoneOpts) ToShareMap() (map[string]interface{}, error) {
-	return map[string]interface{}{
-		"target_project_id": opts.TargetProjectID,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Share shares a zone with another project.
 func Share(ctx context.Context, client *gophercloud.ServiceClient, zoneID string, opts ShareOptsBuilder) (r ZoneShareResult) {
-	body, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	resp, err := client.Post(ctx, sharesBaseURL(client, zoneID), body, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ZoneShareResult)
 }
 
 // Unshare removes a share for a zone.
 func Unshare(ctx context.Context, client *gophercloud.ServiceClient, zoneID, shareID string) (r gophercloud.ErrResult) {
-	resp, err := client.Delete(ctx, shareURL(client, zoneID, shareID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(gophercloud.ErrResult)
 }

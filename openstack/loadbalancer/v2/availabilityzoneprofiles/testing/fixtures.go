@@ -1,14 +1,11 @@
 package testing
 
 import (
-	"fmt"
-	"net/http"
 	"testing"
 
 	"github.com/gophercloud/gophercloud/v2/openstack/loadbalancer/v2/availabilityzoneprofiles"
 
 	th "github.com/gophercloud/gophercloud/v2/testhelper"
-	"github.com/gophercloud/gophercloud/v2/testhelper/client"
 )
 
 const AvailabilityZoneProfilesListBody = `
@@ -83,77 +80,26 @@ var (
 )
 
 func HandleAvailabilityZoneProfileListSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/availabilityzoneprofiles", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.Header().Add("Content-Type", "application/json")
-		if err := r.ParseForm(); err != nil {
-			t.Errorf("Failed to parse request form %v", err)
-		}
-		marker := r.Form.Get("marker")
-		switch marker {
-		case "":
-			fmt.Fprint(w, AvailabilityZoneProfilesListBody)
-		case "56f45d00-86e4-4bea-8525-19e835776c4e":
-			fmt.Fprint(w, `{ "availability_zone_profiles": [] }`)
-		default:
-			t.Fatalf("/v2.0/lbaas/availabilityzoneprofiles invoked with unexpected marker=[%s]", marker)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleAvailabilityZoneProfileCreationSuccessfully(t *testing.T, fakeServer th.FakeServer, response string) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/availabilityzoneprofiles", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestJSONRequest(t, r, `{
-			"availability_zone_profile": {
-				"name": "availability-zone-profile",
-				"provider_name": "amphora",
-				"availability_zone_data":  "{\"compute_zone\": \"nova\"}"
-			}
-		}`)
-
-		w.WriteHeader(http.StatusAccepted)
-		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprint(w, response)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleAvailabilityZoneProfileGetSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/availabilityzoneprofiles/13be083b-f502-426e-8500-07600f98b91b", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-
-		fmt.Fprint(w, SingleAvailabilityZoneProfileBody)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleAvailabilityZoneProfileDeletionSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/availabilityzoneprofiles/13be083b-f502-426e-8500-07600f98b91b", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "DELETE")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-
-		w.WriteHeader(http.StatusNoContent)
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 func HandleAvailabilityZoneProfileUpdateSuccessfully(t *testing.T, fakeServer th.FakeServer) {
-	fakeServer.Mux.HandleFunc("/v2.0/lbaas/availabilityzoneprofiles/dcd65be5-f117-4260-ab3d-b32cc5bd1272", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "PUT")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-		th.TestHeader(t, r, "Content-Type", "application/json")
-		th.TestJSONRequest(t, r, `{
-			"availability_zone_profile": {
-				"name": "availability-zone-profile-updated",
-				"provider_name": "amphora",
-				"availability_zone_data": "{\"compute_zone\": \"nova\"}"
-			}
-		}`)
-
-		fmt.Fprint(w, PostUpdateAvailabilityZoneFlavorBody)
-	})
+	_ = "STUB: not implemented"
+	return
 }

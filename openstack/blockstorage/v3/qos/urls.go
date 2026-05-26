@@ -3,41 +3,45 @@ package qos
 import "github.com/gophercloud/gophercloud/v2"
 
 func getURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("qos-specs", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("qos-specs")
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("qos-specs")
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("qos-specs", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func updateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("qos-specs", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteKeysURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("qos-specs", id, "delete_keys")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func associateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("qos-specs", id, "associate")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func disassociateURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("qos-specs", id, "disassociate")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func disassociateAllURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("qos-specs", id, "disassociate_all")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func listAssociationsURL(client *gophercloud.ServiceClient, id string) string {
-	return client.ServiceURL("qos-specs", id, "associations")
+	_ = "STUB: not implemented"
+	return ""
 }

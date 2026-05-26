@@ -1,7 +1,6 @@
 package amphorae
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -70,26 +69,7 @@ type Amphora struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
-func (a *Amphora) UnmarshalJSON(b []byte) error {
-	type tmp Amphora
-	var s struct {
-		tmp
-		CertExpiration gophercloud.JSONRFC3339NoZ `json:"cert_expiration"`
-		CreatedAt      gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt      gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*a = Amphora(s.tmp)
-
-	a.CreatedAt = time.Time(s.CreatedAt)
-	a.UpdatedAt = time.Time(s.UpdatedAt)
-	a.CertExpiration = time.Time(s.CertExpiration)
-
-	return nil
-}
+func (a *Amphora) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // AmphoraPage is the page returned by a pager when traversing over a
 // collection of amphorae.
@@ -101,35 +81,19 @@ type AmphoraPage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r AmphoraPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"amphorae_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a AmphoraPage struct is empty.
-func (r AmphoraPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractAmphorae(r)
-	return len(is) == 0, err
-}
+func (r AmphoraPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractAmphorae accepts a Page struct, specifically a AmphoraPage
 // struct, and extracts the elements into a slice of Amphora structs. In
 // other words, a generic collection is mapped into a relevant slice.
 func ExtractAmphorae(r pagination.Page) ([]Amphora, error) {
-	var s struct {
-		Amphorae []Amphora `json:"amphorae"`
-	}
-	err := (r.(AmphoraPage)).ExtractInto(&s)
-	return s.Amphorae, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -137,13 +101,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts an amphora.
-func (r commonResult) Extract() (*Amphora, error) {
-	var s struct {
-		Amphora *Amphora `json:"amphora"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Amphora, err
-}
+func (r commonResult) Extract() (*Amphora, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as an amphora.

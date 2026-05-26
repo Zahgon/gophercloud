@@ -12,13 +12,7 @@ type GetResult struct {
 }
 
 // Extract interprets a GetResult as an Extension.
-func (r GetResult) Extract() (*Extension, error) {
-	var s struct {
-		Extension *Extension `json:"extension"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Extension, err
-}
+func (r GetResult) Extract() (*Extension, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // Extension is a struct that represents an OpenStack extension.
 type Extension struct {
@@ -36,22 +30,12 @@ type ExtensionPage struct {
 }
 
 // IsEmpty checks whether an ExtensionPage struct is empty.
-func (r ExtensionPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	is, err := ExtractExtensions(r)
-	return len(is) == 0, err
-}
+func (r ExtensionPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractExtensions accepts a Page struct, specifically an ExtensionPage
 // struct, and extracts the elements into a slice of Extension structs.
 // In other words, a generic collection is mapped into a relevant slice.
 func ExtractExtensions(r pagination.Page) ([]Extension, error) {
-	var s struct {
-		Extensions []Extension `json:"extensions"`
-	}
-	err := (r.(ExtensionPage)).ExtractInto(&s)
-	return s.Extensions, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

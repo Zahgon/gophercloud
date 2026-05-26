@@ -28,24 +28,12 @@ type ListOpts struct {
 }
 
 // ToPoolsListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToPoolsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToPoolsListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List makes a request against the API to list pool information.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := poolsListURL(client)
-	if opts != nil {
-		query, err := opts.ToPoolsListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return PoolPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // ListDetailOptsBuilder allows extensions to add additional parameters to the
@@ -72,21 +60,12 @@ type ListDetailOpts struct {
 
 // ToPoolsListQuery formats a ListDetailOpts into a query string.
 func (opts ListDetailOpts) ToPoolsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ListDetail makes a request against the API to list detailed pool information.
 func ListDetail(client *gophercloud.ServiceClient, opts ListDetailOptsBuilder) pagination.Pager {
-	url := poolsListDetailURL(client)
-	if opts != nil {
-		query, err := opts.ToPoolsListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return PoolPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }

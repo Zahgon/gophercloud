@@ -33,34 +33,14 @@ type CreateOpts struct {
 
 // ToServiceCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToServiceCreateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "service")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["service"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create adds a new service of the requested type to the catalog.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToServiceCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // ListOptsBuilder enables extensions to add additional parameters to the List
@@ -79,31 +59,18 @@ type ListOpts struct {
 }
 
 // ToServiceListMap builds a list query from the list options.
-func (opts ListOpts) ToServiceListMap() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToServiceListMap() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List enumerates the services available to a specific user.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
-	if opts != nil {
-		query, err := opts.ToServiceListMap()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ServicePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get returns additional information about a service, given its ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, serviceID string) (r GetResult) {
-	resp, err := client.Get(ctx, serviceURL(client, serviceID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -132,41 +99,20 @@ type UpdateOpts struct {
 
 // ToServiceUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToServiceUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "service")
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.Extra != nil {
-		if v, ok := b["service"].(map[string]any); ok {
-			for key, value := range opts.Extra {
-				v[key] = value
-			}
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update updates an existing Service.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, serviceID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToServiceUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, updateURL(client, serviceID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete removes an existing service.
 // It either deletes all associated endpoints, or fails until all endpoints
 // are deleted.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, serviceID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, serviceURL(client, serviceID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

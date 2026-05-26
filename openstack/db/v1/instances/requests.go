@@ -22,7 +22,8 @@ type DatastoreOpts struct {
 
 // ToMap converts a DatastoreOpts to a map[string]string (for a request body)
 func (opts DatastoreOpts) ToMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NetworkOpts is used within CreateOpts to control a new server's network attachments.
@@ -43,9 +44,7 @@ type NetworkOpts struct {
 }
 
 // ToMap converts a NetworkOpts to a map[string]string (for a request body)
-func (opts NetworkOpts) ToMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
-}
+func (opts NetworkOpts) ToMap() (map[string]any, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateOpts is the struct responsible for configuring a new database instance.
 type CreateOpts struct {
@@ -77,78 +76,8 @@ type CreateOpts struct {
 
 // ToInstanceCreateMap will render a JSON map.
 func (opts CreateOpts) ToInstanceCreateMap() (map[string]any, error) {
-	if opts.Size > 300 || opts.Size < 1 {
-		err := gophercloud.ErrInvalidInput{}
-		err.Argument = "instances.CreateOpts.Size"
-		err.Value = opts.Size
-		err.Info = "Size (GB) must be between 1-300"
-		return nil, err
-	}
-
-	if opts.FlavorRef == "" {
-		return nil, gophercloud.ErrMissingInput{Argument: "instances.CreateOpts.FlavorRef"}
-	}
-
-	instance := map[string]any{
-		"flavorRef": opts.FlavorRef,
-	}
-
-	if opts.AvailabilityZone != "" {
-		instance["availability_zone"] = opts.AvailabilityZone
-	}
-
-	if opts.Configuration != "" {
-		instance["configuration"] = opts.Configuration
-	}
-
-	if opts.Name != "" {
-		instance["name"] = opts.Name
-	}
-	if opts.Databases != nil {
-		dbs, err := opts.Databases.ToDBCreateMap()
-		if err != nil {
-			return nil, err
-		}
-		instance["databases"] = dbs["databases"]
-	}
-	if opts.Users != nil {
-		users, err := opts.Users.ToUserCreateMap()
-		if err != nil {
-			return nil, err
-		}
-		instance["users"] = users["users"]
-	}
-	if opts.Datastore != nil {
-		datastore, err := opts.Datastore.ToMap()
-		if err != nil {
-			return nil, err
-		}
-		instance["datastore"] = datastore
-	}
-
-	if len(opts.Networks) > 0 {
-		networks := make([]map[string]any, len(opts.Networks))
-		for i, net := range opts.Networks {
-			var err error
-			networks[i], err = net.ToMap()
-			if err != nil {
-				return nil, err
-			}
-		}
-		instance["nics"] = networks
-	}
-
-	volume := map[string]any{
-		"size": opts.Size,
-	}
-
-	if opts.VolumeType != "" {
-		volume["type"] = opts.VolumeType
-	}
-
-	instance["volume"] = volume
-
-	return map[string]any{"instance": instance}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create asynchronously provisions a new database instance. It requires the
@@ -160,95 +89,74 @@ func (opts CreateOpts) ToInstanceCreateMap() (map[string]any, error) {
 // can create an instance with multiple databases and users. The default
 // binding for a MySQL instance is port 3306.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToInstanceCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, baseURL(client), &b, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // List retrieves the status and information for all database instances.
 func List(client *gophercloud.ServiceClient) pagination.Pager {
-	return pagination.NewPager(client, baseURL(client), func(r pagination.PageResult) pagination.Page {
-		return InstancePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves the status and information for a specified database instance.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(ctx, resourceURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // Delete permanently destroys the database instance.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, resourceURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // EnableRootUser enables the login from any host for the root user and
 // provides the user with a generated root password.
 func EnableRootUser(ctx context.Context, client *gophercloud.ServiceClient, id string) (r EnableRootUserResult) {
-	resp, err := client.Post(ctx, userRootURL(client, id), nil, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(EnableRootUserResult)
 }
 
 // IsRootEnabled checks an instance to see if root access is enabled. It returns
 // True if root user is enabled for the specified database instance or False
 // otherwise.
 func IsRootEnabled(ctx context.Context, client *gophercloud.ServiceClient, id string) (r IsRootEnabledResult) {
-	resp, err := client.Get(ctx, userRootURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(IsRootEnabledResult)
 }
 
 // Restart will restart only the MySQL Instance. Restarting MySQL will
 // erase any dynamic configuration settings that you have made within MySQL.
 // The MySQL service will be unavailable until the instance restarts.
 func Restart(ctx context.Context, client *gophercloud.ServiceClient, id string) (r ActionResult) {
-	b := map[string]any{"restart": struct{}{}}
-	resp, err := client.Post(ctx, actionURL(client, id), &b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // Resize changes the memory size of the instance, assuming a valid
 // flavorRef is provided. It will also restart the MySQL service.
 func Resize(ctx context.Context, client *gophercloud.ServiceClient, id, flavorRef string) (r ActionResult) {
-	b := map[string]any{"resize": map[string]string{"flavorRef": flavorRef}}
-	resp, err := client.Post(ctx, actionURL(client, id), &b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // ResizeVolume will resize the attached volume for an instance. It supports
 // only increasing the volume size and does not support decreasing the size.
 // The volume size is in gigabytes (GB) and must be an integer.
 func ResizeVolume(ctx context.Context, client *gophercloud.ServiceClient, id string, size int) (r ActionResult) {
-	b := map[string]any{"resize": map[string]any{"volume": map[string]int{"size": size}}}
-	resp, err := client.Post(ctx, actionURL(client, id), &b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ActionResult)
 }
 
 // AttachConfigurationGroup will attach configuration group to the instance
 func AttachConfigurationGroup(ctx context.Context, client *gophercloud.ServiceClient, instanceID string, configID string) (r ConfigurationResult) {
-	b := map[string]any{"instance": map[string]any{"configuration": configID}}
-	resp, err := client.Put(ctx, resourceURL(client, instanceID), &b, nil, &gophercloud.RequestOpts{OkCodes: []int{202}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ConfigurationResult)
 }
 
 // DetachConfigurationGroup will dettach configuration group from the instance
 func DetachConfigurationGroup(ctx context.Context, client *gophercloud.ServiceClient, instanceID string) (r ConfigurationResult) {
-	b := map[string]any{"instance": map[string]any{}}
-	resp, err := client.Put(ctx, resourceURL(client, instanceID), &b, nil, &gophercloud.RequestOpts{OkCodes: []int{202}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ConfigurationResult)
 }

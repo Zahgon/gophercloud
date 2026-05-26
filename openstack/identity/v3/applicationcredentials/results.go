@@ -1,7 +1,6 @@
 package applicationcredentials
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -60,19 +59,7 @@ type ApplicationCredential struct {
 }
 
 func (r *ApplicationCredential) UnmarshalJSON(b []byte) error {
-	type tmp ApplicationCredential
-	var s struct {
-		tmp
-		ExpiresAt gophercloud.JSONRFC3339MilliNoZ `json:"expires_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = ApplicationCredential(s.tmp)
-
-	r.ExpiresAt = time.Time(s.ExpiresAt)
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -105,45 +92,26 @@ type ApplicationCredentialPage struct {
 
 // IsEmpty determines whether or not a an ApplicationCredentialPage contains any results.
 func (r ApplicationCredentialPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	applicationCredentials, err := ExtractApplicationCredentials(r)
-	return len(applicationCredentials) == 0, err
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r ApplicationCredentialPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Extractan ApplicationCredentials returns a slice of ApplicationCredentials contained in a single page of results.
 func ExtractApplicationCredentials(r pagination.Page) ([]ApplicationCredential, error) {
-	var s struct {
-		ApplicationCredentials []ApplicationCredential `json:"application_credentials"`
-	}
-	err := (r.(ApplicationCredentialPage)).ExtractInto(&s)
-	return s.ApplicationCredentials, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any application_credential results as an ApplicationCredential.
 func (r applicationCredentialResult) Extract() (*ApplicationCredential, error) {
-	var s struct {
-		ApplicationCredential *ApplicationCredential `json:"application_credential"`
-	}
-	err := r.ExtractInto(&s)
-	return s.ApplicationCredential, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetAccessRuleResult is the response from a Get operation. Call its Extract method
@@ -158,44 +126,22 @@ type AccessRulePage struct {
 }
 
 // IsEmpty determines whether or not a an AccessRulePage contains any results.
-func (r AccessRulePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	accessRules, err := ExtractAccessRules(r)
-	return len(accessRules) == 0, err
-}
+func (r AccessRulePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r AccessRulePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links struct {
-			Next     string `json:"next"`
-			Previous string `json:"previous"`
-		} `json:"links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Links.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractAccessRules returns a slice of AccessRules contained in a single page of results.
 func ExtractAccessRules(r pagination.Page) ([]AccessRule, error) {
-	var s struct {
-		AccessRules []AccessRule `json:"access_rules"`
-	}
-	err := (r.(AccessRulePage)).ExtractInto(&s)
-	return s.AccessRules, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any access_rule results as an AccessRule.
 func (r GetAccessRuleResult) Extract() (*AccessRule, error) {
-	var s struct {
-		AccessRule *AccessRule `json:"access_rule"`
-	}
-	err := r.ExtractInto(&s)
-	return s.AccessRule, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

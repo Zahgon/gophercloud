@@ -1,10 +1,6 @@
 package schedulerstats
 
 import (
-	"encoding/json"
-	"math"
-	"strconv"
-
 	"github.com/gophercloud/gophercloud/v2/pagination"
 )
 
@@ -42,52 +38,10 @@ type StoragePool struct {
 	Capabilities Capabilities `json:"capabilities"`
 }
 
-func (r *Capabilities) UnmarshalJSON(b []byte) error {
-	type tmp Capabilities
-	var s struct {
-		tmp
-		AllocatedCapacityGB      any `json:"allocated_capacity_gb"`
-		FreeCapacityGB           any `json:"free_capacity_gb"`
-		MaxOverSubscriptionRatio any `json:"max_over_subscription_ratio"`
-		TotalCapacityGB          any `json:"total_capacity_gb"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Capabilities(s.tmp)
+func (r *Capabilities) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
-	// Generic function to parse a capacity value which may be a numeric
-	// value, "unknown", or "infinite"
-	parseCapacity := func(capacity any) float64 {
-		if capacity != nil {
-			switch c := capacity.(type) {
-			case float64:
-				return c
-			case string:
-				if c == "infinite" {
-					return math.Inf(1)
-				}
-			}
-		}
-		return 0.0
-	}
-
-	r.AllocatedCapacityGB = parseCapacity(s.AllocatedCapacityGB)
-	r.FreeCapacityGB = parseCapacity(s.FreeCapacityGB)
-	r.TotalCapacityGB = parseCapacity(s.TotalCapacityGB)
-
-	if s.MaxOverSubscriptionRatio != nil {
-		switch t := s.MaxOverSubscriptionRatio.(type) {
-		case float64:
-			r.MaxOverSubscriptionRatio = strconv.FormatFloat(t, 'f', -1, 64)
-		case string:
-			r.MaxOverSubscriptionRatio = t
-		}
-	}
-
-	return nil
-}
+// Generic function to parse a capacity value which may be a numeric
+// value, "unknown", or "infinite"
 
 // StoragePoolPage is a single page of all List results.
 type StoragePoolPage struct {
@@ -96,21 +50,11 @@ type StoragePoolPage struct {
 
 // IsEmpty satisfies the IsEmpty method of the Page interface. It returns true
 // if a List contains no results.
-func (page StoragePoolPage) IsEmpty() (bool, error) {
-	if page.StatusCode == 204 {
-		return true, nil
-	}
-
-	va, err := ExtractStoragePools(page)
-	return len(va) == 0, err
-}
+func (page StoragePoolPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractStoragePools takes a List result and extracts the collection of
 // StoragePools returned by the API.
 func ExtractStoragePools(p pagination.Page) ([]StoragePool, error) {
-	var s struct {
-		StoragePools []StoragePool `json:"pools"`
-	}
-	err := (p.(StoragePoolPage)).ExtractInto(&s)
-	return s.StoragePools, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }

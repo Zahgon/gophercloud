@@ -4,6 +4,4 @@ import "github.com/gophercloud/gophercloud/v2"
 
 const apiName = "allocation_candidates"
 
-func listURL(client *gophercloud.ServiceClient) string {
-	return client.ServiceURL(apiName)
-}
+func listURL(client *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }

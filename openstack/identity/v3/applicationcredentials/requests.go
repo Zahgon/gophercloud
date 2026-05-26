@@ -22,30 +22,20 @@ type ListOpts struct {
 
 // ToApplicationCredentialListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToApplicationCredentialListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List enumerates the ApplicationCredentials to which the current token has access.
 func List(client *gophercloud.ServiceClient, userID string, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client, userID)
-	if opts != nil {
-		query, err := opts.ToApplicationCredentialListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return ApplicationCredentialPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // Get retrieves details on a single user, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, userID string, id string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, userID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to
@@ -78,60 +68,36 @@ type CreateOpts struct {
 
 // ToApplicationCredentialCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToApplicationCredentialCreateMap() (map[string]any, error) {
-	parent := "application_credential"
-	b, err := gophercloud.BuildRequestBody(opts, parent)
-	if err != nil {
-		return nil, err
-	}
-
-	if opts.ExpiresAt != nil {
-		if v, ok := b[parent].(map[string]any); ok {
-			v["expires_at"] = opts.ExpiresAt.Format(gophercloud.RFC3339MilliNoZ)
-		}
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Create creates a new ApplicationCredential.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, userID string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToApplicationCredentialCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, createURL(client, userID), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Delete deletes an application credential.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, userID string, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, userID, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }
 
 // ListAccessRules enumerates the AccessRules to which the current user has access.
 func ListAccessRules(client *gophercloud.ServiceClient, userID string) pagination.Pager {
-	url := listAccessRulesURL(client, userID)
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return AccessRulePage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // GetAccessRule retrieves details on a single access rule by ID.
 func GetAccessRule(ctx context.Context, client *gophercloud.ServiceClient, userID string, id string) (r GetAccessRuleResult) {
-	resp, err := client.Get(ctx, getAccessRuleURL(client, userID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetAccessRuleResult)
 }
 
 // DeleteAccessRule deletes an access rule.
 func DeleteAccessRule(ctx context.Context, client *gophercloud.ServiceClient, userID string, id string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteAccessRuleURL(client, userID, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

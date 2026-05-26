@@ -30,31 +30,19 @@ type FlavorProfilePage struct {
 // reached the end of a page and the pager seeks to traverse over a new one.
 // In order to do this, it needs to construct the next page's URL.
 func (r FlavorProfilePage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"flavorprofiles_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty checks whether a FlavorProfilePage struct is empty.
-func (r FlavorProfilePage) IsEmpty() (bool, error) {
-	is, err := ExtractFlavorProfiles(r)
-	return len(is) == 0, err
-}
+func (r FlavorProfilePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractFlavorProfiles accepts a Page struct, specifically a FlavorProfilePage
 // struct, and extracts the elements into a slice of FlavorProfile structs. In
 // other words, a generic collection is mapped into a relevant slice.
 func ExtractFlavorProfiles(r pagination.Page) ([]FlavorProfile, error) {
-	var s struct {
-		FlavorProfiles []FlavorProfile `json:"flavorprofiles"`
-	}
-	err := (r.(FlavorProfilePage)).ExtractInto(&s)
-	return s.FlavorProfiles, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type commonResult struct {
@@ -62,13 +50,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a flavor profile.
-func (r commonResult) Extract() (*FlavorProfile, error) {
-	var s struct {
-		FlavorProfile *FlavorProfile `json:"flavorprofile"`
-	}
-	err := r.ExtractInto(&s)
-	return s.FlavorProfile, err
-}
+func (r commonResult) Extract() (*FlavorProfile, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a FlavorProfile.

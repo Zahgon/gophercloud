@@ -3,17 +3,21 @@ package hypervisors
 import "github.com/gophercloud/gophercloud/v2"
 
 func hypervisorsListDetailURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("os-hypervisors", "detail")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func hypervisorsStatisticsURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("os-hypervisors", "statistics")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func hypervisorsGetURL(c *gophercloud.ServiceClient, hypervisorID string) string {
-	return c.ServiceURL("os-hypervisors", hypervisorID)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func hypervisorsUptimeURL(c *gophercloud.ServiceClient, hypervisorID string) string {
-	return c.ServiceURL("os-hypervisors", hypervisorID, "uptime")
+	_ = "STUB: not implemented"
+	return ""
 }

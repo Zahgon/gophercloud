@@ -8,10 +8,9 @@ const (
 	UserPath = "users"
 )
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(ExtPath, RolePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func userTenantRoleURL(c *gophercloud.ServiceClient, tenantID, userID, roleID string) string {
-	return c.ServiceURL("tenants", tenantID, UserPath, userID, RolePath, ExtPath, roleID)
+	_ = "STUB: not implemented"
+	return ""
 }

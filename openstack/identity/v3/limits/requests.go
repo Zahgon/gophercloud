@@ -9,9 +9,8 @@ import (
 
 // Get retrieves details on a single limit, by ID.
 func GetEnforcementModel(ctx context.Context, client *gophercloud.ServiceClient) (r EnforcementModelResult) {
-	resp, err := client.Get(ctx, enforcementModelURL(client), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(EnforcementModelResult)
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to
@@ -39,24 +38,12 @@ type ListOpts struct {
 }
 
 // ToLimitListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToLimitListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
-}
+func (opts ListOpts) ToLimitListQuery() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // List enumerates the limits.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(client)
-	if opts != nil {
-		query, err := opts.ToLimitListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return LimitPage{pagination.LinkedPageBase{PageResult: r}}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
 
 // BatchCreateOptsBuilder allows extensions to add additional parameters to
@@ -93,40 +80,22 @@ type BatchCreateOpts []CreateOpts
 
 // ToLimitsCreateMap formats a BatchCreateOpts into a create request.
 func (opts BatchCreateOpts) ToLimitsCreateMap() (map[string]any, error) {
-	limits := make([]map[string]any, len(opts))
-	for i, limit := range opts {
-		limitMap, err := limit.ToMap()
-		if err != nil {
-			return nil, err
-		}
-		limits[i] = limitMap
-	}
-	return map[string]any{"limits": limits}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (opts CreateOpts) ToMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
-}
+func (opts CreateOpts) ToMap() (map[string]any, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // BatchCreate creates new Limits.
 func BatchCreate(ctx context.Context, client *gophercloud.ServiceClient, opts BatchCreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToLimitsCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(ctx, rootURL(client), &b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get retrieves details on a single limit, by ID.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, limitID string) (r GetResult) {
-	resp, err := client.Get(ctx, resourceURL(client, limitID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to
@@ -146,26 +115,18 @@ type UpdateOpts struct {
 
 // ToLimitUpdateMap formats UpdateOpts into an update request.
 func (opts UpdateOpts) ToLimitUpdateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "limit")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update modifies the attributes of a limit.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToLimitUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Patch(ctx, resourceURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete deletes a limit.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, limitID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, resourceURL(client, limitID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

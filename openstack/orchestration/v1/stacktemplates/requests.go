@@ -8,9 +8,8 @@ import (
 
 // Get retreives data for the given stack template.
 func Get(ctx context.Context, c *gophercloud.ServiceClient, stackName, stackID string) (r GetResult) {
-	resp, err := c.Get(ctx, getURL(c, stackName, stackID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // ValidateOptsBuilder describes struct types that can be accepted by the Validate call.
@@ -27,19 +26,12 @@ type ValidateOpts struct {
 
 // ToStackTemplateValidateMap assembles a request body based on the contents of a ValidateOpts.
 func (opts ValidateOpts) ToStackTemplateValidateMap() (map[string]any, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Validate validates the given stack template.
 func Validate(ctx context.Context, c *gophercloud.ServiceClient, opts ValidateOptsBuilder) (r ValidateResult) {
-	b, err := opts.ToStackTemplateValidateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(ctx, validateURL(c), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ValidateResult)
 }

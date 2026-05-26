@@ -8,14 +8,14 @@ const (
 	failoverPath = "failover"
 )
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath, resourcePath)
-}
+func rootURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, resourcePath, id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func failoverRootURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, resourcePath, id, failoverPath)
+	_ = "STUB: not implemented"
+	return ""
 }

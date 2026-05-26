@@ -27,45 +27,20 @@ type CreateOpts struct {
 // ToClaimCreateRequest assembles a body and URL for a Create request based on
 // the contents of a CreateOpts.
 func (opts CreateOpts) ToClaimCreateRequest() (map[string]any, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return nil, q.String(), err
-	}
-
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return b, "", err
-	}
-	return b, q.String(), err
+	_ = "STUB: not implemented"
+	return nil, "", nil
 }
 
 // Create creates a Claim that claims messages on a specified queue.
 func Create(ctx context.Context, client *gophercloud.ServiceClient, queueName string, opts CreateOptsBuilder) (r CreateResult) {
-	b, q, err := opts.ToClaimCreateRequest()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
-	url := createURL(client, queueName)
-	if q != "" {
-		url += q
-	}
-
-	resp, err := client.Post(ctx, url, b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{201, 204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(CreateResult)
 }
 
 // Get queries the specified claim for the specified queue.
 func Get(ctx context.Context, client *gophercloud.ServiceClient, queueName string, claimID string) (r GetResult) {
-	resp, err := client.Get(ctx, getURL(client, queueName, claimID), &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetResult)
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -86,32 +61,18 @@ type UpdateOpts struct {
 // ToClaimUpdateMap assembles a request body based on the contents of
 // UpdateOpts.
 func (opts UpdateOpts) ToClaimUpdateMap() (map[string]any, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Update will update the options for a specified claim.
 func Update(ctx context.Context, client *gophercloud.ServiceClient, queueName string, claimID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToClaimUpdateMap()
-	if err != nil {
-		r.Err = err
-		return r
-	}
-	resp, err := client.Patch(ctx, updateURL(client, queueName, claimID), &b, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(UpdateResult)
 }
 
 // Delete will delete a Claim for a specified Queue.
 func Delete(ctx context.Context, client *gophercloud.ServiceClient, queueName string, claimID string) (r DeleteResult) {
-	resp, err := client.Delete(ctx, deleteURL(client, queueName, claimID), &gophercloud.RequestOpts{
-		OkCodes: []int{204},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(DeleteResult)
 }

@@ -1,12 +1,5 @@
 package pagination
 
-import (
-	"fmt"
-	"reflect"
-
-	"github.com/gophercloud/gophercloud/v2"
-)
-
 // MarkerPage is a stricter Page interface that describes additional functionality required for use with NewMarkerPager.
 // For convenience, embed the MarkedPageBase struct.
 type MarkerPage interface {
@@ -26,33 +19,13 @@ type MarkerPageBase struct {
 
 // NextPageURL generates the URL for the page of results after this one.
 func (current MarkerPageBase) NextPageURL(endpointURL string) (string, error) {
-	currentURL := current.URL
-
-	mark, err := current.Owner.LastMarker()
-	if err != nil {
-		return "", err
-	}
-
-	q := currentURL.Query()
-	q.Set("marker", mark)
-	currentURL.RawQuery = q.Encode()
-
-	return currentURL.String(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // IsEmpty satisifies the IsEmpty method of the Page interface
-func (current MarkerPageBase) IsEmpty() (bool, error) {
-	if b, ok := current.Body.([]any); ok {
-		return len(b) == 0, nil
-	}
-	err := gophercloud.ErrUnexpectedType{}
-	err.Expected = "[]any"
-	err.Actual = fmt.Sprintf("%v", reflect.TypeOf(current.Body))
-	return true, err
-}
+func (current MarkerPageBase) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // GetBody returns the linked page's body. This method is needed to satisfy the
 // Page interface.
-func (current MarkerPageBase) GetBody() any {
-	return current.Body
-}
+func (current MarkerPageBase) GetBody() any { _ = "STUB: not implemented"; return *new(any) }

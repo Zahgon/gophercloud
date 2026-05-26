@@ -48,34 +48,20 @@ type ListOpts struct {
 
 // ToResourceTypeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToResourceTypeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list available resource types.
 func List(ctx context.Context, client *gophercloud.ServiceClient, opts ListOptsBuilder) (r ListResult) {
-	url := listURL(client)
-
-	if opts == nil {
-		opts = ListOpts{}
-	}
-	query, err := opts.ToResourceTypeListQuery()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url += query
-
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(ListResult)
 }
 
 // GetSchema retreives the schema for a given resource type.
 func GetSchema(ctx context.Context, client *gophercloud.ServiceClient, resourceType string) (r GetSchemaResult) {
-	resp, err := client.Get(ctx, getSchemaURL(client, resourceType), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(GetSchemaResult)
 }
 
 // GenerateTemplateOptsBuilder allows extensions to add additional parameters
@@ -98,26 +84,12 @@ type GenerateTemplateOpts struct {
 
 // ToGenerateTemplateQuery formats a GenerateTemplateOpts into a query string.
 func (opts GenerateTemplateOpts) ToGenerateTemplateQuery() (string, error) {
-	if opts.TemplateType == "" {
-		opts.TemplateType = TemplateTypeHOT
-	}
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GenerateTemplate retreives an example template for a given resource type.
 func GenerateTemplate(ctx context.Context, client *gophercloud.ServiceClient, resourceType string, opts GenerateTemplateOptsBuilder) (r TemplateResult) {
-	url := generateTemplateURL(client, resourceType)
-	if opts == nil {
-		opts = GenerateTemplateOpts{}
-	}
-	query, err := opts.ToGenerateTemplateQuery()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	url += query
-	resp, err := client.Get(ctx, url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+	_ = "STUB: not implemented"
+	return *new(TemplateResult)
 }

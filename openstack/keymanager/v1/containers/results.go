@@ -1,7 +1,6 @@
 package containers
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -38,24 +37,7 @@ type Container struct {
 	Updated time.Time `json:"-"`
 }
 
-func (r *Container) UnmarshalJSON(b []byte) error {
-	type tmp Container
-	var s struct {
-		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Container(s.tmp)
-
-	r.Created = time.Time(s.Created)
-	r.Updated = time.Time(s.Updated)
-
-	return nil
-}
+func (r *Container) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ConsumerRef represents a consumer reference in a container.
 type ConsumerRef struct {
@@ -77,11 +59,7 @@ type commonResult struct {
 }
 
 // Extract interprets any commonResult as a Container.
-func (r commonResult) Extract() (*Container, error) {
-	var s *Container
-	err := r.ExtractInto(&s)
-	return s, err
-}
+func (r commonResult) Extract() (*Container, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetResult is the response from a Get operation. Call its Extract method
 // to interpret it as a container.
@@ -107,36 +85,19 @@ type ContainerPage struct {
 }
 
 // IsEmpty determines whether or not a page of Container contains any results.
-func (r ContainerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	containers, err := ExtractContainers(r)
-	return len(containers) == 0, err
-}
+func (r ContainerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r ContainerPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next     string `json:"next"`
-		Previous string `json:"previous"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractContainers returns a slice of Containers contained in a single page of
 // results.
 func ExtractContainers(r pagination.Page) ([]Container, error) {
-	var s struct {
-		Containers []Container `json:"containers"`
-	}
-	err := (r.(ContainerPage)).ExtractInto(&s)
-	return s.Containers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Consumer represents a consumer in a container.
@@ -157,24 +118,7 @@ type Consumer struct {
 	URL string `json:"url"`
 }
 
-func (r *Consumer) UnmarshalJSON(b []byte) error {
-	type tmp Consumer
-	var s struct {
-		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Consumer(s.tmp)
-
-	r.Created = time.Time(s.Created)
-	r.Updated = time.Time(s.Updated)
-
-	return nil
-}
+func (r *Consumer) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 // CreateConsumerResult is the response from a CreateConsumer operation.
 // Call its Extract method to interpret it as a container.
@@ -196,43 +140,25 @@ type ConsumerPage struct {
 }
 
 // IsEmpty determines whether or not a page of consumers contains any results.
-func (r ConsumerPage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	consumers, err := ExtractConsumers(r)
-	return len(consumers) == 0, err
-}
+func (r ConsumerPage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // NextPageURL extracts the "next" link from the links section of the result.
 func (r ConsumerPage) NextPageURL(endpointURL string) (string, error) {
-	var s struct {
-		Next     string `json:"next"`
-		Previous string `json:"previous"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return s.Next, err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ExtractConsumers returns a slice of Consumers contained in a single page of
 // results.
 func ExtractConsumers(r pagination.Page) ([]Consumer, error) {
-	var s struct {
-		Consumers []Consumer `json:"consumers"`
-	}
-	err := (r.(ConsumerPage)).ExtractInto(&s)
-	return s.Consumers, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract interprets any CreateSecretRefResult as a Container
 func (r CreateSecretRefResult) Extract() (*Container, error) {
-	var c *Container
-	err := r.ExtractInto(&c)
-	return c, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateSecretRefResult is the response from a CreateSecretRef operation.

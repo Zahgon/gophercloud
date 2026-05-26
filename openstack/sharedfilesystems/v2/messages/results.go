@@ -1,7 +1,6 @@
 package messages
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/gophercloud/gophercloud/v2"
@@ -35,24 +34,7 @@ type Message struct {
 	ExpiresAt time.Time `json:"-"`
 }
 
-func (r *Message) UnmarshalJSON(b []byte) error {
-	type tmp Message
-	var s struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		ExpiresAt gophercloud.JSONRFC3339MilliNoZ `json:"expires_at"`
-	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
-		return err
-	}
-	*r = Message(s.tmp)
-
-	r.CreatedAt = time.Time(s.CreatedAt)
-	r.ExpiresAt = time.Time(s.ExpiresAt)
-
-	return nil
-}
+func (r *Message) UnmarshalJSON(b []byte) error { _ = "STUB: not implemented"; return nil }
 
 type commonResult struct {
 	gophercloud.Result
@@ -64,33 +46,17 @@ type MessagePage struct {
 }
 
 // IsEmpty returns true if a ListResult contains no Messages.
-func (r MessagePage) IsEmpty() (bool, error) {
-	if r.StatusCode == 204 {
-		return true, nil
-	}
-
-	messages, err := ExtractMessages(r)
-	return len(messages) == 0, err
-}
+func (r MessagePage) IsEmpty() (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // ExtractMessages extracts and returns Messages. It is used while
 // iterating over a messages.List call.
 func ExtractMessages(r pagination.Page) ([]Message, error) {
-	var s struct {
-		Messages []Message `json:"messages"`
-	}
-	err := (r.(MessagePage)).ExtractInto(&s)
-	return s.Messages, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Extract will get the Message object out of the commonResult object.
-func (r commonResult) Extract() (*Message, error) {
-	var s struct {
-		Message *Message `json:"message"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Message, err
-}
+func (r commonResult) Extract() (*Message, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {

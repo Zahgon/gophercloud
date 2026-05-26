@@ -108,410 +108,93 @@ type AuthScope struct {
 // ToTokenV2CreateMap allows AuthOptions to satisfy the AuthOptionsBuilder
 // interface in the v2 tokens package
 func (opts AuthOptions) ToTokenV2CreateMap() (map[string]any, error) {
+	_ = "STUB: not implemented"
 	// Populate the request map.
-	authMap := make(map[string]any)
-
-	if opts.Username != "" {
-		if opts.Password != "" {
-			authMap["passwordCredentials"] = map[string]any{
-				"username": opts.Username,
-				"password": opts.Password,
-			}
-		} else {
-			return nil, ErrMissingInput{Argument: "Password"}
-		}
-	} else if opts.TokenID != "" {
-		authMap["token"] = map[string]any{
-			"id": opts.TokenID,
-		}
-	} else {
-		return nil, ErrMissingInput{Argument: "Username"}
-	}
-
-	if opts.TenantID != "" {
-		authMap["tenantId"] = opts.TenantID
-	}
-	if opts.TenantName != "" {
-		authMap["tenantName"] = opts.TenantName
-	}
-
-	return map[string]any{"auth": authMap}, nil
+	return nil, nil
 }
 
 // ToTokenV3CreateMap allows AuthOptions to satisfy the AuthOptionsBuilder
 // interface in the v3 tokens package
 func (opts *AuthOptions) ToTokenV3CreateMap(scope map[string]any) (map[string]any, error) {
-	type domainReq struct {
-		ID   *string `json:"id,omitempty"`
-		Name *string `json:"name,omitempty"`
-	}
-
-	type userReq struct {
-		ID       *string    `json:"id,omitempty"`
-		Name     *string    `json:"name,omitempty"`
-		Password *string    `json:"password,omitempty"`
-		Passcode *string    `json:"passcode,omitempty"`
-		Domain   *domainReq `json:"domain,omitempty"`
-	}
-
-	type passwordReq struct {
-		User userReq `json:"user"`
-	}
-
-	type tokenReq struct {
-		ID string `json:"id"`
-	}
-
-	type applicationCredentialReq struct {
-		ID     *string  `json:"id,omitempty"`
-		Name   *string  `json:"name,omitempty"`
-		User   *userReq `json:"user,omitempty"`
-		Secret *string  `json:"secret,omitempty"`
-	}
-
-	type totpReq struct {
-		User *userReq `json:"user,omitempty"`
-	}
-
-	type identityReq struct {
-		Methods               []string                  `json:"methods"`
-		Password              *passwordReq              `json:"password,omitempty"`
-		Token                 *tokenReq                 `json:"token,omitempty"`
-		ApplicationCredential *applicationCredentialReq `json:"application_credential,omitempty"`
-		TOTP                  *totpReq                  `json:"totp,omitempty"`
-	}
-
-	type authReq struct {
-		Identity identityReq `json:"identity"`
-	}
-
-	type request struct {
-		Auth authReq `json:"auth"`
-	}
-
-	// Populate the request structure based on the provided arguments. Create and return an error
-	// if insufficient or incompatible information is present.
-	var req request
-
-	if opts.Password == "" && opts.Passcode == "" {
-		if opts.TokenID != "" {
-			// Because we aren't using password authentication, it's an error to also provide any of the user-based authentication
-			// parameters.
-			if opts.Username != "" {
-				return nil, ErrUsernameWithToken{}
-			}
-			if opts.UserID != "" {
-				return nil, ErrUserIDWithToken{}
-			}
-			if opts.DomainID != "" {
-				return nil, ErrDomainIDWithToken{}
-			}
-			if opts.DomainName != "" {
-				return nil, ErrDomainNameWithToken{}
-			}
-
-			// Configure the request for Token authentication.
-			req.Auth.Identity.Methods = []string{"token"}
-			req.Auth.Identity.Token = &tokenReq{
-				ID: opts.TokenID,
-			}
-
-		} else if opts.ApplicationCredentialID != "" {
-			// Configure the request for ApplicationCredentialID authentication.
-			// https://github.com/openstack/keystoneauth/blob/stable/rocky/keystoneauth1/identity/v3/application_credential.py#L48-L67
-			// There are three kinds of possible application_credential requests
-			// 1. application_credential id + secret
-			// 2. application_credential name + secret + user_id
-			// 3. application_credential name + secret + username + domain_id / domain_name
-			if opts.ApplicationCredentialSecret == "" {
-				return nil, ErrAppCredMissingSecret{}
-			}
-			req.Auth.Identity.Methods = []string{"application_credential"}
-			req.Auth.Identity.ApplicationCredential = &applicationCredentialReq{
-				ID:     &opts.ApplicationCredentialID,
-				Secret: &opts.ApplicationCredentialSecret,
-			}
-		} else if opts.ApplicationCredentialName != "" {
-			if opts.ApplicationCredentialSecret == "" {
-				return nil, ErrAppCredMissingSecret{}
-			}
-
-			var userRequest *userReq
-
-			if opts.UserID != "" {
-				// UserID could be used without the domain information
-				userRequest = &userReq{
-					ID: &opts.UserID,
-				}
-			}
-
-			if userRequest == nil && opts.Username == "" {
-				// Make sure that Username or UserID are provided
-				return nil, ErrUsernameOrUserID{}
-			}
-
-			if userRequest == nil && opts.DomainID != "" {
-				userRequest = &userReq{
-					Name:   &opts.Username,
-					Domain: &domainReq{ID: &opts.DomainID},
-				}
-			}
-
-			if userRequest == nil && opts.DomainName != "" {
-				userRequest = &userReq{
-					Name:   &opts.Username,
-					Domain: &domainReq{Name: &opts.DomainName},
-				}
-			}
-
-			// Make sure that DomainID or DomainName are provided among Username
-			if userRequest == nil {
-				return nil, ErrDomainIDOrDomainName{}
-			}
-
-			req.Auth.Identity.Methods = []string{"application_credential"}
-			req.Auth.Identity.ApplicationCredential = &applicationCredentialReq{
-				Name:   &opts.ApplicationCredentialName,
-				User:   userRequest,
-				Secret: &opts.ApplicationCredentialSecret,
-			}
-		} else {
-			// If no password or token ID or ApplicationCredential are available, authentication can't continue.
-			return nil, ErrMissingPassword{}
-		}
-	} else {
-		// Password authentication.
-		if opts.Password != "" {
-			req.Auth.Identity.Methods = append(req.Auth.Identity.Methods, "password")
-		}
-
-		// TOTP authentication.
-		if opts.Passcode != "" {
-			req.Auth.Identity.Methods = append(req.Auth.Identity.Methods, "totp")
-		}
-
-		// At least one of Username and UserID must be specified.
-		if opts.Username == "" && opts.UserID == "" {
-			return nil, ErrUsernameOrUserID{}
-		}
-
-		if opts.Username != "" {
-			// If Username is provided, UserID may not be provided.
-			if opts.UserID != "" {
-				return nil, ErrUsernameOrUserID{}
-			}
-
-			// Either DomainID or DomainName must also be specified.
-			if opts.DomainID == "" && opts.DomainName == "" {
-				return nil, ErrDomainIDOrDomainName{}
-			}
-
-			if opts.DomainID != "" {
-				if opts.DomainName != "" {
-					return nil, ErrDomainIDOrDomainName{}
-				}
-
-				// Configure the request for Username and Password authentication with a DomainID.
-				if opts.Password != "" {
-					req.Auth.Identity.Password = &passwordReq{
-						User: userReq{
-							Name:     &opts.Username,
-							Password: &opts.Password,
-							Domain:   &domainReq{ID: &opts.DomainID},
-						},
-					}
-				}
-				if opts.Passcode != "" {
-					req.Auth.Identity.TOTP = &totpReq{
-						User: &userReq{
-							Name:     &opts.Username,
-							Passcode: &opts.Passcode,
-							Domain:   &domainReq{ID: &opts.DomainID},
-						},
-					}
-				}
-			}
-
-			if opts.DomainName != "" {
-				// Configure the request for Username and Password authentication with a DomainName.
-				if opts.Password != "" {
-					req.Auth.Identity.Password = &passwordReq{
-						User: userReq{
-							Name:     &opts.Username,
-							Password: &opts.Password,
-							Domain:   &domainReq{Name: &opts.DomainName},
-						},
-					}
-				}
-
-				if opts.Passcode != "" {
-					req.Auth.Identity.TOTP = &totpReq{
-						User: &userReq{
-							Name:     &opts.Username,
-							Passcode: &opts.Passcode,
-							Domain:   &domainReq{Name: &opts.DomainName},
-						},
-					}
-				}
-			}
-		}
-
-		if opts.UserID != "" {
-			// If UserID is specified, neither DomainID nor DomainName may be.
-			if opts.DomainID != "" {
-				return nil, ErrDomainIDWithUserID{}
-			}
-			if opts.DomainName != "" {
-				return nil, ErrDomainNameWithUserID{}
-			}
-
-			// Configure the request for UserID and Password authentication.
-			if opts.Password != "" {
-				req.Auth.Identity.Password = &passwordReq{
-					User: userReq{
-						ID:       &opts.UserID,
-						Password: &opts.Password,
-					},
-				}
-			}
-
-			if opts.Passcode != "" {
-				req.Auth.Identity.TOTP = &totpReq{
-					User: &userReq{
-						ID:       &opts.UserID,
-						Passcode: &opts.Passcode,
-					},
-				}
-			}
-		}
-	}
-
-	b, err := BuildRequestBody(req, "")
-	if err != nil {
-		return nil, err
-	}
-
-	if len(scope) != 0 {
-		b["auth"].(map[string]any)["scope"] = scope
-	}
-
-	return b, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Populate the request structure based on the provided arguments. Create and return an error
+// if insufficient or incompatible information is present.
+
+// Because we aren't using password authentication, it's an error to also provide any of the user-based authentication
+// parameters.
+
+// Configure the request for Token authentication.
+
+// Configure the request for ApplicationCredentialID authentication.
+// https://github.com/openstack/keystoneauth/blob/stable/rocky/keystoneauth1/identity/v3/application_credential.py#L48-L67
+// There are three kinds of possible application_credential requests
+// 1. application_credential id + secret
+// 2. application_credential name + secret + user_id
+// 3. application_credential name + secret + username + domain_id / domain_name
+
+// UserID could be used without the domain information
+
+// Make sure that Username or UserID are provided
+
+// Make sure that DomainID or DomainName are provided among Username
+
+// If no password or token ID or ApplicationCredential are available, authentication can't continue.
+
+// Password authentication.
+
+// TOTP authentication.
+
+// At least one of Username and UserID must be specified.
+
+// If Username is provided, UserID may not be provided.
+
+// Either DomainID or DomainName must also be specified.
+
+// Configure the request for Username and Password authentication with a DomainID.
+
+// Configure the request for Username and Password authentication with a DomainName.
+
+// If UserID is specified, neither DomainID nor DomainName may be.
+
+// Configure the request for UserID and Password authentication.
 
 // ToTokenV3ScopeMap builds a scope from AuthOptions and satisfies interface in
 // the v3 tokens package.
 func (opts *AuthOptions) ToTokenV3ScopeMap() (map[string]any, error) {
+	_ = "STUB: not implemented"
 	// For backwards compatibility.
 	// If AuthOptions.Scope was not set, try to determine it.
 	// This works well for common scenarios.
-	if opts.Scope == nil {
-		opts.Scope = new(AuthScope)
-		if opts.TenantID != "" {
-			opts.Scope.ProjectID = opts.TenantID
-		} else {
-			if opts.TenantName != "" {
-				opts.Scope.ProjectName = opts.TenantName
-				opts.Scope.DomainID = opts.DomainID
-				opts.Scope.DomainName = opts.DomainName
-			}
-		}
-	}
-
-	if opts.Scope.System {
-		return map[string]any{
-			"system": map[string]any{
-				"all": true,
-			},
-		}, nil
-	}
-
-	if opts.Scope.TrustID != "" {
-		return map[string]any{
-			"OS-TRUST:trust": map[string]string{
-				"id": opts.Scope.TrustID,
-			},
-		}, nil
-	}
-
-	if opts.Scope.ProjectName != "" {
-		// ProjectName provided: either DomainID or DomainName must also be supplied.
-		// ProjectID may not be supplied.
-		if opts.Scope.DomainID == "" && opts.Scope.DomainName == "" {
-			return nil, ErrScopeDomainIDOrDomainName{}
-		}
-		if opts.Scope.ProjectID != "" {
-			return nil, ErrScopeProjectIDOrProjectName{}
-		}
-
-		if opts.Scope.DomainID != "" {
-			// ProjectName + DomainID
-			return map[string]any{
-				"project": map[string]any{
-					"name":   &opts.Scope.ProjectName,
-					"domain": map[string]any{"id": &opts.Scope.DomainID},
-				},
-			}, nil
-		}
-
-		if opts.Scope.DomainName != "" {
-			// ProjectName + DomainName
-			return map[string]any{
-				"project": map[string]any{
-					"name":   &opts.Scope.ProjectName,
-					"domain": map[string]any{"name": &opts.Scope.DomainName},
-				},
-			}, nil
-		}
-	} else if opts.Scope.ProjectID != "" {
-		// ProjectID provided. ProjectName, DomainID, and DomainName may not be provided.
-		if opts.Scope.DomainID != "" {
-			return nil, ErrScopeProjectIDAlone{}
-		}
-		if opts.Scope.DomainName != "" {
-			return nil, ErrScopeProjectIDAlone{}
-		}
-
-		// ProjectID
-		return map[string]any{
-			"project": map[string]any{
-				"id": &opts.Scope.ProjectID,
-			},
-		}, nil
-	} else if opts.Scope.DomainID != "" {
-		// DomainID provided. ProjectID, ProjectName, and DomainName may not be provided.
-		if opts.Scope.DomainName != "" {
-			return nil, ErrScopeDomainIDOrDomainName{}
-		}
-
-		// DomainID
-		return map[string]any{
-			"domain": map[string]any{
-				"id": &opts.Scope.DomainID,
-			},
-		}, nil
-	} else if opts.Scope.DomainName != "" {
-		// DomainName
-		return map[string]any{
-			"domain": map[string]any{
-				"name": &opts.Scope.DomainName,
-			},
-		}, nil
-	}
-
 	return nil, nil
 }
 
-func (opts AuthOptions) CanReauth() bool {
-	if opts.Passcode != "" {
-		// cannot reauth using TOTP passcode
-		return false
-	}
+// ProjectName provided: either DomainID or DomainName must also be supplied.
+// ProjectID may not be supplied.
 
-	return opts.AllowReauth
-}
+// ProjectName + DomainID
+
+// ProjectName + DomainName
+
+// ProjectID provided. ProjectName, DomainID, and DomainName may not be provided.
+
+// ProjectID
+
+// DomainID provided. ProjectID, ProjectName, and DomainName may not be provided.
+
+// DomainID
+
+// DomainName
+
+func (opts AuthOptions) CanReauth() bool { _ = "STUB: not implemented"; return false }
+
+// cannot reauth using TOTP passcode
 
 // ToTokenV3HeadersMap allows AuthOptions to satisfy the AuthOptionsBuilder
 // interface in the v3 tokens package.
 func (opts *AuthOptions) ToTokenV3HeadersMap(map[string]any) (map[string]string, error) {
+	_ = "STUB: not implemented"
 	return nil, nil
 }

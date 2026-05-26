@@ -1,9 +1,6 @@
 package noauth
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/gophercloud/gophercloud/v2"
 )
 
@@ -17,44 +14,23 @@ type EndpointOpts struct {
 
 // NewClient prepares an unauthenticated ProviderClient instance.
 func NewClient(options gophercloud.AuthOptions) (*gophercloud.ProviderClient, error) {
-	if options.Username == "" {
-		options.Username = "admin"
-	}
-	if options.TenantName == "" {
-		options.TenantName = "admin"
-	}
-
-	client := &gophercloud.ProviderClient{
-		TokenID: fmt.Sprintf("%s:%s", options.Username, options.TenantName),
-	}
-
-	return client, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts, clientType string) (*gophercloud.ServiceClient, error) {
-	sc := new(gophercloud.ServiceClient)
-	if eo.CinderEndpoint == "" {
-		return nil, fmt.Errorf("CinderEndpoint is required")
-	}
-
-	token := strings.Split(client.TokenID, ":")
-	if len(token) != 2 {
-		return nil, fmt.Errorf("malformed noauth token")
-	}
-
-	endpoint := fmt.Sprintf("%s%s", gophercloud.NormalizeURL(eo.CinderEndpoint), token[1])
-	sc.Endpoint = gophercloud.NormalizeURL(endpoint)
-	sc.ProviderClient = client
-	sc.Type = clientType
-	return sc, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NewBlockStorageNoAuthV2 creates a ServiceClient that may be used to access "noauth" v2 block storage service.
 func NewBlockStorageNoAuthV2(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	return initClientOpts(client, eo, "block-storage")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NewBlockStorageNoAuthV3 creates a ServiceClient that may be used to access "noauth" v3 block storage service.
 func NewBlockStorageNoAuthV3(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	return initClientOpts(client, eo, "block-storage")
+	_ = "STUB: not implemented"
+	return nil, nil
 }

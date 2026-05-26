@@ -2,26 +2,23 @@ package attachments
 
 import "github.com/gophercloud/gophercloud/v2"
 
-func createURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("attachments")
-}
+func createURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func listURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("attachments", "detail")
-}
+func listURL(c *gophercloud.ServiceClient) string { _ = "STUB: not implemented"; return "" }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("attachments", id)
-}
+func getURL(c *gophercloud.ServiceClient, id string) string { _ = "STUB: not implemented"; return "" }
 
 func updateURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("attachments", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("attachments", id)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func completeURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("attachments", id, "action")
+	_ = "STUB: not implemented"
+	return ""
 }

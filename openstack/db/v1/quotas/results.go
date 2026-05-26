@@ -20,10 +20,4 @@ type GetResult struct {
 
 // Extract interprets a GetResult as a []QuotaDetail.
 // An error is returned if the original call or the extraction failed.
-func (r GetResult) Extract() ([]QuotaDetail, error) {
-	var s struct {
-		Quotas []QuotaDetail `json:"quotas"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Quotas, err
-}
+func (r GetResult) Extract() ([]QuotaDetail, error) { _ = "STUB: not implemented"; return nil, nil }

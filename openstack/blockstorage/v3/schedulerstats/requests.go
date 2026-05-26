@@ -23,21 +23,12 @@ type ListOpts struct {
 
 // ToStoragePoolsListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToStoragePoolsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // List makes a request against the API to list storage pool information.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := storagePoolsListURL(client)
-	if opts != nil {
-		query, err := opts.ToStoragePoolsListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query
-	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
-		return StoragePoolPage{pagination.SinglePageBase(r)}
-	})
+	_ = "STUB: not implemented"
+	return *new(pagination.Pager)
 }
